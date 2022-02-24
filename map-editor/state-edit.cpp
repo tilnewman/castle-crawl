@@ -134,7 +134,7 @@ namespace mapper
             }
         }
 
-        if (sf::Keyboard::Num1 == event.key.code)
+        if (sf::Keyboard::F == event.key.code)
         {
             context.editor.setFloorIsStone(context, !context.editor.getFloorIsStone());
         }
@@ -163,6 +163,7 @@ namespace mapper
                 "  S         - Stairway Up\n"
                 "  b         - Barrel\n"
                 "  c         - Coffin\n"
+                "  f         - Stone or Wood Floor\n"
                 "  CNTRL-R   - ERASE EVERYTHING!\n"
                 "----------------------------------\n"
                 << std::endl;

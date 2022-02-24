@@ -38,16 +38,13 @@ namespace mapper
             m_defaultMapStrings.push_back(row);
         }
 
-        // center cursor
-        m_position = context.layout.cellCountsMax() / 2;
-
         reset(context);
     }
 
     void Editor::reset(Context & context)
     {
         m_isFloorStone = false;
-        m_position = { 0, 0 };
+        m_position = context.layout.cellCountsMax() / 2;
         m_mapStrings = m_defaultMapStrings;
         updateAndRedraw(context);
     }
@@ -110,12 +107,20 @@ namespace mapper
         try
         {
             const auto path = (std::filesystem::current_path() / m_filename);
+            const bool didFilePreExist = std::filesystem::exists(path);
 
-            std::ofstream stream(path, std::ios_base::out);
-
-            if (!stream.is_open() || !stream.good())
             {
-                return false;
+                std::ofstream stream(path, std::ios_base::out);
+
+                if (!stream.is_open() || !stream.good())
+                {
+                    return false;
+                }
+            }
+
+            if (!didFilePreExist)
+            {
+                std::filesystem::remove(path);
             }
         }
         catch (...)
