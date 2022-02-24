@@ -49,11 +49,26 @@ namespace castlecrawl
         m_game.reset();
 
         m_config = config;
-        M_CHECK_SS(std::filesystem::exists(m_config.media_dir_path), m_config.media_dir_path);
-        M_CHECK_SS(std::filesystem::is_directory(m_config.media_dir_path), m_config.media_dir_path);
+        M_CHECK(std::filesystem::exists(m_config.media_dir_path), m_config.media_dir_path);
+        M_CHECK(std::filesystem::is_directory(m_config.media_dir_path), m_config.media_dir_path);
 
-        // this can change m_config and m_layout so call this right after m_config is set
         openWindow();
+
+        m_config.video_mode.width = m_window.getSize().x;
+        m_config.video_mode.height = m_window.getSize().y;
+        m_config.video_mode.bitsPerPixel = m_window.getSettings().depthBits;
+
+        // sometimes SFML repoprts 32bpp as zero, don't know why, don't really care
+        if (0 == m_config.video_mode.bitsPerPixel)
+        {
+            m_config.video_mode.bitsPerPixel = 32;
+        }
+
+        m_layout.setupWindow(m_config);
+
+        std::cout << "Game Window Cells: width_ratio=" << m_config.map_cell_size_ratio
+                  << ", pixels=" << m_layout.mapCellDimm()
+                  << ", grid=" << (m_layout.windowSize() / m_layout.mapCellSize()) << std::endl;
 
         m_soundPlayer.setMediaPath((m_config.media_dir_path / "sfx").string());
         m_soundPlayer.volume(75.0f);
@@ -62,7 +77,7 @@ namespace castlecrawl
 
         m_media.load(m_config, m_layout, m_soundPlayer);
 
-        // depends only on m_random only so passing context here is safe TODO
+        // depends only on m_random only so passing context here is safe
         m_maps.load(m_context);
 
         m_context.switchToMap({ { 0, 0 }, "level-1-first-room", { 5, 3 } });
@@ -92,7 +107,7 @@ namespace castlecrawl
                   << m_config.video_mode.bitsPerPixel << "bits per pixel and a "
                   << m_config.frame_rate_limit << " fps limit." << std::endl;
 
-        M_CHECK_SS(
+        M_CHECK(
             m_window.isOpen(),
             "Failed to make and open the graphics window.  (sf::RenderWindow::isOpen() == false)");
 
@@ -102,16 +117,6 @@ namespace castlecrawl
                       << ", but strangely, a window did open at " << windowActualSize
                       << ".  So...meh." << std::endl;
         }
-
-        m_config.video_mode.width = windowActualSize.x;
-        m_config.video_mode.height = windowActualSize.y;
-        m_config.video_mode.bitsPerPixel = m_window.getSettings().depthBits;
-
-        m_layout.setupWindow(m_config);
-
-        std::cout << "Game Window Cells: width_ratio=" << m_config.map_cell_size_ratio
-                  << ", pixels=" << m_layout.mapCellDimm()
-                  << ", grid=" << (m_layout.windowSize() / m_layout.mapCellSize()) << std::endl;
     }
 
     void GameCoordinator::run(const GameConfig & config)

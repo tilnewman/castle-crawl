@@ -59,8 +59,13 @@ namespace castlecrawl
 
     void Media::loadSoundEffects(util::SoundPlayer & audio)
     {
-        M_CHECK(audio.load(
-            { "tap-wood-low.ogg", "locked.ogg", "door-open.ogg", "tick-on-2.ogg", "stairs.ogg" }));
+        M_CHECK(
+            audio.load({ "tap-wood-low.ogg",
+                         "locked.ogg",
+                         "door-open.ogg",
+                         "tick-on-2.ogg",
+                         "stairs.ogg" }),
+            "Error:  Unable to load sfx files!");
     }
 
     const sf::Font & Media::font() const { return m_font; }

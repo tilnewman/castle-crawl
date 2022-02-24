@@ -58,27 +58,12 @@ namespace castlecrawl
 
     sf::FloatRect Layout::cellBounds(const MapPos_t & pos) const
     {
-        M_CHECK_SS(isPositionValid(pos), pos);
-
         const sf::FloatRect bounds{
             (util::position(m_boardBounds) + (m_cellSize * sf::Vector2f(pos))), m_cellSize
         };
 
         return bounds;
     }
-
-    // BoardPosOpt_t Layout::windowPosToBoardPos(const sf::Vector2f windowPos) const
-    //{
-    //    for (const BoardPos_t & boardPos : m_allValidPositions)
-    //    {
-    //        if (cellBounds(boardPos).contains(windowPos))
-    //        {
-    //            return boardPos;
-    //        }
-    //    }
-    //
-    //    return std::nullopt;
-    //}
 
     //
 
