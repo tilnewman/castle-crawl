@@ -26,6 +26,7 @@ namespace mapper
         , m_map()
         , m_isFloorStone(false)
         , m_filename()
+        , m_cursorRectangle()
     {}
 
     void Editor::setup(Context & context)
@@ -38,7 +39,18 @@ namespace mapper
             m_defaultMapStrings.push_back(row);
         }
 
+        m_cursorRectangle.setFillColor(sf::Color(0, 255, 255, 32));
+        m_cursorRectangle.setOutlineColor(sf::Color::Cyan);
+        m_cursorRectangle.setOutlineThickness(1.0f);
+        m_cursorRectangle.setSize(context.layout.cellSize());
+
         reset(context);
+    }
+
+    void Editor::movePosition(Context & context, const MapPos_t & amount)
+    {
+        m_position += amount;
+        m_cursorRectangle.setPosition(util::position(context.layout.cellBounds(m_position)));
     }
 
     void Editor::reset(Context & context)
@@ -47,15 +59,14 @@ namespace mapper
         m_position = context.layout.cellCountsMax() / 2;
         m_mapStrings = m_defaultMapStrings;
         updateAndRedraw(context);
+        m_cursorRectangle.setPosition(util::position(context.layout.cellBounds(m_position)));
     }
 
     void Editor::draw(
         const Context & context, sf::RenderTarget & target, sf::RenderStates & states) const
     {
         m_map.draw(context, target, states);
-
-        util::drawRectangleShape(
-            target, context.layout.cellBounds(m_position), true, sf::Color(0, 255, 255, 32));
+        target.draw(m_cursorRectangle);
     }
 
     void Editor::setFloorIsStone(Context & context, const bool isStone)

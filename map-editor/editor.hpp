@@ -9,6 +9,7 @@
 #include <filesystem>
 #include <string>
 
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 
 namespace sf
@@ -39,7 +40,7 @@ namespace mapper
         bool getFloorIsStone() const { return m_isFloorStone; }
 
         const MapPos_t position() const { return m_position; }
-        void movePosition(const MapPos_t & amount) { m_position += amount; }
+        void movePosition(Context & context, const MapPos_t & amount);
 
         const std::filesystem::path getFirstAvailableFilePath() const;
 
@@ -56,6 +57,7 @@ namespace mapper
         Map m_map;
         bool m_isFloorStone;
         std::string m_filename;
+        sf::RectangleShape m_cursorRectangle;
     };
 } // namespace mapper
 

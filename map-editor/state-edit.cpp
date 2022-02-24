@@ -59,7 +59,7 @@ namespace mapper
         {
             if (context.editor.position().y > 0)
             {
-                context.editor.movePosition({ 0, -1 });
+                context.editor.movePosition(context, { 0, -1 });
             }
 
             return;
@@ -69,7 +69,7 @@ namespace mapper
         {
             if (context.editor.position().y < (context.layout.cellCountsMax().y - 1))
             {
-                context.editor.movePosition({ 0, 1 });
+                context.editor.movePosition(context, { 0, 1 });
             }
 
             return;
@@ -79,7 +79,7 @@ namespace mapper
         {
             if (context.editor.position().x > 0)
             {
-                context.editor.movePosition({ -1, 0 });
+                context.editor.movePosition(context, { -1, 0 });
             }
 
             return;
@@ -89,7 +89,7 @@ namespace mapper
         {
             if (context.editor.position().x < (context.layout.cellCountsMax().x - 1))
             {
-                context.editor.movePosition({ 1, 0 });
+                context.editor.movePosition(context, { 1, 0 });
             }
 
             return;
