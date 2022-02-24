@@ -1,5 +1,5 @@
-#ifndef CASTLECRAWL_MAPTYPES_HPP_INCLUDED
-#define CASTLECRAWL_MAPTYPES_HPP_INCLUDED
+#ifndef CASTLECRAWLMAPPER_MAPTYPES_HPP_INCLUDED
+#define CASTLECRAWLMAPPER_MAPTYPES_HPP_INCLUDED
 //
 // map-types.hpp
 //
@@ -35,4 +35,4 @@ namespace castlecrawl
     using VertVec_t = std::vector<sf::Vertex>;
 } // namespace castlecrawl
 
-#endif // CASTLECRAWL_MAPTYPES_HPP_INCLUDED
+#endif // CASTLECRAWLMAPPER_MAPTYPES_HPP_INCLUDED

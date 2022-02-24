@@ -1,5 +1,5 @@
-#ifndef CASTLECRAWL_KEYS_HPP_INCLUDED
-#define CASTLECRAWL_KEYS_HPP_INCLUDED
+#ifndef CASTLECRAWLMAPPER_KEYS_HPP_INCLUDED
+#define CASTLECRAWLMAPPER_KEYS_HPP_INCLUDED
 //
 // keys.hpp
 //
@@ -161,4 +161,4 @@ namespace castlecrawl
     } // namespace keys
 } // namespace castlecrawl
 
-#endif // CASTLECRAWL_KEYS_HPP_INCLUDED
+#endif // CASTLECRAWLMAPPER_KEYS_HPP_INCLUDED
