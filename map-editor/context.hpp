@@ -16,6 +16,7 @@ namespace mapper
     class Media;
     class Layout;
     class GameInPlay;
+    class MapTracker;
     class StateMachine;
 
     struct Board;
@@ -29,6 +30,7 @@ namespace mapper
         Context(
             GameInPlay & gam,
             Board & bor,
+            MapTracker & mtr,
             const GameConfig & con,
             Layout & lay,
             const Media & med,
@@ -37,6 +39,7 @@ namespace mapper
             const util::Random & ran)
             : game(gam)
             , board(bor)
+            , map(mtr)
             , config(con)
             , layout(lay)
             , media(med)
@@ -55,6 +58,7 @@ namespace mapper
         // subsystem references
         GameInPlay & game;
         Board & board;
+        MapTracker & map;
         const GameConfig & config;
         Layout & layout;
         const Media & media;

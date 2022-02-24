@@ -6,6 +6,7 @@
 #include "board.hpp"
 #include "context.hpp"
 #include "keys.hpp"
+#include "map-tracker.hpp"
 #include "player-piece.hpp"
 #include "popup-manager.hpp"
 #include "random.hpp"
@@ -43,6 +44,7 @@ namespace mapper
         Media m_media;
         Board m_board;
         Layout m_layout;
+        MapTracker m_map;
         GameInPlay m_game;
         GameConfig m_config;
         StateMachine m_stateMachine;

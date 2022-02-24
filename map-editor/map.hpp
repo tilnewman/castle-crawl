@@ -3,7 +3,6 @@
 //
 // map.hpp
 //
-#include "context.hpp"
 #include "map-types.hpp"
 
 #include <map>
@@ -13,6 +12,7 @@
 
 namespace mapper
 {
+    struct Context;
 
     class Map
     {
