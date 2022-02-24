@@ -3,7 +3,6 @@
 //
 // state-edit.hpp
 //
-#include "frames-per-sec.hpp"
 #include "states.hpp"
 
 #include <string>
@@ -20,12 +19,10 @@ namespace mapper
         StateEdit(Context & context);
 
         void onEnter(Context & context) override;
-        void update(Context &, const float frameTimeSec) override;
         void handleEvent(Context & context, const sf::Event & event) override;
         void draw(const Context &, sf::RenderTarget &, sf::RenderStates) const override;
 
       private:
-        FramesPerSecond m_fps;
         sf::RectangleShape m_windowOutline;
     };
 

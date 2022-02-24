@@ -19,7 +19,7 @@ namespace mapper
         , media_dir_path{ std::filesystem::current_path() / "media" }
         , video_mode{ sf::VideoMode::getDesktopMode() }
         , is_fullscreen{ true }
-        , frame_rate_limit{ 0 }
+        , frame_rate_limit{ 60 }
         , background_color{ sf::Color(14, 14, 17) }
         , map_cell_size_ratio{ 0.024f }
     {}

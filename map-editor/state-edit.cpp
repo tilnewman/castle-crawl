@@ -24,22 +24,17 @@ namespace mapper
 
     StateEdit::StateEdit(Context &)
         : StateBase(State::Edit)
-        , m_fps()
         , m_windowOutline()
     {}
 
     void StateEdit::onEnter(Context & context)
     {
-        m_fps.reset(context);
-
         m_windowOutline.setPosition(util::position(context.layout.boardBounds()));
         m_windowOutline.setSize(util::size(context.layout.boardBounds()));
         m_windowOutline.setFillColor(sf::Color::Transparent);
         m_windowOutline.setOutlineThickness(1.0f);
         m_windowOutline.setOutlineColor(sf::Color(80, 80, 80));
     }
-
-    void StateEdit::update(Context &, const float) { m_fps.update(); }
 
     void StateEdit::handleEvent(Context & context, const sf::Event & event)
     {
@@ -181,7 +176,6 @@ namespace mapper
         context.editor.draw(context, target, states);
         target.draw(context.board, states);
         target.draw(m_windowOutline, states);
-        target.draw(m_fps, states);
     }
 
 } // namespace mapper
