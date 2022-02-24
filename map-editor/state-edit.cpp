@@ -5,9 +5,9 @@
 //
 #include "state-edit.hpp"
 
-#include "../src/map.hpp"
 #include "board.hpp"
 #include "context.hpp"
+#include "map.hpp"
 #include "popup-manager.hpp"
 #include "resources.hpp"
 #include "settings.hpp"

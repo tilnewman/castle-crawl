@@ -3,7 +3,7 @@
 //
 // resources.hpp
 //
-#include "../src/check-macros.hpp"
+#include "check-macros.hpp"
 #include "context.hpp"
 #include "sound-player.hpp"
 #include "tile-image.hpp"

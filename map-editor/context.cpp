@@ -5,8 +5,8 @@
 //
 #include "context.hpp"
 
-#include "../src/check-macros.hpp"
 #include "board.hpp"
+#include "check-macros.hpp"
 #include "settings.hpp"
 
 namespace castlecrawl

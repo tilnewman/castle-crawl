@@ -5,8 +5,8 @@
 //
 #include "game-coordinator.hpp"
 
-#include "../src/check-macros.hpp"
-#include "../src/util.hpp"
+#include "check-macros.hpp"
+#include "util.hpp"
 
 #include <algorithm>
 #include <filesystem>

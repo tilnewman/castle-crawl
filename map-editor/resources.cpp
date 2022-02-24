@@ -5,9 +5,9 @@
 //
 #include "resources.hpp"
 
-#include "../src/util.hpp"
 #include "context.hpp"
 #include "settings.hpp"
+#include "util.hpp"
 
 #include <cassert>
 #include <filesystem>

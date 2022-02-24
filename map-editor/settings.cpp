@@ -5,10 +5,10 @@
 //
 #include "settings.hpp"
 
-#include "../src/check-macros.hpp"
-#include "../src/map.hpp"
-#include "../src/util.hpp"
+#include "check-macros.hpp"
 #include "context.hpp"
+#include "map.hpp"
+#include "util.hpp"
 
 #include <filesystem>
 

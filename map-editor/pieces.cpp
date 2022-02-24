@@ -5,13 +5,13 @@
 //
 #include "pieces.hpp"
 
-#include "../src/check-macros.hpp"
-#include "../src/util.hpp"
+#include "check-macros.hpp"
 #include "keys.hpp"
 #include "random.hpp"
 #include "resources.hpp"
 #include "settings.hpp"
 #include "sound-player.hpp"
+#include "util.hpp"
 
 #include <cassert>
 

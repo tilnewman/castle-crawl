@@ -5,8 +5,8 @@
 //
 #include "player-piece.hpp"
 
-#include "../src/check-macros.hpp"
 #include "board.hpp"
+#include "check-macros.hpp"
 #include "door-piece.hpp"
 #include "keys.hpp"
 #include "settings.hpp"
