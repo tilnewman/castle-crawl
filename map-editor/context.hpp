@@ -15,6 +15,7 @@ namespace mapper
     class Map;
     class Media;
     class Layout;
+    class Editor;
     class GameInPlay;
     class MapTracker;
     class StateMachine;
@@ -31,6 +32,7 @@ namespace mapper
             GameInPlay & gam,
             Board & bor,
             MapTracker & mtr,
+            Editor & edi,
             const GameConfig & con,
             Layout & lay,
             const Media & med,
@@ -40,6 +42,7 @@ namespace mapper
             : game(gam)
             , board(bor)
             , map(mtr)
+            , editor(edi)
             , config(con)
             , layout(lay)
             , media(med)
@@ -59,6 +62,7 @@ namespace mapper
         GameInPlay & game;
         Board & board;
         MapTracker & map;
+        Editor & editor;
         const GameConfig & config;
         Layout & layout;
         const Media & media;

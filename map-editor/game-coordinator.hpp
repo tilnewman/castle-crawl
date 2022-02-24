@@ -5,6 +5,7 @@
 //
 #include "board.hpp"
 #include "context.hpp"
+#include "editor.hpp"
 #include "keys.hpp"
 #include "map-tracker.hpp"
 #include "player-piece.hpp"
@@ -44,6 +45,7 @@ namespace mapper
         Media m_media;
         Board m_board;
         Layout m_layout;
+        Editor m_editor;
         MapTracker m_map;
         GameInPlay m_game;
         GameConfig m_config;

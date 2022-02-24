@@ -23,6 +23,7 @@ namespace mapper
         , m_media()
         , m_board()
         , m_layout()
+        , m_editor()
         , m_map()
         , m_game()
         , m_config()
@@ -33,6 +34,7 @@ namespace mapper
               m_game,
               m_board,
               m_map,
+              m_editor,
               m_config,
               m_layout,
               m_media,
