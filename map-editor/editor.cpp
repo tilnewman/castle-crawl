@@ -20,6 +20,7 @@ namespace mapper
         , m_defaultMapStrings()
         , m_mapStrings()
         , m_map()
+        , m_isFloorStone(false)
     {}
 
     void Editor::setup(Context & context)
@@ -32,11 +33,15 @@ namespace mapper
             m_defaultMapStrings.push_back(row);
         }
 
-        m_mapStrings = m_defaultMapStrings;
+        reset(context);
+    }
 
-        m_map = Map(context, true, m_mapStrings, {});
-        context.layout.setupBoardForNewMap(m_map.size());
-        m_map.load(context);
+    void Editor::reset(Context & context)
+    {
+        m_isFloorStone = false;
+        m_position = { 0, 0 };
+        m_mapStrings = m_defaultMapStrings;
+        updateAndRedraw(context);
     }
 
     void Editor::draw(
@@ -48,10 +53,21 @@ namespace mapper
             target, context.layout.cellBounds(m_position), true, sf::Color(0, 255, 255, 32));
     }
 
+    void Editor::setFloorIsStone(Context & context, const bool isStone)
+    {
+        m_isFloorStone = isStone;
+        updateAndRedraw(context);
+    }
+
     void Editor::set(Context & context, const char ch)
     {
         m_mapStrings.at(m_position.y).at(m_position.x) = ch;
-        m_map = Map(context, true, m_mapStrings, {});
+        updateAndRedraw(context);
+    }
+
+    void Editor::updateAndRedraw(Context & context)
+    {
+        m_map = Map(context, m_isFloorStone, m_mapStrings, {});
         context.layout.setupBoardForNewMap(m_map.size());
         m_map.load(context);
     }

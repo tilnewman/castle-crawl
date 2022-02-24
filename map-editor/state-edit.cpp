@@ -45,18 +45,15 @@ namespace mapper
             return;
         }
 
-        if ((sf::Keyboard::Escape == event.key.code) || (sf::Keyboard::Q == event.key.code))
+        if (sf::Keyboard::Escape == event.key.code)
         {
-            std::cout << "Player pressed 'Q' or 'Escape'.  Quitting." << std::endl;
             context.state.setChangePending(State::Teardown);
             return;
         }
 
-        if (sf::Keyboard::P == event.key.code)
+        if (event.key.control && (sf::Keyboard::R == event.key.code))
         {
-            context.popup.setup(context, "All your bases are belong to us.");
-            context.state.setChangePending(State::Popup);
-            return;
+            context.editor.reset(context);
         }
 
         if (sf::Keyboard::Up == event.key.code)
@@ -102,14 +99,65 @@ namespace mapper
         // clang-format off
         if      (sf::Keyboard::Space == event.key.code) context.editor.set(context, ' ');
         else if (sf::Keyboard::Period == event.key.code)context.editor.set(context, '.');
+        else if (sf::Keyboard::Delete == event.key.code)context.editor.set(context, '.');
         else if (sf::Keyboard::L == event.key.code)     context.editor.set(context, 'l');
         else if (sf::Keyboard::B == event.key.code)     context.editor.set(context, 'b');
-        else if (sf::Keyboard::D == event.key.code)     context.editor.set(context, 'd');
         else if (sf::Keyboard::W == event.key.code)     context.editor.set(context, 'w');
         else if (sf::Keyboard::C == event.key.code)     context.editor.set(context, 'c');
         // clang-format on
 
-        context.board.player.handleEvent(context, event);
+        if (sf::Keyboard::D == event.key.code)
+        {
+            if (event.key.shift)
+            {
+                context.editor.set(context, 'D');
+            }
+            else
+            {
+                context.editor.set(context, 'd');
+            }
+        }
+
+        if (sf::Keyboard::S == event.key.code)
+        {
+            if (event.key.shift)
+            {
+                context.editor.set(context, 'S');
+            }
+            else
+            {
+                context.editor.set(context, 's');
+            }
+        }
+
+        if (sf::Keyboard::Num1 == event.key.code)
+        {
+            context.editor.setFloorIsStone(context, !context.editor.getFloorIsStone());
+        }
+
+        if (sf::Keyboard::F1 == event.key.code)
+        {
+            // clang-format off
+            std::cout << 
+                "----------------------------------\n"
+                "  Escape    - Quit the map editor.\n"
+                "  F1        - See this help text.\n"
+                "  F2        - Save the map.\n"
+                "  Spacebar  - Bare Floor\n"
+                "  Period    - Remove Everything\n"
+                "  Delete    - (same as Period)\n"
+                "  L         - Lava\n"
+                "  W         - Water\n"
+                "  d         - Door\n"
+                "  D         - Locked Door\n"
+                "  s         - Stairway Down\n"
+                "  S         - Stairway Up\n"
+                "  b         - Barrel\n"
+                "  c         - Coffin\n"
+                "----------------------------------\n"
+                << std::endl;
+            // clang-format on
+        }
     }
 
     void StateEdit::draw(
