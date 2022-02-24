@@ -10,7 +10,7 @@
 
 #include <SFML/Graphics/RenderTarget.hpp>
 
-namespace castlecrawl
+namespace mapper
 {
     struct Board : public sf::Drawable
     {
@@ -20,6 +20,6 @@ namespace castlecrawl
         void draw(sf::RenderTarget &, sf::RenderStates) const override;
     };
 
-} // namespace castlecrawl
+} // namespace mapper
 
 #endif // CASTLECRAWLMAPPER_PLAYER_HPP_INCLUDED

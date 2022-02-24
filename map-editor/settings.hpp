@@ -15,7 +15,7 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Window/VideoMode.hpp>
 
-namespace castlecrawl
+namespace mapper
 {
     class Map;
 
@@ -105,6 +105,6 @@ namespace castlecrawl
         bool m_didPlayerWin{ false };
     };
 
-} // namespace castlecrawl
+} // namespace mapper
 
 #endif // CASTLECRAWLMAPPER_SETTINGS_HPP_INCLUDED

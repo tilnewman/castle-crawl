@@ -11,7 +11,7 @@
 
 #include <SFML/Graphics.hpp>
 
-namespace castlecrawl
+namespace mapper
 {
 
     void PopupManager::setup(Context & context, const std::string & message)
@@ -44,4 +44,4 @@ namespace castlecrawl
         target.draw(text, states);
     }
 
-} // namespace castlecrawl
+} // namespace mapper

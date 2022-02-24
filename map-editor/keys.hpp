@@ -14,7 +14,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
-namespace castlecrawl
+namespace mapper
 {
     using DirKeyOpt_t = std::optional<sf::Keyboard::Key>;
 
@@ -159,6 +159,6 @@ namespace castlecrawl
             return std::nullopt;
         }
     } // namespace keys
-} // namespace castlecrawl
+} // namespace mapper
 
 #endif // CASTLECRAWLMAPPER_KEYS_HPP_INCLUDED

@@ -11,7 +11,7 @@
 
 #include <SFML/Graphics/RenderTarget.hpp>
 
-namespace castlecrawl
+namespace mapper
 {
 
     class Map
@@ -66,6 +66,6 @@ namespace castlecrawl
     using NameMapPair_t = std::pair<std::string, Map>;
     using Maps_t = std::map<std::string, Map>;
 
-} // namespace castlecrawl
+} // namespace mapper
 
 #endif // CASTLECRAWLMAPPER_MAP_HPP_INCLUDED

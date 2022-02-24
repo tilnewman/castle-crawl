@@ -7,7 +7,7 @@
 
 #include <SFML/Graphics/RenderTarget.hpp>
 
-namespace castlecrawl
+namespace mapper
 {
     struct Context;
 
@@ -21,6 +21,6 @@ namespace castlecrawl
         void draw(const Context &, sf::RenderTarget &, sf::RenderStates) const override;
     };
 
-} // namespace castlecrawl
+} // namespace mapper
 
 #endif // CASTLECRAWLMAPPER_STATEPOPUP_HPP_INCLUDED

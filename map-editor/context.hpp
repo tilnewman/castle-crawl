@@ -10,7 +10,7 @@ namespace util
     class Random;
 } // namespace util
 
-namespace castlecrawl
+namespace mapper
 {
     class Map;
     class Media;
@@ -64,6 +64,6 @@ namespace castlecrawl
 
         std::string map_name;
     };
-} // namespace castlecrawl
+} // namespace mapper
 
 #endif // CASTLECRAWLMAPPER_CONTEXT_HPP_INCLUDED

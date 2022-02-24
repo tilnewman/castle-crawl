@@ -11,7 +11,7 @@
 
 #include <iostream>
 
-namespace castlecrawl
+namespace mapper
 {
 
     StateMachine::StateMachine()
@@ -54,4 +54,4 @@ namespace castlecrawl
         };
     }
 
-} // namespace castlecrawl
+} // namespace mapper

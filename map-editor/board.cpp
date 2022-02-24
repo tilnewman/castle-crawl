@@ -7,7 +7,7 @@
 
 #include <SFML/Graphics.hpp>
 
-namespace castlecrawl
+namespace mapper
 {
 
     void Board::draw(sf::RenderTarget & target, sf::RenderStates states) const
@@ -15,4 +15,4 @@ namespace castlecrawl
         // Don't draw doors (they are drawn by the character map)
         target.draw(player, states);
     }
-} // namespace castlecrawl
+} // namespace mapper

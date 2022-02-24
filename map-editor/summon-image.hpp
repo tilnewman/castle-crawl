@@ -7,7 +7,7 @@
 
 #include <SFML/Graphics/Rect.hpp>
 
-namespace castlecrawl
+namespace mapper
 {
     // used to index so keep unsigned
     enum class SummonImage : std::size_t
@@ -152,5 +152,5 @@ namespace castlecrawl
         // clang-format on
     }
 
-} // namespace castlecrawl
+} // namespace mapper
 #endif // #define CASTLECRAWLMAPPER_SUMMONIMAGE_HPP_INCLUDED

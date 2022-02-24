@@ -9,7 +9,7 @@
 #include <ostream>
 #include <string>
 
-namespace castlecrawl
+namespace mapper
 {
 
     class StateMachine
@@ -43,6 +43,6 @@ namespace castlecrawl
         StateOpt_t m_changePendingOpt;
     };
 
-} // namespace castlecrawl
+} // namespace mapper
 
 #endif // CASTLECRAWLMAPPER_STATEMACHINE_HPP_INCLUDED

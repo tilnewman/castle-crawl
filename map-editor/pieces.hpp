@@ -11,7 +11,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Window/Event.hpp>
 
-namespace castlecrawl
+namespace mapper
 {
 
     struct IPiece : public sf::Drawable
@@ -68,6 +68,6 @@ namespace castlecrawl
         MapPos_t m_position;
     };
 
-} // namespace castlecrawl
+} // namespace mapper
 
 #endif // CASTLECRAWLMAPPER_PIECES_HPP_INCLUDED

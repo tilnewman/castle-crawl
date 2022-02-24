@@ -10,7 +10,7 @@
 
 #include <SFML/Graphics/RectangleShape.hpp>
 
-namespace castlecrawl
+namespace mapper
 {
     struct Context;
 
@@ -28,6 +28,6 @@ namespace castlecrawl
         sf::RectangleShape m_windowOutline;
     };
 
-} // namespace castlecrawl
+} // namespace mapper
 
 #endif // CASTLECRAWLMAPPER_STATEPLAY_HPP_INCLUDED

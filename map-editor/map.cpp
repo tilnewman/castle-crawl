@@ -14,7 +14,7 @@
 
 #include <SFML/Graphics.hpp>
 
-namespace castlecrawl
+namespace mapper
 {
     Map::Map()
         : m_isFloorStone(false)
@@ -490,4 +490,4 @@ namespace castlecrawl
         }
     }
 
-} // namespace castlecrawl
+} // namespace mapper

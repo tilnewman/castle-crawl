@@ -5,7 +5,7 @@
 //
 #include "pieces.hpp"
 
-namespace castlecrawl
+namespace mapper
 {
     class DoorPiece : public PieceBase
     {
@@ -16,6 +16,6 @@ namespace castlecrawl
         void isLocked(const bool isLocked) { m_isObstacle = isLocked; }
     };
 
-} // namespace castlecrawl
+} // namespace mapper
 
 #endif // CASTLECRAWLMAPPER_PLAYER_HPP_INCLUDED

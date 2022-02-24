@@ -16,7 +16,7 @@
 
 #include <SFML/Graphics.hpp>
 
-namespace castlecrawl
+namespace mapper
 {
     void Media::load(const GameConfig & config, const Layout & layout)
     {
@@ -87,4 +87,4 @@ namespace castlecrawl
         m_defaultSprite.setTexture(m_defaultTexture, true);
     }
 
-} // namespace castlecrawl
+} // namespace mapper

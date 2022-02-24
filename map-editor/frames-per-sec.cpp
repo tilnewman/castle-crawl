@@ -11,7 +11,7 @@
 
 #include <SFML/Graphics.hpp>
 
-namespace castlecrawl
+namespace mapper
 {
 
     FramesPerSecond::FramesPerSecond()
@@ -54,4 +54,4 @@ namespace castlecrawl
         target.draw(m_text, states);
     }
 
-} // namespace castlecrawl
+} // namespace mapper

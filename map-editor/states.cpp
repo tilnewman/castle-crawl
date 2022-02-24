@@ -13,7 +13,7 @@
 
 #include <SFML/Graphics.hpp>
 
-namespace castlecrawl
+namespace mapper
 {
 
     StateBase::StateBase(const State state)
@@ -22,4 +22,4 @@ namespace castlecrawl
 
     void StateTeardown::onEnter(Context & context) { context.game.endGame(false); }
 
-} // namespace castlecrawl
+} // namespace mapper

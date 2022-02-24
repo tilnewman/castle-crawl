@@ -12,7 +12,7 @@
 #include "settings.hpp"
 #include "sound-player.hpp"
 
-namespace castlecrawl
+namespace mapper
 {
     void PlayerPiece::reset(Context & context, const MapPos_t & pos)
     {
@@ -39,4 +39,4 @@ namespace castlecrawl
         move(context, arrowKey);
     }
 
-} // namespace castlecrawl
+} // namespace mapper

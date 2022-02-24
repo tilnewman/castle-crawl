@@ -9,7 +9,7 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Vertex.hpp>
 
-namespace castlecrawl
+namespace mapper
 {
     using MapPos_t = sf::Vector2i;
     using MapChars_t = std::vector<std::string>;
@@ -33,6 +33,6 @@ namespace castlecrawl
     using MapLinks_t = std::vector<MapLink>;
 
     using VertVec_t = std::vector<sf::Vertex>;
-} // namespace castlecrawl
+} // namespace mapper
 
 #endif // CASTLECRAWLMAPPER_MAPTYPES_HPP_INCLUDED

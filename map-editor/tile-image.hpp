@@ -7,7 +7,7 @@
 
 #include <SFML/Graphics/Rect.hpp>
 
-namespace castlecrawl
+namespace mapper
 {
     // used to index so keep unsigned
     enum class TileImage : std::size_t
@@ -138,5 +138,5 @@ namespace castlecrawl
         // clang-format on
     }
 
-} // namespace castlecrawl
+} // namespace mapper
 #endif // #define CASTLECRAWLMAPPER_TILEIMAGE_HPP_INCLUDED

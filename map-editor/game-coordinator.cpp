@@ -16,7 +16,7 @@
 
 #include <SFML/Graphics.hpp>
 
-namespace castlecrawl
+namespace mapper
 {
     GameCoordinator::GameCoordinator()
         : m_window()
@@ -142,4 +142,4 @@ namespace castlecrawl
         m_window.display();
     }
 
-} // namespace castlecrawl
+} // namespace mapper

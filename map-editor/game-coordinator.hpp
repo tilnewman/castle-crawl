@@ -21,7 +21,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Clock.hpp>
 
-namespace castlecrawl
+namespace mapper
 {
     class GameCoordinator
     {
@@ -52,6 +52,6 @@ namespace castlecrawl
         Context m_context;
     };
 
-} // namespace castlecrawl
+} // namespace mapper
 
 #endif // CASTLECRAWLMAPPER_GAMECOORDINATOR_HPP_INCLUDED

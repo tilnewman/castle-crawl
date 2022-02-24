@@ -11,7 +11,7 @@
 
 #include <SFML/Graphics.hpp>
 
-namespace castlecrawl
+namespace mapper
 {
 
     StatePopup::StatePopup(Context & context)
@@ -35,4 +35,4 @@ namespace castlecrawl
         target.draw(context.popup);
     }
 
-} // namespace castlecrawl
+} // namespace mapper

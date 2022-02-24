@@ -12,7 +12,7 @@
 
 #include <filesystem>
 
-namespace castlecrawl
+namespace mapper
 {
     GameConfig::GameConfig()
         : game_name{ "game" }
@@ -103,4 +103,4 @@ namespace castlecrawl
 
         return m_score;
     }
-} // namespace castlecrawl
+} // namespace mapper

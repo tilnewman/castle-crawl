@@ -17,7 +17,7 @@
 
 #include <SFML/Graphics.hpp>
 
-namespace castlecrawl
+namespace mapper
 {
 
     PieceBase::PieceBase()
@@ -66,4 +66,4 @@ namespace castlecrawl
     {
         target.draw(m_sprite, states);
     }
-} // namespace castlecrawl
+} // namespace mapper

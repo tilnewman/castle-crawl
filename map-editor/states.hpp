@@ -10,7 +10,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Window/Event.hpp>
 
-namespace castlecrawl
+namespace mapper
 {
     struct Context;
 
@@ -86,6 +86,6 @@ namespace castlecrawl
         void onEnter(Context & context) override;
     };
 
-} // namespace castlecrawl
+} // namespace mapper
 
 #endif // CASTLECRAWLMAPPER_STATES_HPP_INCLUDED

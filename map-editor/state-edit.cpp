@@ -17,7 +17,7 @@
 
 #include <SFML/Graphics.hpp>
 
-namespace castlecrawl
+namespace mapper
 {
 
     StateEdit::StateEdit(Context & context)
@@ -71,4 +71,4 @@ namespace castlecrawl
         target.draw(m_fps, states);
     }
 
-} // namespace castlecrawl
+} // namespace mapper

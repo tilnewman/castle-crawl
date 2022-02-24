@@ -9,7 +9,7 @@
 #include "check-macros.hpp"
 #include "settings.hpp"
 
-namespace castlecrawl
+namespace mapper
 {
 
     // void Context::switchToMap(const MapLink & link)
@@ -27,4 +27,4 @@ namespace castlecrawl
     //    board.player.reset(*this, link.to_pos);
     //}
 
-} // namespace castlecrawl
+} // namespace mapper

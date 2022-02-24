@@ -8,7 +8,7 @@
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/System/Clock.hpp>
 
-namespace castlecrawl
+namespace mapper
 {
 
     class FramesPerSecond : public sf::Drawable
@@ -26,6 +26,6 @@ namespace castlecrawl
         sf::Text m_text;
     };
 
-} // namespace castlecrawl
+} // namespace mapper
 
 #endif // CASTLECRAWLMAPPER_FRAMESPERSECOND_HPP_INCLUDED

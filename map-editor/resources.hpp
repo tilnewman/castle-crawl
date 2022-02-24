@@ -22,7 +22,7 @@ namespace util
 
 //
 
-namespace castlecrawl
+namespace mapper
 {
     struct GameConfig;
     class Layout;
@@ -62,6 +62,6 @@ namespace castlecrawl
         static inline sf::Sprite m_defaultSprite;
     };
 
-} // namespace castlecrawl
+} // namespace mapper
 
 #endif // #define CASTLECRAWLMAPPER_RESOURCES_HPP_INCLUDED

@@ -11,7 +11,7 @@
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Window/Event.hpp>
 
-namespace castlecrawl
+namespace mapper
 {
     struct Context;
 
@@ -36,6 +36,6 @@ namespace castlecrawl
         sf::Keyboard::Key key;
     };
 
-} // namespace castlecrawl
+} // namespace mapper
 
 #endif // CASTLECRAWLMAPPER_POPUPMANAGER_HPP_INCLUDED

@@ -5,7 +5,7 @@
 //
 #include "pieces.hpp"
 
-namespace castlecrawl
+namespace mapper
 {
 
     class PlayerPiece : public PieceBase
@@ -16,6 +16,6 @@ namespace castlecrawl
         void handleArrowKey(Context &, const sf::Keyboard::Key arrowKey);
     };
 
-} // namespace castlecrawl
+} // namespace mapper
 
 #endif // CASTLECRAWLMAPPER_PLAYER_HPP_INCLUDED

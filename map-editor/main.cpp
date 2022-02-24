@@ -11,7 +11,7 @@
 int main(const int argc, const char * const argv[])
 {
 
-    using namespace castlecrawl;
+    using namespace mapper;
 
     try
     {
