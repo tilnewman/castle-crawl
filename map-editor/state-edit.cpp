@@ -123,7 +123,11 @@ namespace mapper
 
         if (sf::Keyboard::S == event.key.code)
         {
-            if (event.key.shift)
+            if (event.key.control)
+            {
+                context.editor.save(context);
+            }
+            else if (event.key.shift)
             {
                 context.editor.setCell(context, 'S');
             }
@@ -138,11 +142,6 @@ namespace mapper
             context.editor.setFloorIsStone(context, !context.editor.getFloorIsStone());
         }
 
-        if (sf::Keyboard::F2 == event.key.code)
-        {
-            context.editor.save(context);
-        }
-
         if (sf::Keyboard::F1 == event.key.code)
         {
             // clang-format off
@@ -150,7 +149,7 @@ namespace mapper
                 "----------------------------------\n"
                 "  Escape    - Quit the map editor.\n"
                 "  F1        - See this help text.\n"
-                "  F2        - Save the map.\n"
+                "  CNTRL-S   - Save the map.\n"
                 "  Spacebar  - Bare Floor\n"
                 "  Delete    - Clear Cell\n"
                 "  Period    - (same as Delete)\n"
