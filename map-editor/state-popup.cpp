@@ -22,7 +22,6 @@ namespace mapper
     {
         if (sf::Event::KeyPressed == event.type)
         {
-            context.popup.key = event.key.code;
             context.state.setChangePending(State::Edit);
             return;
         }

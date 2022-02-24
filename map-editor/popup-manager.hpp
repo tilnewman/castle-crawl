@@ -33,7 +33,6 @@ namespace mapper
         sf::Text text;
         sf::RectangleShape background_rectangle;
         sf::RectangleShape fade_rectangle;
-        sf::Keyboard::Key key;
     };
 
 } // namespace mapper

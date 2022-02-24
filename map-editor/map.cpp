@@ -337,7 +337,6 @@ namespace mapper
         const sf::Vector2f boardPos{ util::position(context.layout.boardBounds()) };
 
         const float overlapDimm{ mapCellDimm * 0.25f };
-        const sf::Vector2f overlap{ overlapDimm, overlapDimm };
 
         sf::Vector2f pos{ boardPos };
 

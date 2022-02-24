@@ -33,8 +33,6 @@ namespace mapper
             sf::Vector2f{ context.layout.windowSize().x, context.layout.windowSize().y * 0.2f });
 
         util::centerInside(context.popup.text, background_rectangle.getGlobalBounds());
-
-        key = sf::Keyboard::Unknown;
     }
 
     void PopupManager::draw(sf::RenderTarget & target, sf::RenderStates states) const
