@@ -48,4 +48,12 @@ namespace mapper
             target, context.layout.cellBounds(m_position), true, sf::Color(0, 255, 255, 32));
     }
 
+    void Editor::set(Context & context, const char ch)
+    {
+        m_mapStrings.at(m_position.y).at(m_position.x) = ch;
+        m_map = Map(context, true, m_mapStrings, {});
+        context.layout.setupBoardForNewMap(m_map.size());
+        m_map.load(context);
+    }
+
 } // namespace mapper

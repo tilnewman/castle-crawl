@@ -26,6 +26,8 @@ namespace mapper
         void draw(
             const Context & context, sf::RenderTarget & target, sf::RenderStates & states) const;
 
+        void set(Context & context, const char ch);
+
         const MapPos_t position() const { return m_position; }
         void movePosition(const MapPos_t & amount) { m_position += amount; }
 

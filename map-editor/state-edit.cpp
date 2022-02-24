@@ -65,28 +65,49 @@ namespace mapper
             {
                 context.editor.movePosition({ 0, -1 });
             }
+
+            return;
         }
-        else if (sf::Keyboard::Down == event.key.code)
+
+        if (sf::Keyboard::Down == event.key.code)
         {
             if (context.editor.position().y < (context.layout.cellCountsMax().y - 1))
             {
                 context.editor.movePosition({ 0, 1 });
             }
+
+            return;
         }
-        else if (sf::Keyboard::Left == event.key.code)
+
+        if (sf::Keyboard::Left == event.key.code)
         {
             if (context.editor.position().x > 0)
             {
                 context.editor.movePosition({ -1, 0 });
             }
+
+            return;
         }
-        else if (sf::Keyboard::Right == event.key.code)
+
+        if (sf::Keyboard::Right == event.key.code)
         {
             if (context.editor.position().x < (context.layout.cellCountsMax().x - 1))
             {
                 context.editor.movePosition({ 1, 0 });
             }
+
+            return;
         }
+
+        // clang-format off
+        if      (sf::Keyboard::Space == event.key.code) context.editor.set(context, ' ');
+        else if (sf::Keyboard::Period == event.key.code)context.editor.set(context, '.');
+        else if (sf::Keyboard::L == event.key.code)     context.editor.set(context, 'l');
+        else if (sf::Keyboard::B == event.key.code)     context.editor.set(context, 'b');
+        else if (sf::Keyboard::D == event.key.code)     context.editor.set(context, 'd');
+        else if (sf::Keyboard::W == event.key.code)     context.editor.set(context, 'w');
+        else if (sf::Keyboard::C == event.key.code)     context.editor.set(context, 'c');
+        // clang-format on
 
         context.board.player.handleEvent(context, event);
     }
@@ -96,7 +117,7 @@ namespace mapper
     {
         target.clear(context.config.background_color);
         context.editor.draw(context, target, states);
-        // target.draw(context.board, states);
+        target.draw(context.board, states);
         // target.draw(m_windowOutline, states);
         target.draw(m_fps, states);
     }
