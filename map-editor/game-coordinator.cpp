@@ -11,8 +11,6 @@
 #include <algorithm>
 #include <filesystem>
 #include <iostream>
-#include <memory>
-#include <sstream>
 
 #include <SFML/Graphics.hpp>
 
@@ -28,21 +26,13 @@ namespace mapper
         , m_map()
         , m_config()
         , m_state()
-        , m_popupManager()
+        , m_popup()
         , m_random()
         , m_context(
-              m_board,
-              m_map,
-              m_editor,
-              m_config,
-              m_layout,
-              m_media,
-              m_state,
-              m_popupManager,
-              m_random)
+              m_board, m_map, m_editor, m_config, m_layout, m_media, m_state, m_popup, m_random)
     {}
 
-    void GameCoordinator::setup(const GameConfig & configOrig)
+    bool GameCoordinator::setup(const GameConfig & configOrig)
     {
         m_config = configOrig;
         M_CHECK(std::filesystem::exists(m_config.media_dir_path), m_config.media_dir_path);
@@ -73,9 +63,24 @@ namespace mapper
 
         m_editor.setup(m_context);
 
-        m_state.setChangePending(State::Edit);
+        // establish which file we will be creating
+        const auto path = m_editor.getFirstAvailableFilePath();
+        m_editor.setFilename(path.filename().string());
+        if (!m_editor.canFileBeSaved())
+        {
+            std::cout << "Error:  Unable open/write/save/whatever the file: \"" << path.string()
+                      << "\"\nThere is probably a strange unicode character in the path or a "
+                         "permissions problem.  Try running this editor in a different location."
+                      << std::endl;
+
+            return false;
+        }
+
+        m_popup.setup(m_context, path.string());
+        m_state.setChangePending(State::Popup);
 
         std::cout << "Press F1 for help, Escape to quit." << std::endl;
+        return true;
     }
 
     void GameCoordinator::openWindow()
@@ -107,7 +112,10 @@ namespace mapper
 
     void GameCoordinator::run(const GameConfig & config)
     {
-        setup(config);
+        if (!setup(config))
+        {
+            return;
+        }
 
         sf::Clock frameClock;
         while (m_window.isOpen() && (m_state.which() != State::Teardown))

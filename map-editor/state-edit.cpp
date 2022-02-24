@@ -97,24 +97,28 @@ namespace mapper
         }
 
         // clang-format off
-        if      (sf::Keyboard::Space == event.key.code) context.editor.set(context, ' ');
-        else if (sf::Keyboard::Period == event.key.code)context.editor.set(context, '.');
-        else if (sf::Keyboard::Delete == event.key.code)context.editor.set(context, '.');
-        else if (sf::Keyboard::L == event.key.code)     context.editor.set(context, 'l');
-        else if (sf::Keyboard::B == event.key.code)     context.editor.set(context, 'b');
-        else if (sf::Keyboard::W == event.key.code)     context.editor.set(context, 'w');
-        else if (sf::Keyboard::C == event.key.code)     context.editor.set(context, 'c');
+        if      (sf::Keyboard::Space == event.key.code) context.editor.setCell(context, ' ');
+        else if (sf::Keyboard::L == event.key.code)     context.editor.setCell(context, 'l');
+        else if (sf::Keyboard::B == event.key.code)     context.editor.setCell(context, 'b');
+        else if (sf::Keyboard::W == event.key.code)     context.editor.setCell(context, 'w');
+        else if (sf::Keyboard::C == event.key.code)     context.editor.setCell(context, 'c');
         // clang-format on
+
+        if ((sf::Keyboard::Period == event.key.code) || (sf::Keyboard::Delete == event.key.code) ||
+            (sf::Keyboard::BackSpace == event.key.code))
+        {
+            context.editor.setCell(context, '.');
+        }
 
         if (sf::Keyboard::D == event.key.code)
         {
             if (event.key.shift)
             {
-                context.editor.set(context, 'D');
+                context.editor.setCell(context, 'D');
             }
             else
             {
-                context.editor.set(context, 'd');
+                context.editor.setCell(context, 'd');
             }
         }
 
@@ -122,17 +126,22 @@ namespace mapper
         {
             if (event.key.shift)
             {
-                context.editor.set(context, 'S');
+                context.editor.setCell(context, 'S');
             }
             else
             {
-                context.editor.set(context, 's');
+                context.editor.setCell(context, 's');
             }
         }
 
         if (sf::Keyboard::Num1 == event.key.code)
         {
             context.editor.setFloorIsStone(context, !context.editor.getFloorIsStone());
+        }
+
+        if (sf::Keyboard::F2 == event.key.code)
+        {
+            context.editor.save(context);
         }
 
         if (sf::Keyboard::F1 == event.key.code)
@@ -144,8 +153,8 @@ namespace mapper
                 "  F1        - See this help text.\n"
                 "  F2        - Save the map.\n"
                 "  Spacebar  - Bare Floor\n"
-                "  Period    - Remove Everything\n"
-                "  Delete    - (same as Period)\n"
+                "  Delete    - Clear Cell\n"
+                "  Period    - (same as Delete)\n"
                 "  L         - Lava\n"
                 "  W         - Water\n"
                 "  d         - Door\n"
@@ -154,6 +163,7 @@ namespace mapper
                 "  S         - Stairway Up\n"
                 "  b         - Barrel\n"
                 "  c         - Coffin\n"
+                "  CNTRL-R   - ERASE EVERYTHING!\n"
                 "----------------------------------\n"
                 << std::endl;
             // clang-format on

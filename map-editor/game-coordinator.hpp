@@ -33,7 +33,7 @@ namespace mapper
         void run(const GameConfig & config);
 
       protected:
-        void setup(const GameConfig & config);
+        bool setup(const GameConfig & config);
         void openWindow();
         void handleEvents();
         void update(const float elapsedTimeSec);
@@ -50,7 +50,7 @@ namespace mapper
         MapTracker m_map;
         GameConfig m_config;
         StateMachine m_state;
-        PopupManager m_popupManager;
+        PopupManager m_popup;
         util::Random m_random;
 
         Context m_context;

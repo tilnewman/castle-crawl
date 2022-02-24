@@ -6,6 +6,9 @@
 #include "map-types.hpp"
 #include "map.hpp"
 
+#include <filesystem>
+#include <string>
+
 #include <SFML/Graphics/RenderStates.hpp>
 
 namespace sf
@@ -27,13 +30,21 @@ namespace mapper
         void draw(
             const Context & context, sf::RenderTarget & target, sf::RenderStates & states) const;
 
-        void set(Context & context, const char ch);
+        void setCell(Context & context, const char ch);
+
+        void setFilename(const std::string & filename) { m_filename = filename; }
+        const std::string getFilename() const { return m_filename; }
 
         void setFloorIsStone(Context & context, const bool isStone);
         bool getFloorIsStone() const { return m_isFloorStone; }
 
         const MapPos_t position() const { return m_position; }
         void movePosition(const MapPos_t & amount) { m_position += amount; }
+
+        const std::filesystem::path getFirstAvailableFilePath() const;
+
+        bool canFileBeSaved();
+        void save(Context & context);
 
       private:
         void updateAndRedraw(Context & context);
@@ -44,6 +55,7 @@ namespace mapper
         MapChars_t m_mapStrings;
         Map m_map;
         bool m_isFloorStone;
+        std::string m_filename;
     };
 } // namespace mapper
 

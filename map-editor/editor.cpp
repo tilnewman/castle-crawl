@@ -7,8 +7,12 @@
 
 #include "check-macros.hpp"
 #include "context.hpp"
+#include "popup-manager.hpp"
 #include "settings.hpp"
+#include "state-machine.hpp"
 #include "util.hpp"
+
+#include <fstream>
 
 #include <SFML/Graphics/RenderTarget.hpp>
 
@@ -21,6 +25,7 @@ namespace mapper
         , m_mapStrings()
         , m_map()
         , m_isFloorStone(false)
+        , m_filename()
     {}
 
     void Editor::setup(Context & context)
@@ -32,6 +37,9 @@ namespace mapper
         {
             m_defaultMapStrings.push_back(row);
         }
+
+        // center cursor
+        m_position = context.layout.cellCountsMax() / 2;
 
         reset(context);
     }
@@ -59,7 +67,7 @@ namespace mapper
         updateAndRedraw(context);
     }
 
-    void Editor::set(Context & context, const char ch)
+    void Editor::setCell(Context & context, const char ch)
     {
         m_mapStrings.at(m_position.y).at(m_position.x) = ch;
         updateAndRedraw(context);
@@ -70,6 +78,75 @@ namespace mapper
         m_map = Map(context, m_isFloorStone, m_mapStrings, {});
         context.layout.setupBoardForNewMap(m_map.size());
         m_map.load(context);
+    }
+
+    const std::filesystem::path Editor::getFirstAvailableFilePath() const
+    {
+        int number = 0;
+        std::filesystem::path path;
+        std::string filename;
+
+        do
+        {
+            ++number;
+
+            filename = "map-";
+            filename += std::to_string(number);
+            filename += ".txt";
+
+            path = (std::filesystem::current_path() / filename);
+        } while (std::filesystem::exists(path));
+
+        return path;
+    }
+
+    bool Editor::canFileBeSaved()
+    {
+        if (m_filename.empty())
+        {
+            return false;
+        }
+
+        try
+        {
+            const auto path = (std::filesystem::current_path() / m_filename);
+
+            std::ofstream stream(path, std::ios_base::out);
+
+            if (!stream.is_open() || !stream.good())
+            {
+                return false;
+            }
+        }
+        catch (...)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    void Editor::save(Context & context)
+    {
+        const auto path = (std::filesystem::current_path() / m_filename);
+
+        {
+            std::ofstream stream(path, std::ios_base::trunc);
+
+            if (!stream.is_open() || !stream.good())
+            {
+                std::cout << "Error:  Can't open file: \"" << path.string() << '\"' << std::endl;
+                return;
+            }
+
+            for (const std::string & row : m_mapStrings)
+            {
+                stream << row << '\n';
+            }
+        }
+
+        context.popup.setup(context, "Saved: " + path.string());
+        context.state.setChangePending(State::Popup);
     }
 
 } // namespace mapper
