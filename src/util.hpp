@@ -105,7 +105,7 @@ namespace util
 
     // this lib is for simple/innaccurate/game/etc apps, so a simple multiple of epsilon works
     template <typename T>
-    constexpr T float_compare_epsilon = (std::numeric_limits<T>::epsilon() * T(100));
+    constexpr T float_compare_epsilon = (std::numeric_limits<T>::epsilon() * T(10));
 
     //
     // isRealClose()
@@ -191,11 +191,9 @@ namespace util
         return static_cast<Ratio_t>((number - inMin) / (inMax - inMin));
     }
 
-    template<typename T = float>
-    inline constexpr sf::Uint8 mapRatioToColorValue(const T ratio)
+    inline constexpr sf::Uint8 mapRatioToColorValue(const float ratio)
     {
-        static_assert(std::is_floating_point_v<T>);
-        return map(std::clamp(ratio, T(0), T(1)), T(0), T(1), sf::Uint8(0), sf::Uint8(255));
+        return map(std::clamp(ratio, 0.0f, 1.0f), 0.0f, 1.0f, sf::Uint8(0), sf::Uint8(255));
     }
 
     constexpr std::size_t verts_per_quad{ 4 };
@@ -382,7 +380,7 @@ namespace sf
 
         if (!vm.isValid())
         {
-            os << " [invalid]";
+            os << "(sfml says this mode is invalid)";
         }
 
         os << ")";
@@ -432,7 +430,11 @@ namespace util
             ++count;
         }
 
-        ss << separator << "(total=" << count << ", supported=" << modeCountOrig << ")";
+        const std::size_t modeCountReturned{ count };
+
+        ss << separator << "(total_supported=" << modeCountOrig << ")";
+        ss << separator << "(total_listed=" << modeCountReturned << ")";
+
         return ss.str();
     }
 
@@ -641,14 +643,12 @@ namespace util
         return center(thing.getLocalBounds());
     }
 
-    // origin is always in local coords
     template <typename T>
     void setOriginToCenter(T & thing)
     {
         thing.setOrigin(centerLocal(thing));
     }
 
-    // origin is always in local coords
     // sf::Text needs correction after changing the: string, scale, or characterSize
     template <typename T>
     void setOriginToPosition(T & thing)
@@ -682,6 +682,36 @@ namespace util
         makeEven(copy, willAdd);
         return copy;
     }
+
+    // template <typename Output_t, typename Input_t>
+    // Output_t makeMultOf(const Input_t startingNumber, const Output_t mult, const bool willAdd)
+    //{
+    //    static_assert(std::is_integral_v<Output_t>);
+    //
+    //    Output_t result{ static_cast<Output_t>(startingNumber) };
+    //
+    //    while ((result % mult) != 0)
+    //    {
+    //        if (willAdd)
+    //        {
+    //            ++result;
+    //        }
+    //        else
+    //        {
+    //            if (result > 2)
+    //            {
+    //                --result;
+    //            }
+    //            else
+    //            {
+    //                result = 2;
+    //                break;
+    //            }
+    //        }
+    //    }
+    //
+    //    return result;
+    //};
 
     template <typename Output_t, typename Input_t>
     sf::Vector2<Output_t>
@@ -881,6 +911,12 @@ namespace util
     void fit(T & thing, const sf::FloatRect & rect)
     {
         fit(thing, { rect.width, rect.height });
+    }
+
+    template <typename T>
+    void fit(T & thing, const float newScale)
+    {
+        fit(thing, { newScale, newScale });
     }
 
     template <typename T>
@@ -1375,6 +1411,41 @@ namespace util
 
         return ss.str();
     }
+
+    inline const sf::VideoMode findVideoModeClosestTo(const sf::VideoMode & targetMode)
+    {
+        std::vector<sf::VideoMode> videoModes = sf::VideoMode::getFullscreenModes();
+
+        videoModes.erase(
+            std::remove_if(
+                std::begin(videoModes),
+                std::end(videoModes),
+                [&](const auto & vm) { return (vm.bitsPerPixel != targetMode.bitsPerPixel); }),
+            std::end(videoModes));
+
+        if (videoModes.empty())
+        {
+            return sf::VideoMode::getDesktopMode();
+        }
+
+        std::sort(
+            std::begin(videoModes),
+            std::end(videoModes),
+            [&](const sf::VideoMode A, const sf::VideoMode B) {
+                const unsigned int diffA{ (
+                    util::abs(A.width - targetMode.width) +
+                    util::abs(A.height - targetMode.height)) };
+
+                const unsigned int diffB{ (
+                    util::abs(B.width - targetMode.width) +
+                    util::abs(B.height - targetMode.height)) };
+
+                return (diffA < diffB);
+            });
+
+        return *videoModes.begin();
+    }
+
 } // namespace util
 
 #endif // SNAKE_UTIL_HPP_INCLUDED
