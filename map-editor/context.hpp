@@ -16,7 +16,6 @@ namespace mapper
     class Media;
     class Layout;
     class Editor;
-    class GameInPlay;
     class MapTracker;
     class StateMachine;
 
@@ -29,7 +28,6 @@ namespace mapper
     struct Context
     {
         Context(
-            GameInPlay & gam,
             Board & bor,
             MapTracker & mtr,
             Editor & edi,
@@ -39,8 +37,7 @@ namespace mapper
             StateMachine & sta,
             PopupManager & pop,
             const util::Random & ran)
-            : game(gam)
-            , board(bor)
+            : board(bor)
             , map(mtr)
             , editor(edi)
             , config(con)
@@ -49,7 +46,6 @@ namespace mapper
             , state(sta)
             , popup(pop)
             , random(ran)
-            , map_name()
         {}
 
         Context(const Context &) = delete;
@@ -59,7 +55,6 @@ namespace mapper
         Context & operator=(Context &&) = delete;
 
         // subsystem references
-        GameInPlay & game;
         Board & board;
         MapTracker & map;
         Editor & editor;
@@ -69,8 +64,6 @@ namespace mapper
         StateMachine & state;
         PopupManager & popup;
         const util::Random & random;
-
-        std::string map_name;
     };
 } // namespace mapper
 

@@ -33,7 +33,7 @@ namespace mapper
         void run(const GameConfig & config);
 
       protected:
-        void initializeSubsystems(const GameConfig & config);
+        void setup(const GameConfig & config);
         void openWindow();
         void handleEvents();
         void update(const float elapsedTimeSec);
@@ -41,15 +41,15 @@ namespace mapper
 
       protected:
         sf::RenderWindow m_window;
+        sf::RenderStates m_renderStates;
 
         Media m_media;
         Board m_board;
         Layout m_layout;
         Editor m_editor;
         MapTracker m_map;
-        GameInPlay m_game;
         GameConfig m_config;
-        StateMachine m_stateMachine;
+        StateMachine m_state;
         PopupManager m_popupManager;
         util::Random m_random;
 

@@ -5,21 +5,11 @@
 //
 #include "states.hpp"
 
-#include "context.hpp"
-#include "settings.hpp"
-#include "state-machine.hpp"
-
-#include <iostream>
-
-#include <SFML/Graphics.hpp>
-
 namespace mapper
 {
 
     StateBase::StateBase(const State state)
         : m_state(state)
     {}
-
-    void StateTeardown::onEnter(Context & context) { context.game.endGame(false); }
 
 } // namespace mapper

@@ -38,7 +38,6 @@ namespace mapper
 
     using IStateUPtr_t = std::unique_ptr<IState>;
 
-    //
     class StateBase : public IState
     {
       protected:
@@ -66,7 +65,6 @@ namespace mapper
         State m_state;
     };
 
-    //
     class StateSetup : public StateBase
     {
       public:
@@ -75,15 +73,12 @@ namespace mapper
         {}
     };
 
-    //
     class StateTeardown : public StateBase
     {
       public:
         StateTeardown(Context &)
             : StateBase(State::Teardown)
         {}
-
-        void onEnter(Context & context) override;
     };
 
 } // namespace mapper

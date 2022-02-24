@@ -26,7 +26,7 @@ namespace mapper
 
     sf::Vector2f Layout::windowSize() const { return util::size(m_windowBounds); }
 
-    void Layout::setupWindow(const GameConfig & config)
+    void Layout::setupWindowInitial(const GameConfig & config)
     {
         const sf::Vector2f windowSize{ sf::Vector2u{ config.video_mode.width,
                                                      config.video_mode.height } };
@@ -39,7 +39,7 @@ namespace mapper
         m_cellSize.y = cellDimm;
     }
 
-    void Layout::setupBoard(const sf::Vector2i & mapSize)
+    void Layout::setupBoardForNewMap(const sf::Vector2i & mapSize)
     {
         m_cellCounts = mapSize;
 
@@ -70,37 +70,4 @@ namespace mapper
         return bounds;
     }
 
-    // BoardPosOpt_t Layout::windowPosToBoardPos(const sf::Vector2f windowPos) const
-    //{
-    //    for (const BoardPos_t & boardPos : m_allValidPositions)
-    //    {
-    //        if (cellBounds(boardPos).contains(windowPos))
-    //        {
-    //            return boardPos;
-    //        }
-    //    }
-    //
-    //    return std::nullopt;
-    //}
-
-    //
-
-    void GameInPlay::reset()
-    {
-        m_score = 0;
-        m_isGameOver = false;
-        m_didPlayerWin = false;
-    }
-
-    int GameInPlay::scoreAdj(const int adj)
-    {
-        m_score += adj;
-
-        if (m_score < 0)
-        {
-            m_score = 0;
-        }
-
-        return m_score;
-    }
 } // namespace mapper

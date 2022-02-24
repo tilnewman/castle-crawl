@@ -20,43 +20,60 @@ namespace mapper
 {
     GameCoordinator::GameCoordinator()
         : m_window()
+        , m_renderStates()
         , m_media()
         , m_board()
         , m_layout()
         , m_editor()
         , m_map()
-        , m_game()
         , m_config()
-        , m_stateMachine()
+        , m_state()
         , m_popupManager()
         , m_random()
         , m_context(
-              m_game,
               m_board,
               m_map,
               m_editor,
               m_config,
               m_layout,
               m_media,
-              m_stateMachine,
+              m_state,
               m_popupManager,
               m_random)
     {}
 
-    void GameCoordinator::initializeSubsystems(const GameConfig & config)
+    void GameCoordinator::setup(const GameConfig & configOrig)
     {
-        m_game.reset();
-
-        m_config = config;
+        m_config = configOrig;
         M_CHECK(std::filesystem::exists(m_config.media_dir_path), m_config.media_dir_path);
         M_CHECK(std::filesystem::is_directory(m_config.media_dir_path), m_config.media_dir_path);
 
-        // this can change m_config and m_layout so call this right after m_config is set
         openWindow();
+
+        m_config.video_mode.width = m_window.getSize().x;
+        m_config.video_mode.height = m_window.getSize().y;
+        m_config.video_mode.bitsPerPixel = m_window.getSettings().depthBits;
+
+        // sometimes SFML reports 32bpp as zero for some reason...meh
+        if (0 == m_config.video_mode.bitsPerPixel)
+        {
+            m_config.video_mode.bitsPerPixel = 32;
+        }
+
+        m_layout.setupWindowInitial(m_config);
+
+        std::cout << "Game Window Cells: width_ratio=" << m_config.map_cell_size_ratio
+                  << ", pixels=" << m_layout.mapCellDimm()
+                  << ", grid=" << (m_layout.windowSize() / m_layout.mapCellSize()) << std::endl;
+
+        m_window.setFramerateLimit(m_config.frame_rate_limit);
+        m_window.setKeyRepeatEnabled(false);
 
         m_media.load(m_config, m_layout);
 
-        m_stateMachine.setChangePending(State::Edit);
+        m_editor.setup(m_context);
+
+        m_state.setChangePending(State::Edit);
     }
 
     void GameCoordinator::openWindow()
@@ -66,9 +83,6 @@ namespace mapper
         const auto style{ (m_config.is_fullscreen) ? sf::Style::Fullscreen : sf::Style::Default };
 
         m_window.create(m_config.video_mode, m_config.game_name, style);
-
-        m_window.setFramerateLimit(m_config.frame_rate_limit);
-        m_window.setKeyRepeatEnabled(false);
 
         // verify the window size is what was specified/expected,
         // otherwise all the size/positions calculations will be wrong
@@ -91,58 +105,48 @@ namespace mapper
                       << ", but strangely, a window did open at " << windowActualSize
                       << ".  So...meh." << std::endl;
         }
-
-        m_config.video_mode.width = windowActualSize.x;
-        m_config.video_mode.height = windowActualSize.y;
-        m_config.video_mode.bitsPerPixel = m_window.getSettings().depthBits;
-
-        m_layout.setupWindow(m_config);
-
-        std::cout << "Game Window Cells: width_ratio=" << m_config.map_cell_size_ratio
-                  << ", pixels=" << m_layout.mapCellDimm()
-                  << ", grid=" << (m_layout.windowSize() / m_layout.mapCellSize()) << std::endl;
     }
 
     void GameCoordinator::run(const GameConfig & config)
     {
-        initializeSubsystems(config);
+        setup(config);
 
         sf::Clock frameClock;
-        while (m_window.isOpen() && !m_game.isGameOver())
+        while (m_window.isOpen() && (m_state.which() != State::Teardown))
         {
             handleEvents();
             update(frameClock.restart().asSeconds());
             draw();
-            m_stateMachine.changeIfPending(m_context);
+            m_state.changeIfPending(m_context);
         }
     }
 
     void GameCoordinator::handleEvents()
     {
         sf::Event event;
-        while (m_window.isOpen() && !m_game.isGameOver() && m_window.pollEvent(event))
+        while (m_window.pollEvent(event))
         {
             if (sf::Event::Closed == event.type)
             {
-                std::cout << "Player closed the window.  Quitting." << std::endl;
+                std::cout << "User closed the window.  Quitting." << std::endl;
                 m_window.close();
-                m_stateMachine.setChangePending(State::Teardown);
+                m_state.setChangePending(State::Teardown);
                 return;
             }
 
-            m_stateMachine.state().handleEvent(m_context, event);
+            m_state.state().handleEvent(m_context, event);
         }
     }
 
     void GameCoordinator::update(const float frameTimeSec)
     {
-        m_stateMachine.state().update(m_context, frameTimeSec);
+        m_state.state().update(m_context, frameTimeSec);
     }
 
     void GameCoordinator::draw()
     {
         m_window.clear();
-        m_stateMachine.state().draw(m_context, m_window, sf::RenderStates());
+        m_state.state().draw(m_context, m_window, m_renderStates);
         m_window.display();
     }
 

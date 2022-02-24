@@ -7,6 +7,7 @@
 
 #include "board.hpp"
 #include "context.hpp"
+#include "editor.hpp"
 #include "map.hpp"
 #include "popup-manager.hpp"
 #include "resources.hpp"
@@ -58,6 +59,35 @@ namespace mapper
             return;
         }
 
+        if (sf::Keyboard::Up == event.key.code)
+        {
+            if (context.editor.position().y > 0)
+            {
+                context.editor.movePosition({ 0, -1 });
+            }
+        }
+        else if (sf::Keyboard::Down == event.key.code)
+        {
+            if (context.editor.position().y < (context.layout.cellCountsMax().y - 1))
+            {
+                context.editor.movePosition({ 0, 1 });
+            }
+        }
+        else if (sf::Keyboard::Left == event.key.code)
+        {
+            if (context.editor.position().x > 0)
+            {
+                context.editor.movePosition({ -1, 0 });
+            }
+        }
+        else if (sf::Keyboard::Right == event.key.code)
+        {
+            if (context.editor.position().x < (context.layout.cellCountsMax().x - 1))
+            {
+                context.editor.movePosition({ 1, 0 });
+            }
+        }
+
         context.board.player.handleEvent(context, event);
     }
 
@@ -65,9 +95,9 @@ namespace mapper
         const Context & context, sf::RenderTarget & target, sf::RenderStates states) const
     {
         target.clear(context.config.background_color);
-        // context.map().draw(context, target, states);
-        target.draw(context.board, states);
-        target.draw(m_windowOutline, states);
+        context.editor.draw(context, target, states);
+        // target.draw(context.board, states);
+        // target.draw(m_windowOutline, states);
         target.draw(m_fps, states);
     }
 
