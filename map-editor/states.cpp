@@ -20,6 +20,6 @@ namespace castlecrawl
         : m_state(state)
     {}
 
-    void StateQuit::onEnter(Context & context) { context.game.endGame(false); }
+    void StateTeardown::onEnter(Context & context) { context.game.endGame(false); }
 
 } // namespace castlecrawl

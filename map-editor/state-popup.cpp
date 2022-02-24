@@ -15,7 +15,7 @@ namespace castlecrawl
 {
 
     StatePopup::StatePopup(Context & context)
-        : StatePlay(context)
+        : StateEdit(context)
     {}
 
     void StatePopup::handleEvent(Context & context, const sf::Event & event)
@@ -23,7 +23,7 @@ namespace castlecrawl
         if (sf::Event::KeyPressed == event.type)
         {
             context.popup.key = event.key.code;
-            context.state.setChangePending(State::Play);
+            context.state.setChangePending(State::Edit);
             return;
         }
     }
@@ -31,7 +31,7 @@ namespace castlecrawl
     void StatePopup::draw(
         const Context & context, sf::RenderTarget & target, sf::RenderStates states) const
     {
-        StatePlay::draw(context, target, states);
+        StateEdit::draw(context, target, states);
         target.draw(context.popup);
     }
 

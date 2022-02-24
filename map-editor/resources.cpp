@@ -5,6 +5,7 @@
 //
 #include "resources.hpp"
 
+#include "../src/util.hpp"
 #include "context.hpp"
 #include "settings.hpp"
 
@@ -17,13 +18,12 @@
 
 namespace castlecrawl
 {
-    void Media::load(const GameConfig & config, const Layout & layout, util::SoundPlayer & audio)
+    void Media::load(const GameConfig & config, const Layout & layout)
     {
         makeDefaults();
         load((config.media_dir_path / "font/gentium-plus/gentium-plus.ttf"), m_font);
 
         loadTileSprites(config, layout);
-        loadSoundEffects(audio);
     }
 
     void Media::loadTileSprites(const GameConfig & config, const Layout & layout)
@@ -57,10 +57,11 @@ namespace castlecrawl
         m_tileSprites.at(static_cast<std::size_t>(TileImage::Empty)) = m_defaultSprite;
     }
 
-    void Media::loadSoundEffects(util::SoundPlayer & audio)
+    void Media::loadSoundEffects(util::SoundPlayer &)
     {
-        M_CHECK(audio.load(
-            { "tap-wood-low.ogg", "locked.ogg", "door-open.ogg", "tick-on-2.ogg", "stairs.ogg" }));
+        // M_CHECK(audio.load(
+        //    { "tap-wood-low.ogg", "locked.ogg", "door-open.ogg", "tick-on-2.ogg", "stairs.ogg"
+        //    }));
     }
 
     const sf::Font & Media::font() const { return m_font; }
@@ -86,18 +87,4 @@ namespace castlecrawl
         m_defaultSprite.setTexture(m_defaultTexture, true);
     }
 
-    // void loadImages()
-    // {
-    //     for (std::size_t i(0); i < TileImage::Count; ++i)
-    //     {
-    //         const Piece piece = static_cast<Piece>(i);
-    //         m_textures.push_back(std::make_unique<sf::Texture>());
-    //         load(imagePath(piece), *m_textures.back());
-    //     }
-    // }
-
-    // void loadFonts()
-    //{
-    //    load((m_mediaPath / "font/gentium-plus/gentium-plus.ttf"), m_font);
-    //}
 } // namespace castlecrawl

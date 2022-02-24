@@ -6,9 +6,8 @@
 #include "state-machine.hpp"
 
 #include "context.hpp"
-#include "state-play.hpp"
+#include "state-edit.hpp"
 #include "state-popup.hpp"
-#include "state-splash.hpp"
 
 #include <iostream>
 
@@ -16,12 +15,9 @@ namespace castlecrawl
 {
 
     StateMachine::StateMachine()
-        : m_stateUPtr()
-        , m_changePendingOpt(State::Init)
-    {
-        m_stateUPtr = std::make_unique<StateInit>();
-        m_changePendingOpt = m_stateUPtr->state();
-    }
+        : m_stateUPtr(std::make_unique<StateSetup>())
+        , m_changePendingOpt()
+    {}
 
     void StateMachine::changeIfPending(Context & context)
     {
@@ -32,8 +28,9 @@ namespace castlecrawl
 
         m_stateUPtr->onExit(context);
 
+        m_stateUPtr.reset();
         m_stateUPtr = makeState(context, m_changePendingOpt.value());
-        m_changePendingOpt = std::nullopt;
+        m_changePendingOpt.reset();
 
         m_stateUPtr->onEnter(context);
     }
@@ -43,17 +40,16 @@ namespace castlecrawl
         switch (state)
         {
             // clang-format off
-            case State::Init:   { return std::make_unique<StateInit>();         }
-            case State::Splash: { return std::make_unique<StateSplash>();       }
-            case State::Play:   { return std::make_unique<StatePlay>(context);  }
-            case State::Popup:  { return std::make_unique<StatePopup>(context); }
-            case State::Quit:   { return std::make_unique<StateQuit>(context);  }
+            case State::Setup:   { return std::make_unique<StateSetup>();           }
+            case State::Edit:    { return std::make_unique<StateEdit>(context);     }
+            case State::Popup:   { return std::make_unique<StatePopup>(context);    }
+            case State::Teardown:{ return std::make_unique<StateTeardown>(context); }
                 // clang-format on
             default: {
-                std::cerr << "ERROR:  StateMachine::makeState(\"" << state
-                          << "\") not handled in switch.  Bail." << std::endl;
+                std::cerr << "ERROR:  StateMachine::makeState(" << static_cast<int>(state)
+                          << ") not handled in switch.  Bail." << std::endl;
 
-                return std::make_unique<StateQuit>(context);
+                return std::make_unique<StateTeardown>(context);
             }
         };
     }

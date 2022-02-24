@@ -5,9 +5,9 @@
 //
 #include "popup-manager.hpp"
 
+#include "../src/util.hpp"
 #include "resources.hpp"
 #include "settings.hpp"
-#include "util.hpp"
 
 #include <SFML/Graphics.hpp>
 

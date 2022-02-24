@@ -5,7 +5,8 @@
 //
 #include "game-coordinator.hpp"
 
-#include "util.hpp"
+#include "../src/check-macros.hpp"
+#include "../src/util.hpp"
 
 #include <algorithm>
 #include <filesystem>
@@ -19,7 +20,6 @@ namespace castlecrawl
 {
     GameCoordinator::GameCoordinator()
         : m_window()
-        , m_maps()
         , m_media()
         , m_board()
         , m_layout()
@@ -28,20 +28,15 @@ namespace castlecrawl
         , m_stateMachine()
         , m_popupManager()
         , m_random()
-        , m_soundPlayer(m_random)
-        , m_animationPlayer(m_random)
         , m_context(
               m_game,
-              m_maps,
               m_board,
               m_config,
               m_layout,
               m_media,
               m_stateMachine,
               m_popupManager,
-              m_random,
-              m_soundPlayer,
-              m_animationPlayer)
+              m_random)
     {}
 
     void GameCoordinator::initializeSubsystems(const GameConfig & config)
@@ -49,25 +44,15 @@ namespace castlecrawl
         m_game.reset();
 
         m_config = config;
-        M_CHECK_SS(std::filesystem::exists(m_config.media_dir_path), m_config.media_dir_path);
-        M_CHECK_SS(std::filesystem::is_directory(m_config.media_dir_path), m_config.media_dir_path);
+        M_CHECK(std::filesystem::exists(m_config.media_dir_path), m_config.media_dir_path);
+        M_CHECK(std::filesystem::is_directory(m_config.media_dir_path), m_config.media_dir_path);
 
         // this can change m_config and m_layout so call this right after m_config is set
         openWindow();
 
-        m_soundPlayer.setMediaPath((m_config.media_dir_path / "sfx").string());
-        m_soundPlayer.volume(75.0f);
+        m_media.load(m_config, m_layout);
 
-        m_animationPlayer.setMediaPath((m_config.media_dir_path / "anim").string());
-
-        m_media.load(m_config, m_layout, m_soundPlayer);
-
-        // depends only on m_random only so passing context here is safe TODO
-        m_maps.load(m_context);
-
-        m_context.switchToMap({ { 0, 0 }, "level-1-first-room", { 5, 3 } });
-
-        m_stateMachine.setChangePending(State::Splash);
+        m_stateMachine.setChangePending(State::Edit);
     }
 
     void GameCoordinator::openWindow()
@@ -92,7 +77,7 @@ namespace castlecrawl
                   << m_config.video_mode.bitsPerPixel << "bits per pixel and a "
                   << m_config.frame_rate_limit << " fps limit." << std::endl;
 
-        M_CHECK_SS(
+        M_CHECK(
             m_window.isOpen(),
             "Failed to make and open the graphics window.  (sf::RenderWindow::isOpen() == false)");
 
@@ -137,7 +122,7 @@ namespace castlecrawl
             {
                 std::cout << "Player closed the window.  Quitting." << std::endl;
                 m_window.close();
-                m_stateMachine.setChangePending(State::Quit);
+                m_stateMachine.setChangePending(State::Teardown);
                 return;
             }
 

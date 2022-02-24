@@ -6,8 +6,8 @@
 #include "context.hpp"
 #include "map-types.hpp"
 #include "tile-image.hpp"
-#include "util.hpp"
 
+#include <filesystem>
 #include <string>
 #include <vector>
 
@@ -34,7 +34,7 @@ namespace castlecrawl
         float map_cell_size_ratio;
     };
 
-    // Everything about the window that can only be calculated once BOTH the window is open and the
+    // Everything about the window that can only be calculated once BOTH the window is open AND the
     // map has been parsed.
     class Layout
     {
@@ -51,7 +51,7 @@ namespace castlecrawl
 
         sf::Vector2f mapCellSize() const { return m_cellSize; }
 
-        sf::Vector2f windowSize() const { return util::size(m_windowBounds); }
+        sf::Vector2f windowSize() const;
         sf::FloatRect windowBounds() const { return m_windowBounds; }
         sf::FloatRect boardBounds() const { return m_boardBounds; }
         sf::Vector2i cellCounts() const { return m_cellCounts; }
@@ -60,8 +60,6 @@ namespace castlecrawl
         sf::FloatRect cellBounds(const MapPos_t & pos) const;
 
         bool isPositionValid(const MapPos_t & pos) const;
-
-        // BoardPosOpt_t windowPosToBoardPos(const sf::Vector2f windowPos) const ;
 
       protected:
         sf::FloatRect m_windowBounds;

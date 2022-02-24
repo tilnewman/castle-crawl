@@ -5,9 +5,10 @@
 //
 #include "settings.hpp"
 
-#include "check-macros.hpp"
+#include "../src/check-macros.hpp"
+#include "../src/map.hpp"
+#include "../src/util.hpp"
 #include "context.hpp"
-#include "map.hpp"
 
 #include <filesystem>
 
@@ -22,6 +23,8 @@ namespace castlecrawl
         , background_color{ sf::Color(17, 14, 14) }
         , map_cell_size_ratio{ 0.024f }
     {}
+
+    sf::Vector2f Layout::windowSize() const { return util::size(m_windowBounds); }
 
     void Layout::setupWindow(const GameConfig & config)
     {
@@ -58,7 +61,7 @@ namespace castlecrawl
 
     sf::FloatRect Layout::cellBounds(const MapPos_t & pos) const
     {
-        M_CHECK_SS(isPositionValid(pos), pos);
+        M_CHECK(isPositionValid(pos), pos);
 
         const sf::FloatRect bounds{
             (util::position(m_boardBounds) + (m_cellSize * sf::Vector2f(pos))), m_cellSize

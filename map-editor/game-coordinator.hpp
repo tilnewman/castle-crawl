@@ -3,17 +3,14 @@
 //
 // game-coordinator.hpp
 //
-#include "animation-player.hpp"
 #include "board.hpp"
 #include "context.hpp"
 #include "keys.hpp"
-#include "maps.hpp"
 #include "player-piece.hpp"
 #include "popup-manager.hpp"
 #include "random.hpp"
 #include "resources.hpp"
 #include "settings.hpp"
-#include "sound-player.hpp"
 #include "state-machine.hpp"
 #include "tile-image.hpp"
 
@@ -43,8 +40,6 @@ namespace castlecrawl
       protected:
         sf::RenderWindow m_window;
 
-        // subsystems
-        Maps m_maps;
         Media m_media;
         Board m_board;
         Layout m_layout;
@@ -53,10 +48,7 @@ namespace castlecrawl
         StateMachine m_stateMachine;
         PopupManager m_popupManager;
         util::Random m_random;
-        util::SoundPlayer m_soundPlayer;
-        util::AnimationPlayer m_animationPlayer;
 
-        // subsystems reference wrapper
         Context m_context;
     };
 

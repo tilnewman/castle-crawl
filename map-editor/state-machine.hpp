@@ -25,7 +25,7 @@ namespace castlecrawl
         StateMachine & operator=(const StateMachine &) = delete;
         StateMachine & operator=(StateMachine &&) = delete;
 
-        State stateEnum() const { return m_stateUPtr->state(); }
+        State stateEnum() const { return m_stateUPtr->which(); }
 
         IState & state() { return *m_stateUPtr; }
         const IState & state() const { return *m_stateUPtr; }

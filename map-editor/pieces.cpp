@@ -5,7 +5,8 @@
 //
 #include "pieces.hpp"
 
-#include "check-macros.hpp"
+#include "../src/check-macros.hpp"
+#include "../src/util.hpp"
 #include "keys.hpp"
 #include "random.hpp"
 #include "resources.hpp"

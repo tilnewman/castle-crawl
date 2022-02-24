@@ -14,45 +14,21 @@ namespace castlecrawl
 {
     struct Context;
 
-    enum class State : std::size_t
+    enum class State
     {
-        Init = 0,
-        Splash,
-        Play,
+        Setup = 0,
+        Edit,
         Popup,
-        Quit,
+        Teardown,
     };
 
     using StateOpt_t = std::optional<State>;
 
-    //
-
-    inline std::string toString(const State state)
-    {
-        switch (state)
-        {
-            case State::Init: return "Init";
-            case State::Splash: return "Splash";
-            case State::Popup: return "Popup";
-            case State::Play: return "Play";
-            case State::Quit: return "Quit";
-            default: return "";
-        }
-    }
-
-    //
-    inline std::ostream & operator<<(std::ostream & os, const State state)
-    {
-        os << toString(state);
-        return os;
-    }
-
-    //
     struct IState
     {
         virtual ~IState() = default;
 
-        virtual State state() const = 0;
+        virtual State which() const = 0;
         virtual void update(Context &, const float elapsedSec) = 0;
         virtual void handleEvent(Context & context, const sf::Event & event) = 0;
         virtual void draw(const Context &, sf::RenderTarget &, sf::RenderStates) const = 0;
@@ -78,7 +54,7 @@ namespace castlecrawl
         StateBase & operator=(const StateBase &) = delete;
         StateBase & operator=(StateBase &&) = delete;
 
-        State state() const final { return m_state; }
+        State which() const final { return m_state; }
 
         void update(Context &, const float) override {}
         void handleEvent(Context &, const sf::Event &) override {}
@@ -91,20 +67,20 @@ namespace castlecrawl
     };
 
     //
-    class StateInit : public StateBase
+    class StateSetup : public StateBase
     {
       public:
-        StateInit()
-            : StateBase(State::Init)
+        StateSetup()
+            : StateBase(State::Setup)
         {}
     };
 
     //
-    class StateQuit : public StateBase
+    class StateTeardown : public StateBase
     {
       public:
-        StateQuit(Context &)
-            : StateBase(State::Quit)
+        StateTeardown(Context &)
+            : StateBase(State::Teardown)
         {}
 
         void onEnter(Context & context) override;

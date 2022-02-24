@@ -8,14 +8,11 @@
 namespace util
 {
     class Random;
-    class SoundPlayer;
-    class AnimationPlayer;
 } // namespace util
 
 namespace castlecrawl
 {
     class Map;
-    class Maps;
     class Media;
     class Layout;
     class GameInPlay;
@@ -31,18 +28,14 @@ namespace castlecrawl
     {
         Context(
             GameInPlay & gam,
-            Maps & mps,
             Board & bor,
             const GameConfig & con,
             Layout & lay,
             const Media & med,
             StateMachine & sta,
             PopupManager & pop,
-            const util::Random & ran,
-            util::SoundPlayer & aud,
-            util::AnimationPlayer & ani)
+            const util::Random & ran)
             : game(gam)
-            , maps(mps)
             , board(bor)
             , config(con)
             , layout(lay)
@@ -50,8 +43,6 @@ namespace castlecrawl
             , state(sta)
             , popup(pop)
             , random(ran)
-            , audio(aud)
-            , anim(ani)
             , map_name()
         {}
 
@@ -63,7 +54,6 @@ namespace castlecrawl
 
         // subsystem references
         GameInPlay & game;
-        Maps & maps;
         Board & board;
         const GameConfig & config;
         Layout & layout;
@@ -71,13 +61,6 @@ namespace castlecrawl
         StateMachine & state;
         PopupManager & popup;
         const util::Random & random;
-        util::SoundPlayer & audio;
-        util::AnimationPlayer & anim;
-
-        // map handlers
-        Map & map();
-        const Map & map() const;
-        void switchToMap(const MapLink & link);
 
         std::string map_name;
     };

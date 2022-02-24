@@ -3,7 +3,7 @@
 //
 // state-popup.hpp
 //
-#include "state-play.hpp"
+#include "state-edit.hpp"
 
 #include <SFML/Graphics/RenderTarget.hpp>
 
@@ -12,7 +12,7 @@ namespace castlecrawl
     struct Context;
 
     //
-    class StatePopup : public StatePlay
+    class StatePopup : public StateEdit
     {
       public:
         StatePopup(Context & context);
