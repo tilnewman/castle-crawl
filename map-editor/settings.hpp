@@ -55,7 +55,7 @@ namespace mapper
         sf::FloatRect windowBounds() const { return m_windowBounds; }
         sf::FloatRect boardBounds() const { return m_boardBounds; }
         sf::Vector2i cellCounts() const { return m_cellCounts; }
-        sf::Vector2i cellCountsMax() const { return { 34, 21 }; }
+        sf::Vector2i cellCountsMax() const { return { 41, 23 }; }
         std::size_t cellCountTotal() const { return m_cellCountTotal; }
         sf::Vector2f cellSize() const { return m_cellSize; }
         sf::FloatRect cellBounds(const MapPos_t & pos) const;
