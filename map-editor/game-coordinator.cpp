@@ -40,6 +40,9 @@ namespace mapper
 
         openWindow();
 
+        m_window.setFramerateLimit(m_config.frame_rate_limit);
+        m_window.setKeyRepeatEnabled(false);
+
         m_config.video_mode.width = m_window.getSize().x;
         m_config.video_mode.height = m_window.getSize().y;
         m_config.video_mode.bitsPerPixel = m_window.getSettings().depthBits;
@@ -55,9 +58,6 @@ namespace mapper
         std::cout << "Editor Window Cells: width_ratio=" << m_config.map_cell_size_ratio
                   << ", pixels=" << m_layout.mapCellDimm()
                   << ", grid=" << (m_layout.windowSize() / m_layout.mapCellSize()) << std::endl;
-
-        m_window.setFramerateLimit(m_config.frame_rate_limit);
-        m_window.setKeyRepeatEnabled(false);
 
         m_media.load(m_config, m_layout);
 
@@ -151,7 +151,7 @@ namespace mapper
 
     void GameCoordinator::draw()
     {
-        m_window.clear();
+        m_window.clear(m_config.background_color);
         m_state.state().draw(m_context, m_window, m_renderStates);
         m_window.display();
     }

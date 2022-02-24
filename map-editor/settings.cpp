@@ -20,7 +20,7 @@ namespace mapper
         , video_mode{ sf::VideoMode::getDesktopMode() }
         , is_fullscreen{ true }
         , frame_rate_limit{ 0 }
-        , background_color{ sf::Color(17, 14, 14) }
+        , background_color{ sf::Color(14, 14, 17) }
         , map_cell_size_ratio{ 0.024f }
     {}
 

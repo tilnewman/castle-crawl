@@ -13,6 +13,7 @@
 #include "resources.hpp"
 #include "settings.hpp"
 #include "state-machine.hpp"
+#include "util.hpp"
 
 #include <iostream>
 
@@ -21,18 +22,21 @@
 namespace mapper
 {
 
-    StateEdit::StateEdit(Context & context)
+    StateEdit::StateEdit(Context &)
         : StateBase(State::Edit)
         , m_fps()
         , m_windowOutline()
+    {}
+
+    void StateEdit::onEnter(Context & context)
     {
-        m_windowOutline.setPosition(1.0f, 1.0f);
-        m_windowOutline.setSize(context.layout.windowSize() - sf::Vector2f{ 2.0f, 2.0f });
+        m_fps.reset(context);
+
+        m_windowOutline.setPosition(util::position(context.layout.boardBounds()));
+        m_windowOutline.setSize(util::size(context.layout.boardBounds()));
         m_windowOutline.setFillColor(sf::Color::Transparent);
         m_windowOutline.setOutlineThickness(1.0f);
         m_windowOutline.setOutlineColor(sf::Color(80, 80, 80));
-
-        m_fps.reset(context);
     }
 
     void StateEdit::update(Context &, const float) { m_fps.update(); }
@@ -174,10 +178,9 @@ namespace mapper
     void StateEdit::draw(
         const Context & context, sf::RenderTarget & target, sf::RenderStates states) const
     {
-        target.clear(context.config.background_color);
         context.editor.draw(context, target, states);
         target.draw(context.board, states);
-        // target.draw(m_windowOutline, states);
+        target.draw(m_windowOutline, states);
         target.draw(m_fps, states);
     }
 
