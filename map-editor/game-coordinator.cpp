@@ -55,10 +55,6 @@ namespace mapper
 
         m_layout.setupWindowInitial(m_config);
 
-        std::cout << "Editor Window Cells: width_ratio=" << m_config.map_cell_size_ratio
-                  << ", pixels=" << m_layout.mapCellDimm()
-                  << ", grid=" << (m_layout.windowSize() / m_layout.mapCellSize()) << std::endl;
-
         m_media.load(m_config, m_layout);
 
         m_editor.setup(m_context);

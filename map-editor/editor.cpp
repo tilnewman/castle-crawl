@@ -66,7 +66,9 @@ namespace mapper
 
     void Editor::setCell(Context & context, const char ch)
     {
-        m_mapStrings.at(m_position.y).at(m_position.x) = ch;
+        m_mapStrings.at(static_cast<std::size_t>(m_position.y))
+            .at(static_cast<std::size_t>(m_position.x)) = ch;
+
         updateAndRedraw(context);
     }
 
