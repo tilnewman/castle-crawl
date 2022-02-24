@@ -15,15 +15,10 @@ int main(const int argc, const char * const argv[])
 
     try
     {
-
-        //
         GameConfig config;
         if (argc > 1)
         {
             config.media_dir_path = std::filesystem::path{ argv[1] };
-
-            std::cout << "Custom media path found on the command line: " << config.media_dir_path
-                      << std::endl;
         }
 
         GameCoordinator game;

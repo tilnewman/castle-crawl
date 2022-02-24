@@ -62,7 +62,7 @@ namespace mapper
 
         m_layout.setupWindowInitial(m_config);
 
-        std::cout << "Game Window Cells: width_ratio=" << m_config.map_cell_size_ratio
+        std::cout << "Editor Window Cells: width_ratio=" << m_config.map_cell_size_ratio
                   << ", pixels=" << m_layout.mapCellDimm()
                   << ", grid=" << (m_layout.windowSize() / m_layout.mapCellSize()) << std::endl;
 
@@ -74,6 +74,8 @@ namespace mapper
         m_editor.setup(m_context);
 
         m_state.setChangePending(State::Edit);
+
+        std::cout << "Press F1 for help, Escape to quit." << std::endl;
     }
 
     void GameCoordinator::openWindow()
@@ -90,10 +92,6 @@ namespace mapper
                                                m_config.video_mode.height };
 
         const sf::Vector2u windowActualSize{ m_window.getSize() };
-
-        std::cout << "Game Window: " << windowExpectedSize << " at "
-                  << m_config.video_mode.bitsPerPixel << "bits per pixel and a "
-                  << m_config.frame_rate_limit << " fps limit." << std::endl;
 
         M_CHECK(
             m_window.isOpen(),
