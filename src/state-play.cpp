@@ -9,6 +9,7 @@
 #include "board.hpp"
 #include "context.hpp"
 #include "map.hpp"
+#include "maps.hpp"
 #include "popup-manager.hpp"
 #include "resources.hpp"
 #include "settings.hpp"
@@ -54,6 +55,7 @@ namespace castlecrawl
             return;
         }
 
+        // TEMP TODO REMOVE after testing
         if (sf::Keyboard::P == event.key.code)
         {
             context.popup.setup(context, "All your bases are belong to us.");
@@ -68,7 +70,7 @@ namespace castlecrawl
         const Context & context, sf::RenderTarget & target, sf::RenderStates states) const
     {
         target.draw(m_bgRectangle, states);
-        context.map().draw(context, target, states);
+        context.maps.get().draw(context, target, states);
         target.draw(context.board, states);
         target.draw(context.anim, states);
         target.draw(m_fps, states);

@@ -6,7 +6,6 @@
 #include "map-types.hpp"
 #include "random.hpp"
 
-#include <map>
 #include <vector>
 
 #include <SFML/Graphics/RenderTarget.hpp>
@@ -66,9 +65,6 @@ namespace castlecrawl
         VertVec_t m_wallVerts;
         VertVec_t m_transVerts;
     };
-
-    using NameMapPair_t = std::pair<std::string, Map>;
-    using Maps_t = std::map<std::string, Map>;
 
 } // namespace castlecrawl
 

@@ -3,7 +3,6 @@
 //
 // context.hpp
 //
-#include <string>
 
 namespace util
 {
@@ -52,7 +51,6 @@ namespace castlecrawl
             , random(ran)
             , audio(aud)
             , anim(ani)
-            , map_name()
         {}
 
         Context(const Context &) = delete;
@@ -61,7 +59,6 @@ namespace castlecrawl
         Context & operator=(const Context &) = delete;
         Context & operator=(Context &&) = delete;
 
-        // subsystem references
         GameInPlay & game;
         Maps & maps;
         Board & board;
@@ -73,13 +70,6 @@ namespace castlecrawl
         const util::Random & random;
         util::SoundPlayer & audio;
         util::AnimationPlayer & anim;
-
-        // map handlers
-        Map & map();
-        const Map & map() const;
-        void switchToMap(const MapLink & link);
-
-        std::string map_name;
     };
 } // namespace castlecrawl
 

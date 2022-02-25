@@ -11,6 +11,7 @@
 #include "context.hpp"
 #include "door-piece.hpp"
 #include "keys.hpp"
+#include "maps.hpp"
 #include "settings.hpp"
 #include "sound-player.hpp"
 
@@ -70,11 +71,11 @@ namespace castlecrawl
     {
         const MapPos_t newPos = keys::moveIfDir(position(), arrowKey);
 
-        for (const MapLink & link : context.map().links())
+        for (const MapLink & link : context.maps.get().links())
         {
             if (link.from_pos == newPos)
             {
-                const char currentChar = context.map().getChar(position());
+                const char currentChar = context.maps.get().getChar(position());
 
                 if ((currentChar == 'S') || (currentChar == 's'))
                 {
@@ -85,12 +86,12 @@ namespace castlecrawl
                     context.audio.play("tick-on-2.ogg");
                 }
 
-                context.switchToMap(link);
+                context.maps.switchTo(context, link);
                 return;
             }
         }
 
-        const char newChar = context.map().getChar(newPos);
+        const char newChar = context.maps.get().getChar(newPos);
 
         if ((newChar != ' ') && (newChar != 'D') && (newChar != 'd') && (newChar != 'S') &&
             (newChar != 's'))

@@ -5,10 +5,33 @@
 //
 #include "maps.hpp"
 
+#include "board.hpp"
+#include "check-macros.hpp"
+#include "context.hpp"
+#include "settings.hpp"
+#include "util.hpp"
+
 namespace castlecrawl
 {
+    Maps::Maps()
+        : m_maps()
+        , m_currentMapName()
+    {}
 
-    void Maps::load(const util::Random & random)
+    const Map & Maps::get() const
+    {
+        const auto iter = m_maps.find(m_currentMapName);
+        if (iter == std::end(m_maps))
+        {
+            return m_invalidMap;
+        }
+        else
+        {
+            return iter->second;
+        }
+    }
+
+    void Maps::loadAll(const util::Random & random)
     {
         m_maps.clear();
 
@@ -199,6 +222,23 @@ namespace castlecrawl
             };
 
         // clang-format on
+    }
+
+    void Maps::switchTo(Context & context, const MapLink & link)
+    {
+        const std::string fromMapName = m_currentMapName;
+        m_currentMapName = link.to_name;
+
+        Map & map = get();
+
+        M_CHECK(
+            (!map.empty()),
+            "Map is empty!  from=\"" << fromMapName << "\" to " << link.to_pos << " in \""
+                                     << m_currentMapName << "\"");
+
+        context.layout.calcBoardValues(map.size());
+        map.load(context);
+        context.board.player.reset(context, link.to_pos);
     }
 
 } // namespace castlecrawl

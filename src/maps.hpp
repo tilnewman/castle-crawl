@@ -3,7 +3,10 @@
 //
 // maps.hpp
 //
+#include "flat-map.hpp"
 #include "map.hpp"
+
+#include <string>
 
 namespace castlecrawl
 {
@@ -11,13 +14,20 @@ namespace castlecrawl
     class Maps
     {
       public:
-        void load(const util::Random & random);
+        Maps();
 
-        Maps_t & maps() { return m_maps; }
-        const Maps_t & maps() const { return m_maps; }
+        void loadAll(const util::Random & random);
+
+        Map & get() { return m_maps[m_currentMapName]; }
+
+        const Map & get() const;
+
+        void switchTo(Context & context, const MapLink & link);
 
       private:
-        Maps_t m_maps;
+        util::FlatMap<std::string, Map> m_maps;
+        std::string m_currentMapName;
+        Map m_invalidMap;
     };
 
 } // namespace castlecrawl

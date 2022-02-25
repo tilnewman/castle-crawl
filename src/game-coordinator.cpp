@@ -69,11 +69,11 @@ namespace castlecrawl
 
         m_media.load(m_config, m_layout, m_audio);
 
-        m_maps.load(m_random);
-
-        m_context.switchToMap({ { 0, 0 }, "level-1-first-room", { 5, 3 } });
+        m_maps.loadAll(m_random);
 
         m_states.setChangePending(State::Splash);
+
+        m_maps.switchTo(m_context, { { 0, 0 }, "level-1-first-room", { 5, 3 } });
     }
 
     void GameCoordinator::run(const GameConfig & configOrig)
