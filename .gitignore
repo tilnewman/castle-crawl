@@ -50,3 +50,4 @@
 *.vcxproj
 *.vcxproj.filters
 *.vcxproj.user
+*.cpt_backup
