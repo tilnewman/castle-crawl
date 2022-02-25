@@ -17,12 +17,7 @@
 #include "state-machine.hpp"
 #include "tile-image.hpp"
 
-#include <memory>
-#include <string>
-
-#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/System/Clock.hpp>
 
 namespace castlecrawl
 {
@@ -34,8 +29,7 @@ namespace castlecrawl
         void run(const GameConfig & config);
 
       protected:
-        void initializeSubsystems(const GameConfig & config);
-        void openWindow();
+        void setup(const GameConfig & config);
         void handleEvents();
         void update(const float elapsedTimeSec);
         void draw();
@@ -50,11 +44,11 @@ namespace castlecrawl
         Layout m_layout;
         GameInPlay m_game;
         GameConfig m_config;
-        StateMachine m_stateMachine;
-        PopupManager m_popupManager;
+        StateMachine m_states;
+        PopupManager m_popups;
         util::Random m_random;
-        util::SoundPlayer m_soundPlayer;
-        util::AnimationPlayer m_animationPlayer;
+        util::SoundPlayer m_audio;
+        util::AnimationPlayer m_anim;
 
         // subsystems reference wrapper
         Context m_context;

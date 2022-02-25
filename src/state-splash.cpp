@@ -35,7 +35,7 @@ namespace castlecrawl
         const bool loadSuccess = m_texture.loadFromFile(
             (context.config.media_dir_path / "image" / "splash.png").string());
 
-        M_CHECK_SS(loadSuccess, "failed to load splash.png");
+        M_CHECK(loadSuccess, "failed to load splash.png");
 
         m_sprite.setTexture(m_texture);
 

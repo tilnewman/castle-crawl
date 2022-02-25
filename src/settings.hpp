@@ -28,7 +28,6 @@ namespace castlecrawl
         std::string game_name;
         std::filesystem::path media_dir_path;
         sf::VideoMode video_mode;
-        bool is_fullscreen;
         unsigned frame_rate_limit;
         sf::Color background_color;
         float map_cell_size_ratio;

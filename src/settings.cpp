@@ -17,7 +17,6 @@ namespace castlecrawl
         : game_name{ "game" }
         , media_dir_path{ std::filesystem::current_path() / "media" }
         , video_mode{ sf::VideoMode::getDesktopMode() }
-        , is_fullscreen{ true }
         , frame_rate_limit{ 0 }
         , background_color{ sf::Color(17, 14, 14) }
         , map_cell_size_ratio{ 0.024f }
