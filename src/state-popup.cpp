@@ -9,11 +9,8 @@
 #include "popup-manager.hpp"
 #include "state-machine.hpp"
 
-#include <SFML/Graphics.hpp>
-
 namespace castlecrawl
 {
-
     StatePopup::StatePopup(Context & context)
         : StatePlay(context)
     {}

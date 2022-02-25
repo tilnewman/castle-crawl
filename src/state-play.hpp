@@ -6,12 +6,17 @@
 #include "frames-per-sec.hpp"
 #include "states.hpp"
 
-#include <string>
-
 #include <SFML/Graphics/RectangleShape.hpp>
 
-// TODO REMOVE AFTER TESTING
-//#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
+#include <SFML/Window/Event.hpp>
+#include <SFML/Window/Keyboard.hpp>
+
+namespace sf
+{
+    class RenderTarget;
+    class Event;
+} // namespace sf
 
 namespace castlecrawl
 {
@@ -30,22 +35,6 @@ namespace castlecrawl
         FramesPerSecond m_fps;
         sf::RectangleShape m_windowOutline;
     };
-
-    //
-    // class StatePopup : public StatePlay
-    //{
-    //  public:
-    //    StatePopup(Context & context);
-    //
-    //    bool handleEvent(Context & context, const sf::Event & event) override;
-    //    void draw(const Context &, sf::RenderTarget &, const sf::RenderStates &) const override;
-    //
-    //  private:
-    //    sf::Text m_text;
-    //    sf::Texture m_paperTexture;
-    //    sf::Sprite m_paperSprite;
-    //    sf::RectangleShape m_backgroundFade;
-    //};
 
 } // namespace castlecrawl
 

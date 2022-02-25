@@ -33,7 +33,7 @@ namespace castlecrawl
         sf::Text text;
         sf::RectangleShape background_rectangle;
         sf::RectangleShape fade_rectangle;
-        sf::Keyboard::Key key;
+        sf::Keyboard::Key key = sf::Keyboard::Unknown;
     };
 
 } // namespace castlecrawl

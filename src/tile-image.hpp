@@ -139,4 +139,4 @@ namespace castlecrawl
     }
 
 } // namespace castlecrawl
-#endif // #define CASTLECRAWL_TILEIMAGE_HPP_INCLUDED
+#endif // CASTLECRAWL_TILEIMAGE_HPP_INCLUDED

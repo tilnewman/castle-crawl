@@ -6,15 +6,18 @@
 #include "pieces.hpp"
 
 #include "check-macros.hpp"
+#include "context.hpp"
 #include "keys.hpp"
 #include "random.hpp"
 #include "resources.hpp"
 #include "settings.hpp"
 #include "sound-player.hpp"
+#include "util.hpp"
 
 #include <cassert>
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Window/Event.hpp>
 
 namespace castlecrawl
 {

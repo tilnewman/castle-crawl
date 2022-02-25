@@ -7,6 +7,8 @@
 
 namespace castlecrawl
 {
+    struct Context;
+
     class DoorPiece : public PieceBase
     {
       public:

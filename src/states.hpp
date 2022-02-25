@@ -7,9 +7,15 @@
 #include <ostream>
 #include <string>
 
-#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Window/Event.hpp>
+#include <SFML/Window/Keyboard.hpp>
 
+namespace sf
+{
+    class RenderTarget;
+    class Event;
+} // namespace sf
 namespace castlecrawl
 {
     struct Context;

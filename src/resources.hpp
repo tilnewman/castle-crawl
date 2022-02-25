@@ -3,14 +3,15 @@
 //
 // resources.hpp
 //
-#include "../src/check-macros.hpp"
-#include "context.hpp"
+#include "check-macros.hpp"
 #include "sound-player.hpp"
 #include "tile-image.hpp"
 
 #include <filesystem>
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Texture.hpp>
 
 //
 
@@ -24,6 +25,7 @@ namespace util
 
 namespace castlecrawl
 {
+    struct Context;
     struct GameConfig;
     class Layout;
 

@@ -3,8 +3,8 @@
 //
 // map.hpp
 //
-#include "context.hpp"
 #include "map-types.hpp"
+#include "random.hpp"
 
 #include <map>
 #include <vector>
@@ -13,6 +13,7 @@
 
 namespace castlecrawl
 {
+    struct Context;
 
     class Map
     {

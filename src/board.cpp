@@ -5,7 +5,7 @@
 //
 #include "board.hpp"
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 
 namespace castlecrawl
 {

@@ -3,16 +3,22 @@
 //
 // pieces.hpp
 //
-#include "context.hpp"
 #include "map-types.hpp"
 #include "tile-image.hpp"
 
-#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Window/Event.hpp>
+#include <SFML/Window/Keyboard.hpp>
+
+namespace sf
+{
+    class RenderTarget;
+    class Event;
+} // namespace sf
 
 namespace castlecrawl
 {
+    struct Context;
 
     struct IPiece : public sf::Drawable
     {
@@ -32,10 +38,6 @@ namespace castlecrawl
 
     //
 
-    // using IPieceOpt_t = std::optional<std::reference_wrapper<IPiece>>;
-    // using IPieceUPtr_t = std::unique_ptr<IPiece>;
-
-    // ALL pieces must derive from this
     class PieceBase : public IPiece
     {
       public:

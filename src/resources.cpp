@@ -7,13 +7,9 @@
 
 #include "context.hpp"
 #include "settings.hpp"
+#include "util.hpp"
 
-#include <cassert>
 #include <filesystem>
-#include <memory>
-#include <vector>
-
-#include <SFML/Graphics.hpp>
 
 namespace castlecrawl
 {
@@ -91,18 +87,4 @@ namespace castlecrawl
         m_defaultSprite.setTexture(m_defaultTexture, true);
     }
 
-    // void loadImages()
-    // {
-    //     for (std::size_t i(0); i < TileImage::Count; ++i)
-    //     {
-    //         const Piece piece = static_cast<Piece>(i);
-    //         m_textures.push_back(std::make_unique<sf::Texture>());
-    //         load(imagePath(piece), *m_textures.back());
-    //     }
-    // }
-
-    // void loadFonts()
-    //{
-    //    load((m_mediaPath / "font/gentium-plus/gentium-plus.ttf"), m_font);
-    //}
 } // namespace castlecrawl

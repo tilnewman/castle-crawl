@@ -8,7 +8,12 @@
 
 #include <vector>
 
-#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
+
+namespace sf
+{
+    class RenderTarget;
+}
 
 namespace castlecrawl
 {

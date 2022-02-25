@@ -5,8 +5,16 @@
 //
 #include "states.hpp"
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Clock.hpp>
+
+namespace sf
+{
+    class RenderTarget;
+    class Event;
+} // namespace sf
 
 namespace castlecrawl
 {

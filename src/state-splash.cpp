@@ -6,17 +6,13 @@
 #include "state-splash.hpp"
 
 #include "check-macros.hpp"
+#include "context.hpp"
 #include "settings.hpp"
 #include "state-machine.hpp"
 #include "util.hpp"
 
-#include <algorithm>
 #include <filesystem>
 #include <iostream>
-#include <memory>
-#include <sstream>
-
-#include <SFML/Graphics.hpp>
 
 namespace castlecrawl
 {

@@ -9,6 +9,7 @@
 #include "check-macros.hpp"
 #include "maps.hpp"
 #include "settings.hpp"
+#include "util.hpp"
 
 namespace castlecrawl
 {

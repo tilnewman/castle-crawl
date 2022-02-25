@@ -8,6 +8,7 @@
 #include "check-macros.hpp"
 #include "context.hpp"
 #include "map.hpp"
+#include "util.hpp"
 
 #include <filesystem>
 
@@ -46,6 +47,8 @@ namespace castlecrawl
             video_mode.bitsPerPixel = 32;
         }
     }
+
+    sf::Vector2f Layout::windowSize() const { return util::size(m_windowBounds); }
 
     void Layout::setupWindow(const GameConfig & config)
     {

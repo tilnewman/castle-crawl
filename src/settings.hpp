@@ -3,13 +3,10 @@
 //
 // settings.hpp
 //
-#include "context.hpp"
 #include "map-types.hpp"
 #include "tile-image.hpp"
-#include "util.hpp"
 
-#include <string>
-#include <vector>
+#include <filesystem>
 
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
@@ -18,6 +15,7 @@
 namespace castlecrawl
 {
     class Map;
+    struct Context;
 
     // All settings about the game that must be set before...well before everything else.
     // No need for an interface class since this will be const in Context.
@@ -51,7 +49,7 @@ namespace castlecrawl
 
         sf::Vector2f mapCellSize() const { return m_cellSize; }
 
-        sf::Vector2f windowSize() const { return util::size(m_windowBounds); }
+        sf::Vector2f windowSize() const;
         sf::FloatRect windowBounds() const { return m_windowBounds; }
         sf::FloatRect boardBounds() const { return m_boardBounds; }
         sf::Vector2i cellCounts() const { return m_cellCounts; }

@@ -3,13 +3,12 @@
 //
 // frames-per-sec.hpp
 //
-#include "context.hpp"
-
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/System/Clock.hpp>
 
 namespace castlecrawl
 {
+    struct Context;
 
     class FramesPerSecond : public sf::Drawable
     {

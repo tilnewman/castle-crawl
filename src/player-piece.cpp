@@ -8,10 +8,13 @@
 #include "animation-player.hpp"
 #include "board.hpp"
 #include "check-macros.hpp"
+#include "context.hpp"
 #include "door-piece.hpp"
 #include "keys.hpp"
 #include "settings.hpp"
 #include "sound-player.hpp"
+
+#include <SFML/Window/Event.hpp>
 
 namespace castlecrawl
 {

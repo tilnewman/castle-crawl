@@ -5,7 +5,6 @@
 //
 #include "game-coordinator.hpp"
 
-#include <filesystem>
 #include <iostream>
 
 namespace castlecrawl
@@ -101,7 +100,7 @@ namespace castlecrawl
                 std::cout << "Player closed the window.  Quitting." << std::endl;
                 m_window.close();
                 m_states.setChangePending(State::Quit);
-                return;
+                break;
             }
 
             m_states.state().handleEvent(m_context, event);

@@ -6,6 +6,7 @@
 #include "map.hpp"
 
 #include "board.hpp"
+#include "context.hpp"
 #include "door-piece.hpp"
 #include "random.hpp"
 #include "resources.hpp"

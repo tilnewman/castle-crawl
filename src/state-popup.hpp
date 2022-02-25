@@ -5,7 +5,13 @@
 //
 #include "state-play.hpp"
 
-#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
+
+namespace sf
+{
+    class RenderTarget;
+    class Event;
+} // namespace sf
 
 namespace castlecrawl
 {

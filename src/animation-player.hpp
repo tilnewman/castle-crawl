@@ -10,7 +10,11 @@
 #include <tuple>
 #include <vector>
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/BlendMode.hpp>
+#include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/Drawable.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Texture.hpp>
 
 namespace util
 {

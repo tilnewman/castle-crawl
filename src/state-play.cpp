@@ -16,8 +16,6 @@
 
 #include <iostream>
 
-#include <SFML/Graphics.hpp>
-
 namespace castlecrawl
 {
 
