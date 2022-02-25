@@ -70,4 +70,21 @@ namespace mapper
         return bounds;
     }
 
+    const MapPos_t Layout::cellIndex(const sf::Vector2f & position) const
+    {
+        for (int y = 0; y < cellCountsMax().y; ++y)
+        {
+            for (int x = 0; x < cellCountsMax().x; ++x)
+            {
+                const sf::FloatRect bounds = cellBounds({ x, y });
+                if (bounds.contains(position))
+                {
+                    return { x, y };
+                }
+            }
+        }
+
+        return { -1, -1 };
+    }
+
 } // namespace mapper

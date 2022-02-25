@@ -62,6 +62,8 @@ namespace mapper
 
         bool isPositionValid(const MapPos_t & pos) const;
 
+        const MapPos_t cellIndex(const sf::Vector2f & position) const;
+
       protected:
         sf::FloatRect m_windowBounds;
         sf::FloatRect m_boardBounds;

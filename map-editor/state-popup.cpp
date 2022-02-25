@@ -20,7 +20,7 @@ namespace mapper
 
     void StatePopup::handleEvent(Context & context, const sf::Event & event)
     {
-        if (sf::Event::KeyPressed == event.type)
+        if ((sf::Event::MouseButtonPressed == event.type) || (sf::Event::KeyPressed == event.type))
         {
             context.state.setChangePending(State::Edit);
             return;

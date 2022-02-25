@@ -41,6 +41,7 @@ namespace mapper
 
         const MapPos_t position() const { return m_position; }
         void movePosition(Context & context, const MapPos_t & amount);
+        void setPosition(Context & context, const MapPos_t & position);
 
         const std::filesystem::path getFirstAvailableFilePath() const;
 

@@ -38,6 +38,18 @@ namespace mapper
 
     void StateEdit::handleEvent(Context & context, const sf::Event & event)
     {
+        if (sf::Event::MouseButtonPressed == event.type)
+        {
+            const sf::Vector2f mousePosition = sf::Vector2f{ sf::Mouse::getPosition() };
+            const MapPos_t cellIndex = context.layout.cellIndex(mousePosition);
+            if (context.layout.isPositionValid(cellIndex))
+            {
+                context.editor.setPosition(context, cellIndex);
+            }
+
+            return;
+        }
+
         // all that remain are keystrokes
         if (sf::Event::KeyPressed != event.type)
         {

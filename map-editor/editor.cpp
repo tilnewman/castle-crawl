@@ -53,6 +53,12 @@ namespace mapper
         m_cursorRectangle.setPosition(util::position(context.layout.cellBounds(m_position)));
     }
 
+    void Editor::setPosition(Context & context, const MapPos_t & position)
+    {
+        m_position = position;
+        m_cursorRectangle.setPosition(util::position(context.layout.cellBounds(m_position)));
+    }
+
     void Editor::reset(Context & context)
     {
         m_isFloorStone = false;
