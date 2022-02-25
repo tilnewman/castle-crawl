@@ -38,16 +38,10 @@
 **/.vscode
 **/.vs
 **/CPTCMakeBuild
-**/Blast4/media
 *.DS_Store
 *.oa
 *.ncb
-*.sln
-*.suo
 *.vap
 *.dbp
 *.ilk
-*.vcxproj
-*.vcxproj.filters
-*.vcxproj.user
 *.cpt_backup
