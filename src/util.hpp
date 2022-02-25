@@ -663,7 +663,7 @@ namespace util
     }
 
     template <typename T>
-    void makeEven(T number, const bool willAdd)
+    void makeEven(T & number, const bool willAdd)
     {
         static_assert(std::is_integral_v<T>);
 
