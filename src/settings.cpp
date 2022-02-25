@@ -18,7 +18,7 @@ namespace castlecrawl
         : media_dir_path{ std::filesystem::current_path() / "media" }
         , video_mode{ sf::VideoMode::getDesktopMode() }
         , frame_rate_limit{ 0 }
-        , background_color{ sf::Color(17, 14, 14) }
+        , background_color{ sf::Color(14, 17, 20) }
         , map_cell_size_ratio{ 0.024f }
     {}
 

@@ -26,7 +26,7 @@ namespace castlecrawl
     {
         m_windowOutline.setPosition(1.0f, 1.0f);
         m_windowOutline.setSize(context.layout.windowSize() - sf::Vector2f{ 2.0f, 2.0f });
-        m_windowOutline.setFillColor(sf::Color::Transparent);
+        m_windowOutline.setFillColor(context.config.background_color);
         m_windowOutline.setOutlineThickness(1.0f);
         m_windowOutline.setOutlineColor(sf::Color(80, 80, 80));
 
@@ -67,61 +67,11 @@ namespace castlecrawl
     void StatePlay::draw(
         const Context & context, sf::RenderTarget & target, sf::RenderStates states) const
     {
-        target.clear(context.config.background_color);
+        target.draw(m_windowOutline, states);
         context.map().draw(context, target, states);
         target.draw(context.board, states);
-        target.draw(m_windowOutline, states);
         target.draw(context.anim, states);
         target.draw(m_fps, states);
     }
-
-    //
-    //
-    //
-
-    // StatePopup::StatePopup(Context & context)
-    //    : StatePlay(context)
-    //    , m_text(context.popup_message, context.media.font(), 40)
-    //    , m_paperTexture()
-    //    , m_paperSprite()
-    //    , m_backgroundFade()
-    //{
-    //    m_text.setFillColor(sf::Color::Black);
-    //
-    //    m_backgroundFade.setSize(context.config.windowSize());
-    //    m_backgroundFade.setFillColor(sf::Color(0, 0, 0, 150));
-    //
-    //    m_paperTexture.loadFromFile(
-    //        (context.config.media_dir_path / "image" / "paper-1.png").string());
-    //
-    //    m_paperSprite.setTexture(m_paperTexture);
-    //    util::centerInside(m_paperSprite, context.config.windowRect());
-    //
-    //    util::centerInside(m_text, context.config.windowRect());
-    //}
-    //
-    // bool StatePopup::handleEvent(Context & context, const sf::Event & event)
-    //{
-    //    if ((sf::Event::KeyPressed == event.type) || (sf::Event::MouseButtonReleased ==
-    //    event.type))
-    //    {
-    //        context.state.setChangePending(State::Play);
-    //        return true;
-    //    }
-    //    else
-    //    {
-    //        return false;
-    //    }
-    //}
-    //
-    // void StatePopup::draw(
-    //    const Context & context, sf::RenderTarget & target, const sf::RenderStates & states) const
-    //{
-    //    StatePlay::draw(context, target, states);
-    //
-    //    target.draw(m_backgroundFade, states);
-    //    target.draw(m_paperSprite, states);
-    //    target.draw(m_text, states);
-    //}
 
 } // namespace castlecrawl
