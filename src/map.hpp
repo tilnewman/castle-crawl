@@ -38,7 +38,7 @@ namespace castlecrawl
         char getChar(const int x, const int y) const { return getChar(MapPos_t{ x, y }); }
 
         void setChar(const MapPos_t & pos, const char newChar);
-        void setChar(const int x, const int y, const char newChar) { setChar({ x, y }, newChar); };
+        void setChar(const int x, const int y, const char newChar) { setChar({ x, y }, newChar); }
 
         void draw(const Context &, sf::RenderTarget &, sf::RenderStates) const;
 
