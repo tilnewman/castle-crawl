@@ -203,7 +203,7 @@ namespace mapper
         std::string line;
         while (std::getline(stream, line))
         {
-            if (line.size() != context.layout.cellCountsMax().x)
+            if (line.size() != static_cast<std::size_t>(context.layout.cellCountsMax().x))
             {
                 std::cout << "Error:  The file format is invalid.  Lines not all "
                           << context.layout.cellCountsMax().x << " wide.  \"" << path.string()
@@ -217,7 +217,7 @@ namespace mapper
             }
         }
 
-        if (m_mapStrings.size() != context.layout.cellCountsMax().y)
+        if (m_mapStrings.size() != static_cast<std::size_t>(context.layout.cellCountsMax().y))
         {
             std::cout << "Error:  The file format is invalid.  " << m_mapStrings.size()
                       << " Lines/rows instead of " << context.layout.cellCountsMax().y << ".  \""
