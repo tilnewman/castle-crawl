@@ -28,8 +28,18 @@ namespace mapper
         , m_state()
         , m_popup()
         , m_random()
+        , m_audio(m_random)
         , m_context(
-              m_board, m_map, m_editor, m_config, m_layout, m_media, m_state, m_popup, m_random)
+              m_board,
+              m_map,
+              m_editor,
+              m_config,
+              m_layout,
+              m_media,
+              m_state,
+              m_popup,
+              m_random,
+              m_audio)
     {}
 
     bool GameCoordinator::setup(const GameConfig & configOrig)
@@ -37,6 +47,9 @@ namespace mapper
         m_config = configOrig;
         M_CHECK(std::filesystem::exists(m_config.media_dir_path), m_config.media_dir_path);
         M_CHECK(std::filesystem::is_directory(m_config.media_dir_path), m_config.media_dir_path);
+
+        m_audio.setMediaPath(m_config.media_dir_path.string());
+        m_audio.loadAll();
 
         openWindow();
 

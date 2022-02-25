@@ -286,7 +286,7 @@ namespace util
             sfx->sound.setVolume(0.0f);
         }
 
-        std::cout << "Loaded Sound Effect: " << sfx->toString() << std::endl;
+        // std::cout << "Loaded Sound Effect: " << sfx->toString() << std::endl;
         m_soundEffects.push_back(std::move(sfx));
         return true;
     }

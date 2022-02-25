@@ -13,6 +13,7 @@
 #include "random.hpp"
 #include "resources.hpp"
 #include "settings.hpp"
+#include "sound-player.hpp"
 #include "state-machine.hpp"
 #include "tile-image.hpp"
 
@@ -53,6 +54,7 @@ namespace mapper
         StateMachine m_state;
         PopupManager m_popup;
         util::Random m_random;
+        util::SoundPlayer m_audio;
 
         Context m_context;
     };

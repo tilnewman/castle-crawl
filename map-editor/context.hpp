@@ -8,6 +8,7 @@
 namespace util
 {
     class Random;
+    class SoundPlayer;
 } // namespace util
 
 namespace mapper
@@ -36,7 +37,8 @@ namespace mapper
             const Media & med,
             StateMachine & sta,
             PopupManager & pop,
-            const util::Random & ran)
+            const util::Random & ran,
+            util::SoundPlayer & snd)
             : board(bor)
             , map(mtr)
             , editor(edi)
@@ -46,6 +48,7 @@ namespace mapper
             , state(sta)
             , popup(pop)
             , random(ran)
+            , audio(snd)
         {}
 
         Context(const Context &) = delete;
@@ -64,6 +67,7 @@ namespace mapper
         StateMachine & state;
         PopupManager & popup;
         const util::Random & random;
+        util::SoundPlayer & audio;
     };
 } // namespace mapper
 

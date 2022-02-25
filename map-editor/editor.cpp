@@ -9,6 +9,7 @@
 #include "context.hpp"
 #include "popup-manager.hpp"
 #include "settings.hpp"
+#include "sound-player.hpp"
 #include "state-machine.hpp"
 #include "util.hpp"
 
@@ -49,6 +50,7 @@ namespace mapper
 
     void Editor::movePosition(Context & context, const MapPos_t & amount)
     {
+        context.audio.play("tick-on-1");
         m_position += amount;
         m_cursorRectangle.setPosition(util::position(context.layout.cellBounds(m_position)));
     }
@@ -91,6 +93,7 @@ namespace mapper
 
     void Editor::updateAndRedraw(Context & context)
     {
+        context.audio.play("tick-off-2");
         m_map = Map(context, m_isFloorStone, m_mapStrings, {});
         context.layout.setupBoardForNewMap(m_map.size());
         m_map.load(context);

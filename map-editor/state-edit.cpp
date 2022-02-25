@@ -12,6 +12,7 @@
 #include "popup-manager.hpp"
 #include "resources.hpp"
 #include "settings.hpp"
+#include "sound-player.hpp"
 #include "state-machine.hpp"
 #include "util.hpp"
 
@@ -44,6 +45,7 @@ namespace mapper
             const MapPos_t cellIndex = context.layout.cellIndex(mousePosition);
             if (context.layout.isPositionValid(cellIndex))
             {
+                context.audio.play("thock-2");
                 context.editor.setPosition(context, cellIndex);
             }
 

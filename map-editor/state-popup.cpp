@@ -7,6 +7,7 @@
 
 #include "context.hpp"
 #include "popup-manager.hpp"
+#include "sound-player.hpp"
 #include "state-machine.hpp"
 
 #include <SFML/Graphics.hpp>
@@ -17,6 +18,9 @@ namespace mapper
     StatePopup::StatePopup(Context & context)
         : StateEdit(context)
     {}
+
+    void StatePopup::onEnter(Context & context) { context.audio.play("thock-1"); }
+    void StatePopup::onExit(Context & context) { context.audio.play("thock-3"); }
 
     void StatePopup::handleEvent(Context & context, const sf::Event & event)
     {
