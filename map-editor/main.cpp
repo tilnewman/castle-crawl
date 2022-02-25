@@ -21,6 +21,11 @@ int main(const int argc, const char * const argv[])
             config.media_dir_path = std::filesystem::path{ argv[1] };
         }
 
+        if (argc > 2)
+        {
+            config.file_to_edit_path = std::filesystem::path{ argv[2] };
+        }
+
         GameCoordinator game;
         game.run(config);
     }

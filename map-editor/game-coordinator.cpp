@@ -59,24 +59,64 @@ namespace mapper
 
         m_editor.setup(m_context);
 
-        // establish which file we will be creating
-        const auto path = m_editor.getFirstAvailableFilePath();
-        m_editor.setFilename(path.filename().string());
-        if (!m_editor.canFileBeSaved())
+        // start with a popup showing which file is being created/modified
+        const auto path = findWhichFileToEdit();
+        if (path.empty())
         {
-            std::cout << "Error:  Unable open/write/save/whatever the file: \"" << path.string()
-                      << "\"\nThere is probably a strange unicode character in the path or a "
-                         "permissions problem.  Try running this editor in a different location."
-                      << std::endl;
-
             return false;
         }
+        else
+        {
+            m_popup.setup(m_context, path.string());
+        }
 
-        m_popup.setup(m_context, path.string());
         m_state.setChangePending(State::Popup);
 
         std::cout << "Press F1 for help, Escape to quit." << std::endl;
         return true;
+    }
+
+    const std::filesystem::path GameCoordinator::findWhichFileToEdit()
+    {
+        std::filesystem::path path;
+        if (m_config.file_to_edit_path.empty())
+        {
+            path = m_editor.getFirstAvailableFilePath();
+            m_editor.setFilename(path.filename().string());
+            if (!m_editor.canFileBeSaved())
+            {
+                std::cout
+                    << "Error:  Unable open/write/save/whatever the file: \"" << path.string()
+                    << "\"\nThere is probably a strange unicode character in the path or a "
+                       "permissions problem.  Try running this editor in a different location."
+                    << std::endl;
+
+                return {};
+            }
+        }
+        else
+        {
+            path = std::filesystem::current_path() / m_config.file_to_edit_path;
+
+            try
+            {
+                path = std::filesystem::canonical(path);
+            }
+            catch (...)
+            {
+                std::cout << "Error:  Unable to find the file: \"" << path.string() << '\"'
+                          << std::endl;
+
+                return {};
+            }
+
+            if (!m_editor.load(m_context, path))
+            {
+                return {};
+            }
+        }
+
+        return path;
     }
 
     void GameCoordinator::openWindow()

@@ -32,14 +32,15 @@ namespace mapper
 
         void run(const GameConfig & config);
 
-      protected:
+      private:
         bool setup(const GameConfig & config);
         void openWindow();
         void handleEvents();
         void update(const float elapsedTimeSec);
         void draw();
+        const std::filesystem::path findWhichFileToEdit();
 
-      protected:
+      private:
         sf::RenderWindow m_window;
         sf::RenderStates m_renderStates;
 

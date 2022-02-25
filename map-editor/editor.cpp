@@ -173,4 +173,59 @@ namespace mapper
         context.state.setChangePending(State::Popup);
     }
 
+    bool Editor::load(Context & context, const std::filesystem::path & path)
+    {
+        if (!std::filesystem::exists(path))
+        {
+            std::cout << "Error:  Unable to FIND the file: \"" << path.string() << '\"'
+                      << std::endl;
+
+            return false;
+        }
+
+        m_filename = path.filename().string();
+
+        std::ifstream stream(path, std::ios_base::in);
+
+        if (!stream.is_open() || !stream.good())
+        {
+            std::cout << "Error:  Unable to OPEN the file: \"" << path.string() << '\"'
+                      << std::endl;
+
+            return false;
+        }
+
+        m_mapStrings.clear();
+
+        std::string line;
+        while (std::getline(stream, line))
+        {
+            if (line.size() != context.layout.cellCountsMax().x)
+            {
+                std::cout << "Error:  The file format is invalid.  Lines not all "
+                          << context.layout.cellCountsMax().x << " wide.  \"" << path.string()
+                          << '\"' << std::endl;
+
+                return false;
+            }
+            else
+            {
+                m_mapStrings.push_back(line);
+            }
+        }
+
+        if (m_mapStrings.size() != context.layout.cellCountsMax().y)
+        {
+            std::cout << "Error:  The file format is invalid.  " << m_mapStrings.size()
+                      << " Lines/rows instead of " << context.layout.cellCountsMax().y << ".  \""
+                      << path.string() << '\"' << std::endl;
+
+            return false;
+        }
+
+        updateAndRedraw(context);
+
+        return true;
+    }
+
 } // namespace mapper

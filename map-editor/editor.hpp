@@ -47,6 +47,7 @@ namespace mapper
 
         bool canFileBeSaved();
         void save(Context & context);
+        bool load(Context & context, const std::filesystem::path & path);
 
       private:
         void updateAndRedraw(Context & context);
