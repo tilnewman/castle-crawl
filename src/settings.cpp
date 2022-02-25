@@ -11,6 +11,7 @@
 #include "util.hpp"
 
 #include <filesystem>
+#include <iostream>
 
 namespace castlecrawl
 {
@@ -19,7 +20,7 @@ namespace castlecrawl
         , video_mode{ sf::VideoMode::getDesktopMode() }
         , frame_rate_limit{ 0 }
         , background_color{ sf::Color(14, 17, 20) }
-        , map_cell_size_ratio{ 0.024f }
+        , cell_counts(41, 23) // these values just look good, not too big, not too small
     {}
 
     void GameConfig::setup(const sf::VideoMode & videoModeActual)
@@ -48,33 +49,39 @@ namespace castlecrawl
         }
     }
 
-    sf::Vector2f Layout::windowSize() const { return util::size(m_windowBounds); }
+    const sf::Vector2f Layout::windowSize() const { return util::size(m_windowBounds); }
 
-    void Layout::setupWindow(const GameConfig & config)
+    void Layout::calcWindowValues(const GameConfig & config)
     {
         const sf::Vector2f windowSize{ sf::Vector2u{ config.video_mode.width,
                                                      config.video_mode.height } };
 
         m_windowBounds = sf::FloatRect({ 0.0f, 0.0f }, windowSize);
 
-        const float cellDimm = std::floor(config.map_cell_size_ratio * windowSize.x);
+        int cellDimm = (static_cast<int>(windowSize.x) / config.cell_counts.x);
 
-        m_cellSize.x = cellDimm;
-        m_cellSize.y = cellDimm;
+        // keep seeing drawing artifacts if this is odd, so make sure it is even
+        util::makeEven(cellDimm, false);
+
+        m_cellSize = sf::Vector2f{ sf::Vector2i{ cellDimm, cellDimm } };
+
+        const sf::Vector2f boardRegionSize = (m_cellSize * sf::Vector2f{ config.cell_counts });
+
+        m_topRegion = { { 0.0f, 0.0f },
+                        { windowSize.x, (windowSize.y - boardRegionSize.y) - 2.0f } };
+
+        m_boardRegion = { { ((windowSize.x * 0.5f) - (boardRegionSize.x * 0.5f)),
+                            (m_topRegion.height + 1.0f) },
+                          boardRegionSize };
     }
 
-    void Layout::setupBoard(const sf::Vector2i & mapSize)
+    void Layout::calcBoardValues(const sf::Vector2i & mapSize)
     {
         m_cellCounts = mapSize;
 
-        m_cellCountTotal = static_cast<std::size_t>(m_cellCounts.x * m_cellCounts.y);
-
-        const sf::Vector2f actualBoardSize{ sf::Vector2i(m_cellSize) * m_cellCounts };
-
-        const sf::Vector2f actualBoardPos{ util::center(m_windowBounds) -
-                                           (actualBoardSize / 2.0f) };
-
-        m_boardBounds = sf::FloatRect(actualBoardPos, actualBoardSize);
+        const sf::Vector2f boardSize{ sf::Vector2i(m_cellSize) * m_cellCounts };
+        const sf::Vector2f boardPos{ util::center(m_boardRegion) - (boardSize / 2.0f) };
+        m_boardBounds = sf::FloatRect(boardPos, boardSize);
     }
 
     bool Layout::isPositionValid(const MapPos_t & pos) const
@@ -83,7 +90,7 @@ namespace castlecrawl
             (pos.x >= 0) && (pos.x < m_cellCounts.x) && (pos.y >= 0) && (pos.y < m_cellCounts.y));
     }
 
-    sf::FloatRect Layout::cellBounds(const MapPos_t & pos) const
+    const sf::FloatRect Layout::cellBounds(const MapPos_t & pos) const
     {
         const sf::FloatRect bounds{
             (util::position(m_boardBounds) + (m_cellSize * sf::Vector2f(pos))), m_cellSize

@@ -60,7 +60,7 @@ namespace castlecrawl
         m_window.setFramerateLimit(m_config.frame_rate_limit);
         m_window.setKeyRepeatEnabled(false);
 
-        m_layout.setupWindow(m_config);
+        m_layout.calcWindowValues(m_config);
 
         m_audio.setMediaPath((m_config.media_dir_path / "sfx").string());
         m_audio.volume(75.0f);

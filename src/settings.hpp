@@ -29,7 +29,7 @@ namespace castlecrawl
         sf::VideoMode video_mode;
         unsigned frame_rate_limit;
         sf::Color background_color;
-        float map_cell_size_ratio;
+        sf::Vector2i cell_counts;
     };
 
     // Everything about the window that can only be calculated once BOTH the window is open and the
@@ -39,34 +39,37 @@ namespace castlecrawl
       public:
         Layout() = default;
 
-        // always call this setup first
-        void setupWindow(const GameConfig & config);
+        // always call this setup first before setupBoardValues() below
+        void calcWindowValues(const GameConfig & config);
 
-        //...and this setup on each map load
-        void setupBoard(const sf::Vector2i & mapSize);
+        // always call this just before each map::load()
+        void calcBoardValues(const sf::Vector2i & mapSize);
 
+        // these are set at startup with resolution and config.cell_counts
+        const sf::Vector2f windowSize() const;
+        const sf::FloatRect windowBounds() const { return m_windowBounds; }
         float mapCellDimm() const { return m_cellSize.x; }
+        const sf::Vector2f mapCellSize() const { return m_cellSize; }
+        const sf::FloatRect boardRegion() const { return m_boardRegion; }
+        const sf::FloatRect topRegion() const { return m_topRegion; }
+        const sf::Vector2f cellSize() const { return m_cellSize; }
 
-        sf::Vector2f mapCellSize() const { return m_cellSize; }
-
-        sf::Vector2f windowSize() const;
-        sf::FloatRect windowBounds() const { return m_windowBounds; }
-        sf::FloatRect boardBounds() const { return m_boardBounds; }
-        sf::Vector2i cellCounts() const { return m_cellCounts; }
-        std::size_t cellCountTotal() const { return m_cellCountTotal; }
-        sf::Vector2f cellSize() const { return m_cellSize; }
-        sf::FloatRect cellBounds(const MapPos_t & pos) const;
-
+        // these change with the map
+        const sf::FloatRect boardBounds() const { return m_boardBounds; }
+        const sf::Vector2i cellCounts() const { return m_cellCounts; }
+        const sf::FloatRect cellBounds(const MapPos_t & pos) const;
         bool isPositionValid(const MapPos_t & pos) const;
 
-        // BoardPosOpt_t windowPosToBoardPos(const sf::Vector2f windowPos) const ;
-
       protected:
+        // these are set at startup with resolution and config.cell_counts
         sf::FloatRect m_windowBounds;
+        sf::FloatRect m_boardRegion;
+        sf::FloatRect m_topRegion;
+        sf::Vector2f m_cellSize;
+
+        // these members change with the map
         sf::FloatRect m_boardBounds;
         sf::Vector2i m_cellCounts;
-        std::size_t m_cellCountTotal{ 0 };
-        sf::Vector2f m_cellSize;
     };
 
     // All info about a game in progress that can changes during play.

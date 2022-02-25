@@ -13,6 +13,7 @@
 #include "resources.hpp"
 #include "settings.hpp"
 #include "state-machine.hpp"
+#include "util.hpp"
 
 #include <iostream>
 
@@ -22,13 +23,12 @@ namespace castlecrawl
     StatePlay::StatePlay(Context & context)
         : StateBase(State::Play)
         , m_fps()
-        , m_windowOutline()
+        , m_bgRectangle()
     {
-        m_windowOutline.setPosition(1.0f, 1.0f);
-        m_windowOutline.setSize(context.layout.windowSize() - sf::Vector2f{ 2.0f, 2.0f });
-        m_windowOutline.setFillColor(context.config.background_color);
-        m_windowOutline.setOutlineThickness(1.0f);
-        m_windowOutline.setOutlineColor(sf::Color(80, 80, 80));
+        m_bgRectangle.setPosition(0.0f, 0.0f);
+        m_bgRectangle.setSize(context.layout.windowSize());
+        m_bgRectangle.setFillColor(context.config.background_color);
+        m_bgRectangle.setOutlineThickness(0.0f);
 
         m_fps.reset(context);
     }
@@ -67,7 +67,7 @@ namespace castlecrawl
     void StatePlay::draw(
         const Context & context, sf::RenderTarget & target, sf::RenderStates states) const
     {
-        target.draw(m_windowOutline, states);
+        target.draw(m_bgRectangle, states);
         context.map().draw(context, target, states);
         target.draw(context.board, states);
         target.draw(context.anim, states);

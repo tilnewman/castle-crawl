@@ -33,7 +33,7 @@ namespace castlecrawl
 
       private:
         FramesPerSecond m_fps;
-        sf::RectangleShape m_windowOutline;
+        sf::RectangleShape m_bgRectangle;
     };
 
 } // namespace castlecrawl
