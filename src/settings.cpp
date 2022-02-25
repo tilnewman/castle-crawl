@@ -14,13 +14,38 @@
 namespace castlecrawl
 {
     GameConfig::GameConfig()
-        : game_name{ "game" }
-        , media_dir_path{ std::filesystem::current_path() / "media" }
+        : media_dir_path{ std::filesystem::current_path() / "media" }
         , video_mode{ sf::VideoMode::getDesktopMode() }
         , frame_rate_limit{ 0 }
         , background_color{ sf::Color(17, 14, 14) }
         , map_cell_size_ratio{ 0.024f }
     {}
+
+    void GameConfig::setup(const sf::VideoMode & videoModeActual)
+    {
+        try
+        {
+            media_dir_path = std::filesystem::canonical(media_dir_path);
+        }
+        catch (...)
+        {
+        }
+
+        M_CHECK(
+            std::filesystem::exists(media_dir_path),
+            "Error:  The media path does not exist:"
+                << media_dir_path
+                << "\nPut the media path on the command line or put the 'media' folder here.");
+
+        // sometimes SFML doesn't use the resolution you specify, so set the actual values here
+        video_mode = videoModeActual;
+
+        // sometimes SFML repoprts 32bpp as zero, don't know why, don't really care
+        if (0 == video_mode.bitsPerPixel)
+        {
+            video_mode.bitsPerPixel = 32;
+        }
+    }
 
     void Layout::setupWindow(const GameConfig & config)
     {

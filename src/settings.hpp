@@ -25,7 +25,8 @@ namespace castlecrawl
     {
         GameConfig();
 
-        std::string game_name;
+        void setup(const sf::VideoMode & videoModeActual);
+
         std::filesystem::path media_dir_path;
         sf::VideoMode video_mode;
         unsigned frame_rate_limit;

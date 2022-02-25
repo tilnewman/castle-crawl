@@ -18,7 +18,10 @@ namespace castlecrawl
     {
       public:
         Map();
-        Map(const Context &, const bool isFloorStone, const MapChars_t &, const MapLinks_t &);
+        Map(const util::Random & random,
+            const bool isFloorStone,
+            const MapChars_t &,
+            const MapLinks_t &);
 
         void load(Context & context);
 
@@ -43,7 +46,7 @@ namespace castlecrawl
       private:
         void addWalls();
         void addWallCorners();
-        void randomizeFloorTiles(const Context & context);
+        void randomizeFloorTiles(const util::Random & random);
         void makeDoors(Context &);
 
         static void makeBorderVerts(const Context & context, const MapChars_t &, VertVec_t &);

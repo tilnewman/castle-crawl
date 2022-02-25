@@ -12,7 +12,7 @@
 #include "settings.hpp"
 #include "util.hpp"
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 
 namespace castlecrawl
 {
@@ -29,7 +29,7 @@ namespace castlecrawl
     {}
 
     Map::Map(
-        const Context & context,
+        const util::Random & random,
         const bool isFloorStone,
         const MapChars_t & chars,
         const MapLinks_t & links)
@@ -46,7 +46,7 @@ namespace castlecrawl
         addWallCorners();
 
         m_floorChars = m_chars;
-        randomizeFloorTiles(context);
+        randomizeFloorTiles(random);
     }
 
     void Map::load(Context & context)
@@ -58,10 +58,10 @@ namespace castlecrawl
         m_wallVerts.clear();
         m_transVerts.clear();
 
-        m_floorVerts.reserve(4000);
-        m_borderVerts.reserve(4000);
-        m_wallVerts.reserve(4000);
-        m_transVerts.reserve(4000);
+        m_floorVerts.reserve(10000);
+        m_borderVerts.reserve(10000);
+        m_wallVerts.reserve(10000);
+        m_transVerts.reserve(10000);
 
         makeVerts(context, m_floorChars, m_floorVerts);
         makeBorderVerts(context, m_floorChars, m_borderVerts);
@@ -103,7 +103,7 @@ namespace castlecrawl
         }
     }
 
-    void Map::randomizeFloorTiles(const Context & context)
+    void Map::randomizeFloorTiles(const util::Random & random)
     {
         for (std::string & str : m_floorChars)
         {
@@ -120,7 +120,7 @@ namespace castlecrawl
                         ch = '0';
                     }
 
-                    ch += context.random.fromTo<char>(0, 5);
+                    ch += random.fromTo<char>(0, 5);
                 }
             }
         }

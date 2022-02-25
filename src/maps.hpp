@@ -11,7 +11,7 @@ namespace castlecrawl
     class Maps
     {
       public:
-        void load(const Context &);
+        void load(const util::Random & random);
 
         Maps_t & maps() { return m_maps; }
         const Maps_t & maps() const { return m_maps; }

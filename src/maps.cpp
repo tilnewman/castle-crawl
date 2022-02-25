@@ -8,14 +8,14 @@
 namespace castlecrawl
 {
 
-    void Maps::load(const Context & context)
+    void Maps::load(const util::Random & random)
     {
         m_maps.clear();
 
         // clang-format off
      
         m_maps["level-1-first-room"] = Map {
-            context,
+            random,
             true,
             MapChars_t {
                 "...........",
@@ -36,7 +36,7 @@ namespace castlecrawl
 
         
         m_maps["level-1-cell-block"] = Map {
-            context,
+            random,
             false,
             MapChars_t {
                 "......d...........................",
@@ -69,7 +69,7 @@ namespace castlecrawl
 
         
         m_maps["level-1-main-hall"] = Map {
-            context,
+            random,
             false,
             MapChars_t {
                 "................d.................",
@@ -104,7 +104,7 @@ namespace castlecrawl
             };
 
         m_maps["level-1-boiler-room"] = Map {
-            context,
+            random,
             true,
             MapChars_t {
                 "..S..............................",
@@ -136,7 +136,7 @@ namespace castlecrawl
             };
         
         m_maps["level-1-hidden-passage"] = Map {
-            context,
+            random,
             false,
             MapChars_t {
                 "...................",
@@ -168,7 +168,7 @@ namespace castlecrawl
             };
 
         m_maps["level-1-coffin-room"] = Map {
-            context,
+            random,
             true,
             MapChars_t {
                 ".................................",

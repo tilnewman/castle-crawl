@@ -5,15 +5,8 @@
 //
 #include "game-coordinator.hpp"
 
-#include "util.hpp"
-
-#include <algorithm>
 #include <filesystem>
 #include <iostream>
-#include <memory>
-#include <sstream>
-
-#include <SFML/Graphics.hpp>
 
 namespace castlecrawl
 {
@@ -46,40 +39,29 @@ namespace castlecrawl
 
     void GameCoordinator::setup(const GameConfig & configOrig)
     {
+        // Note that m_context is not safe to use until this function completes
+
         m_config = configOrig;
-
-        M_CHECK(
-            std::filesystem::exists(m_config.media_dir_path),
-            "Error:  The media path does not exist:" << m_config.media_dir_path);
-
-        M_CHECK(std::filesystem::is_directory(m_config.media_dir_path), m_config.media_dir_path);
 
         m_game.reset();
 
-        m_window.create(m_config.video_mode, m_config.game_name, sf::Style::Fullscreen);
+        m_window.create(m_config.video_mode, "Castle Crawl", sf::Style::Fullscreen);
 
         M_CHECK(
             m_window.isOpen(),
-            "Failed to make and open the graphics window.  (sf::RenderWindow::isOpen() == false)");
+            "Error:  Failed to create() the fullscreen graphics window at "
+                << m_config.video_mode.width << 'x' << m_config.video_mode.height);
+
+        m_config.setup(sf::VideoMode{
+            m_window.getSize().x,
+            m_window.getSize().y,
+            m_window.getSettings().depthBits,
+        });
 
         m_window.setFramerateLimit(m_config.frame_rate_limit);
         m_window.setKeyRepeatEnabled(false);
 
-        m_config.video_mode.width = m_window.getSize().x;
-        m_config.video_mode.height = m_window.getSize().y;
-        m_config.video_mode.bitsPerPixel = m_window.getSettings().depthBits;
-
-        // sometimes SFML repoprts 32bpp as zero, don't know why, don't really care
-        if (0 == m_config.video_mode.bitsPerPixel)
-        {
-            m_config.video_mode.bitsPerPixel = 32;
-        }
-
         m_layout.setupWindow(m_config);
-
-        std::cout << "Game Window Cells: width_ratio=" << m_config.map_cell_size_ratio
-                  << ", pixels=" << m_layout.mapCellDimm()
-                  << ", grid=" << (m_layout.windowSize() / m_layout.mapCellSize()) << std::endl;
 
         m_audio.setMediaPath((m_config.media_dir_path / "sfx").string());
         m_audio.volume(75.0f);
@@ -88,17 +70,16 @@ namespace castlecrawl
 
         m_media.load(m_config, m_layout, m_audio);
 
-        // depends only on m_random only so passing context here is safe
-        m_maps.load(m_context);
+        m_maps.load(m_random);
 
         m_context.switchToMap({ { 0, 0 }, "level-1-first-room", { 5, 3 } });
 
         m_states.setChangePending(State::Splash);
     }
 
-    void GameCoordinator::run(const GameConfig & config)
+    void GameCoordinator::run(const GameConfig & configOrig)
     {
-        setup(config);
+        setup(configOrig);
 
         sf::Clock frameClock;
         while (m_window.isOpen() && !m_game.isGameOver())
