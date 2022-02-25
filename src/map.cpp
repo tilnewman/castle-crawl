@@ -82,14 +82,14 @@ namespace castlecrawl
         }
     }
 
-    void Map::setChar(const int x, const int y, const char newChar)
+    void Map::setChar(const MapPos_t & pos, const char newChar)
     {
-        if (!isPosValid(x, y))
+        if (!isPosValid(pos))
         {
             return;
         }
 
-        m_chars[static_cast<std::size_t>(y)][static_cast<std::size_t>(x)] = newChar;
+        m_chars[static_cast<std::size_t>(pos.y)][static_cast<std::size_t>(pos.x)] = newChar;
     }
 
     MapPos_t Map::size() const

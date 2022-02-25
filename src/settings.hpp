@@ -60,6 +60,8 @@ namespace castlecrawl
         const sf::FloatRect cellBounds(const MapPos_t & pos) const;
         bool isPositionValid(const MapPos_t & pos) const;
 
+        const MapPos_t cellPosition(const sf::Vector2f & windowPosition) const;
+
       protected:
         // these are set at startup with resolution and config.cell_counts
         sf::FloatRect m_windowBounds;

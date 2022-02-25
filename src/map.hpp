@@ -18,6 +18,7 @@ namespace castlecrawl
     {
       public:
         Map();
+
         Map(const util::Random & random,
             const bool isFloorStone,
             const MapChars_t &,
@@ -33,11 +34,11 @@ namespace castlecrawl
             return ((pos.x >= 0) && (pos.y >= 0) && (pos.x < size().x) && (pos.y < size().y));
         }
 
-        bool isPosValid(const int x, const int y) const { return isPosValid(MapPos_t{ x, y }); }
-
         char getChar(const MapPos_t & pos) const;
         char getChar(const int x, const int y) const { return getChar(MapPos_t{ x, y }); }
-        void setChar(const int x, const int y, const char newChar);
+
+        void setChar(const MapPos_t & pos, const char newChar);
+        void setChar(const int x, const int y, const char newChar) { setChar({ x, y }, newChar); };
 
         void draw(const Context &, sf::RenderTarget &, sf::RenderStates) const;
 

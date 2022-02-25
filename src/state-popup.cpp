@@ -17,7 +17,7 @@ namespace castlecrawl
 
     void StatePopup::handleEvent(Context & context, const sf::Event & event)
     {
-        if (sf::Event::KeyPressed == event.type)
+        if ((sf::Event::KeyPressed == event.type) || (sf::Event::MouseButtonPressed == event.type))
         {
             context.popup.key = event.key.code;
             context.state.setChangePending(State::Play);

@@ -99,6 +99,22 @@ namespace castlecrawl
         return bounds;
     }
 
+    const MapPos_t Layout::cellPosition(const sf::Vector2f & windowPosition) const
+    {
+        for (int y = 0; y < m_cellCounts.y; ++y)
+        {
+            for (int x = 0; x < m_cellCounts.x; ++x)
+            {
+                if (cellBounds({ x, y }).contains(windowPosition))
+                {
+                    return { x, y };
+                }
+            }
+        }
+
+        return { -1, -1 };
+    }
+
     //
 
     void GameInPlay::reset()
