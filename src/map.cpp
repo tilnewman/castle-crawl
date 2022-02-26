@@ -17,15 +17,25 @@
 
 namespace castlecrawl
 {
+    void MapVerts::reset()
+    {
+        floor.clear();
+        border.clear();
+        wall.clear();
+        transition.clear();
+
+        // these reserve values found after trials of the biggest maps
+        floor.reserve(4000);
+        border.reserve(2000);
+        wall.reserve(4000);
+        transition.reserve(1000);
+    }
+
     Map::Map()
         : m_isFloorStone(false)
         , m_chars()
         , m_floorChars(false)
         , m_links()
-        , m_floorVerts()
-        , m_borderVerts()
-        , m_wallVerts()
-        , m_transVerts()
 
     {}
 
@@ -38,10 +48,11 @@ namespace castlecrawl
         , m_chars(chars)
         , m_floorChars()
         , m_links(links)
-        , m_floorVerts()
-        , m_borderVerts()
-        , m_wallVerts()
-        , m_transVerts()
+    {
+        updateMapChars(random);
+    }
+
+    void Map::updateMapChars(const util::Random & random)
     {
         addWalls();
         addWallCorners();
@@ -50,24 +61,16 @@ namespace castlecrawl
         randomizeFloorTiles(random);
     }
 
-    void Map::load(Context & context)
+    void Map::load(Context & context, MapVerts & verts)
     {
         makeDoors(context);
 
-        m_floorVerts.clear();
-        m_borderVerts.clear();
-        m_wallVerts.clear();
-        m_transVerts.clear();
+        verts.reset();
 
-        m_floorVerts.reserve(10000);
-        m_borderVerts.reserve(10000);
-        m_wallVerts.reserve(10000);
-        m_transVerts.reserve(10000);
-
-        makeVerts(context, m_floorChars, m_floorVerts);
-        makeBorderVerts(context, m_floorChars, m_borderVerts);
-        makeVerts(context, m_chars, m_wallVerts);
-        makeStoneTransitionVerts(context, m_transVerts);
+        makeVerts(context, m_floorChars, verts.floor);
+        makeBorderVerts(context, m_floorChars, verts.border);
+        makeVerts(context, m_chars, verts.wall);
+        makeStoneTransitionVerts(context, verts.transition);
     }
 
     char Map::getChar(const MapPos_t & pos) const
@@ -258,33 +261,6 @@ namespace castlecrawl
                     continue;
                 }
             }
-        }
-    }
-
-    void
-        Map::draw(const Context & context, sf::RenderTarget & target, sf::RenderStates states) const
-    {
-        states.texture = &context.media.tileTexture();
-
-        if (!m_floorVerts.empty())
-        {
-            target.draw(&m_floorVerts[0], m_floorVerts.size(), sf::Quads, states);
-        }
-
-        if (!m_borderVerts.empty())
-        {
-            // do not use states because these verts have no texture
-            target.draw(&m_borderVerts[0], m_borderVerts.size(), sf::Quads);
-        }
-
-        if (!m_wallVerts.empty())
-        {
-            target.draw(&m_wallVerts[0], m_wallVerts.size(), sf::Quads, states);
-        }
-
-        if (!m_transVerts.empty())
-        {
-            target.draw(&m_transVerts[0], m_transVerts.size(), sf::Quads, states);
         }
     }
 

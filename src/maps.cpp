@@ -8,13 +8,17 @@
 #include "board.hpp"
 #include "check-macros.hpp"
 #include "context.hpp"
+#include "resources.hpp"
 #include "settings.hpp"
 #include "util.hpp"
 
 #include <fstream>
 
+#include <SFML/Graphics/RenderTarget.hpp>
+
 namespace castlecrawl
 {
+
     Maps::Maps()
         : m_maps()
         , m_currentMapName()
@@ -27,7 +31,6 @@ namespace castlecrawl
         m_maps.clear();
 
         // clang-format off
-     
         m_maps["level-1-first-room"] = Map {
             random,
             true,
@@ -229,8 +232,35 @@ namespace castlecrawl
         m_currentMapPtr = &iter->second;
 
         context.layout.calcBoardValues(m_currentMapPtr->size());
-        m_currentMapPtr->load(context);
+        m_currentMapPtr->load(context, m_verts);
         context.board.player.reset(context, link.to_pos);
+    }
+
+    void Maps::drawCurrent(
+        const Context & context, sf::RenderTarget & target, sf::RenderStates states) const
+    {
+        states.texture = &context.media.tileTexture();
+
+        if (!m_verts.floor.empty())
+        {
+            target.draw(&m_verts.floor[0], m_verts.floor.size(), sf::Quads, states);
+        }
+
+        if (!m_verts.border.empty())
+        {
+            // do not use states because these verts have no texture
+            target.draw(&m_verts.border[0], m_verts.border.size(), sf::Quads);
+        }
+
+        if (!m_verts.wall.empty())
+        {
+            target.draw(&m_verts.wall[0], m_verts.wall.size(), sf::Quads, states);
+        }
+
+        if (!m_verts.transition.empty())
+        {
+            target.draw(&m_verts.transition[0], m_verts.transition.size(), sf::Quads, states);
+        }
     }
 
     void Maps::dumpAllToFile() const

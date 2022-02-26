@@ -95,7 +95,7 @@ namespace castlecrawl
         const Context & context, sf::RenderTarget & target, sf::RenderStates states) const
     {
         target.draw(m_bgRectangle, states);
-        context.maps.get().draw(context, target, states);
+        context.maps.drawCurrent(context, target, states);
         target.draw(context.board, states);
         target.draw(context.anim, states);
         target.draw(m_fps, states);

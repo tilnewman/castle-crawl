@@ -8,6 +8,13 @@
 
 #include <string>
 
+#include <SFML/Graphics/RenderStates.hpp>
+
+namespace sf
+{
+    class RenderTarget;
+} // namespace sf
+
 namespace castlecrawl
 {
 
@@ -23,6 +30,9 @@ namespace castlecrawl
 
         void switchTo(Context & context, const MapLink & link);
 
+        void drawCurrent(
+            const Context & context, sf::RenderTarget & target, sf::RenderStates states) const;
+
         void dumpAllToFile() const;
 
       private:
@@ -30,6 +40,7 @@ namespace castlecrawl
         std::string m_currentMapName;
         Map m_invalidMap;
         Map * m_currentMapPtr;
+        MapVerts m_verts;
     };
 
 } // namespace castlecrawl

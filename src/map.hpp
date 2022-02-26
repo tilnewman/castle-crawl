@@ -8,11 +8,19 @@
 
 #include <vector>
 
-#include <SFML/Graphics/RenderTarget.hpp>
-
 namespace castlecrawl
 {
     struct Context;
+
+    struct MapVerts
+    {
+        VertVec_t floor;
+        VertVec_t border;
+        VertVec_t wall;
+        VertVec_t transition;
+
+        void reset();
+    };
 
     class Map
     {
@@ -24,7 +32,8 @@ namespace castlecrawl
             const MapChars_t &,
             const MapLinks_t &);
 
-        void load(Context & context);
+        void load(Context & context, MapVerts & verts);
+        void updateMapChars(const util::Random & random);
 
         MapPos_t size() const;
         bool empty() const { return !((size().x > 0) && (size().y > 0)); }
@@ -39,8 +48,6 @@ namespace castlecrawl
 
         void setChar(const MapPos_t & pos, const char newChar);
         void setChar(const int x, const int y, const char newChar) { setChar({ x, y }, newChar); }
-
-        void draw(const Context &, sf::RenderTarget &, sf::RenderStates) const;
 
         const MapLinks_t & links() const { return m_links; }
 
@@ -62,11 +69,6 @@ namespace castlecrawl
         MapChars_t m_chars;
         MapChars_t m_floorChars;
         MapLinks_t m_links;
-
-        VertVec_t m_floorVerts;
-        VertVec_t m_borderVerts;
-        VertVec_t m_wallVerts;
-        VertVec_t m_transVerts;
     };
 
 } // namespace castlecrawl
