@@ -11,6 +11,8 @@
 #include "settings.hpp"
 #include "util.hpp"
 
+#include <fstream>
+
 namespace castlecrawl
 {
     Maps::Maps()
@@ -209,7 +211,6 @@ namespace castlecrawl
                 { { -1, 9 }, "level-1-hidden-passage", { 18, 16 } }
                 }
             };
-
         // clang-format on
     }
 
@@ -230,6 +231,23 @@ namespace castlecrawl
         context.layout.calcBoardValues(m_currentMapPtr->size());
         m_currentMapPtr->load(context);
         context.board.player.reset(context, link.to_pos);
+    }
+
+    void Maps::dumpAllToFile() const
+    {
+        std::ofstream fileStream("converted-maps.txt", std::ios_base::trunc);
+
+        for (const auto & pair : m_maps)
+        {
+            const auto & strings = pair.second.strings();
+
+            for (const std::string & row : strings)
+            {
+                fileStream << row << '\n';
+            }
+
+            fileStream << "\n\n";
+        }
     }
 
 } // namespace castlecrawl

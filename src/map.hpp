@@ -44,6 +44,8 @@ namespace castlecrawl
 
         const MapLinks_t & links() const { return m_links; }
 
+        const MapChars_t & strings() const { return m_chars; }
+
       private:
         void addWalls();
         void addWallCorners();

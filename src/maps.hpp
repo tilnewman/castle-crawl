@@ -23,6 +23,8 @@ namespace castlecrawl
 
         void switchTo(Context & context, const MapLink & link);
 
+        void dumpAllToFile() const;
+
       private:
         util::FlatMap<std::string, Map> m_maps;
         std::string m_currentMapName;
