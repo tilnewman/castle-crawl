@@ -47,6 +47,8 @@ namespace castlecrawl
         {
             video_mode.bitsPerPixel = 32;
         }
+
+        std::cout << "Game Window Resolution: " << video_mode << std::endl;
     }
 
     const sf::Vector2f Layout::windowSize() const { return util::size(m_windowBounds); }
