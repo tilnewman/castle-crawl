@@ -12,7 +12,7 @@ namespace castlecrawl
     // used to index so keep unsigned
     enum class SummonImage : std::size_t
     {
-        SnakeBag,
+        SnakeBag = 0,
         Snkake1,
         Snkake2,
         Snkake3,
@@ -147,7 +147,7 @@ namespace castlecrawl
             case SummonImage::Wizard5:      return sf::IntRect( 448, 320,  64,  64);
             case SummonImage::Wizard6:      return sf::IntRect( 448, 384,  64,  64);
             case SummonImage::Count:
-            default:                         return sf::IntRect(0,0,0,0);
+            default:                        return sf::IntRect(0,0,0,0);
         }
         // clang-format on
     }
