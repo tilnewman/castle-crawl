@@ -18,9 +18,8 @@ namespace castlecrawl
 
         void loadAll(const util::Random & random);
 
-        Map & get() { return m_maps[m_currentMapName]; }
-
-        const Map & get() const;
+        Map & get() { return *m_currentMapPtr; }
+        const Map & get() const { return *m_currentMapPtr; }
 
         void switchTo(Context & context, const MapLink & link);
 
@@ -28,6 +27,7 @@ namespace castlecrawl
         util::FlatMap<std::string, Map> m_maps;
         std::string m_currentMapName;
         Map m_invalidMap;
+        Map * m_currentMapPtr;
     };
 
 } // namespace castlecrawl

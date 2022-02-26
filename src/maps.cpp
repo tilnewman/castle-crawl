@@ -16,20 +16,9 @@ namespace castlecrawl
     Maps::Maps()
         : m_maps()
         , m_currentMapName()
+        , m_invalidMap()
+        , m_currentMapPtr(&m_invalidMap)
     {}
-
-    const Map & Maps::get() const
-    {
-        const auto iter = m_maps.find(m_currentMapName);
-        if (iter == std::end(m_maps))
-        {
-            return m_invalidMap;
-        }
-        else
-        {
-            return iter->second;
-        }
-    }
 
     void Maps::loadAll(const util::Random & random)
     {
@@ -229,15 +218,17 @@ namespace castlecrawl
         const std::string fromMapName = m_currentMapName;
         m_currentMapName = link.to_name;
 
-        Map & map = get();
+        const auto iter = m_maps.find(m_currentMapName);
 
         M_CHECK(
-            (!map.empty()),
+            (!iter->second.empty()),
             "Map is empty!  from=\"" << fromMapName << "\" to " << link.to_pos << " in \""
                                      << m_currentMapName << "\"");
 
-        context.layout.calcBoardValues(map.size());
-        map.load(context);
+        m_currentMapPtr = &iter->second;
+
+        context.layout.calcBoardValues(m_currentMapPtr->size());
+        m_currentMapPtr->load(context);
         context.board.player.reset(context, link.to_pos);
     }
 
