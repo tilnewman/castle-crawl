@@ -27,4 +27,4 @@ namespace castlecrawl
 
 } // namespace castlecrawl
 
-#endif // CASTLECRAWL_PLAYER_HPP_INCLUDED
+#endif // CASTLECRAWL_BOARD_HPP_INCLUDED

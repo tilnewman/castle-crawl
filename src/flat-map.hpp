@@ -126,7 +126,9 @@ namespace util
         // removes all duplicate keys
         void sortAndUnique()
         {
-            std::sort(std::begin(m_vector), std::end(m_vector));
+            std::sort(std::begin(m_vector), std::end(m_vector), [](const auto & A, const auto & B) {
+                return (A.first < B.first);
+            });
 
             m_vector.erase(
                 std::unique(

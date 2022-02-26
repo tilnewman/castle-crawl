@@ -15,15 +15,18 @@ namespace castlecrawl
         , m_media()
         , m_board()
         , m_layout()
+        , m_player()
         , m_game()
         , m_config()
         , m_states()
         , m_popups()
+        , m_items()
         , m_random()
         , m_audio(m_random)
         , m_anim(m_random)
         , m_context(
               m_game,
+              m_player,
               m_maps,
               m_board,
               m_config,
@@ -31,6 +34,7 @@ namespace castlecrawl
               m_media,
               m_states,
               m_popups,
+              m_items,
               m_random,
               m_audio,
               m_anim)

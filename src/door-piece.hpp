@@ -1,5 +1,5 @@
-#ifndef CASTLECRAWL_DOOR_HPP_INCLUDED
-#define CASTLECRAWL_DOOR_HPP_INCLUDED
+#ifndef CASTLECRAWL_DOOR_PIECE_HPP_INCLUDED
+#define CASTLECRAWL_DOOR_PIECE_HPP_INCLUDED
 //
 // door.hpp
 //
@@ -20,4 +20,4 @@ namespace castlecrawl
 
 } // namespace castlecrawl
 
-#endif // CASTLECRAWL_PLAYER_HPP_INCLUDED
+#endif // CASTLECRAWL_DOOR_PIECE_HPP_INCLUDED

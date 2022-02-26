@@ -6,9 +6,11 @@
 #include "animation-player.hpp"
 #include "board.hpp"
 #include "context.hpp"
+#include "item-factory.hpp"
 #include "keys.hpp"
 #include "maps.hpp"
 #include "player-piece.hpp"
+#include "player.hpp"
 #include "popup-manager.hpp"
 #include "random.hpp"
 #include "resources.hpp"
@@ -37,20 +39,20 @@ namespace castlecrawl
       protected:
         sf::RenderWindow m_window;
 
-        // subsystems
         Maps m_maps;
         Media m_media;
         Board m_board;
         Layout m_layout;
+        Player m_player;
         GameInPlay m_game;
         GameConfig m_config;
         StateMachine m_states;
         PopupManager m_popups;
+        item::ItemFactory m_items;
         util::Random m_random;
         util::SoundPlayer m_audio;
         util::AnimationPlayer m_anim;
 
-        // subsystems reference wrapper
         Context m_context;
     };
 

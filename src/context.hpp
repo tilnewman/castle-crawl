@@ -13,10 +13,17 @@ namespace util
 
 namespace castlecrawl
 {
+
+    namespace item
+    {
+        class ItemFactory;
+    }
+
     class Map;
     class Maps;
     class Media;
     class Layout;
+    class Player;
     class GameInPlay;
     class StateMachine;
 
@@ -30,6 +37,7 @@ namespace castlecrawl
     {
         Context(
             GameInPlay & gam,
+            Player & pla,
             Maps & mps,
             Board & bor,
             const GameConfig & con,
@@ -37,10 +45,12 @@ namespace castlecrawl
             const Media & med,
             StateMachine & sta,
             PopupManager & pop,
+            item::ItemFactory & ifa,
             const util::Random & ran,
             util::SoundPlayer & aud,
             util::AnimationPlayer & ani)
             : game(gam)
+            , player(pla)
             , maps(mps)
             , board(bor)
             , config(con)
@@ -48,6 +58,7 @@ namespace castlecrawl
             , media(med)
             , state(sta)
             , popup(pop)
+            , items(ifa)
             , random(ran)
             , audio(aud)
             , anim(ani)
@@ -60,6 +71,7 @@ namespace castlecrawl
         Context & operator=(Context &&) = delete;
 
         GameInPlay & game;
+        Player & player;
         Maps & maps;
         Board & board;
         const GameConfig & config;
@@ -67,6 +79,7 @@ namespace castlecrawl
         const Media & media;
         StateMachine & state;
         PopupManager & popup;
+        item::ItemFactory & items;
         const util::Random & random;
         util::SoundPlayer & audio;
         util::AnimationPlayer & anim;

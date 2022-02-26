@@ -215,6 +215,9 @@ namespace castlecrawl
                 }
             };
         // clang-format on
+
+        // this sort is not required but helps performance
+        m_maps.sortAndUnique();
     }
 
     void Maps::switchTo(Context & context, const MapLink & link)
