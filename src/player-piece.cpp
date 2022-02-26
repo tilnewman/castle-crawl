@@ -33,10 +33,7 @@ namespace castlecrawl
 
         const sf::Keyboard::Key key{ event.key.code };
 
-        if (keys::isArrow(key))
-        {
-            handleArrowKey(context, key);
-        }
+        handleArrowKey(context, key);
 
         // TODO REMOVE TEMP ANIMATION TEST
         if (sf::Keyboard::Num1 == key)
@@ -69,6 +66,11 @@ namespace castlecrawl
 
     void PlayerPiece::handleArrowKey(Context & context, const sf::Keyboard::Key arrowKey)
     {
+        if (!keys::isArrow(arrowKey))
+        {
+            return;
+        }
+
         const MapPos_t newPos = keys::moveIfDir(position(), arrowKey);
 
         for (const MapLink & link : context.maps.get().links())
