@@ -42,7 +42,6 @@ namespace castlecrawl
 
       protected:
         void makeDefaults();
-        void loadSoundEffects(util::SoundPlayer &);
         void loadTileSprites(const GameConfig & config, const Layout &);
 
         template <typename T>

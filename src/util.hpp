@@ -928,7 +928,7 @@ namespace util
     template <typename T>
     void centerInside(T & thing, const sf::FloatRect & rect)
     {
-        thing.setPosition((center(rect) - (size(thing) * 0.5f)) + thing.getOrigin());
+        thing.setPosition(center(rect) - (size(thing) * 0.5f));
     }
 
     template <typename T>

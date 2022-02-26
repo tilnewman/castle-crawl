@@ -16,10 +16,12 @@ namespace castlecrawl
     void Media::load(const GameConfig & config, const Layout & layout, util::SoundPlayer & audio)
     {
         makeDefaults();
+
         load((config.media_dir_path / "font/gentium-plus/gentium-plus.ttf"), m_font);
 
         loadTileSprites(config, layout);
-        loadSoundEffects(audio);
+
+        audio.loadAll();
     }
 
     void Media::loadTileSprites(const GameConfig & config, const Layout & layout)
@@ -51,17 +53,6 @@ namespace castlecrawl
             .setColor(sf::Color(130, 75, 40));
 
         m_tileSprites.at(static_cast<std::size_t>(TileImage::Empty)) = m_defaultSprite;
-    }
-
-    void Media::loadSoundEffects(util::SoundPlayer & audio)
-    {
-        M_CHECK(
-            audio.load({ "tap-wood-low.ogg",
-                         "locked.ogg",
-                         "door-open.ogg",
-                         "tick-on-2.ogg",
-                         "stairs.ogg" }),
-            "Error:  Unable to load sfx files!");
     }
 
     const sf::Font & Media::font() const { return m_font; }

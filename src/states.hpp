@@ -25,6 +25,7 @@ namespace castlecrawl
         Init = 0,
         Splash,
         Play,
+        Pause,
         Popup,
         Quit,
     };
@@ -41,8 +42,9 @@ namespace castlecrawl
             case State::Splash: return "Splash";
             case State::Popup: return "Popup";
             case State::Play: return "Play";
+            case State::Pause: return "Pause";
             case State::Quit: return "Quit";
-            default: return "";
+            default: return "State::Invalid";
         }
     }
 

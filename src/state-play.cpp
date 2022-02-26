@@ -74,6 +74,12 @@ namespace castlecrawl
             return;
         }
 
+        if (sf::Keyboard::Space == event.key.code)
+        {
+            context.state.setChangePending(State::Pause);
+            return;
+        }
+
         // TEMP TODO REMOVE after testing
         if (sf::Keyboard::P == event.key.code)
         {
