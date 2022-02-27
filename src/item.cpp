@@ -6,76 +6,77 @@
 #include "item.hpp"
 
 #include <ostream>
-#include <sstream>
 
 namespace castlecrawl
 {
     namespace item
     {
-        Item::Item()
-            : m_name()
-            , m_weapon(Weapon::Count)
-            , m_armor(Armor::Count)
-            , m_misc(Misc::Count)
-            , m_armorRating(0)
-            , m_damageMin(0)
-            , m_damageMax(0)
-            , m_value(0)
-        {}
-
-        Item::Item(const std::string & name, const Weapon weapon)
-            : m_name(name)
+        Item::Item(const Weapon weapon, const WeaponMaterial material)
+            : m_name(weaponName(weapon))
             , m_weapon(weapon)
             , m_armor(Armor::Count)
             , m_misc(Misc::Count)
+            , m_armorMaterial(ArmorMaterial::Count)
+            , m_weaponMaterial(material)
             , m_armorRating(0)
-            , m_damageMin(baseWeaponDamage(weapon).x)
-            , m_damageMax(baseWeaponDamage(weapon).y)
+            , m_damageMin(baseWeaponDamage(weapon).x + weaponMaterialDamage(material))
+            , m_damageMax(baseWeaponDamage(weapon).y + weaponMaterialDamage(material))
             , m_value(calcValue())
         {}
 
-        Item::Item(const std::string & name, const Armor armor)
-            : m_name(name)
+        Item::Item(const Armor armor, const ArmorMaterial material)
+            : m_name(armorName(armor))
             , m_weapon(Weapon::Count)
             , m_armor(armor)
             , m_misc(Misc::Count)
-            , m_armorRating(baseArmorRating(armor))
+            , m_armorMaterial(material)
+            , m_weaponMaterial(WeaponMaterial::Count)
+            , m_armorRating(baseArmorRating(armor) + armorMaterialRating(material))
             , m_damageMin(0)
             , m_damageMax(0)
             , m_value(calcValue())
         {}
 
-        Item::Item(const std::string & name, const Misc misc)
-            : m_name(name)
+        Item::Item(const Misc misc)
+            : m_name(miscName(misc))
             , m_weapon(Weapon::Count)
             , m_armor(Armor::Count)
             , m_misc(misc)
+            , m_armorMaterial(ArmorMaterial::Count)
+            , m_weaponMaterial(WeaponMaterial::Count)
             , m_armorRating(0)
             , m_damageMin(0)
             , m_damageMax(0)
             , m_value(calcValue())
         {}
+
+        const std::string Item::name() const
+        {
+            if (isArmor())
+            {
+                return armorMaterialName(m_armorMaterial) + " " + m_name;
+            }
+            else if (isWeapon())
+            {
+                return weaponMaterialName(m_weaponMaterial) + " " + m_name;
+            }
+            else
+            {
+                return m_name;
+            }
+        }
 
         const std::string Item::description() const
         {
             std::string str;
             str.reserve(200);
 
-            str += "The ";
-            str += m_name;
-            str += " is ";
+            str += name();
+            str += " is";
 
             if (isWeapon())
             {
-                str += "a ";
-
-                if (m_name != weaponName(m_weapon))
-                {
-                    str += weaponName(m_weapon);
-                    str += ' ';
-                }
-
-                str += "weapon that does between ";
+                str += " a weapon that does between ";
                 str += std::to_string(m_damageMin);
                 str += " and ";
                 str += std::to_string(m_damageMax);
@@ -83,19 +84,12 @@ namespace castlecrawl
             }
             else if (isArmor())
             {
-                if (m_name != armorName(m_armor))
-                {
-                    str += armorName(m_armor);
-                    str += ' ';
-                }
-
-                str += "armor that has a rating of ";
+                str += " armor that has a rating of ";
                 str += std::to_string(m_armorRating);
             }
-            else
+            else // must be a misc item
             {
-                // must be a misc item
-                str += "a misc item";
+                str += " a misc item";
 
                 if (isUseable())
                 {
@@ -144,23 +138,22 @@ namespace castlecrawl
         std::ostream & operator<<(std::ostream & os, const Item & item)
         {
             os << '[';
+            os << "\"" << item.name() << '\"';
 
             if (item.isArmor())
             {
-                os << "Armor=" << armorName(item.armorType());
+                os << "(Armor)";
             }
 
             if (item.isWeapon())
             {
-                os << "Weapon=" << weaponName(item.weaponType());
+                os << "(Weapon)";
             }
 
             if (item.isMisc())
             {
-                os << "Misc=" << miscName(item.miscType());
+                os << "(Misc)";
             }
-
-            os << ",\"" << item.name() << '\"';
 
             if (item.armorRating() != 0)
             {
@@ -171,18 +164,22 @@ namespace castlecrawl
             {
                 os << ",damage=" << item.damageMin() << '-' << item.damageMax();
             }
-            if (item.isUseable())
-            {
-                os << ",useable";
-            }
 
-            if (item.equipCount() > 1)
+            if (item.isMisc())
             {
-                os << ",equip_count=" << item.equipCount();
-            }
-            else if (item.equipCount() == 1)
-            {
-                os << ",equipable";
+                if (item.isUseable())
+                {
+                    os << ",useable";
+                }
+
+                if (item.equipCount() > 1)
+                {
+                    os << ",equip_count=" << item.equipCount();
+                }
+                else if (item.equipCount() == 1)
+                {
+                    os << ",equipable";
+                }
             }
 
             os << ",value=" << item.value();

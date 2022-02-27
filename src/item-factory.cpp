@@ -16,7 +16,7 @@ namespace castlecrawl
     namespace item
     {
 
-        ItemFactory::ItemFactory() {}
+        ItemFactory::ItemFactory() { validateAndOutputAll(); }
 
         void ItemFactory::validateAndOutputAll()
         {
@@ -25,19 +25,27 @@ namespace castlecrawl
             for (int i = 0; i < static_cast<int>(Weapon::Count); ++i)
             {
                 const auto type = static_cast<Weapon>(i);
-                items.push_back(Item(weaponName(type), type));
+                for (int m = 0; m < static_cast<int>(WeaponMaterial::Count); ++m)
+                {
+                    const auto material = static_cast<WeaponMaterial>(m);
+                    items.push_back(Item(type, material));
+                }
             }
 
             for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
             {
                 const auto type = static_cast<Armor>(i);
-                items.push_back(Item(armorName(type), type));
+                for (int m = 0; m < static_cast<int>(ArmorMaterial::Count); ++m)
+                {
+                    const auto material = static_cast<ArmorMaterial>(m);
+                    items.push_back(Item(type, material));
+                }
             }
 
             for (int i = 0; i < static_cast<int>(Misc::Count); ++i)
             {
                 const auto type = static_cast<Misc>(i);
-                items.push_back(Item(miscName(type), type));
+                items.push_back(Item(type));
             }
 
             std::sort(std::begin(items), std::end(items), [](const Item & A, const Item & B) {
@@ -104,6 +112,10 @@ namespace castlecrawl
                 M_CHECK(
                     (item.armorRating() >= 1),
                     "Error:  Armor Item's amor_rating invalid: " << item);
+
+                M_CHECK(
+                    (item.armorMaterial() != ArmorMaterial::Count),
+                    "Error:  Armor Item has no material: " << item);
             }
 
             if (item.isWeapon())
@@ -114,6 +126,10 @@ namespace castlecrawl
                 M_CHECK(
                     (item.damageMax() > item.damageMin()),
                     "Error:  Weapon Item's damage_max is not greater than the min: " << item);
+
+                M_CHECK(
+                    (item.weaponMaterial() != WeaponMaterial::Count),
+                    "Error:  Weapon Item has no material: " << item);
             }
 
             M_CHECK((item.value() > 0), "Error:  Item's Value is zero or less: " << item)
