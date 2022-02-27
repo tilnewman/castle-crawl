@@ -16,7 +16,8 @@ namespace castlecrawl
             ItemFactory();
 
           private:
-            void dumpInfo();
+            void validateAndOutputAll();
+            void validateItem(const Item & item);
         };
 
     } // namespace item

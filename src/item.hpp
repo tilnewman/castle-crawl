@@ -3,6 +3,7 @@
 //
 // item.hpp
 //
+#include <iosfwd>
 #include <string>
 #include <tuple>
 
@@ -15,8 +16,7 @@ namespace castlecrawl
 
         enum class Weapon
         {
-            Not = 0,
-            Dagger,
+            Dagger = 0,
             Handaxe,
             Mace,
             Warhammer,
@@ -42,7 +42,6 @@ namespace castlecrawl
                 case Weapon::Claymore:      { return "Claymore"; }
                 case Weapon::Waraxe:        { return "Waraxe"; }
                 case Weapon::Scythe:        { return "Scythe"; }
-                case Weapon::Not:
                 case Weapon::Count:
                 default:                    { return ""; }
             }
@@ -51,8 +50,7 @@ namespace castlecrawl
 
         enum class Armor
         {
-            Not = 0,
-            Helm,
+            Helm = 0,
             Cuirass,
             Bracers,
             Gauntlets,
@@ -72,7 +70,6 @@ namespace castlecrawl
                 case Armor::Gauntlets:  { return "Gauntlets"; }
                 case Armor::Greaves:    { return "Greaves"; }
                 case Armor::Boots:      { return "Boots"; }
-                case Armor::Not:
                 case Armor::Count:
                 default:                { return ""; }
             }
@@ -81,8 +78,7 @@ namespace castlecrawl
 
         enum class Misc
         {
-            Not = 0,
-            Amulet,
+            Amulet = 0,
             Potion,
             Ring,
             Charm,
@@ -106,7 +102,6 @@ namespace castlecrawl
                 case Misc::Mask:        { return "Mask"; }
                 case Misc::Talisman:    { return "Talisman"; }
                 case Misc::Herbs:       { return "Herbs"; }
-                case Misc::Not:
                 case Misc::Count:
                 default:                { return ""; }
             }
@@ -127,7 +122,6 @@ namespace castlecrawl
                 case Weapon::Claymore:   { return { 10, 16 }; }
                 case Weapon::Waraxe:     { return { 12, 18 }; }
                 case Weapon::Scythe:     { return { 13, 20 }; }
-                case Weapon::Not:
                 case Weapon::Count:
                 default:                 { return {  0,  0 }; }
             }
@@ -142,22 +136,20 @@ namespace castlecrawl
                 case Armor::Helm:       { return 5; }
                 case Armor::Cuirass:    { return 9; }
                 case Armor::Bracers:    { return 3; }
-                case Armor::Gauntlets:  { return 4; }
+                case Armor::Gauntlets:  { return 2; }
                 case Armor::Greaves:    { return 6; }
-                case Armor::Boots:      { return 4; }
-                case Armor::Not:
+                case Armor::Boots:      { return 1; }
                 case Armor::Count:
                 default:                { return 0; }
             }
             // clang-format on
         }
 
-        inline bool isUseable(const Misc misc)
+        inline bool isMiscUseable(const Misc misc)
         {
             // clang-format off
             switch (misc)
             {
-                case Misc::Not:       { return false; }
                 case Misc::Amulet:    { return false; }
                 case Misc::Potion:    { return true;  }
                 case Misc::Ring:      { return false; }
@@ -172,12 +164,12 @@ namespace castlecrawl
             // clang-format on
         }
 
-        inline std::size_t equipCount(const Misc misc)
+        // if not misc, then it's either weapon/armor which can only equip one of
+        inline std::size_t miscEquipCount(const Misc misc)
         {
             // clang-format off
             switch (misc)
             {
-                case Misc::Not:       { return 1; }
                 case Misc::Amulet:    { return 1; }
                 case Misc::Potion:    { return 0; }
                 case Misc::Ring:      { return 2; }
@@ -187,12 +179,12 @@ namespace castlecrawl
                 case Misc::Talisman:  { return 0; }
                 case Misc::Herbs:     { return 0; }
                 case Misc::Count:
-                default:              { return 0; }
+                default:              { return 1; }
             }
             // clang-format on
         }
 
-        inline bool isEquipable(const Misc misc) { return (equipCount(misc) > 0); }
+        inline bool isMiscEquipable(const Misc misc) { return (miscEquipCount(misc) > 0); }
 
         //
 
@@ -218,16 +210,22 @@ namespace castlecrawl
             int value() const { return m_value; }
 
             // these three are mutually exclusive but one must be true to be valid
-            bool isWeapon() const { return (m_weapon != Weapon::Not); }
-            bool isArmor() const { return (m_armor != Armor::Not); }
-            bool isMisc() const { return ((m_misc != Misc::Not)); }
+            bool isWeapon() const { return (m_weapon != Weapon::Count); }
+            bool isArmor() const { return (m_armor != Armor::Count); }
+            bool isMisc() const { return ((m_misc != Misc::Count)); }
+
+            bool isUseable() const { return isMiscUseable(m_misc); }
+            std::size_t equipCount() const { return miscEquipCount(m_misc); }
+            bool isEquipable() const { return isMiscEquipable(m_misc); }
+
+            const std::string description() const;
 
             friend bool operator==(const Item & left, const Item & right);
             friend bool operator!=(const Item & left, const Item & right);
             friend bool operator<(const Item & left, const Item & right);
+            friend std::ostream & operator<<(std::ostream & os, const Item & item);
 
           private:
-            // not monetary but an internally used measure so random treasure matches player level
             int calcValue() const;
 
           private:
@@ -290,6 +288,8 @@ namespace castlecrawl
                     right.m_damageMax,
                     right.m_value));
         }
+
+        std::ostream & operator<<(std::ostream & os, const Item & item);
 
     } // namespace item
 } // namespace castlecrawl
