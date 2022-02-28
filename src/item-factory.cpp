@@ -65,17 +65,32 @@ namespace castlecrawl
                 return (A.value() < B.value());
             });
 
-            std::cout << items.size() << " items" << std::endl << std::endl;
-
             for (const Item & item : items)
             {
                 validateItem(item);
             }
 
+            std::string longestName;
+            std::string longestDesc;
             for (const Item & item : items)
             {
+                if (item.name().size() > longestName.size())
+                {
+                    longestName = item.name();
+                }
+
+                if (item.description().size() > longestDesc.size())
+                {
+                    longestDesc = item.description();
+                }
+
                 std::cout << '\t' << item.value() << "\t" << item << std::endl;
             }
+
+            std::cout << std::endl;
+
+            std::cout << "longest name and description:\n\t" << longestName << "\n\t" << longestDesc
+                      << std::endl; 
 
             std::cout << std::endl;
 
@@ -83,6 +98,12 @@ namespace castlecrawl
             {
                 std::cout << '\t' << item.description() << std::endl;
             }
+
+            std::cout << std::endl;
+
+            std::cout << items.size() << " items total" << std::endl << std::endl;
+
+
         }
 
         void ItemFactory::validateItem(const Item & item)
