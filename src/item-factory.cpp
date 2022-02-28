@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <iostream>
 #include <vector>
+#include <set>
 
 namespace castlecrawl
 {
@@ -42,25 +43,41 @@ namespace castlecrawl
                 }
             }
 
+            // these are the equipable misc items
             for (int i = 0; i < static_cast<int>(Misc::Count); ++i)
             {
                 const auto type = static_cast<Misc>(i);
-                if (requiredMiscMaterial(type) == MiscMaterial::Count)
+                if (requiredMiscMaterial(type) != MiscMaterial::Count)
                 {
-                    for (int m = 0; m < static_cast<int>(MiscMaterial::Magic); ++m)
-                    {
-                        const auto material = static_cast<MiscMaterial>(m);
-                        items.push_back(Item(type, material, UseStrength::Normal, {}, {}));
-                    }
+                    continue;
                 }
-                else
-                {
-                    items.push_back(Item(type, MiscMaterial::Magic, UseStrength::Weak, {}, {}));
-                    items.push_back(Item(type, MiscMaterial::Magic, UseStrength::Normal, {}, {}));
-                    items.push_back(Item(type, MiscMaterial::Magic, UseStrength::Strong, {}, {}));
-                }
-            }
 
+                for (int m = 0; m < static_cast<int>(MiscMaterial::Magic); ++m)
+                {
+                    const auto material = static_cast<MiscMaterial>(m);
+
+                    items.push_back(Item(
+                        type,
+                        material,
+                        UseStrength::Normal,
+                        {},
+                        miscMaterialEquipEffect(material)));
+                }
+            }    
+                 
+            // these are the useable misc items
+            items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Weak,   {.health=8}, {}));
+            items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Normal, {.health=16}, {}));
+            items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Strong, {.health=32}, {}));
+            //
+            items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Weak,   {.mana=5}, {}));
+            items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Normal, {.mana=10}, {}));
+            items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Strong, {.mana=20}, {}));
+            //
+            items.push_back(Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Weak,   {.health=5}, {}));
+            items.push_back(Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Normal, {.health=10}, {}));
+            items.push_back(Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Strong, {.health=20}, {}));
+            
             std::sort(std::begin(items), std::end(items));
 
             for (const Item & item : items)
@@ -68,18 +85,32 @@ namespace castlecrawl
                 validateItem(item);
             }
             
+            std::set<std::string> names;
             std::string longestName;
             std::string longestDesc;
             for (const Item & item : items)
             {
-                if (item.name().size() > longestName.size())
+                const std::string name = item.name();
+
+                const auto iter = names.find(name);
+                if (iter != std::end(names))
                 {
-                    longestName = item.name();
+                    std::cout << "Error: Two items had the same name: " << item << '\n';
+                }
+                else
+                {
+                    names.insert(name);
                 }
 
-                if (item.description().size() > longestDesc.size())
+                if (name.size() > longestName.size())
                 {
-                    longestDesc = item.description();
+                    longestName = name;
+                }
+
+                const std::string desc = item.description();
+                if (desc.size() > longestDesc.size())
+                {
+                    longestDesc = desc;
                 }
             }
 
@@ -97,13 +128,24 @@ namespace castlecrawl
                 std::cout << '\t' << item.value() << "\t" << item << '\n';
             }
 
+            std::cout << std::endl;
+
+            for (const Item & item : items)
+            {
+                if (item.isUseable())
+                {
+                    std::cout << '\t' << item.value() << "\t" << item.name() << '\n';
+                }
+            }
+
+            std::cout << std::endl;
+
             std::cout << items.size() << " items total" << std::endl << std::endl;
 
             std::cout << "longest name and description:\n\t" << longestName << ": "
                       << longestName.size() << "\n\t" << longestDesc << ": " << longestDesc.size()
+                      << std::endl
                       << std::endl;
-
-            std::cout << std::endl;
         }
 
         void ItemFactory::validateItem(const Item & item)
@@ -178,8 +220,12 @@ namespace castlecrawl
 
             if (item.isMisc())
             {
-                if ((item.miscType() == Misc::Potion) || (item.miscType() == Misc::Herbs))
+                if (item.isUseable())
                 {
+                    M_CHECK(
+                        (item.useEffect().total() > 0),
+                        "Error:  Useable item has no use effects: " << item);
+
                     M_CHECK(
                         (item.miscMaterial() == MiscMaterial::Magic),
                         "Error: Misc item Potions and Herbs MUST have the material 'Magic': "

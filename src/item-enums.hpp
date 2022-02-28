@@ -11,6 +11,44 @@ namespace castlecrawl
 {
     namespace item
     {
+        struct UseEffect
+        {
+            int health = 0;
+            int mana = 0;
+            
+            constexpr int total() const noexcept { return (health + mana); }
+            auto operator<=>(const UseEffect &) const = default;
+        };
+
+        struct EquipEffect
+        {
+            int str = 0;
+            int dex = 0;
+            int arc = 0;
+            int lck = 0;
+            int dmg = 0;
+
+            constexpr int total() const noexcept { return (str + dex + arc + lck + dmg); }
+
+            constexpr inline EquipEffect & operator+=(const EquipEffect & right) noexcept
+            {
+                str += right.str;
+                dex += right.dex;
+                arc += right.arc;
+                lck += right.lck;
+                dmg += right.dmg;
+                return *this;
+            }
+
+            friend constexpr inline EquipEffect
+                operator+(EquipEffect left, const EquipEffect & right) noexcept
+            {
+                left += right;
+                return left;
+            }
+
+            auto operator<=>(const EquipEffect &) const = default;
+        };
 
         enum class Weapon
         {
@@ -255,19 +293,41 @@ namespace castlecrawl
 
         enum class MiscMaterial
         {
-            Iron = 0,//+3str
-            Bronze,  //+1str 
-            Bone,    //+1arc,+1dmg
-            Tribal,  //+3arc,+1lck
-            Fang,    //+5dmg
-            Jade,    //+5lck
-            Obsidian,//+3dmg, +3arc
-            Lazuli,  //+5arc, +3lck
-            Bloody,  //+10dmg
-            Jeweled, //+10arc, +5luck
-            Magic,   //(none)must always be last
+            Iron = 0,
+            Bronze,  
+            Bone,    
+            Tribal,  
+            Fang,    
+            Jade,    
+            Obsidian,
+            Lazuli,  
+            Bloody,  
+            Jeweled, 
+            Magic,   
             Count
         };
+
+        inline const EquipEffect miscMaterialEquipEffect(const MiscMaterial material)
+        {
+            // clang-format off
+            switch (material)
+            {
+                case MiscMaterial::Iron:     { return { .str=3 }; }
+                case MiscMaterial::Bronze:   { return { .str=1 }; }
+                case MiscMaterial::Bone:     { return { .arc=1, .dmg=1 }; }
+                case MiscMaterial::Tribal:   { return { .arc=3, .lck=1 }; }
+                case MiscMaterial::Fang:     { return { .dmg=5 }; }
+                case MiscMaterial::Jade:     { return { .lck=5 }; }
+                case MiscMaterial::Obsidian: { return { .arc=3,.dmg=3 }; }
+                case MiscMaterial::Lazuli:   { return { .arc=5, .lck=3 }; }
+                case MiscMaterial::Bloody:   { return { .dmg=10 }; }
+                case MiscMaterial::Jeweled:  { return { .arc=10, .lck=5 }; }
+                case MiscMaterial::Magic:
+                case MiscMaterial::Count:
+                default:                     { return {}; }
+            }
+            // clang-format on
+        }
 
         // useable misc items (potions & herbs) can only have the "Magic" material
         inline MiscMaterial requiredMiscMaterial(const Misc misc)

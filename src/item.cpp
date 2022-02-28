@@ -96,8 +96,22 @@ namespace castlecrawl
                     str += ' ';
                 }
 
-                str += miscMaterialName(m_miscMaterial);
-                str += ' ';
+                if (isUseable())
+                {
+                    if (m_useEffect.health > 0)
+                    {
+                        str += "Healing ";
+                    }
+                    else
+                    {
+                        str += "Mana ";
+                    }
+                }
+                else
+                {
+                    str += miscMaterialName(m_miscMaterial);
+                    str += ' ';
+                }
             }
 
             str += m_name;
@@ -171,6 +185,11 @@ namespace castlecrawl
             }
 
             value += miscMaterialValue(m_miscMaterial);
+
+            value += (m_equipEffect.total() * 30);
+            
+            value += (m_useEffect.health * 30);
+            value += (m_useEffect.mana * 40);
 
             return value;
         }

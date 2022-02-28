@@ -15,42 +15,6 @@ namespace castlecrawl
     namespace item
     {
 
-        struct UseEffect
-        {
-            int health = 0;
-            int mana = 0;
-            auto operator<=>(const UseEffect &) const = default;
-        };
-
-        struct EquipEffect
-        {
-            int str = 0;
-            int dex = 0;
-            int arc = 0;
-            int lck = 0;
-            int dmg = 0;
-        
-            constexpr inline EquipEffect & operator+=(const EquipEffect & right) noexcept
-            {
-                str += right.str;
-                dex += right.dex;
-                arc += right.arc;
-                lck += right.lck;
-                dmg += right.dmg;
-                return *this;
-            }
-
-            friend constexpr inline EquipEffect operator+(EquipEffect left, const EquipEffect & right) noexcept
-            {
-                left += right;
-                return left;
-            }
-
-            auto operator<=>(const EquipEffect &) const = default;
-        };
-
-        //
-
         class Item
         {
           public:
@@ -87,6 +51,9 @@ namespace castlecrawl
             bool isUseable() const { return isMiscUseable(m_misc); }
             std::size_t equipCount() const { return miscEquipCount(m_misc); }
             bool isEquipable() const { return isMiscEquipable(m_misc); }
+
+            const UseEffect & useEffect() const { return m_useEffect; }
+            const EquipEffect & equipEffect() const { return m_equipEffect; }
 
             const std::string description() const;
 
