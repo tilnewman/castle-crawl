@@ -252,6 +252,44 @@ namespace castlecrawl
         // misc items are either Useable or Equipable but never both and never neither
         inline bool isMiscUseable(const Misc misc) { return !isMiscEquipable(misc); }
 
+        enum class MiscMaterial
+        {
+            Bone = 0,
+            Fang,
+            Obsidian,
+            Bronze,
+            Jade,
+            Lazuli,
+            Bloody,
+            Tribal,
+            Jeweled,
+            Iron,
+            Count
+        };
+
+        inline bool hasMiscMaterial(const Misc misc) { return isMiscEquipable(misc); }
+
+        inline const std::string miscMaterialName(const MiscMaterial misc)
+        {
+            // clang-format off
+            switch (misc)
+            {
+                case MiscMaterial::Bone:        { return "Bone"; }
+                case MiscMaterial::Fang:        { return "Fang"; }
+                case MiscMaterial::Obsidian:    { return "Obsidian"; }
+                case MiscMaterial::Bronze:      { return "Bronze"; }
+                case MiscMaterial::Jade:        { return "Jade"; }
+                case MiscMaterial::Lazuli:      { return "Lazuli"; }
+                case MiscMaterial::Bloody:      { return "Bloody"; }
+                case MiscMaterial::Tribal:      { return "Tribal"; }
+                case MiscMaterial::Jeweled:     { return "Jeweled"; }
+                case MiscMaterial::Iron:        { return "Iron"; }
+                case MiscMaterial::Count:
+                default:                        { return ""; }
+            }
+            // clang-format on
+        }
+
     } // namespace item
 } // namespace castlecrawl
 

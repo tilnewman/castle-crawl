@@ -45,12 +45,25 @@ namespace castlecrawl
             for (int i = 0; i < static_cast<int>(Misc::Count); ++i)
             {
                 const auto type = static_cast<Misc>(i);
-                items.push_back(Item(type));
+                if (hasMiscMaterial(type))
+                {
+                    for (int m = 0; m < static_cast<int>(MiscMaterial::Count); ++m)
+                    {
+                        const auto material = static_cast<MiscMaterial>(m);
+                        items.push_back(Item(type, material));
+                    }
+                }
+                else
+                {
+                    items.push_back(Item(type, MiscMaterial::Count));
+                }
             }
 
             std::sort(std::begin(items), std::end(items), [](const Item & A, const Item & B) {
                 return (A.value() < B.value());
             });
+
+            std::cout << items.size() << " items" << std::endl << std::endl;
 
             for (const Item & item : items)
             {
@@ -116,6 +129,10 @@ namespace castlecrawl
                 M_CHECK(
                     (item.armorMaterial() != ArmorMaterial::Count),
                     "Error:  Armor Item has no material: " << item);
+
+                M_CHECK(
+                    item.isEquipable(),
+                    "Error:  Armor Item SHOULD be Equipable but is not: " << item);
             }
 
             if (item.isWeapon())
@@ -130,6 +147,26 @@ namespace castlecrawl
                 M_CHECK(
                     (item.weaponMaterial() != WeaponMaterial::Count),
                     "Error:  Weapon Item has no material: " << item);
+
+                M_CHECK(
+                    item.isEquipable(),
+                    "Error:  Weapon Item SHOULD be Equipable but is not: " << item);
+            }
+
+            if (item.isMisc())
+            {
+                if (hasMiscMaterial(item.miscType()))
+                {
+                    M_CHECK(
+                        (item.miscMaterial() != MiscMaterial::Count),
+                        "Error: Misc item SHOULD have a material: " << item);
+                }
+                else
+                {
+                    M_CHECK(
+                        (item.miscMaterial() == MiscMaterial::Count),
+                        "Error: Misc item should NOT have a material: " << item);
+                }
             }
 
             M_CHECK((item.value() > 0), "Error:  Item's Value is zero or less: " << item)

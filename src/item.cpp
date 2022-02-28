@@ -18,6 +18,7 @@ namespace castlecrawl
             , m_misc(Misc::Count)
             , m_armorMaterial(ArmorMaterial::Count)
             , m_weaponMaterial(material)
+            , m_miscMaterial(MiscMaterial::Count)
             , m_armorRating(0)
             , m_damageMin(baseWeaponDamage(weapon).x + weaponMaterialDamage(material))
             , m_damageMax(baseWeaponDamage(weapon).y + weaponMaterialDamage(material))
@@ -31,19 +32,21 @@ namespace castlecrawl
             , m_misc(Misc::Count)
             , m_armorMaterial(material)
             , m_weaponMaterial(WeaponMaterial::Count)
+            , m_miscMaterial(MiscMaterial::Count)
             , m_armorRating(baseArmorRating(armor) + armorMaterialRating(material))
             , m_damageMin(0)
             , m_damageMax(0)
             , m_value(calcValue())
         {}
 
-        Item::Item(const Misc misc)
+        Item::Item(const Misc misc, const MiscMaterial material)
             : m_name(miscName(misc))
             , m_weapon(Weapon::Count)
             , m_armor(Armor::Count)
             , m_misc(misc)
             , m_armorMaterial(ArmorMaterial::Count)
             , m_weaponMaterial(WeaponMaterial::Count)
+            , m_miscMaterial(material)
             , m_armorRating(0)
             , m_damageMin(0)
             , m_damageMax(0)
@@ -60,9 +63,16 @@ namespace castlecrawl
             {
                 return weaponMaterialName(m_weaponMaterial) + " " + m_name;
             }
-            else
+            else // must be misc
             {
-                return m_name;
+                if (hasMiscMaterial(m_misc))
+                {
+                    return miscMaterialName(m_miscMaterial) + " " + m_name;
+                }
+                else
+                {
+                    return m_name;
+                }
             }
         }
 

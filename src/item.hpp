@@ -19,7 +19,7 @@ namespace castlecrawl
           public:
             Item(const Weapon weapon, const WeaponMaterial material);
             Item(const Armor armor, const ArmorMaterial material);
-            Item(const Misc misc);
+            Item(const Misc misc, const MiscMaterial material);
 
             const std::string name() const;
 
@@ -34,6 +34,7 @@ namespace castlecrawl
 
             ArmorMaterial armorMaterial() const { return m_armorMaterial; }
             WeaponMaterial weaponMaterial() const { return m_weaponMaterial; }
+            MiscMaterial miscMaterial() const { return m_miscMaterial; }
 
             // these three are mutually exclusive but one must be true to be valid
             bool isWeapon() const { return (m_weapon != Weapon::Count); }
@@ -63,6 +64,7 @@ namespace castlecrawl
 
             ArmorMaterial m_armorMaterial;
             WeaponMaterial m_weaponMaterial;
+            MiscMaterial m_miscMaterial;
 
             int m_armorRating;
             int m_damageMin;
@@ -81,6 +83,7 @@ namespace castlecrawl
                     left.m_armorRating,
                     left.m_armorMaterial,
                     left.m_weaponMaterial,
+                    left.m_miscMaterial,
                     left.m_damageMin,
                     left.m_damageMax,
                     left.m_value) ==
@@ -92,6 +95,7 @@ namespace castlecrawl
                     right.m_armorRating,
                     right.m_armorMaterial,
                     right.m_weaponMaterial,
+                    right.m_miscMaterial,
                     right.m_damageMin,
                     right.m_damageMax,
                     right.m_value));
@@ -110,6 +114,7 @@ namespace castlecrawl
                     left.m_armorRating,
                     left.m_armorMaterial,
                     left.m_weaponMaterial,
+                    left.m_miscMaterial,
                     left.m_damageMin,
                     left.m_damageMax,
                     left.m_value) <
@@ -121,6 +126,7 @@ namespace castlecrawl
                     right.m_armorRating,
                     right.m_armorMaterial,
                     right.m_weaponMaterial,
+                    right.m_miscMaterial,
                     right.m_damageMin,
                     right.m_damageMax,
                     right.m_value));
