@@ -55,25 +55,30 @@ namespace castlecrawl
 
         const std::string Item::name() const
         {
+            std::string str;
+            str.reserve(100);
+
             if (isArmor())
             {
-                return armorMaterialName(m_armorMaterial) + " " + m_name;
+                str += armorMaterialName(m_armorMaterial);
+                str += ' ';
             }
             else if (isWeapon())
             {
-                return weaponMaterialName(m_weaponMaterial) + " " + m_name;
+                str += weaponMaterialName(m_weaponMaterial);
+                str += ' ';
             }
             else // must be misc
             {
                 if (hasMiscMaterial(m_misc))
                 {
-                    return miscMaterialName(m_miscMaterial) + " " + m_name;
-                }
-                else
-                {
-                    return m_name;
+                    str += miscMaterialName(m_miscMaterial);
+                    str += ' ';
                 }
             }
+
+            str += m_name;
+            return str;
         }
 
         const std::string Item::description() const
@@ -126,21 +131,23 @@ namespace castlecrawl
 
         int Item::calcValue() const
         {
-            int value = 100;
+            int value = 1;
 
-            value += (m_armorRating * 33);
-            value += (m_damageMin * 10);
-            value += (m_damageMax * 10);
+            value += (m_armorRating * 6);
+            value += (m_damageMin * 2);
+            value += (m_damageMax * 2);
 
             if (isUseable())
             {
-                value += 50;
+                value += 10;
             }
 
             if (isEquipable())
             {
-                value += 20;
+                value += 4;
             }
+
+            value += miscMaterialValue(m_miscMaterial);
 
             return value;
         }

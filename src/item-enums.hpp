@@ -269,10 +269,10 @@ namespace castlecrawl
 
         inline bool hasMiscMaterial(const Misc misc) { return isMiscEquipable(misc); }
 
-        inline const std::string miscMaterialName(const MiscMaterial misc)
+        inline const std::string miscMaterialName(const MiscMaterial material)
         {
             // clang-format off
-            switch (misc)
+            switch (material)
             {
                 case MiscMaterial::Bone:        { return "Bone"; }
                 case MiscMaterial::Fang:        { return "Fang"; }
@@ -286,6 +286,27 @@ namespace castlecrawl
                 case MiscMaterial::Iron:        { return "Iron"; }
                 case MiscMaterial::Count:
                 default:                        { return ""; }
+            }
+            // clang-format on
+        }
+
+        inline int miscMaterialValue(const MiscMaterial material)
+        {
+            // clang-format off
+            switch (material)
+            {
+                case MiscMaterial::Bone:        { return  3; }
+                case MiscMaterial::Fang:        { return  5; }
+                case MiscMaterial::Obsidian:    { return  7; }
+                case MiscMaterial::Bronze:      { return  2; }
+                case MiscMaterial::Jade:        { return  6; }
+                case MiscMaterial::Lazuli:      { return  8; }
+                case MiscMaterial::Bloody:      { return  9; }
+                case MiscMaterial::Tribal:      { return  4; }
+                case MiscMaterial::Jeweled:     { return 10; }
+                case MiscMaterial::Iron:        { return  1; }
+                case MiscMaterial::Count:
+                default:                        { return  0; }
             }
             // clang-format on
         }
