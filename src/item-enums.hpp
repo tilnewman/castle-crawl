@@ -255,16 +255,16 @@ namespace castlecrawl
 
         enum class MiscMaterial
         {
-            Iron = 0,
-            Bronze,
-            Bone,
-            Tribal,
-            Fang,
-            Jade,
-            Obsidian,
-            Lazuli,
-            Bloody,
-            Jeweled,
+            Iron = 0,//+3str
+            Bronze,  //+1str 
+            Bone,    //+1arc,+1dmg
+            Tribal,  //+3arc,+1lck
+            Fang,    //+5dmg
+            Jade,    //+5lck
+            Obsidian,//+3dmg, +3arc
+            Lazuli,  //+5arc, +3lck
+            Bloody,  //+10dmg
+            Jeweled, //+10arc, +5luck
             Magic,//must always be last
             Count
         };

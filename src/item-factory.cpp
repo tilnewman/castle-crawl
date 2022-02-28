@@ -89,7 +89,8 @@ namespace castlecrawl
 
             std::cout << std::endl;
 
-            std::cout << "longest name and description:\n\t" << longestName << "\n\t" << longestDesc
+            std::cout << "longest name and description:\n\t" << longestName << " -" 
+                      << longestName.size() << "\n\t" << longestDesc << " -" << longestDesc.size()
                       << std::endl; 
 
             std::cout << std::endl;

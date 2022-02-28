@@ -59,6 +59,7 @@ namespace castlecrawl
         Stat m_strength;
         Stat m_dexterity;
         Stat m_arcane;
+        Stat m_luck;
         Stat m_health;
         Stat m_mana;
         Stat m_level;
