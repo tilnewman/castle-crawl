@@ -254,20 +254,32 @@ namespace castlecrawl
 
         enum class MiscMaterial
         {
-            Bone = 0,
-            Fang,
-            Obsidian,
+            Iron = 0,
             Bronze,
+            Bone,
+            Tribal,
+            Fang,
             Jade,
+            Obsidian,
             Lazuli,
             Bloody,
-            Tribal,
             Jeweled,
-            Iron,
+            Magic,
             Count
         };
 
-        inline bool hasMiscMaterial(const Misc misc) { return isMiscEquipable(misc); }
+        // useable misc items (potions & herbs) can only have the "Magic" material
+        inline MiscMaterial requiredMiscMaterial(const Misc misc)
+        {
+            MiscMaterial material = MiscMaterial::Count;
+
+            if (isMiscUseable(misc))
+            {
+                material = MiscMaterial::Magic;
+            }
+
+            return material;
+        }
 
         inline const std::string miscMaterialName(const MiscMaterial material)
         {
@@ -284,6 +296,7 @@ namespace castlecrawl
                 case MiscMaterial::Tribal:      { return "Tribal"; }
                 case MiscMaterial::Jeweled:     { return "Jeweled"; }
                 case MiscMaterial::Iron:        { return "Iron"; }
+                case MiscMaterial::Magic:       { return "Magic"; }
                 case MiscMaterial::Count:
                 default:                        { return ""; }
             }
@@ -295,18 +308,38 @@ namespace castlecrawl
             // clang-format off
             switch (material)
             {
-                case MiscMaterial::Bone:        { return  3; }
-                case MiscMaterial::Fang:        { return  5; }
-                case MiscMaterial::Obsidian:    { return  7; }
-                case MiscMaterial::Bronze:      { return  2; }
-                case MiscMaterial::Jade:        { return  6; }
-                case MiscMaterial::Lazuli:      { return  8; }
-                case MiscMaterial::Bloody:      { return  9; }
-                case MiscMaterial::Tribal:      { return  4; }
-                case MiscMaterial::Jeweled:     { return 10; }
-                case MiscMaterial::Iron:        { return  1; }
+                case MiscMaterial::Iron:        { return 0; }
+                case MiscMaterial::Bronze:      { return 1; }
+                case MiscMaterial::Bone:        { return 2; }
+                case MiscMaterial::Tribal:      { return 3; }
+                case MiscMaterial::Fang:        { return 4; }
+                case MiscMaterial::Jade:        { return 5; }
+                case MiscMaterial::Obsidian:    { return 6; }
+                case MiscMaterial::Lazuli:      { return 7; }
+                case MiscMaterial::Bloody:      { return 8; }
+                case MiscMaterial::Jeweled:     { return 9; }
                 case MiscMaterial::Count:
-                default:                        { return  0; }
+                default:                        { return 0; }
+            }
+            // clang-format on
+        }
+
+        enum class UseStrength
+        {
+            Weak,
+            Normal,
+            Strong
+        };
+
+        inline const std::string useStrengthName(const UseStrength strength)
+        {
+            // clang-format off
+            switch (strength)
+            {
+                case UseStrength::Weak:     { return "Weak"; }
+                case UseStrength::Strong:   { return "Strong"; }
+                case UseStrength::Normal://don't let the word 'normal' in item names
+                default:                    { return ""; }
             }
             // clang-format on
         }

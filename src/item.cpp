@@ -70,11 +70,8 @@ namespace castlecrawl
             }
             else // must be misc
             {
-                if (hasMiscMaterial(m_misc))
-                {
-                    str += miscMaterialName(m_miscMaterial);
-                    str += ' ';
-                }
+                str += miscMaterialName(m_miscMaterial);
+                str += ' ';
             }
 
             str += m_name;
@@ -154,22 +151,21 @@ namespace castlecrawl
 
         std::ostream & operator<<(std::ostream & os, const Item & item)
         {
-            os << '[';
-            os << "\"" << item.name() << '\"';
+            os << '[' << item.name();
 
             if (item.isArmor())
             {
-                os << "(Armor)";
+                os << ",Armor";
             }
 
             if (item.isWeapon())
             {
-                os << "(Weapon)";
+                os << ",Weapon";
             }
 
             if (item.isMisc())
             {
-                os << "(Misc)";
+                os << ",Misc";
             }
 
             if (item.armorRating() != 0)

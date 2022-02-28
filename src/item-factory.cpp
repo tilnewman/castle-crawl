@@ -45,9 +45,9 @@ namespace castlecrawl
             for (int i = 0; i < static_cast<int>(Misc::Count); ++i)
             {
                 const auto type = static_cast<Misc>(i);
-                if (hasMiscMaterial(type))
+                if (requiredMiscMaterial(type) == MiscMaterial::Count)
                 {
-                    for (int m = 0; m < static_cast<int>(MiscMaterial::Count); ++m)
+                    for (int m = 0; m < static_cast<int>(MiscMaterial::Magic); ++m)
                     {
                         const auto material = static_cast<MiscMaterial>(m);
                         items.push_back(Item(type, material));
@@ -55,7 +55,7 @@ namespace castlecrawl
                 }
                 else
                 {
-                    items.push_back(Item(type, MiscMaterial::Count));
+                    items.push_back(Item(type, MiscMaterial::Magic));
                 }
             }
 
@@ -155,17 +155,18 @@ namespace castlecrawl
 
             if (item.isMisc())
             {
-                if (hasMiscMaterial(item.miscType()))
+                if ((item.miscType() == Misc::Potion) || (item.miscType() == Misc::Herbs))
                 {
                     M_CHECK(
-                        (item.miscMaterial() != MiscMaterial::Count),
-                        "Error: Misc item SHOULD have a material: " << item);
+                        (item.miscMaterial() == MiscMaterial::Magic),
+                        "Error: Misc item Potions and Herbs MUST have the material 'Magic': "
+                            << item);
                 }
                 else
                 {
                     M_CHECK(
-                        (item.miscMaterial() == MiscMaterial::Count),
-                        "Error: Misc item should NOT have a material: " << item);
+                        (item.miscMaterial() != MiscMaterial::Magic),
+                        "Error: This Misc item must NOT have the material 'Magic': " << item);
                 }
             }
 
