@@ -50,26 +50,24 @@ namespace castlecrawl
                     for (int m = 0; m < static_cast<int>(MiscMaterial::Magic); ++m)
                     {
                         const auto material = static_cast<MiscMaterial>(m);
-                        items.push_back(Item(type, material, UseStrength::Normal));
+                        items.push_back(Item(type, material, UseStrength::Normal, {}, {}));
                     }
                 }
                 else
                 {
-                    items.push_back(Item(type, MiscMaterial::Magic, UseStrength::Weak));
-                    items.push_back(Item(type, MiscMaterial::Magic, UseStrength::Normal));
-                    items.push_back(Item(type, MiscMaterial::Magic, UseStrength::Strong));
+                    items.push_back(Item(type, MiscMaterial::Magic, UseStrength::Weak, {}, {}));
+                    items.push_back(Item(type, MiscMaterial::Magic, UseStrength::Normal, {}, {}));
+                    items.push_back(Item(type, MiscMaterial::Magic, UseStrength::Strong, {}, {}));
                 }
             }
 
-            std::sort(std::begin(items), std::end(items), [](const Item & A, const Item & B) {
-                return (A.value() < B.value());
-            });
+            std::sort(std::begin(items), std::end(items));
 
             for (const Item & item : items)
             {
                 validateItem(item);
             }
-
+            
             std::string longestName;
             std::string longestDesc;
             for (const Item & item : items)
@@ -83,28 +81,29 @@ namespace castlecrawl
                 {
                     longestDesc = item.description();
                 }
-
-                std::cout << '\t' << item.value() << "\t" << item << std::endl;
             }
-
-            std::cout << std::endl;
-
-            std::cout << "longest name and description:\n\t" << longestName << " -" 
-                      << longestName.size() << "\n\t" << longestDesc << " -" << longestDesc.size()
-                      << std::endl; 
 
             std::cout << std::endl;
 
             for (const Item & item : items)
             {
-                std::cout << '\t' << item.description() << std::endl;
+                std::cout << '\t' << item.description() << '\n';
             }
 
             std::cout << std::endl;
 
+            for (const Item & item : items)
+            {
+                std::cout << '\t' << item.value() << "\t" << item << '\n';
+            }
+
             std::cout << items.size() << " items total" << std::endl << std::endl;
 
+            std::cout << "longest name and description:\n\t" << longestName << ": "
+                      << longestName.size() << "\n\t" << longestDesc << ": " << longestDesc.size()
+                      << std::endl;
 
+            std::cout << std::endl;
         }
 
         void ItemFactory::validateItem(const Item & item)

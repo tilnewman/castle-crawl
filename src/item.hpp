@@ -8,18 +8,61 @@
 #include <iosfwd>
 #include <string>
 #include <tuple>
+#include <compare>
 
 namespace castlecrawl
 {
     namespace item
     {
 
+        struct UseEffect
+        {
+            int health = 0;
+            int mana = 0;
+            auto operator<=>(const UseEffect &) const = default;
+        };
+
+        struct EquipEffect
+        {
+            int str = 0;
+            int dex = 0;
+            int arc = 0;
+            int lck = 0;
+            int dmg = 0;
+        
+            constexpr inline EquipEffect & operator+=(const EquipEffect & right) noexcept
+            {
+                str += right.str;
+                dex += right.dex;
+                arc += right.arc;
+                lck += right.lck;
+                dmg += right.dmg;
+                return *this;
+            }
+
+            friend constexpr inline EquipEffect operator+(EquipEffect left, const EquipEffect & right) noexcept
+            {
+                left += right;
+                return left;
+            }
+
+            auto operator<=>(const EquipEffect &) const = default;
+        };
+
+        //
+
         class Item
         {
           public:
             Item(const Weapon weapon, const WeaponMaterial material);
             Item(const Armor armor, const ArmorMaterial material);
-            Item(const Misc misc, const MiscMaterial material, const UseStrength strength);
+
+            Item(
+                const Misc misc,
+                const MiscMaterial material,
+                const UseStrength strength,
+                const UseEffect & useEffect,
+                const EquipEffect & equipEffect);
 
             const std::string name() const;
 
@@ -47,20 +90,21 @@ namespace castlecrawl
 
             const std::string description() const;
 
-            friend bool operator==(const Item & left, const Item & right);
-            friend bool operator!=(const Item & left, const Item & right);
-            friend bool operator<(const Item & left, const Item & right);
+            auto operator<=>(const Item &) const = default;
             friend std::ostream & operator<<(std::ostream & os, const Item & item);
 
           private:
             int calcValue() const;
 
           private:
-            std::string m_name;
+            // keeping value first ensures sorting by value first
+            int m_value;
 
             Weapon m_weapon;
             Armor m_armor;
             Misc m_misc;
+
+            std::string m_name;
 
             ArmorMaterial m_armorMaterial;
             WeaponMaterial m_weaponMaterial;
@@ -71,72 +115,10 @@ namespace castlecrawl
             int m_armorRating;
             int m_damageMin;
             int m_damageMax;
-            int m_value;
+            
+            UseEffect m_useEffect;
+            EquipEffect m_equipEffect;
         };
-
-        inline bool operator==(const Item & left, const Item & right)
-        {
-            return (
-                std::tie(
-                    left.m_name,
-                    left.m_weapon,
-                    left.m_armor,
-                    left.m_misc,
-                    left.m_armorRating,
-                    left.m_armorMaterial,
-                    left.m_weaponMaterial,
-                    left.m_miscMaterial,
-                    left.m_useStrength,
-                    left.m_damageMin,
-                    left.m_damageMax,
-                    left.m_value) ==
-                std::tie(
-                    right.m_name,
-                    right.m_weapon,
-                    right.m_armor,
-                    right.m_misc,
-                    right.m_armorRating,
-                    right.m_armorMaterial,
-                    right.m_weaponMaterial,
-                    right.m_miscMaterial,
-                    right.m_useStrength,
-                    right.m_damageMin,
-                    right.m_damageMax,
-                    right.m_value));
-        }
-
-        inline bool operator!=(const Item & left, const Item & right) { return !(left == right); }
-
-        inline bool operator<(const Item & left, const Item & right)
-        {
-            return (
-                std::tie(
-                    left.m_name,
-                    left.m_weapon,
-                    left.m_armor,
-                    left.m_misc,
-                    left.m_armorRating,
-                    left.m_armorMaterial,
-                    left.m_weaponMaterial,
-                    left.m_miscMaterial,
-                    left.m_useStrength,
-                    left.m_damageMin,
-                    left.m_damageMax,
-                    left.m_value) <
-                std::tie(
-                    right.m_name,
-                    right.m_weapon,
-                    right.m_armor,
-                    right.m_misc,
-                    right.m_armorRating,
-                    right.m_armorMaterial,
-                    right.m_weaponMaterial,
-                    right.m_miscMaterial,
-                    right.m_useStrength,
-                    right.m_damageMin,
-                    right.m_damageMax,
-                    right.m_value));
-        }
 
         std::ostream & operator<<(std::ostream & os, const Item & item);
 

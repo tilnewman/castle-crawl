@@ -97,11 +97,11 @@ namespace castlecrawl
             // clang-format off
             switch (material)
             {
-                case WeaponMaterial::Bronze:    { return -1; }
-                case WeaponMaterial::Steel:     { return  0; }
-                case WeaponMaterial::Obsidian:  { return  2; }
-                case WeaponMaterial::Silver:    { return  4; }
-                case WeaponMaterial::Gold:      { return  8; }
+                case WeaponMaterial::Bronze:    { return 0; }
+                case WeaponMaterial::Steel:     { return 1; }
+                case WeaponMaterial::Obsidian:  { return 4; }
+                case WeaponMaterial::Silver:    { return 6; }
+                case WeaponMaterial::Gold:      { return 8; }
                 case WeaponMaterial::Count:
                 default:                        { return 0; }
             }
@@ -265,7 +265,7 @@ namespace castlecrawl
             Lazuli,  //+5arc, +3lck
             Bloody,  //+10dmg
             Jeweled, //+10arc, +5luck
-            Magic,//must always be last
+            Magic,   //(none)must always be last
             Count
         };
 
