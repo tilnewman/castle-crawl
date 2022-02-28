@@ -198,6 +198,7 @@ namespace castlecrawl
             // clang-format on
         }
 
+        // there are only equipable and useable misc items
         enum class Misc
         {
             Amulet = 0,
@@ -236,7 +237,7 @@ namespace castlecrawl
             {
                 case Misc::Amulet:    { return 1; }
                 case Misc::Potion:    { return 0; }
-                case Misc::Ring:      { return 2; }
+                case Misc::Ring:      { return 4; }
                 case Misc::Charm:     { return 1; }
                 case Misc::Mask:      { return 1; }
                 case Misc::Talisman:  { return 1; }
@@ -264,7 +265,7 @@ namespace castlecrawl
             Lazuli,
             Bloody,
             Jeweled,
-            Magic,
+            Magic,//must always be last
             Count
         };
 
@@ -338,7 +339,7 @@ namespace castlecrawl
             {
                 case UseStrength::Weak:     { return "Weak"; }
                 case UseStrength::Strong:   { return "Strong"; }
-                case UseStrength::Normal://don't let the word 'normal' in item names
+                case UseStrength::Normal://don't let the word 'normal' appear in item names
                 default:                    { return ""; }
             }
             // clang-format on

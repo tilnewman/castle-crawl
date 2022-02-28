@@ -19,6 +19,7 @@ namespace castlecrawl
             , m_armorMaterial(ArmorMaterial::Count)
             , m_weaponMaterial(material)
             , m_miscMaterial(MiscMaterial::Count)
+            , m_useStrength(UseStrength::Normal)
             , m_armorRating(0)
             , m_damageMin(baseWeaponDamage(weapon).x + weaponMaterialDamage(material))
             , m_damageMax(baseWeaponDamage(weapon).y + weaponMaterialDamage(material))
@@ -33,13 +34,14 @@ namespace castlecrawl
             , m_armorMaterial(material)
             , m_weaponMaterial(WeaponMaterial::Count)
             , m_miscMaterial(MiscMaterial::Count)
+            , m_useStrength(UseStrength::Normal)
             , m_armorRating(baseArmorRating(armor) + armorMaterialRating(material))
             , m_damageMin(0)
             , m_damageMax(0)
             , m_value(calcValue())
         {}
 
-        Item::Item(const Misc misc, const MiscMaterial material)
+        Item::Item(const Misc misc, const MiscMaterial material, const UseStrength strength)
             : m_name(miscName(misc))
             , m_weapon(Weapon::Count)
             , m_armor(Armor::Count)
@@ -47,6 +49,7 @@ namespace castlecrawl
             , m_armorMaterial(ArmorMaterial::Count)
             , m_weaponMaterial(WeaponMaterial::Count)
             , m_miscMaterial(material)
+            , m_useStrength(strength)
             , m_armorRating(0)
             , m_damageMin(0)
             , m_damageMax(0)
@@ -70,6 +73,12 @@ namespace castlecrawl
             }
             else // must be misc
             {
+                if (isUseable() && (m_useStrength != UseStrength::Normal))
+                {
+                    str += useStrengthName(m_useStrength);
+                    str += ' ';
+                }
+
                 str += miscMaterialName(m_miscMaterial);
                 str += ' ';
             }

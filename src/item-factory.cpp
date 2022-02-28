@@ -50,12 +50,14 @@ namespace castlecrawl
                     for (int m = 0; m < static_cast<int>(MiscMaterial::Magic); ++m)
                     {
                         const auto material = static_cast<MiscMaterial>(m);
-                        items.push_back(Item(type, material));
+                        items.push_back(Item(type, material, UseStrength::Normal));
                     }
                 }
                 else
                 {
-                    items.push_back(Item(type, MiscMaterial::Magic));
+                    items.push_back(Item(type, MiscMaterial::Magic, UseStrength::Weak));
+                    items.push_back(Item(type, MiscMaterial::Magic, UseStrength::Normal));
+                    items.push_back(Item(type, MiscMaterial::Magic, UseStrength::Strong));
                 }
             }
 

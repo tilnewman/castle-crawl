@@ -19,7 +19,7 @@ namespace castlecrawl
           public:
             Item(const Weapon weapon, const WeaponMaterial material);
             Item(const Armor armor, const ArmorMaterial material);
-            Item(const Misc misc, const MiscMaterial material);
+            Item(const Misc misc, const MiscMaterial material, const UseStrength strength);
 
             const std::string name() const;
 
@@ -66,6 +66,8 @@ namespace castlecrawl
             WeaponMaterial m_weaponMaterial;
             MiscMaterial m_miscMaterial;
 
+            UseStrength m_useStrength;
+
             int m_armorRating;
             int m_damageMin;
             int m_damageMax;
@@ -84,6 +86,7 @@ namespace castlecrawl
                     left.m_armorMaterial,
                     left.m_weaponMaterial,
                     left.m_miscMaterial,
+                    left.m_useStrength,
                     left.m_damageMin,
                     left.m_damageMax,
                     left.m_value) ==
@@ -96,6 +99,7 @@ namespace castlecrawl
                     right.m_armorMaterial,
                     right.m_weaponMaterial,
                     right.m_miscMaterial,
+                    right.m_useStrength,
                     right.m_damageMin,
                     right.m_damageMax,
                     right.m_value));
@@ -115,6 +119,7 @@ namespace castlecrawl
                     left.m_armorMaterial,
                     left.m_weaponMaterial,
                     left.m_miscMaterial,
+                    left.m_useStrength,
                     left.m_damageMin,
                     left.m_damageMax,
                     left.m_value) <
@@ -127,6 +132,7 @@ namespace castlecrawl
                     right.m_armorMaterial,
                     right.m_weaponMaterial,
                     right.m_miscMaterial,
+                    right.m_useStrength,
                     right.m_damageMin,
                     right.m_damageMax,
                     right.m_value));
