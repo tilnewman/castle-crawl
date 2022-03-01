@@ -36,20 +36,31 @@ namespace castlecrawl
             {
                 if (hasEquipped(item.armorType()))
                 {
-                    return "Already has " + armorName(item.armorType()) + " equipped.";
+                    std::string str;
+                    str += "Already has ";
+                    str += armorName(item.armorType());
+                    str += " equipped.";
+                    return str;
                 }
             }
             else if (item.isMisc())
             {
                 if (!isMiscEquipable(item.miscType()))
                 {
-                    return miscName(item.miscType()) + " can't be equipped.";
+                    std::string str;
+                    str += miscName(item.miscType());
+                    str += " can't be equipped.";
+                    return str;
                 }
 
                 const std::size_t count = miscEquipCount(item.miscType());
                 if (countOfEquipped(item.miscType()) >= count)
                 {
-                    return "Already has " + std::to_string(count) + " equipped.";
+                    std::string str;
+                    str += "Already has ";
+                    str += std::to_string(count);
+                    str += " equipped.";
+                    return str;
                 }
             }
             
