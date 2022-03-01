@@ -23,12 +23,12 @@ namespace castlecrawl
 
         struct EquipEffect
         {
-            int str = 0;
-            int dex = 0;
             int arc = 0;
-            int lck = 0;
+            int dex = 0;
             int dmg = 0;
-
+            int lck = 0;
+            int str = 0;
+            
             constexpr int total() const noexcept { return (str + dex + arc + lck + dmg); }
             constexpr bool empty() const noexcept { return (total() == 0); }
 

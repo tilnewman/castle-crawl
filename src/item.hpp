@@ -18,9 +18,27 @@ namespace castlecrawl
         class Item
         {
           public:
+            // normal weapon constructor  
             Item(const Weapon weapon, const WeaponMaterial material);
+
+            // magical weapon constructor
+            Item(
+                const Weapon weapon,
+                const WeaponMaterial material,
+                const std::string & uniqueName,
+                const EquipEffect & effect);
+
+            // normal armor constructor
             Item(const Armor armor, const ArmorMaterial material);
 
+            // magical armor constructor
+            Item(
+                const Armor armor,
+                const ArmorMaterial material,
+                const std::string & uniqueName,
+                const EquipEffect & effect);
+
+            // misc item constructor (all misc items are magical)
             Item(
                 const Misc misc,
                 const MiscMaterial material,

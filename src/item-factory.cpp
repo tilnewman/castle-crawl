@@ -63,7 +63,7 @@ namespace castlecrawl
                         {},
                         miscMaterialEquipEffect(material)));
                 }
-            }    
+            }
                  
             // these are the useable misc items
             items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Weak,   {.health=8}, {}));
@@ -78,6 +78,27 @@ namespace castlecrawl
             items.push_back(Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Normal, {.health=10}, {}));
             items.push_back(Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Strong, {.health=20}, {}));
             
+            // custom magical items (must have a unique name)
+            items.push_back(Item(
+                Weapon::Dagger,
+                WeaponMaterial::Obsidian,
+                "Dagger of Night",
+                { .arc = 3, .dmg = 3 }));
+            
+            items.push_back(Item(
+                Weapon::Dagger,
+                WeaponMaterial::Steel,
+                "Backstabber Dagger",
+                { .dmg = 7 }));
+
+            items.push_back(Item(
+                Armor::Cuirass,
+                ArmorMaterial::DragonScale,
+                "Dragon Slayer Cuirass",
+                { .arc = 5, .dmg = 5, .str = 5 }));
+
+            
+
             std::sort(std::begin(items), std::end(items));
 
             for (const Item & item : items)
@@ -114,27 +135,42 @@ namespace castlecrawl
                 }
             }
 
-            std::cout << std::endl;
-
+            std::cout << std::endl << "All Descriptions:" << std::endl;
+           
             for (const Item & item : items)
             {
                 std::cout << '\t' << item.description() << '\n';
             }
 
-            std::cout << std::endl;
+            std::cout << std::endl << "All Streamed Descriptions:" << std::endl;
 
             for (const Item & item : items)
             {
                 std::cout << '\t' << item.value() << "\t" << item << '\n';
             }
 
-            std::cout << std::endl;
-
+            std::cout << std::endl << "All Useable Names:" << std::endl;
+            
             for (const Item & item : items)
             {
                 if (item.isUseable())
                 {
                     std::cout << '\t' << item.value() << "\t" << item.name() << '\n';
+                }
+            }
+
+            std::cout << std::endl << "All Magical Weapons and Armor:" << std::endl;
+
+            for (const Item & item : items)
+            {
+                if (!item.isMagical())
+                {
+                    continue;
+                }
+
+                if (item.isWeapon() || item.isArmor())
+                {
+                    std::cout << "\t" << item.value() << "\t" << item.description() << '\n';
                 }
             }
 
@@ -198,6 +234,17 @@ namespace castlecrawl
                 M_CHECK(
                     item.isEquipable(),
                     "Error:  Armor Item SHOULD be Equipable but is not: " << item);
+
+                if (item.isMagical())
+                {
+                    M_CHECK(
+                        (item.name() != armorName(item.armorType())),
+                        "Error: Magical armor has a default name:" << item);
+
+                    M_CHECK(
+                        (item.equipEffect().total() > 0),
+                        "Error: Magical armor has no equip effect:" << item);
+                }
             }
 
             if (item.isWeapon())
@@ -216,6 +263,17 @@ namespace castlecrawl
                 M_CHECK(
                     item.isEquipable(),
                     "Error:  Weapon Item SHOULD be Equipable but is not: " << item);
+
+                if (item.isMagical())
+                {
+                    M_CHECK(
+                        (item.name() != weaponName(item.weaponType())),
+                        "Error: Magical weapon has a default name:" << item);
+
+                    M_CHECK(
+                        (item.equipEffect().total() > 0),
+                        "Error: Magical weapon has no equip effect:" << item);
+                }
             }
 
             if (item.isMisc())
@@ -238,6 +296,8 @@ namespace castlecrawl
                         "Error: This Misc item must NOT have the material 'Magic': " << item);
                 }
             }
+
+            
 
             M_CHECK((item.value() > 0), "Error:  Item's Value is zero or less: " << item)
         }

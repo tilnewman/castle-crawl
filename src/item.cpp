@@ -30,6 +30,30 @@ namespace castlecrawl
             m_value = calcValue();
         }
 
+        Item::Item(
+            const Weapon weapon,
+            const WeaponMaterial material,
+            const std::string & uniqueName,
+            const EquipEffect & effect)
+            : m_value(0)
+            , m_weapon(weapon)
+            , m_armor(Armor::Count)
+            , m_misc(Misc::Count)
+            , m_name(uniqueName)
+            , m_armorMaterial(ArmorMaterial::Count)
+            , m_weaponMaterial(material)
+            , m_miscMaterial(MiscMaterial::Count)
+            , m_useStrength(UseStrength::Normal)
+            , m_armorRating(0)
+            , m_damageMin(baseWeaponDamage(weapon).x + weaponMaterialDamage(material))
+            , m_damageMax(baseWeaponDamage(weapon).y + weaponMaterialDamage(material))
+            , m_useEffect()
+            , m_equipEffect(effect)
+        {
+            m_value = calcValue();
+        }
+
+
         Item::Item(const Armor armor, const ArmorMaterial material)
             : m_value(0)
             , m_weapon(Weapon::Count)
@@ -48,6 +72,30 @@ namespace castlecrawl
         {
             m_value = calcValue();
         }
+
+        Item::Item(
+            const Armor armor,
+            const ArmorMaterial material,
+            const std::string & uniqueName,
+            const EquipEffect & effect)
+            : m_value(0)
+            , m_weapon(Weapon::Count)
+            , m_armor(armor)
+            , m_misc(Misc::Count)
+            , m_name(uniqueName)
+            , m_armorMaterial(material)
+            , m_weaponMaterial(WeaponMaterial::Count)
+            , m_miscMaterial(MiscMaterial::Count)
+            , m_useStrength(UseStrength::Normal)
+            , m_armorRating(baseArmorRating(armor) + armorMaterialRating(material))
+            , m_damageMin(0)
+            , m_damageMax(0)
+            , m_useEffect()
+            , m_equipEffect(effect)
+        {
+            m_value = calcValue();
+        }
+
 
         Item::Item(
             const Misc misc,
@@ -80,13 +128,19 @@ namespace castlecrawl
 
             if (isArmor())
             {
-                str += armorMaterialName(m_armorMaterial);
-                str += ' ';
+                if (!isMagical())
+                {
+                    str += armorMaterialName(m_armorMaterial);
+                    str += ' ';
+                }
             }
             else if (isWeapon())
             {
-                str += weaponMaterialName(m_weaponMaterial);
-                str += ' ';
+                if (!isMagical())
+                {
+                    str += weaponMaterialName(m_weaponMaterial);
+                    str += ' ';
+                }
             }
             else // must be misc
             {
@@ -128,7 +182,14 @@ namespace castlecrawl
 
             if (isWeapon())
             {
-                str += " a weapon that does between ";
+                str += " a";
+                
+                if (isMagical())
+                {
+                    str += " magical";
+                }
+
+                str += " weapon that does between ";
                 str += std::to_string(m_damageMin);
                 str += " and ";
                 str += std::to_string(m_damageMax);
@@ -136,12 +197,17 @@ namespace castlecrawl
             }
             else if (isArmor())
             {
+                if (isMagical())
+                {
+                    str += " magical";
+                }
+
                 str += " armor that has a rating of ";
                 str += std::to_string(m_armorRating);
             }
             else // must be a misc item
             {
-                str += " a misc item";
+                str += " a magical item";
 
                 if (isUseable())
                 {
@@ -204,10 +270,11 @@ namespace castlecrawl
 
             value += miscMaterialValue(m_miscMaterial);
 
-            value += (m_equipEffect.total() * 30);
-            
-            value += (m_useEffect.health * 30);
-            value += (m_useEffect.mana * 40);
+            value += (m_equipEffect.total() ^ 2);
+            value += (m_equipEffect.total() * 100);
+
+            value += ((m_useEffect.total() / 2) ^ 2);
+            value += (m_useEffect.total() * 25);
 
             return value;
         }
