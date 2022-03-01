@@ -28,6 +28,9 @@ namespace castlecrawl
 
             const EquipEffect totalEquipEffects() const;
 
+            friend void to_json(json & j, const Inventory & i);
+            friend void from_json(const json & j, Inventory & i);
+
         private:
             bool hasWeaponEquipped() const;
             bool hasEquipped(const Armor armor) const;
@@ -37,6 +40,19 @@ namespace castlecrawl
             ItemVec_t m_items;
             ItemVec_t m_eqItems;
         };
+
+        
+        inline void to_json(json & j, const Inventory & inv)
+        {
+            j = json{ { "items", inv.m_items },
+                      { "equipped_items", inv.m_eqItems } };
+        }
+
+        inline void from_json(const json & j, Inventory & inv)
+        {
+            j.at("items").get_to(inv.m_items);
+            j.at("equipped_items").get_to(inv.m_eqItems);
+        }
 
     } // namespace item
 } // namespace castlecrawl

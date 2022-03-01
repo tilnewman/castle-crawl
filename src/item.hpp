@@ -83,6 +83,8 @@ namespace castlecrawl
 
             auto operator<=>(const Item &) const = default;
             friend std::ostream & operator<<(std::ostream & os, const Item & item);
+            friend void to_json(json & j, const Item & i);
+            friend void from_json(const json & j, Item & i);
 
           private:
             int calcValue() const;
@@ -111,9 +113,45 @@ namespace castlecrawl
             EquipEffect m_equipEffect;
         };
 
+        using ItemVec_t = std::vector<Item>;
+
         std::ostream & operator<<(std::ostream & os, const Item & item);
 
-        using ItemVec_t = std::vector<Item>;
+        inline void to_json(json & j, const Item & i)
+        {
+            j = json{ { "value", i.m_value },
+                      { "weapon", i.m_weapon },
+                      { "armor", i.m_armor },
+                      { "misc", i.m_misc },
+                      { "name", i.m_name },
+                      { "armor_material", i.m_armorMaterial },
+                      { "weapon_material", i.m_weaponMaterial },
+                      { "misc_material", i.m_miscMaterial },
+                      { "use_strength", i.m_useStrength },
+                      { "armor_rating", i.m_armorRating },
+                      { "damage_min", i.m_damageMin },
+                      { "damage_max", i.m_damageMax },
+                      { "use_effect", i.m_useEffect },
+                      { "equip_effect", i.m_equipEffect } };
+        }
+
+        inline void from_json(const json & j, Item & i)
+        {
+            j.at("value").get_to(i.m_value);
+            j.at("weapon").get_to(i.m_weapon);
+            j.at("armor").get_to(i.m_armor);
+            j.at("misc").get_to(i.m_misc);
+            j.at("name").get_to(i.m_name);
+            j.at("armor_material").get_to(i.m_armorMaterial);
+            j.at("weapon_material").get_to(i.m_weaponMaterial);
+            j.at("misc_material").get_to(i.m_miscMaterial);
+            j.at("use_strength").get_to(i.m_useStrength);
+            j.at("armor_rating").get_to(i.m_armorRating);
+            j.at("damage_min").get_to(i.m_damageMin);
+            j.at("damage_max").get_to(i.m_damageMax);
+            j.at("use_effect").get_to(i.m_useEffect);
+            j.at("equip_effect").get_to(i.m_equipEffect);
+        }
 
     } // namespace item
 } // namespace castlecrawl

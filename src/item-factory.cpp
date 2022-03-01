@@ -249,6 +249,10 @@ namespace castlecrawl
                       << longestName.size() << "\n\t" << longestDesc << ": " << longestDesc.size()
                       << std::endl
                       << std::endl;
+
+           
+            json j = items.back();
+            std::cout << "JSON: " << j << std::endl;
         }
 
         void ItemFactory::validate(const Item & item) const
@@ -364,7 +368,11 @@ namespace castlecrawl
                 }
             }
 
-            M_CHECK((item.value() > 0), "Error:  Item's Value is zero or less: " << item)
+            M_CHECK((item.value() > 0), "Error:  Item's Value is zero or less: " << item);
+
+            json j = item;
+            const Item item2 = j.get<Item>();
+            M_CHECK((item == item2), "Error:  Item failed to json serialize correctly: " << item);
         }
 
     } // namespace item

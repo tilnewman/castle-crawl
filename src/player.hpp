@@ -3,6 +3,8 @@
 //
 // player.hpp
 //
+#include "inventory.hpp"
+
 #include <algorithm>
 #include <string>
 
@@ -45,12 +47,34 @@ namespace castlecrawl
 
         void reset() { m_current = m_normal; }
 
+        friend void to_json(json & j, const Stat & s);
+        friend void from_json(const json & j, Stat & s);
+
       private:
         int m_current;
         int m_normal;
         int m_min;
         int m_max;
     };
+
+    
+    inline void to_json(json & j, const Stat & s)
+    {
+        j = json{ 
+            { "current", s.m_current }, 
+            { "normal", s.m_normal },
+            { "min", s.m_min },
+            { "max", s.m_max }
+        };
+    }
+
+    inline void from_json(const json & j, Stat & s)
+    {
+        j.at("current").get_to(s.m_current);
+        j.at("normal").get_to(s.m_normal);
+        j.at("min").get_to(s.m_min);
+        j.at("max").get_to(s.m_max);
+    }
 
     //
 
@@ -72,6 +96,9 @@ namespace castlecrawl
         int gold() const { return m_gold; }
         void adjGold(const int adjustment) { m_gold += adjustment; }
 
+        friend void to_json(json & j, const Player & p);
+        friend void from_json(const json & j, Player & p);
+
       private:
         constexpr static int statMin = 1;
         constexpr static int statMax = 99;
@@ -91,6 +118,31 @@ namespace castlecrawl
         
         int m_gold;
     };
+
+    inline void to_json(json & j, const Player & p)
+    {
+        j = json{ { "arcane", p.m_arcane },
+                  { "dexterity", p.m_dexterity },
+                  { "luck", p.m_luck },
+                  { "strength", p.m_strength },
+                  { "health", p.m_health }, 
+                  { "mana", p.m_mana },
+                  { "level", p.m_level },
+                  { "gold", p.m_gold }
+        };
+    }
+
+    inline void from_json(const json & j, Player & p)
+    {
+        j.at("arcane").get_to(p.m_arcane);
+        j.at("dexterity").get_to(p.m_dexterity);
+        j.at("luck").get_to(p.m_luck);
+        j.at("strength").get_to(p.m_strength);
+        j.at("health").get_to(p.m_health); 
+        j.at("mana").get_to(p.m_mana);
+        j.at("level").get_to(p.m_level);
+        j.at("gold").get_to(p.m_gold);
+    }
 
 } // namespace castlecrawl
 

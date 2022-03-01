@@ -7,10 +7,15 @@
 
 #include <SFML/System/Vector2.hpp>
 
+#include "json.hpp"
+
 namespace castlecrawl
 {
+    using json = nlohmann::json;
+
     namespace item
     {
+    
         struct UseEffect
         {
             int health = 0;
@@ -20,6 +25,19 @@ namespace castlecrawl
             constexpr bool empty() const noexcept { return (total() == 0); }
             auto operator<=>(const UseEffect &) const = default;
         };
+
+        inline void to_json(json & j, const UseEffect & ue)
+        {
+            j = json{ { "health", ue.health }, { "mana", ue.mana } };
+        }
+
+        inline void from_json(const json & j, UseEffect & ue)
+        {
+            j.at("health").get_to(ue.health);
+            j.at("mana").get_to(ue.mana);
+        }
+
+        //
 
         struct EquipEffect
         {
@@ -34,11 +52,11 @@ namespace castlecrawl
 
             constexpr inline EquipEffect & operator+=(const EquipEffect & right) noexcept
             {
-                str += right.str;
-                dex += right.dex;
                 arc += right.arc;
-                lck += right.lck;
+                dex += right.dex;
                 dmg += right.dmg;
+                lck += right.lck;
+                str += right.str;
                 return *this;
             }
 
@@ -51,6 +69,28 @@ namespace castlecrawl
 
             auto operator<=>(const EquipEffect &) const = default;
         };
+
+        inline void to_json(json & j, const EquipEffect & ee)
+        {
+            j = json{ 
+                { "arc", ee.arc },
+                { "dex", ee.dex },
+                { "dmg", ee.dmg },
+                { "lck", ee.lck },
+                { "str", ee.str }                    
+            };
+        }
+
+        inline void from_json(const json & j, EquipEffect & ee)
+        {
+            j.at("arc").get_to(ee.arc);
+            j.at("dex").get_to(ee.dex);
+            j.at("dmg").get_to(ee.dmg);
+            j.at("lck").get_to(ee.lck);
+            j.at("str").get_to(ee.str);
+        }
+
+        //
 
         enum class Weapon
         {
