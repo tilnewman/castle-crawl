@@ -9,6 +9,7 @@
 #include <string>
 #include <tuple>
 #include <compare>
+#include <vector>
 
 namespace castlecrawl
 {
@@ -111,6 +112,8 @@ namespace castlecrawl
         };
 
         std::ostream & operator<<(std::ostream & os, const Item & item);
+
+        using ItemVec_t = std::vector<Item>;
 
     } // namespace item
 } // namespace castlecrawl

@@ -16,8 +16,14 @@ namespace castlecrawl
             ItemFactory();
 
           private:
-            void validateAndOutputAll();
-            void validateItem(const Item & item);
+            const ItemVec_t makeAll() const;
+            const ItemVec_t makeWeapons() const;
+            const ItemVec_t makeArmor() const;
+            const ItemVec_t makeMisc() const;
+            const ItemVec_t makeCustom() const;
+
+            void validateAndDumpToConsole() const;
+            void validate(const Item & item) const;
         };
 
     } // namespace item

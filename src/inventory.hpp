@@ -23,8 +23,8 @@ namespace castlecrawl
             const std::string equip(const std::size_t index);
             void unequip(const std::size_t index);
 
-            const auto items() const { return m_items; }
-            const auto eqItems() const { return m_eqItems; }
+            const ItemVec_t items() const { return m_items; }
+            const ItemVec_t eqItems() const { return m_eqItems; }
 
             const EquipEffect totalEquipEffects() const;
 
@@ -34,8 +34,8 @@ namespace castlecrawl
             std::size_t countOfEquipped(const Misc misc) const;
 
         private:
-            std::vector<Item> m_items;
-            std::vector<Item> m_eqItems;
+            ItemVec_t m_items;
+            ItemVec_t m_eqItems;
         };
 
     } // namespace item

@@ -17,11 +17,39 @@ namespace castlecrawl
     namespace item
     {
 
-        ItemFactory::ItemFactory() { validateAndOutputAll(); }
+        ItemFactory::ItemFactory() { validateAndDumpToConsole(); }
 
-        void ItemFactory::validateAndOutputAll()
+
+        const ItemVec_t ItemFactory::makeAll() const 
         {
-            std::vector<Item> items;
+            ItemVec_t items;
+
+            for (const Item & item : makeWeapons())
+            {
+                items.push_back(item);
+            }
+
+            for (const Item & item : makeArmor())
+            {
+                items.push_back(item);
+            }
+
+            for (const Item & item : makeMisc())
+            {
+                items.push_back(item);
+            }
+
+            for (const Item & item : makeCustom())
+            {
+                items.push_back(item);
+            }
+
+            return items;
+        }
+        
+        const ItemVec_t ItemFactory::makeWeapons() const 
+        {
+            ItemVec_t items;
 
             for (int i = 0; i < static_cast<int>(Weapon::Count); ++i)
             {
@@ -33,6 +61,13 @@ namespace castlecrawl
                 }
             }
 
+            return items;
+        }
+
+        const ItemVec_t ItemFactory::makeArmor() const 
+        {
+            ItemVec_t items;
+
             for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
             {
                 const auto type = static_cast<Armor>(i);
@@ -42,6 +77,13 @@ namespace castlecrawl
                     items.push_back(Item(type, material));
                 }
             }
+
+            return items;
+        }
+
+        const ItemVec_t ItemFactory::makeMisc() const 
+        {
+            ItemVec_t items;
 
             // these are the equipable misc items
             for (int i = 0; i < static_cast<int>(Misc::Count); ++i)
@@ -66,6 +108,7 @@ namespace castlecrawl
             }
 
             // these are the useable misc items
+            // clang-format off
             items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Weak,   {.health=8}, {}));
             items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Normal, {.health=16}, {}));
             items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Strong, {.health=32}, {}));
@@ -77,24 +120,30 @@ namespace castlecrawl
             items.push_back(Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Weak,   {.health=5}, {}));
             items.push_back(Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Normal, {.health=10}, {}));
             items.push_back(Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Strong, {.health=20}, {}));
-            
+            // clang-format on
+
+            return items;
+        }
+
+
+        const ItemVec_t ItemFactory::makeCustom() const 
+        {
+            ItemVec_t items;
+
             // custom magical items (must have a unique name) (lots more todo here)
             for (int i = 0; i < static_cast<int>(Weapon::Count); ++i)
             {
                 const auto type = static_cast<Weapon>(i);
 
                 items.push_back(Item(
-                    type, 
-                    WeaponMaterial::Obsidian, 
-                    std::string(weaponName(type)).append(" of Night"), 
+                    type,
+                    WeaponMaterial::Obsidian,
+                    std::string(weaponName(type)).append(" of Night"),
                     { .arc = 3, .dmg = 3 }));
             }
 
-            items.push_back(Item(
-                Weapon::Dagger,
-                WeaponMaterial::Steel,
-                "Backstabber Dagger",
-                { .dmg = 7 }));
+            items.push_back(
+                Item(Weapon::Dagger, WeaponMaterial::Steel, "Backstabber Dagger", { .dmg = 7 }));
 
             for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
             {
@@ -106,12 +155,19 @@ namespace castlecrawl
                     std::string("Dragon Slayer ").append(armorName(type)),
                     { .arc = 5, .dmg = 5, .str = 5 }));
             }
-            
+
+            return items;
+        }
+
+        void ItemFactory::validateAndDumpToConsole() const
+        {
+            ItemVec_t items{ makeAll() };
+
             std::sort(std::begin(items), std::end(items));
 
             for (const Item & item : items)
             {
-                validateItem(item);
+                validate(item);
             }
             
             std::set<std::string> names;
@@ -195,7 +251,7 @@ namespace castlecrawl
                       << std::endl;
         }
 
-        void ItemFactory::validateItem(const Item & item)
+        void ItemFactory::validate(const Item & item) const
         {
             {
                 std::size_t count = 0;
@@ -307,8 +363,6 @@ namespace castlecrawl
                         "Error: This Misc item must NOT have the material 'Magic': " << item);
                 }
             }
-
-            
 
             M_CHECK((item.value() > 0), "Error:  Item's Value is zero or less: " << item)
         }
