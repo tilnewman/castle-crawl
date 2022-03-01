@@ -55,6 +55,8 @@ namespace castlecrawl
             const UseEffect & useEffect() const { return m_useEffect; }
             const EquipEffect & equipEffect() const { return m_equipEffect; }
 
+            bool isMagical() const { return (!m_useEffect.empty() || !m_equipEffect.empty()); }
+            
             const std::string description() const;
 
             auto operator<=>(const Item &) const = default;

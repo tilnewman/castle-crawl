@@ -17,6 +17,7 @@ namespace castlecrawl
             int mana = 0;
             
             constexpr int total() const noexcept { return (health + mana); }
+            constexpr bool empty() const noexcept { return (total() == 0); }
             auto operator<=>(const UseEffect &) const = default;
         };
 
@@ -29,6 +30,7 @@ namespace castlecrawl
             int dmg = 0;
 
             constexpr int total() const noexcept { return (str + dex + arc + lck + dmg); }
+            constexpr bool empty() const noexcept { return (total() == 0); }
 
             constexpr inline EquipEffect & operator+=(const EquipEffect & right) noexcept
             {
