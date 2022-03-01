@@ -64,7 +64,7 @@ namespace castlecrawl
                         miscMaterialEquipEffect(material)));
                 }
             }
-                 
+
             // these are the useable misc items
             items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Weak,   {.health=8}, {}));
             items.push_back(Item(Misc::Potion, MiscMaterial::Magic, UseStrength::Normal, {.health=16}, {}));
@@ -78,27 +78,35 @@ namespace castlecrawl
             items.push_back(Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Normal, {.health=10}, {}));
             items.push_back(Item(Misc::Herbs, MiscMaterial::Magic, UseStrength::Strong, {.health=20}, {}));
             
-            // custom magical items (must have a unique name)
-            items.push_back(Item(
-                Weapon::Dagger,
-                WeaponMaterial::Obsidian,
-                "Dagger of Night",
-                { .arc = 3, .dmg = 3 }));
-            
+            // custom magical items (must have a unique name) (lots more todo here)
+            for (int i = 0; i < static_cast<int>(Weapon::Count); ++i)
+            {
+                const auto type = static_cast<Weapon>(i);
+
+                items.push_back(Item(
+                    type, 
+                    WeaponMaterial::Obsidian, 
+                    std::string(weaponName(type)).append(" of Night"), 
+                    { .arc = 3, .dmg = 3 }));
+            }
+
             items.push_back(Item(
                 Weapon::Dagger,
                 WeaponMaterial::Steel,
                 "Backstabber Dagger",
                 { .dmg = 7 }));
 
-            items.push_back(Item(
-                Armor::Cuirass,
-                ArmorMaterial::DragonScale,
-                "Dragon Slayer Cuirass",
-                { .arc = 5, .dmg = 5, .str = 5 }));
+            for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
+            {
+                const auto type = static_cast<Armor>(i);
 
+                items.push_back(Item(
+                    type,
+                    ArmorMaterial::DragonScale,
+                    std::string("Dragon Slayer ").append(armorName(type)),
+                    { .arc = 5, .dmg = 5, .str = 5 }));
+            }
             
-
             std::sort(std::begin(items), std::end(items));
 
             for (const Item & item : items)
@@ -142,11 +150,14 @@ namespace castlecrawl
                 std::cout << '\t' << item.description() << '\n';
             }
 
-            std::cout << std::endl << "All Streamed Descriptions:" << std::endl;
+            std::cout << std::endl << "All Non-Magical:" << std::endl;
 
             for (const Item & item : items)
             {
-                std::cout << '\t' << item.value() << "\t" << item << '\n';
+                if (!item.isMagical())
+                {
+                    std::cout << '\t' << item.value() << "\t" << item << '\n';
+                }
             }
 
             std::cout << std::endl << "All Useable Names:" << std::endl;
