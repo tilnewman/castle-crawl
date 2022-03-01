@@ -18,6 +18,9 @@ namespace castlecrawl
         class Item
         {
           public:
+            // the default constructor makes an invalid item
+            Item();
+
             // normal weapon constructor  
             Item(const Weapon weapon, const WeaponMaterial material);
 

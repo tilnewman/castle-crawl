@@ -11,6 +11,23 @@ namespace castlecrawl
 {
     namespace item
     {
+        Item::Item()
+            : m_value(0)
+            , m_weapon(Weapon::Count)
+            , m_armor(Armor::Count)
+            , m_misc(Misc::Count)
+            , m_name()
+            , m_armorMaterial(ArmorMaterial::Count)
+            , m_weaponMaterial(WeaponMaterial::Count)
+            , m_miscMaterial(MiscMaterial::Count)
+            , m_useStrength(UseStrength::Normal)
+            , m_armorRating(0)
+            , m_damageMin(0)
+            , m_damageMax(0)
+            , m_useEffect()
+            , m_equipEffect()
+        {}
+
         Item::Item(const Weapon weapon, const WeaponMaterial material)
             : m_value(0)
             , m_weapon(weapon)
