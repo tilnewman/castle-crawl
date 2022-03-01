@@ -8,31 +8,46 @@
 
 namespace castlecrawl
 {
-
+    // Tracks a player's stat (i.e. strength) which is the m_normal value that
+    // is always clamped between a min and max, but can be temporarily changed
+    // by magical items etc so this also tracks a m_current value that can
+    // fluctuate higher or lower.
     class Stat
     {
       public:
         Stat(const int value, const int theMin, const int theMax)
-            : m_value(value)
+            : m_current(value)
+            , m_normal(value)
             , m_min(theMin)
             , m_max(theMax)
         {}
 
-        int get() const { return m_value; }
-        int getMin() const { return m_min; }
-        int getMax() const { return m_max; }
+        int current() const { return m_current; }
+        int normal() const { return m_normal; }
 
-        void set(const int newValue)
+        int min() const { return m_min; }
+        int max() const { return m_max; }
+
+        void adjCurrent(const int adjustment) { current(m_current + adjustment); }
+        void adjNormal(const int adjustment) { normal(m_normal + adjustment); }
+         
+        void current(const int newValue)
         {
-            m_value = newValue;
-            m_value = std::clamp(m_value, m_min, m_max);
+            m_current = newValue;
+            m_current = std::clamp(m_current, m_min, m_max);
         }
 
-        void adj(const int adjustment) { set(m_value + adjustment); }
-        void adjMax(const int adjustment) { m_max += adjustment; }
+        void normal(const int newValue)
+        {
+            m_normal = newValue;
+            m_normal = std::clamp(m_normal, m_min, m_max);
+        }
+
+        void reset() { m_current = m_normal; }
 
       private:
-        int m_value;
+        int m_current;
+        int m_normal;
         int m_min;
         int m_max;
     };
@@ -44,10 +59,18 @@ namespace castlecrawl
       public:
         Player();
 
-        Stat & strength() { return m_strength; }
-        Stat & dexterity() { return m_dexterity; }
         Stat & arcane() { return m_arcane; }
+        Stat & dexterity() { return m_dexterity; }
+        Stat & luck() { return m_luck; }
+        Stat & strength() { return m_strength; }
+        
         Stat & health() { return m_health; }
+        Stat & mana() { return m_mana; }
+
+        Stat & level() { return m_level; }
+
+        int gold() const { return m_gold; }
+        void adjGold(const int adjustment) { m_gold += adjustment; }
 
       private:
         constexpr static int statMin = 1;
@@ -56,13 +79,17 @@ namespace castlecrawl
         constexpr static int healthStart = 20;
         constexpr static int manaStart = 16;
 
-        Stat m_strength;
-        Stat m_dexterity;
         Stat m_arcane;
+        Stat m_dexterity;
         Stat m_luck;
+        Stat m_strength;
+        
         Stat m_health;
         Stat m_mana;
+        
         Stat m_level;
+        
+        int m_gold;
     };
 
 } // namespace castlecrawl
