@@ -10,10 +10,20 @@ namespace castlecrawl
     namespace item
     {
 
+        struct TextExtent
+        {
+            std::size_t longest_name = 0;
+            std::size_t longest_desc = 0;
+        };
+
         class ItemFactory
         {
           public:
             ItemFactory();
+
+            void processAll();
+            void printSummaries() const;
+            const TextExtent textExtents() const { return m_textExtent; }
 
           private:
             const ItemVec_t makeAll() const;
@@ -22,8 +32,11 @@ namespace castlecrawl
             const ItemVec_t makeMisc() const;
             const ItemVec_t makeCustom() const;
 
-            void validateAndDumpToConsole() const;
-            void validate(const Item & item) const;
+            const TextExtent findTextExtents(const ItemVec_t & items) const;
+            void validateAll(const ItemVec_t & items) const;
+            void throwIfInvalid(const Item & item) const;
+
+            TextExtent m_textExtent;
         };
 
     } // namespace item

@@ -18,9 +18,11 @@ namespace castlecrawl
     {
 
         ItemFactory::ItemFactory()
-        {
+            : m_textExtent()
+        { 
+            processAll();
+            //printSummaries();
         }
-
 
         const ItemVec_t ItemFactory::makeAll() const 
         {
@@ -45,6 +47,9 @@ namespace castlecrawl
             {
                 items.push_back(item);
             }
+
+            // this sort is not required but makes output pretty and speeds up runtime
+            std::sort(std::begin(items), std::end(items));
 
             return items;
         }
@@ -130,9 +135,12 @@ namespace castlecrawl
 
         const ItemVec_t ItemFactory::makeCustom() const 
         {
+            // All custom magical items must have a unique name!
+            
             ItemVec_t items;
 
-            // custom magical items (must have a unique name) (lots more todo here)
+            //weapons
+
             for (int i = 0; i < static_cast<int>(Weapon::Count); ++i)
             {
                 const auto type = static_cast<Weapon>(i);
@@ -147,6 +155,17 @@ namespace castlecrawl
             items.push_back(
                 Item(Weapon::Dagger, WeaponMaterial::Steel, "Backstabber Dagger", { .dmg = 7 }));
 
+            items.push_back(
+                Item(Weapon::Dagger, WeaponMaterial::Gold, "Lucky Dagger", { .lck = 10 }));
+
+            items.push_back(
+                Item(Weapon::Scythe, WeaponMaterial::Gold, "Sythe of the Lich", { .arc=7, .dmg=7 }));
+
+            items.push_back(
+                Item(Weapon::Handaxe, WeaponMaterial::Steel, "Maniac Handaxe", { .dmg = 5 }));
+
+            //armor
+
             for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
             {
                 const auto type = static_cast<Armor>(i);
@@ -155,26 +174,19 @@ namespace castlecrawl
                     type,
                     ArmorMaterial::DragonScale,
                     std::string("Dragon Slayer ").append(armorName(type)),
-                    { .arc = 5, .dmg = 5, .str = 5 }));
+                    { .arc = 3, .dmg = 3, .str = 3 }));
             }
+
+            items.push_back(
+                Item(Armor::Boots, ArmorMaterial::Leather, "Nimble Boots", { .dex = 7 }));
 
             return items;
         }
 
-        void ItemFactory::validateAndDumpToConsole() const
+        void ItemFactory::validateAll(const ItemVec_t & items) const 
         {
-            ItemVec_t items{ makeAll() };
-
-            std::sort(std::begin(items), std::end(items));
-
-            for (const Item & item : items)
-            {
-                validate(item);
-            }
-            
+            // loook for duplicate names
             std::set<std::string> names;
-            std::string longestName;
-            std::string longestDesc;
             for (const Item & item : items)
             {
                 const std::string name = item.name();
@@ -188,18 +200,50 @@ namespace castlecrawl
                 {
                     names.insert(name);
                 }
+            }
 
-                if (name.size() > longestName.size())
+            // throw if any item is invalid
+            for (const Item & item : items)
+            {
+                throwIfInvalid(item);
+            }
+        }
+
+        const TextExtent ItemFactory::findTextExtents(const ItemVec_t & items) const
+        {
+            TextExtent extents;
+
+            for (const Item & item : items)
+            {
+                const std::string name = item.name();
+
+                if (name.size() > extents.longest_name)
                 {
-                    longestName = name;
+                    extents.longest_name = name.size();
                 }
 
                 const std::string desc = item.description();
-                if (desc.size() > longestDesc.size())
+                if (desc.size() > extents.longest_desc)
                 {
-                    longestDesc = desc;
+                    extents.longest_desc = desc.size();
                 }
             }
+
+            return extents;
+        }
+
+        void ItemFactory::processAll()
+        {
+            const ItemVec_t items{ makeAll() };
+
+            validateAll(items);
+
+            m_textExtent = findTextExtents(items);
+        }
+
+        void ItemFactory::printSummaries() const
+        {
+            const ItemVec_t items{ makeAll() };
 
             std::cout << std::endl << "All Descriptions:" << std::endl;
            
@@ -245,19 +289,44 @@ namespace castlecrawl
 
             std::cout << std::endl;
 
-            std::cout << items.size() << " items total" << std::endl << std::endl;
+            std::cout << items.size() << " total unique items" << std::endl << std::endl;
 
-            std::cout << "longest name and description:\n\t" << longestName << ": "
-                      << longestName.size() << "\n\t" << longestDesc << ": " << longestDesc.size()
-                      << std::endl
-                      << std::endl;
+            std::cout << "longest name=" << m_textExtent.longest_name << std::endl;
+            std::cout << "longest desc=" << m_textExtent.longest_desc << std::endl;
+            
+            std::cout << std::endl;
 
-           
             json j = items.back();
             std::cout << "JSON: " << j << std::endl;
+
+            std::cout << std::endl;
+
+            std::cout << std::endl << "All Weapons sorted by damage:" << std::endl;
+            ItemVec_t weapons;
+            for (const Item & item : items)
+            {
+                if (item.isWeapon())
+                {
+                    weapons.push_back(item);
+                }
+            }
+
+            std::sort(std::begin(weapons), std::end(weapons), [](const Item & A, const Item & B) 
+                { 
+                    const int dmgA{ A.damageMin() + A.damageMax() + (A.equipEffect().dmg * 2) };
+                    const int dmgB{ B.damageMin() + B.damageMax() + (B.equipEffect().dmg * 2)};
+                    return (dmgA < dmgB);
+                });
+
+            for (const Item & item : weapons)
+            {
+                std::cout << '\t' << item.value() << '\t' << item.name() << '\n';
+            }
+
+            std::cout << std::endl;
         }
 
-        void ItemFactory::validate(const Item & item) const
+        void ItemFactory::throwIfInvalid(const Item & item) const
         {
             {
                 std::size_t count = 0;
