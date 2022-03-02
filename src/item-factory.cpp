@@ -327,7 +327,7 @@ namespace castlecrawl
             std::cout << std::endl;
 
             json j = items.back();
-            std::cout << "JSON: " << j << std::endl;
+            std::cout << "JSON:\n" << std::setw(4) << j << std::endl;
 
             std::cout << std::endl;
 
