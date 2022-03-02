@@ -9,7 +9,6 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 
 #include <SFML/Graphics/RenderStates.hpp>
-#include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
 namespace sf
@@ -27,7 +26,8 @@ namespace castlecrawl
       public:
         StatePlay(Context & context);
 
-        void update(Context &, const float frameTimeSec) override;
+        void onEnter(Context & context) override;
+        void update(Context & context, const float frameTimeSec) override;
         void handleEvent(Context & context, const sf::Event & event) override;
         void draw(const Context &, sf::RenderTarget &, sf::RenderStates) const override;
 

@@ -34,6 +34,11 @@ namespace castlecrawl
         m_fps.reset(context);
     }
 
+    void StatePlay::onEnter(Context &) 
+    {
+
+    }
+
     void StatePlay::update(Context & context, const float frameTimeSec)
     {
         context.anim.update(frameTimeSec);
@@ -86,6 +91,12 @@ namespace castlecrawl
         {
             context.popup.setup(context, "All your bases are belong to us.");
             context.state.setChangePending(State::Popup);
+            return;
+        }
+
+        if (sf::Keyboard::F == event.key.code)
+        {
+            context.state.setChangePending(State::Direction);
             return;
         }
 

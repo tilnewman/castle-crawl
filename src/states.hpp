@@ -27,6 +27,7 @@ namespace castlecrawl
         Play,
         Pause,
         Popup,
+        Direction,
         Quit,
     };
 
@@ -34,7 +35,7 @@ namespace castlecrawl
 
     //
 
-    inline std::string toString(const State state)
+    inline constexpr std::string_view toString(const State state) noexcept
     {
         switch (state)
         {
@@ -44,6 +45,7 @@ namespace castlecrawl
             case State::Play: return "Play";
             case State::Pause: return "Pause";
             case State::Quit: return "Quit";
+            case State::Direction: return "Direction";
             default: return "State::Invalid";
         }
     }
