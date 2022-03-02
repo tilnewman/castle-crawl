@@ -27,6 +27,7 @@ namespace castlecrawl
         const ItemVec_t ItemFactory::makeAll() const 
         {
             ItemVec_t items;
+            items.reserve(200);//acutally 168 as of 2022-3-2
 
             for (const Item & item : makeWeapons())
             {
@@ -58,6 +59,10 @@ namespace castlecrawl
         {
             ItemVec_t items;
 
+            items.reserve(
+                static_cast<std::size_t>(Weapon::Count) *
+                static_cast<std::size_t>(WeaponMaterial::Count));
+
             for (int i = 0; i < static_cast<int>(Weapon::Count); ++i)
             {
                 const auto type = static_cast<Weapon>(i);
@@ -74,6 +79,10 @@ namespace castlecrawl
         const ItemVec_t ItemFactory::makeArmor() const 
         {
             ItemVec_t items;
+           
+            items.reserve(
+                static_cast<std::size_t>(Armor::Count) *
+                static_cast<std::size_t>(ArmorMaterial::Count));
 
             for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
             {
@@ -91,6 +100,10 @@ namespace castlecrawl
         const ItemVec_t ItemFactory::makeMisc() const 
         {
             ItemVec_t items;
+
+            items.reserve(
+                (static_cast<std::size_t>(Misc::Count) *
+                static_cast<std::size_t>(MiscMaterial::Count)) + 9);
 
             // these are the equipable misc items
             for (int i = 0; i < static_cast<int>(Misc::Count); ++i)
@@ -177,8 +190,25 @@ namespace castlecrawl
                     { .arc = 3, .dmg = 3, .str = 3 }));
             }
 
+            for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
+            {
+                const auto type = static_cast<Armor>(i);
+
+                items.push_back(Item(
+                    type,
+                    ArmorMaterial::Steel,
+                    std::string("Commander ").append(armorName(type)),
+                    { .str = 1 }));
+            }
+
             items.push_back(
-                Item(Armor::Boots, ArmorMaterial::Leather, "Nimble Boots", { .dex = 7 }));
+                Item(Armor::Boots, ArmorMaterial::Leather, "Nimble Boots", { .dex = 5 }));
+
+            items.push_back(
+                Item(Armor::Bracers, ArmorMaterial::Leather, "Swift Bracers", { .dex = 7 }));
+
+            items.push_back(
+                Item(Armor::Gauntlets, ArmorMaterial::Leather, "Mongoose Gauntlets", { .dex = 9 }));
 
             return items;
         }
@@ -314,7 +344,7 @@ namespace castlecrawl
             std::sort(std::begin(weapons), std::end(weapons), [](const Item & A, const Item & B) 
                 { 
                     const int dmgA{ A.damageMin() + A.damageMax() + (A.equipEffect().dmg * 2) };
-                    const int dmgB{ B.damageMin() + B.damageMax() + (B.equipEffect().dmg * 2)};
+                    const int dmgB{ B.damageMin() + B.damageMax() + (B.equipEffect().dmg * 2) };
                     return (dmgA < dmgB);
                 });
 
@@ -395,8 +425,8 @@ namespace castlecrawl
                     (item.damageMin() > 0), "Error:  Weapon Item's damage_min invalid: " << item);
 
                 M_CHECK(
-                    (item.damageMax() > item.damageMin()),
-                    "Error:  Weapon Item's damage_max is not greater than the min: " << item);
+                    (item.damageMax() >= item.damageMin()),
+                    "Error:  Weapon Item's damage_max is not >= than the min: " << item);
 
                 M_CHECK(
                     (item.weaponMaterial() != WeaponMaterial::Count),
