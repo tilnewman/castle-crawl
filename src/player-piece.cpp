@@ -64,6 +64,8 @@ namespace castlecrawl
         }
     }
 
+    void PlayerPiece::update(Context & context, const float frameTimeSec) { PieceBase::update(context, frameTimeSec); }
+
     void PlayerPiece::handleArrowKey(Context & context, const sf::Keyboard::Key arrowKey)
     {
         if (!keys::isArrow(arrowKey))

@@ -17,11 +17,14 @@ namespace sf
 
 namespace castlecrawl
 {
+    struct Context;
+
     struct Board : public sf::Drawable
     {
         PlayerPiece player;
         std::vector<DoorPiece> doors;
 
+        void update(Context & context, const float frameTimeSec);
         void draw(sf::RenderTarget &, sf::RenderStates) const override;
     };
 

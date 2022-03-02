@@ -26,7 +26,9 @@ namespace castlecrawl
         : m_mapChar{ '.' }
         , m_isObstacle{ true }
         , m_sprite{}
-        , m_position{ 0, 0 }
+        , m_shaker()
+        , m_willShake(false)
+        , m_position()
     {}
 
     void PieceBase::reset(
@@ -36,7 +38,6 @@ namespace castlecrawl
         m_isObstacle = isObstacle;
         m_sprite = context.media.sprite(mapCharToTileImage(mapChar));
         m_position = pos;
-
         m_sprite.setPosition(util::position(context.layout.cellBounds(pos)));
     }
 
@@ -68,4 +69,21 @@ namespace castlecrawl
     {
         target.draw(m_sprite, states);
     }
+
+    void PieceBase::update(Context & context, const float frameTimeSec) 
+    {
+        m_shaker.update(frameTimeSec);
+        if (m_willShake)
+        {
+            shake(context);
+        }
+    }
+
+    void PieceBase::shake(Context& context) 
+    {
+        sf::Vector2f pos{ util::position(context.layout.cellBounds(m_position)) };
+        pos.x += m_shaker.adjustment();
+        m_sprite.setPosition(pos);
+    }
+
 } // namespace castlecrawl

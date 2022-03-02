@@ -5,6 +5,7 @@
 //
 #include "map-types.hpp"
 #include "tile-image.hpp"
+#include "shaker.hpp"
 
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/Sprite.hpp>
@@ -34,6 +35,8 @@ namespace castlecrawl
 
         virtual void handleEvent(Context &, const sf::Event &) = 0;
         void draw(sf::RenderTarget &, sf::RenderStates) const override = 0;
+
+        virtual void update(Context & context, const float frameTimeSec) = 0;
     };
 
     //
@@ -57,16 +60,25 @@ namespace castlecrawl
 
         void draw(sf::RenderTarget & target, sf::RenderStates states) const override;
 
+        void update(Context & context, const float frameTimeSec) override;
+
+        void willShake(const bool enable) { m_willShake = enable; }
+
       protected:
         void reset(
             Context & context, const MapPos_t & pos, const char mapChar, const bool isObstacle);
+
+      private:
+        void shake(Context & context);
 
       protected:
         char m_mapChar;
         bool m_isObstacle;
         sf::Sprite m_sprite;
-
+        
       private:
+        Shaker m_shaker;
+        bool m_willShake;
         MapPos_t m_position;
     };
 

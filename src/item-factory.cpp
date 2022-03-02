@@ -17,7 +17,9 @@ namespace castlecrawl
     namespace item
     {
 
-        ItemFactory::ItemFactory() { validateAndDumpToConsole(); }
+        ItemFactory::ItemFactory()
+        {
+        }
 
 
         const ItemVec_t ItemFactory::makeAll() const 

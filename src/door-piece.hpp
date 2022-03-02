@@ -13,7 +13,7 @@ namespace castlecrawl
     {
       public:
         void reset(Context & context, const MapPos_t & pos, const bool isLocked);
-
+        
         bool isLocked() const { return isObstacle(); }
         void isLocked(const bool isLocked) { m_isObstacle = isLocked; }
     };

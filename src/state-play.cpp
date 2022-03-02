@@ -37,6 +37,7 @@ namespace castlecrawl
     void StatePlay::update(Context & context, const float frameTimeSec)
     {
         context.anim.update(frameTimeSec);
+        context.board.update(context, frameTimeSec);
         m_fps.update();
     }
 

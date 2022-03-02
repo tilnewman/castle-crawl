@@ -7,12 +7,14 @@
 
 namespace castlecrawl
 {
+    struct Context;
 
     class PlayerPiece : public PieceBase
     {
       public:
         void reset(Context & context, const MapPos_t & pos);
         void handleEvent(Context &, const sf::Event &) override;
+        void update(Context & context, const float frameTimeSec) override;
         void handleArrowKey(Context &, const sf::Keyboard::Key arrowKey);
     };
 
