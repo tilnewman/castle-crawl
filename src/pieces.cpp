@@ -27,7 +27,7 @@ namespace castlecrawl
         , m_isObstacle{ true }
         , m_sprite{}
         , m_shaker()
-        , m_willShake(false)
+        , m_shakeTimerSec(0.0f)
         , m_position()
     {}
 
@@ -72,9 +72,10 @@ namespace castlecrawl
 
     void PieceBase::update(Context & context, const float frameTimeSec) 
     {
-        m_shaker.update(frameTimeSec);
-        if (m_willShake)
+        m_shakeTimerSec -= frameTimeSec;
+        if (m_shakeTimerSec > 0.0f)
         {
+            m_shaker.update(frameTimeSec);
             shake(context);
         }
     }

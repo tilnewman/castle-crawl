@@ -62,7 +62,7 @@ namespace castlecrawl
 
         void update(Context & context, const float frameTimeSec) override;
 
-        void willShake(const bool enable) { m_willShake = enable; }
+        void shake() { m_shakeTimerSec = 1.0f; }
 
       protected:
         void reset(
@@ -78,7 +78,7 @@ namespace castlecrawl
         
       private:
         Shaker m_shaker;
-        bool m_willShake;
+        float m_shakeTimerSec;
         MapPos_t m_position;
     };
 

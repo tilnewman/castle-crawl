@@ -48,6 +48,7 @@ namespace castlecrawl
             rect.height *= 1.5f;
 
             context.anim.play("sparkle-burst", rect, config);
+            shake();
         }
         else if (sf::Keyboard::Num2 == key)
         {
@@ -61,6 +62,7 @@ namespace castlecrawl
             rect.height *= 3.0f;
 
             context.anim.play("star-flash", rect, config);
+            shake();
         }
     }
 
