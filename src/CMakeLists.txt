@@ -88,7 +88,7 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
     target_compile_options(
         ${PROJECT_NAME}
         PUBLIC
-        -std=c++2a
+        -std=c++20
         -O3
         -DNDEBUG
         -lstdc++
@@ -96,7 +96,6 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
         -pedantic
         -Wall
         -Wconversion
-        -Weffc++
         -Wextra
         -Wfatal-errors
         -Wfloat-equal
