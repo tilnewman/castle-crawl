@@ -6,6 +6,9 @@
 #include "item-factory.hpp"
 
 #include "check-macros.hpp"
+#include "context.hpp"
+#include "player.hpp"
+#include "random.hpp"
 
 #include <algorithm>
 #include <iostream>
@@ -19,6 +22,7 @@ namespace castlecrawl
 
         ItemFactory::ItemFactory()
             : m_textExtent()
+            , m_lowestValue(0)
         { 
             processAll();
             //printSummaries();
@@ -49,8 +53,10 @@ namespace castlecrawl
                 items.push_back(item);
             }
 
-            // this sort is not required but makes output pretty and speeds up runtime
-            std::sort(std::begin(items), std::end(items));
+            std::sort(std::begin(items), std::end(items), [](const Item & A, const Item & B) 
+                {
+                    return (A.value() < B.value());
+                });
 
             return items;
         }
@@ -177,6 +183,9 @@ namespace castlecrawl
             items.push_back(
                 Item(Weapon::Handaxe, WeaponMaterial::Steel, "Maniac Handaxe", { .dmg = 5 }));
 
+            items.push_back(
+                Item(Weapon::Mace, WeaponMaterial::Steel, "Brute Mace", { .dmg = 4 }));
+
             //armor
 
             for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
@@ -188,6 +197,17 @@ namespace castlecrawl
                     ArmorMaterial::DragonScale,
                     std::string("Dragon Slayer ").append(toString(type)),
                     { .arc = 3, .dmg = 3, .str = 3 }));
+            }
+
+            for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
+            {
+                const auto type = static_cast<Armor>(i);
+
+                items.push_back(Item(
+                    type,
+                    ArmorMaterial::Silver,
+                    std::string(toString(type)).append(" of Nobility"),
+                    { .arc = 1, .lck = 2, .str = 3 }));
             }
 
             for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
@@ -269,6 +289,8 @@ namespace castlecrawl
             validateAll(items);
 
             m_textExtent = findTextExtents(items);
+
+            m_lowestValue = std::begin(items)->value();
         }
 
         void ItemFactory::printSummaries() const
@@ -328,30 +350,6 @@ namespace castlecrawl
 
             json j = items.back();
             std::cout << "JSON:\n" << std::setw(4) << j << std::endl;
-
-            std::cout << std::endl;
-
-            std::cout << std::endl << "All Weapons sorted by damage:" << std::endl;
-            ItemVec_t weapons;
-            for (const Item & item : items)
-            {
-                if (item.isWeapon())
-                {
-                    weapons.push_back(item);
-                }
-            }
-
-            std::sort(std::begin(weapons), std::end(weapons), [](const Item & A, const Item & B) 
-                { 
-                    const int dmgA{ A.damageMin() + A.damageMax() + (A.equipEffect().dmg * 2) };
-                    const int dmgB{ B.damageMin() + B.damageMax() + (B.equipEffect().dmg * 2) };
-                    return (dmgA < dmgB);
-                });
-
-            for (const Item & item : weapons)
-            {
-                std::cout << '\t' << item.value() << '\t' << item.name() << '\n';
-            }
 
             std::cout << std::endl;
         }
@@ -474,6 +472,39 @@ namespace castlecrawl
             json j = item;
             const Item item2 = j.get<Item>();
             M_CHECK((item == item2), "Error:  Item failed to json serialize correctly: " << item);
+        }
+
+        const Treasure ItemFactory::randomTreasureFind(Context & context) const 
+        {
+            Treasure treasure;
+
+            // establish how much value this random find is worth
+            const int valuePerLevel{100};
+            int value = context.player.level().current() * valuePerLevel;
+            value += context.random.fromTo(0, valuePerLevel);
+            value = context.random.fromTo(0, value);
+
+            // determine how much will be gold
+            const int valueOfGold = context.random.fromTo(0, value);
+            treasure.gold = (valueOfGold / 5);
+            value -= valueOfGold;
+
+            //use remaining value to add items
+            while (value >= m_lowestValue)
+            {
+                ItemVec_t items = makeAll();
+
+                items.erase(
+                    std::remove_if(std::begin(items), std::end(items), [&](const Item & item) 
+                        { return (item.value() > value);
+                        }), std::end(items));
+
+                const Item & item = treasure.items.emplace_back(context.random.from(items));
+
+                value -= item.value();
+            }
+
+            return treasure;
         }
 
     } // namespace item

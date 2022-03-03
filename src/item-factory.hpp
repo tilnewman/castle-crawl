@@ -7,8 +7,15 @@
 
 namespace castlecrawl
 {
+    struct Context;
+
     namespace item
     {
+        struct Treasure
+        {
+            int gold = 0;
+            ItemVec_t items;
+        };
 
         struct TextExtent
         {
@@ -24,6 +31,7 @@ namespace castlecrawl
             void processAll();
             void printSummaries() const;
             const TextExtent textExtents() const { return m_textExtent; }
+            const Treasure randomTreasureFind(Context & context) const;
 
           private:
             const ItemVec_t makeAll() const;
@@ -36,7 +44,10 @@ namespace castlecrawl
             void validateAll(const ItemVec_t & items) const;
             void throwIfInvalid(const Item & item) const;
 
+          private:
+            int m_lowestValue;
             TextExtent m_textExtent;
+
         };
 
     } // namespace item

@@ -90,7 +90,6 @@ namespace castlecrawl
             int calcValue() const;
 
           private:
-            // keeping value first ensures sorting by value first
             int m_value;
 
             Weapon m_weapon;
