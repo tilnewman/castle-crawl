@@ -161,7 +161,7 @@ namespace castlecrawl
                 items.push_back(Item(
                     type,
                     WeaponMaterial::Obsidian,
-                    std::string(weaponName(type)).append(" of Night"),
+                    std::string(toString(type)).append(" of Night"),
                     { .arc = 3, .dmg = 3 }));
             }
 
@@ -186,7 +186,7 @@ namespace castlecrawl
                 items.push_back(Item(
                     type,
                     ArmorMaterial::DragonScale,
-                    std::string("Dragon Slayer ").append(armorName(type)),
+                    std::string("Dragon Slayer ").append(toString(type)),
                     { .arc = 3, .dmg = 3, .str = 3 }));
             }
 
@@ -197,7 +197,7 @@ namespace castlecrawl
                 items.push_back(Item(
                     type,
                     ArmorMaterial::Steel,
-                    std::string("Commander ").append(armorName(type)),
+                    std::string("Commander ").append(toString(type)),
                     { .str = 1 }));
             }
 
@@ -410,7 +410,7 @@ namespace castlecrawl
                 if (item.isMagical())
                 {
                     M_CHECK(
-                        (item.name() != armorName(item.armorType())),
+                        (item.name() != toString(item.armorType())),
                         "Error: Magical armor has a default name:" << item);
 
                     M_CHECK(
@@ -439,7 +439,7 @@ namespace castlecrawl
                 if (item.isMagical())
                 {
                     M_CHECK(
-                        (item.name() != weaponName(item.weaponType())),
+                        (item.name() != toString(item.weaponType())),
                         "Error: Magical weapon has a default name:" << item);
 
                     M_CHECK(

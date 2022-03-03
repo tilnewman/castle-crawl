@@ -106,7 +106,7 @@ namespace castlecrawl
             Count
         };
 
-        inline constexpr std::string_view weaponName(const Weapon weapon) noexcept
+        inline constexpr std::string_view toString(const Weapon weapon) noexcept
         {
             // clang-format off
             switch (weapon)
@@ -156,7 +156,7 @@ namespace castlecrawl
             Count
         };
 
-        inline constexpr std::string_view weaponMaterialName(const WeaponMaterial material) noexcept
+        inline constexpr std::string_view toString(const WeaponMaterial material) noexcept
         {
             // clang-format off
             switch (material)
@@ -199,7 +199,7 @@ namespace castlecrawl
             Count
         };
 
-        inline constexpr std::string_view armorName(const Armor armor) noexcept
+        inline constexpr std::string_view toString(const Armor armor) noexcept
         {
             // clang-format off
             switch (armor)
@@ -244,7 +244,7 @@ namespace castlecrawl
             Count
         };
 
-        inline constexpr std::string_view armorMaterialName(const ArmorMaterial material) noexcept
+        inline constexpr std::string_view toString(const ArmorMaterial material) noexcept
         {
             // clang-format off
             switch (material)
@@ -291,7 +291,7 @@ namespace castlecrawl
             Count
         };
 
-        inline constexpr std::string_view miscName(const Misc misc) noexcept
+        inline constexpr std::string_view toString(const Misc misc) noexcept
         {
             // clang-format off
             switch (misc)
@@ -390,7 +390,7 @@ namespace castlecrawl
             return material;
         }
 
-        inline constexpr std::string_view miscMaterialName(const MiscMaterial material) noexcept
+        inline constexpr std::string_view toString(const MiscMaterial material) noexcept
         {
             // clang-format off
             switch (material)
@@ -440,7 +440,7 @@ namespace castlecrawl
             Strong
         };
 
-        inline constexpr std::string_view useStrengthName(const UseStrength strength) noexcept
+        inline constexpr std::string_view toString(const UseStrength strength) noexcept
         {
             // clang-format off
             switch (strength)

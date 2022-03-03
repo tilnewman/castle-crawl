@@ -38,7 +38,7 @@ namespace castlecrawl
                 {
                     std::string str;
                     str += "Already has ";
-                    str += armorName(item.armorType());
+                    str += toString(item.armorType());
                     str += " equipped.";
                     return str;
                 }
@@ -48,7 +48,7 @@ namespace castlecrawl
                 if (!isMiscEquipable(item.miscType()))
                 {
                     std::string str;
-                    str += miscName(item.miscType());
+                    str += toString(item.miscType());
                     str += " can't be equipped.";
                     return str;
                 }

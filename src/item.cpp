@@ -33,7 +33,7 @@ namespace castlecrawl
             , m_weapon(weapon)
             , m_armor(Armor::Count)
             , m_misc(Misc::Count)
-            , m_name(weaponName(weapon))
+            , m_name(toString(weapon))
             , m_armorMaterial(ArmorMaterial::Count)
             , m_weaponMaterial(material)
             , m_miscMaterial(MiscMaterial::Count)
@@ -76,7 +76,7 @@ namespace castlecrawl
             , m_weapon(Weapon::Count)
             , m_armor(armor)
             , m_misc(Misc::Count)
-            , m_name(armorName(armor))
+            , m_name(toString(armor))
             , m_armorMaterial(material)
             , m_weaponMaterial(WeaponMaterial::Count)
             , m_miscMaterial(MiscMaterial::Count)
@@ -124,7 +124,7 @@ namespace castlecrawl
             , m_weapon(Weapon::Count)
             , m_armor(Armor::Count)
             , m_misc(misc)
-            , m_name(miscName(misc))
+            , m_name(toString(misc))
             , m_armorMaterial(ArmorMaterial::Count)
             , m_weaponMaterial(WeaponMaterial::Count)
             , m_miscMaterial(material)
@@ -147,7 +147,7 @@ namespace castlecrawl
             {
                 if (!isMagical())
                 {
-                    str += armorMaterialName(m_armorMaterial);
+                    str += toString(m_armorMaterial);
                     str += ' ';
                 }
             }
@@ -155,7 +155,7 @@ namespace castlecrawl
             {
                 if (!isMagical())
                 {
-                    str += weaponMaterialName(m_weaponMaterial);
+                    str += toString(m_weaponMaterial);
                     str += ' ';
                 }
             }
@@ -163,7 +163,7 @@ namespace castlecrawl
             {
                 if (isUseable() && (m_useStrength != UseStrength::Normal))
                 {
-                    str += useStrengthName(m_useStrength);
+                    str += toString(m_useStrength);
                     str += ' ';
                 }
 
@@ -180,7 +180,7 @@ namespace castlecrawl
                 }
                 else
                 {
-                    str += miscMaterialName(m_miscMaterial);
+                    str += toString(m_miscMaterial);
                     str += ' ';
                 }
             }
