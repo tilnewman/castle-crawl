@@ -55,10 +55,7 @@ namespace castlecrawl
                 const Treasure treasure = context.items.randomTreasureFind(context);
 
                 context.player.adjGold(treasure.gold);
-                for (const Item & item : treasure.items)
-                {
-                    context.player.inventory().add(item);
-                }
+                context.player.inventory().add(treasure.items);
 
                 context.popup.setup(context, treasure.description());
                 context.state.setChangePending(State::Popup, State::Play);

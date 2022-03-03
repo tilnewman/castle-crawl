@@ -18,6 +18,7 @@ namespace castlecrawl
             Inventory();
 
             void add(const Item & item) { m_items.push_back(item); }
+            void add(const ItemVec_t & items);
             void remove(const std::size_t index);
 
             const std::string equip(const std::size_t index);

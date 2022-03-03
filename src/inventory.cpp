@@ -16,6 +16,14 @@ namespace castlecrawl
             : m_items()
         {}
 
+        void Inventory::add(const ItemVec_t & items) 
+        { 
+            for (const Item & item : items)
+            {
+                m_items.push_back(item);
+            }
+        }
+
         void Inventory::remove(const std::size_t index)
         {
             M_CHECK(index < m_items.size(), "Error:  Tried to remove() out of bounds index!");
