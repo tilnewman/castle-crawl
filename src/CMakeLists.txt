@@ -88,7 +88,7 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
     target_compile_options(
         ${PROJECT_NAME}
         PUBLIC
-        -std=c++20
+        -std=c++2a
         -O3
         -DNDEBUG
         -lstdc++
