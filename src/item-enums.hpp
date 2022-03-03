@@ -3,6 +3,7 @@
 //
 // item-enums.hpp
 //
+#include <compare>
 #include <string>
 
 #include <SFML/System/Vector2.hpp>
@@ -15,12 +16,12 @@ namespace castlecrawl
 
     namespace item
     {
-    
+
         struct UseEffect
         {
             int health = 0;
             int mana = 0;
-            
+
             constexpr int total() const noexcept { return (health + mana); }
             constexpr bool empty() const noexcept { return (total() == 0); }
             auto operator<=>(const UseEffect &) const = default;
@@ -46,7 +47,7 @@ namespace castlecrawl
             int dmg = 0;
             int lck = 0;
             int str = 0;
-            
+
             constexpr int total() const noexcept { return (str + dex + arc + lck + dmg); }
             constexpr bool empty() const noexcept { return (total() == 0); }
 
@@ -72,13 +73,11 @@ namespace castlecrawl
 
         inline void to_json(json & j, const EquipEffect & ee)
         {
-            j = json{ 
-                { "arc", ee.arc },
-                { "dex", ee.dex },
-                { "dmg", ee.dmg },
-                { "lck", ee.lck },
-                { "str", ee.str }                    
-            };
+            j = json{ { "arc", ee.arc },
+                      { "dex", ee.dex },
+                      { "dmg", ee.dmg },
+                      { "lck", ee.lck },
+                      { "str", ee.str } };
         }
 
         inline void from_json(const json & j, EquipEffect & ee)
@@ -342,16 +341,16 @@ namespace castlecrawl
         enum class MiscMaterial
         {
             Iron = 0,
-            Bronze,  
-            Bone,    
-            Tribal,  
-            Fang,    
-            Jade,    
+            Bronze,
+            Bone,
+            Tribal,
+            Fang,
+            Jade,
             Obsidian,
-            Lazuli,  
-            Bloody,  
-            Jeweled, 
-            Magic,   
+            Lazuli,
+            Bloody,
+            Jeweled,
+            Magic,
             Count
         };
 
@@ -427,6 +426,7 @@ namespace castlecrawl
                 case MiscMaterial::Lazuli:      { return 7; }
                 case MiscMaterial::Bloody:      { return 8; }
                 case MiscMaterial::Jeweled:     { return 9; }
+                case MiscMaterial::Magic:       { return 0; }
                 case MiscMaterial::Count:
                 default:                        { return 0; }
             }

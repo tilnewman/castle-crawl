@@ -5,10 +5,10 @@
 //
 #include "state-popup.hpp"
 
+#include "check-macros.hpp"
 #include "context.hpp"
 #include "popup-manager.hpp"
 #include "state-machine.hpp"
-#include "check-macros.hpp"
 
 namespace castlecrawl
 {
@@ -16,8 +16,7 @@ namespace castlecrawl
         : StatePlay(context)
     {}
 
-    void StatePopup::onEnter(Context & context) 
-    {}
+    void StatePopup::onEnter(Context &) {}
 
     void StatePopup::handleEvent(Context & context, const sf::Event & event)
     {

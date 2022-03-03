@@ -10,20 +10,20 @@
 namespace castlecrawl
 {
 
-	Shaker::Shaker()
-		: m_time(0.0f)
+    Shaker::Shaker()
+        : m_time(0.0f)
         , m_adjustment(0.0f)
     {}
 
-	void Shaker::update(const float frameTimeSec) 
-	{
-		m_time += (frameTimeSec * 50.0f);
-        m_adjustment = (sin(m_time) * 2.0f);  
+    void Shaker::update(const float frameTimeSec)
+    {
+        m_time += (frameTimeSec * 50.0f);
+        m_adjustment = (sin(m_time) * 2.0f);
 
-		if (m_time > 100000.0f)
+        if (m_time > 100000.0f)
         {
-			m_time = 0.0f;
+            m_time = 0.0f;
         }
-	}
+    }
 
 } // namespace castlecrawl

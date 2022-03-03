@@ -3,19 +3,18 @@
 //
 // shaker.hpp
 //
-
 namespace castlecrawl
 {
 
     class Shaker
     {
-    public:
+      public:
         Shaker();
 
         void update(const float frameTimeSec);
         float adjustment() const { return m_adjustment; }
 
-    private:
+      private:
         float m_time;
         float m_adjustment;
     };

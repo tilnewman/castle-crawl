@@ -5,17 +5,17 @@
 //
 #include "state-direction.hpp"
 
+#include "board.hpp"
 #include "context.hpp"
+#include "keys.hpp"
+#include "player-piece.hpp"
+#include "popup-manager.hpp"
+#include "process.hpp"
 #include "resources.hpp"
 #include "settings.hpp"
 #include "sound-player.hpp"
 #include "state-machine.hpp"
 #include "util.hpp"
-#include "board.hpp"
-#include "player-piece.hpp"
-#include "keys.hpp"
-#include "process.hpp"
-#include "popup-manager.hpp"
 
 namespace castlecrawl
 {
@@ -33,8 +33,8 @@ namespace castlecrawl
     {
         m_closingEvent = {};
 
-        //TODO which sfx to play?
-        //context.audio.play("pause");
+        // TODO which sfx to play?
+        // context.audio.play("pause");
 
         const MapPos_t upPos{ context.board.player.position() + MapPos_t{ 0, -1 } };
         const MapPos_t downPos{ context.board.player.position() + MapPos_t{ 0, 1 } };
@@ -47,7 +47,7 @@ namespace castlecrawl
         }
         else
         {
-            m_up = {-1.0f, -1.0f, -1.0f, -1.0f};
+            m_up = { -1.0f, -1.0f, -1.0f, -1.0f };
         }
 
         if (context.layout.isPositionValid(downPos))
@@ -58,7 +58,7 @@ namespace castlecrawl
         {
             m_down = { -1.0f, -1.0f, -1.0f, -1.0f };
         }
-        
+
         if (context.layout.isPositionValid(leftPos))
         {
             m_left = context.layout.cellBounds(leftPos);
@@ -85,8 +85,7 @@ namespace castlecrawl
             return;
         }
 
-        if ((sf::Keyboard::Escape == event.key.code) ||
-            keys::isArrow(event.key.code))
+        if ((sf::Keyboard::Escape == event.key.code) || keys::isArrow(event.key.code))
         {
             m_closingEvent = event;
             context.state.setChangePendingToFallback();
@@ -97,7 +96,7 @@ namespace castlecrawl
         const Context & context, sf::RenderTarget & target, sf::RenderStates states) const
     {
         StatePlay::draw(context, target, states);
-        
+
         sf::RectangleShape rs;
         rs.setFillColor(sf::Color(0, 255, 255, 60));
         rs.setOutlineColor(sf::Color(0, 255, 255, 150));
@@ -129,14 +128,14 @@ namespace castlecrawl
         }
     }
 
-     bool StateDirection::isClosingEventValid() 
-     {
-         if (m_closingEvent.type != sf::Event::KeyPressed)
-         {
-             return false;
-         }
+    bool StateDirection::isClosingEventValid()
+    {
+        if (m_closingEvent.type != sf::Event::KeyPressed)
+        {
+            return false;
+        }
 
-         return keys::isArrow(m_closingEvent.key.code);
-     }
+        return keys::isArrow(m_closingEvent.key.code);
+    }
 
 } // namespace castlecrawl

@@ -49,7 +49,6 @@ namespace castlecrawl
           private:
             int m_lowestValue;
             TextExtent m_textExtent;
-
         };
 
     } // namespace item
