@@ -20,7 +20,7 @@ namespace castlecrawl
     void Shaker::update(const float frameTimeSec)
     {
         m_time += (frameTimeSec * 50.0f);
-        m_adjustment = (sin(m_time) * 2.0f);
+        m_adjustment = (std::sin(m_time) * 2.0f);
 
         if (m_time > 100000.0f)
         {
