@@ -19,7 +19,7 @@ namespace castlecrawl
         void Inventory::remove(const std::size_t index)
         {
             M_CHECK(index < m_items.size(), "Error:  Tried to remove() out of bounds index!");
-            m_items.erase(std::begin(m_items) + index);
+            m_items.erase(std::begin(m_items) + static_cast<std::ptrdiff_t>(index));
         }
 
         const std::string Inventory::equip(const std::size_t index)
@@ -65,7 +65,7 @@ namespace castlecrawl
             }
 
             m_eqItems.push_back(m_items[index]);
-            m_items.erase(std::begin(m_items) + index);
+            m_items.erase(std::begin(m_items) + static_cast<std::ptrdiff_t>(index));
             return "";
         }
 
@@ -73,7 +73,7 @@ namespace castlecrawl
         {
             M_CHECK(index < m_eqItems.size(), "Error:  Tried to unequip() out of bounds index!");
             m_items.push_back(m_eqItems[index]);
-            m_eqItems.erase(std::begin(m_eqItems) + index);
+            m_eqItems.erase(std::begin(m_eqItems) + static_cast<std::ptrdiff_t>(index));
         }
 
         const EquipEffect Inventory::totalEquipEffects() const

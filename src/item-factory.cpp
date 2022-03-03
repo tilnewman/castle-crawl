@@ -39,8 +39,8 @@ namespace castlecrawl
         }
 
         ItemFactory::ItemFactory()
-            : m_textExtent()
-            , m_lowestValue(0)
+            : m_lowestValue(0)
+            , m_textExtent()
         {
             processAll();
             // printSummaries();
