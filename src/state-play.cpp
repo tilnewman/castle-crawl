@@ -40,19 +40,21 @@ namespace castlecrawl
     void StatePlay::onEnter(Context & context) 
     {
         if ((Action::Fight == context.process.action) &&
-            (StateDirection::m_closingEvent.type == sf::Event::KeyPressed) && 
-            keys::isArrow(StateDirection::m_closingEvent.key.code))
+            StateDirection::isClosingEventValid())
         {
             const MapPos_t fightPos = keys::moveIfDir(
                 context.board.player.position(), StateDirection::m_closingEvent.key.code);
 
-            StateDirection::m_closingEvent = {};
-
+            
             std::string message{ "You fight the '" };
             message += context.maps.get().getChar(fightPos);
             message += "'";
             context.popup.setup(context, message);
             context.state.setChangePending(State::Popup);
+            
+            StateDirection::m_closingEvent = {};
+            context.process.action = Action::None;
+
             return;
         }
     }

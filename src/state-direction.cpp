@@ -14,6 +14,8 @@
 #include "board.hpp"
 #include "player-piece.hpp"
 #include "keys.hpp"
+#include "process.hpp"
+#include "popup-manager.hpp"
 
 namespace castlecrawl
 {
@@ -96,28 +98,45 @@ namespace castlecrawl
     {
         StatePlay::draw(context, target, states);
         
-        const sf::Color color(0,255,255,127);
+        sf::RectangleShape rs;
+        rs.setFillColor(sf::Color(0, 255, 255, 60));
+        rs.setOutlineColor(sf::Color(0, 255, 255, 150));
+        rs.setOutlineThickness(2.0f);
+        rs.setSize(context.layout.cellSize());
 
         if (m_up.left > 0.0f)
         {
-            util::drawRectangleShape(target, m_up, true, color);
+            rs.setPosition(util::position(m_up));
+            target.draw(rs);
         }
 
         if (m_down.left > 0.0f)
         {
-            util::drawRectangleShape(target, m_down, true, color);
+            rs.setPosition(util::position(m_down));
+            target.draw(rs);
         }
 
         if (m_left.left > 0.0f)
         {
-            util::drawRectangleShape(target, m_left, true, color);
+            rs.setPosition(util::position(m_left));
+            target.draw(rs);
         }
 
         if (m_right.left > 0.0f)
         {
-            util::drawRectangleShape(target, m_right, true, color);
+            rs.setPosition(util::position(m_right));
+            target.draw(rs);
         }
-
     }
+
+     bool StateDirection::isClosingEventValid() 
+     {
+         if (m_closingEvent.type != sf::Event::KeyPressed)
+         {
+             return false;
+         }
+
+         return keys::isArrow(m_closingEvent.key.code);
+     }
 
 } // namespace castlecrawl

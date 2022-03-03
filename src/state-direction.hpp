@@ -27,6 +27,7 @@ namespace castlecrawl
         void draw(const Context &, sf::RenderTarget &, sf::RenderStates) const override;
 
         static sf::Event m_closingEvent;
+        static bool isClosingEventValid();
 
       private:
         sf::FloatRect m_up;
