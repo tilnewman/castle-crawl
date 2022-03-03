@@ -5,10 +5,10 @@
 //
 #include "item-enums.hpp"
 
-#include <iosfwd>
+#include <compare>
+#include <ostream>
 #include <string>
 #include <tuple>
-#include <compare>
 #include <vector>
 
 namespace castlecrawl
@@ -22,7 +22,7 @@ namespace castlecrawl
             // the default constructor makes an invalid item
             Item();
 
-            // normal weapon constructor  
+            // normal weapon constructor
             Item(const Weapon weapon, const WeaponMaterial material);
 
             // magical weapon constructor
@@ -78,7 +78,7 @@ namespace castlecrawl
             const EquipEffect & equipEffect() const { return m_equipEffect; }
 
             bool isMagical() const { return (!m_useEffect.empty() || !m_equipEffect.empty()); }
-            
+
             const std::string description() const;
 
             auto operator<=>(const Item &) const = default;
@@ -107,7 +107,7 @@ namespace castlecrawl
             int m_armorRating;
             int m_damageMin;
             int m_damageMax;
-            
+
             UseEffect m_useEffect;
             EquipEffect m_equipEffect;
         };

@@ -7,6 +7,8 @@
 
 #include "check-macros.hpp"
 
+#include <cmath>
+
 namespace castlecrawl
 {
 
