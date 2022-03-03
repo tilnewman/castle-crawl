@@ -63,7 +63,7 @@ namespace castlecrawl
 
     void Map::load(Context & context, MapVerts & verts)
     {
-        makeDoors(context);
+        resetDoors(context);
 
         verts.reset();
 
@@ -436,7 +436,7 @@ namespace castlecrawl
         }
     }
 
-    void Map::makeDoors(Context & context)
+    void Map::resetDoors(Context & context)
     {
         context.board.doors.clear();
 

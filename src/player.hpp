@@ -96,6 +96,8 @@ namespace castlecrawl
         int gold() const { return m_gold; }
         void adjGold(const int adjustment) { m_gold += adjustment; }
 
+        item::Inventory & inventory() { return m_inventory; }
+
         friend void to_json(json & j, const Player & p);
         friend void from_json(const json & j, Player & p);
 
@@ -117,6 +119,8 @@ namespace castlecrawl
         Stat m_level;
         
         int m_gold;
+
+        item::Inventory m_inventory;
     };
 
     inline void to_json(json & j, const Player & p)
@@ -128,7 +132,8 @@ namespace castlecrawl
                   { "health", p.m_health }, 
                   { "mana", p.m_mana },
                   { "level", p.m_level },
-                  { "gold", p.m_gold }
+                  { "gold", p.m_gold },           
+                  { "inventory", p.m_inventory }
         };
     }
 
@@ -142,6 +147,7 @@ namespace castlecrawl
         j.at("mana").get_to(p.m_mana);
         j.at("level").get_to(p.m_level);
         j.at("gold").get_to(p.m_gold);
+        j.at("inventory").get_to(p.m_inventory);
     }
 
 } // namespace castlecrawl

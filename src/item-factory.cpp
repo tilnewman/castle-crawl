@@ -20,6 +20,24 @@ namespace castlecrawl
     namespace item
     {
 
+        const std::string Treasure::description() const 
+        {
+            std::string str;
+            str.reserve(200);
+
+            str += "You find ";
+            str += std::to_string(gold);
+            str += " gold and:\n";
+            
+            for (const Item & item : items)
+            {
+                str += item.name();
+                str += '\n';
+            }
+
+            return str;
+        }
+
         ItemFactory::ItemFactory()
             : m_textExtent()
             , m_lowestValue(0)

@@ -18,6 +18,8 @@
 #include "state-direction.hpp"
 #include "keys.hpp"
 #include "process.hpp"
+#include "item-factory.hpp"
+#include "player.hpp"
 
 #include <iostream>
 
@@ -45,12 +47,24 @@ namespace castlecrawl
             const MapPos_t fightPos = keys::moveIfDir(
                 context.board.player.position(), StateDirection::m_closingEvent.key.code);
 
+            if (context.maps.get().getChar(fightPos) == 'b')
+            {
+                context.maps.get().setChar(fightPos, ' ');
+                context.maps.reloadAfterChange(context);
+
+                using namespace item;
+                const Treasure treasure = context.items.randomTreasureFind(context);
+
+                context.player.adjGold(treasure.gold);
+                for (const Item & item : treasure.items)
+                {
+                    context.player.inventory().add(item);
+                }
+
+                context.popup.setup(context, treasure.description());
+                context.state.setChangePending(State::Popup, State::Play);
             
-            std::string message{ "You fight the '" };
-            message += context.maps.get().getChar(fightPos);
-            message += "'";
-            context.popup.setup(context, message);
-            context.state.setChangePending(State::Popup, State::Play);
+            }
             
             StateDirection::m_closingEvent = {};
             context.process.action = Action::None;

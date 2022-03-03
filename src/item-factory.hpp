@@ -15,6 +15,8 @@ namespace castlecrawl
         {
             int gold = 0;
             ItemVec_t items;
+
+            const std::string description() const;
         };
 
         struct TextExtent
