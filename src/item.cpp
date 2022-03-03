@@ -70,7 +70,6 @@ namespace castlecrawl
             m_value = calcValue();
         }
 
-
         Item::Item(const Armor armor, const ArmorMaterial material)
             : m_value(0)
             , m_weapon(Weapon::Count)
@@ -112,7 +111,6 @@ namespace castlecrawl
         {
             m_value = calcValue();
         }
-
 
         Item::Item(
             const Misc misc,
@@ -200,7 +198,7 @@ namespace castlecrawl
             if (isWeapon())
             {
                 str += " a";
-                
+
                 if (isMagical())
                 {
                     str += " magical";
@@ -250,7 +248,7 @@ namespace castlecrawl
                 str += ", and grants ";
 
                 const EquipEffect & ef = m_equipEffect;
-                
+
                 // clang-format off
                 if (ef.arc > 0) str += "+" + std::to_string(ef.arc) + "arc, ";
                 if (ef.dex > 0) str += "+" + std::to_string(ef.dex) + "dex, ";

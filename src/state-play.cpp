@@ -8,18 +8,18 @@
 #include "animation-player.hpp"
 #include "board.hpp"
 #include "context.hpp"
+#include "item-factory.hpp"
+#include "keys.hpp"
 #include "map.hpp"
 #include "maps.hpp"
+#include "player.hpp"
 #include "popup-manager.hpp"
+#include "process.hpp"
 #include "resources.hpp"
 #include "settings.hpp"
+#include "state-direction.hpp"
 #include "state-machine.hpp"
 #include "util.hpp"
-#include "state-direction.hpp"
-#include "keys.hpp"
-#include "process.hpp"
-#include "item-factory.hpp"
-#include "player.hpp"
 
 #include <iostream>
 
@@ -39,10 +39,9 @@ namespace castlecrawl
         m_fps.reset(context);
     }
 
-    void StatePlay::onEnter(Context & context) 
+    void StatePlay::onEnter(Context & context)
     {
-        if ((Action::Fight == context.process.action) &&
-            StateDirection::isClosingEventValid())
+        if ((Action::Fight == context.process.action) && StateDirection::isClosingEventValid())
         {
             const MapPos_t fightPos = keys::moveIfDir(
                 context.board.player.position(), StateDirection::m_closingEvent.key.code);
@@ -63,9 +62,8 @@ namespace castlecrawl
 
                 context.popup.setup(context, treasure.description());
                 context.state.setChangePending(State::Popup, State::Play);
-            
             }
-            
+
             StateDirection::m_closingEvent = {};
             context.process.action = Action::None;
 

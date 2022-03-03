@@ -14,7 +14,7 @@ namespace castlecrawl
 
         class Inventory
         {
-        public:
+          public:
             Inventory();
 
             void add(const Item & item) { m_items.push_back(item); }
@@ -31,21 +31,19 @@ namespace castlecrawl
             friend void to_json(json & j, const Inventory & i);
             friend void from_json(const json & j, Inventory & i);
 
-        private:
+          private:
             bool hasWeaponEquipped() const;
             bool hasEquipped(const Armor armor) const;
             std::size_t countOfEquipped(const Misc misc) const;
 
-        private:
+          private:
             ItemVec_t m_items;
             ItemVec_t m_eqItems;
         };
 
-        
         inline void to_json(json & j, const Inventory & inv)
         {
-            j = json{ { "items", inv.m_items },
-                      { "equipped_items", inv.m_eqItems } };
+            j = json{ { "items", inv.m_items }, { "equipped_items", inv.m_eqItems } };
         }
 
         inline void from_json(const json & j, Inventory & inv)

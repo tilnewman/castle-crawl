@@ -22,10 +22,10 @@ namespace castlecrawl
             m_items.erase(std::begin(m_items) + index);
         }
 
-        const std::string Inventory::equip(const std::size_t index) 
+        const std::string Inventory::equip(const std::size_t index)
         {
             M_CHECK(index < m_items.size(), "Error:  Tried to equip() out of bounds index!");
-            
+
             const Item & item = m_items[index];
 
             if (item.isWeapon() && hasWeaponEquipped())
@@ -63,7 +63,7 @@ namespace castlecrawl
                     return str;
                 }
             }
-            
+
             m_eqItems.push_back(m_items[index]);
             m_items.erase(std::begin(m_items) + index);
             return "";
@@ -76,7 +76,7 @@ namespace castlecrawl
             m_eqItems.erase(std::begin(m_eqItems) + index);
         }
 
-        const EquipEffect Inventory::totalEquipEffects() const 
+        const EquipEffect Inventory::totalEquipEffects() const
         {
             EquipEffect equipEffect;
 
@@ -88,8 +88,8 @@ namespace castlecrawl
             return equipEffect;
         }
 
-        bool Inventory::hasWeaponEquipped() const 
-        { 
+        bool Inventory::hasWeaponEquipped() const
+        {
             for (const Item & item : m_eqItems)
             {
                 if (item.isWeapon())
@@ -114,7 +114,7 @@ namespace castlecrawl
             return false;
         }
 
-        std::size_t Inventory::countOfEquipped(const Misc misc) const 
+        std::size_t Inventory::countOfEquipped(const Misc misc) const
         {
             std::size_t count = 0;
 

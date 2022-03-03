@@ -12,15 +12,15 @@
 
 #include <algorithm>
 #include <iostream>
-#include <vector>
 #include <set>
+#include <vector>
 
 namespace castlecrawl
 {
     namespace item
     {
 
-        const std::string Treasure::description() const 
+        const std::string Treasure::description() const
         {
             std::string str;
             str.reserve(200);
@@ -28,7 +28,7 @@ namespace castlecrawl
             str += "You find ";
             str += std::to_string(gold);
             str += " gold and:\n";
-            
+
             for (const Item & item : items)
             {
                 str += item.name();
@@ -41,15 +41,15 @@ namespace castlecrawl
         ItemFactory::ItemFactory()
             : m_textExtent()
             , m_lowestValue(0)
-        { 
+        {
             processAll();
-            //printSummaries();
+            // printSummaries();
         }
 
-        const ItemVec_t ItemFactory::makeAll() const 
+        const ItemVec_t ItemFactory::makeAll() const
         {
             ItemVec_t items;
-            items.reserve(200);//acutally 168 as of 2022-3-2
+            items.reserve(200); // acutally 168 as of 2022-3-2
 
             for (const Item & item : makeWeapons())
             {
@@ -71,15 +71,14 @@ namespace castlecrawl
                 items.push_back(item);
             }
 
-            std::sort(std::begin(items), std::end(items), [](const Item & A, const Item & B) 
-                {
-                    return (A.value() < B.value());
-                });
+            std::sort(std::begin(items), std::end(items), [](const Item & A, const Item & B) {
+                return (A.value() < B.value());
+            });
 
             return items;
         }
-        
-        const ItemVec_t ItemFactory::makeWeapons() const 
+
+        const ItemVec_t ItemFactory::makeWeapons() const
         {
             ItemVec_t items;
 
@@ -100,10 +99,10 @@ namespace castlecrawl
             return items;
         }
 
-        const ItemVec_t ItemFactory::makeArmor() const 
+        const ItemVec_t ItemFactory::makeArmor() const
         {
             ItemVec_t items;
-           
+
             items.reserve(
                 static_cast<std::size_t>(Armor::Count) *
                 static_cast<std::size_t>(ArmorMaterial::Count));
@@ -121,13 +120,14 @@ namespace castlecrawl
             return items;
         }
 
-        const ItemVec_t ItemFactory::makeMisc() const 
+        const ItemVec_t ItemFactory::makeMisc() const
         {
             ItemVec_t items;
 
             items.reserve(
                 (static_cast<std::size_t>(Misc::Count) *
-                static_cast<std::size_t>(MiscMaterial::Count)) + 9);
+                 static_cast<std::size_t>(MiscMaterial::Count)) +
+                9);
 
             // these are the equipable misc items
             for (int i = 0; i < static_cast<int>(Misc::Count); ++i)
@@ -169,14 +169,13 @@ namespace castlecrawl
             return items;
         }
 
-
-        const ItemVec_t ItemFactory::makeCustom() const 
+        const ItemVec_t ItemFactory::makeCustom() const
         {
             // All custom magical items must have a unique name!
-            
+
             ItemVec_t items;
 
-            //weapons
+            // weapons
 
             for (int i = 0; i < static_cast<int>(Weapon::Count); ++i)
             {
@@ -195,16 +194,15 @@ namespace castlecrawl
             items.push_back(
                 Item(Weapon::Dagger, WeaponMaterial::Gold, "Lucky Dagger", { .lck = 10 }));
 
-            items.push_back(
-                Item(Weapon::Scythe, WeaponMaterial::Gold, "Sythe of the Lich", { .arc=7, .dmg=7 }));
+            items.push_back(Item(
+                Weapon::Scythe, WeaponMaterial::Gold, "Sythe of the Lich", { .arc = 7, .dmg = 7 }));
 
             items.push_back(
                 Item(Weapon::Handaxe, WeaponMaterial::Steel, "Maniac Handaxe", { .dmg = 5 }));
 
-            items.push_back(
-                Item(Weapon::Mace, WeaponMaterial::Steel, "Brute Mace", { .dmg = 4 }));
+            items.push_back(Item(Weapon::Mace, WeaponMaterial::Steel, "Brute Mace", { .dmg = 4 }));
 
-            //armor
+            // armor
 
             for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
             {
@@ -251,7 +249,7 @@ namespace castlecrawl
             return items;
         }
 
-        void ItemFactory::validateAll(const ItemVec_t & items) const 
+        void ItemFactory::validateAll(const ItemVec_t & items) const
         {
             // loook for duplicate names
             std::set<std::string> names;
@@ -316,7 +314,7 @@ namespace castlecrawl
             const ItemVec_t items{ makeAll() };
 
             std::cout << std::endl << "All Descriptions:" << std::endl;
-           
+
             for (const Item & item : items)
             {
                 std::cout << '\t' << item.description() << '\n';
@@ -333,7 +331,7 @@ namespace castlecrawl
             }
 
             std::cout << std::endl << "All Useable Names:" << std::endl;
-            
+
             for (const Item & item : items)
             {
                 if (item.isUseable())
@@ -363,7 +361,7 @@ namespace castlecrawl
 
             std::cout << "longest name=" << m_textExtent.longest_name << std::endl;
             std::cout << "longest desc=" << m_textExtent.longest_desc << std::endl;
-            
+
             std::cout << std::endl;
 
             json j = items.back();
@@ -492,12 +490,12 @@ namespace castlecrawl
             M_CHECK((item == item2), "Error:  Item failed to json serialize correctly: " << item);
         }
 
-        const Treasure ItemFactory::randomTreasureFind(Context & context) const 
+        const Treasure ItemFactory::randomTreasureFind(Context & context) const
         {
             Treasure treasure;
 
             // establish how much value this random find is worth
-            const int valuePerLevel{100};
+            const int valuePerLevel{ 100 };
             int value = context.player.level().current() * valuePerLevel;
             value += context.random.fromTo(0, valuePerLevel);
             value = context.random.fromTo(0, value);
@@ -507,15 +505,17 @@ namespace castlecrawl
             treasure.gold = (valueOfGold / 5);
             value -= valueOfGold;
 
-            //use remaining value to add items
+            // use remaining value to add items
             while (value >= m_lowestValue)
             {
                 ItemVec_t items = makeAll();
 
                 items.erase(
-                    std::remove_if(std::begin(items), std::end(items), [&](const Item & item) 
-                        { return (item.value() > value);
-                        }), std::end(items));
+                    std::remove_if(
+                        std::begin(items),
+                        std::end(items),
+                        [&](const Item & item) { return (item.value() > value); }),
+                    std::end(items));
 
                 const Item & item = treasure.items.emplace_back(context.random.from(items));
 
