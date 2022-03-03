@@ -16,8 +16,9 @@ namespace castlecrawl
     struct Context;
 
     //
-    struct PopupManager : public sf::Drawable
+    class PopupManager : public sf::Drawable
     {
+      public:
         PopupManager() = default;
 
         // prevent all copy and assignment
@@ -30,10 +31,10 @@ namespace castlecrawl
         void setup(Context & context, const std::string & message);
         void draw(sf::RenderTarget &, sf::RenderStates) const override;
 
+      private:
         sf::Text text;
         sf::RectangleShape background_rectangle;
         sf::RectangleShape fade_rectangle;
-        sf::Keyboard::Key key = sf::Keyboard::Unknown;
     };
 
 } // namespace castlecrawl

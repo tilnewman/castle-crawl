@@ -32,7 +32,18 @@ namespace castlecrawl
 
         bool isChangePending() const { return m_changePendingOpt.has_value(); }
         StateOpt_t getChangePending() const { return m_changePendingOpt; }
-        void setChangePending(const State state) { m_changePendingOpt = state; }
+        StateOpt_t getFallback() const { return m_fallbackOpt; }
+
+        void setChangePending(const State state, const StateOpt_t fallback = std::nullopt);
+
+        void setChangePendingToFallback() 
+        { 
+            if (m_fallbackOpt.has_value())
+            {
+                m_changePendingOpt = m_fallbackOpt;
+            }
+        }
+        
         void changeIfPending(Context & context);
 
       private:
@@ -41,6 +52,7 @@ namespace castlecrawl
       private:
         IStateUPtr_t m_stateUPtr;
         StateOpt_t m_changePendingOpt;
+        StateOpt_t m_fallbackOpt;
     };
 
 } // namespace castlecrawl

@@ -8,6 +8,7 @@
 #include "context.hpp"
 #include "popup-manager.hpp"
 #include "state-machine.hpp"
+#include "check-macros.hpp"
 
 namespace castlecrawl
 {
@@ -15,12 +16,14 @@ namespace castlecrawl
         : StatePlay(context)
     {}
 
+    void StatePopup::onEnter(Context & context) 
+    {}
+
     void StatePopup::handleEvent(Context & context, const sf::Event & event)
     {
         if ((sf::Event::KeyPressed == event.type) || (sf::Event::MouseButtonPressed == event.type))
         {
-            context.popup.key = event.key.code;
-            context.state.setChangePending(State::Play);
+            context.state.setChangePendingToFallback();
             return;
         }
     }

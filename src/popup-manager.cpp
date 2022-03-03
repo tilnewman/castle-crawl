@@ -21,7 +21,7 @@ namespace castlecrawl
         text.setFont(context.media.font());
 
         fade_rectangle.setSize(context.layout.windowSize());
-        fade_rectangle.setFillColor(sf::Color(0, 0, 0, 150));
+        fade_rectangle.setFillColor(sf::Color(0, 0, 0, 60));
 
         background_rectangle.setFillColor(sf::Color(25, 100, 115));
         background_rectangle.setOutlineColor(sf::Color(255, 255, 255, 200));
@@ -32,8 +32,6 @@ namespace castlecrawl
             sf::Vector2f{ context.layout.windowSize().x, context.layout.windowSize().y * 0.2f });
 
         util::centerInside(context.popup.text, background_rectangle.getGlobalBounds());
-
-        key = sf::Keyboard::Unknown;
     }
 
     void PopupManager::draw(sf::RenderTarget & target, sf::RenderStates states) const

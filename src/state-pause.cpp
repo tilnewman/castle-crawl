@@ -58,7 +58,7 @@ namespace castlecrawl
         if ((sf::Event::KeyPressed == event.type) || (sf::Event::MouseButtonPressed == event.type))
         {
             context.audio.play("pause");
-            context.state.setChangePending(State::Play);
+            context.state.setChangePendingToFallback();
             return;
         }
     }

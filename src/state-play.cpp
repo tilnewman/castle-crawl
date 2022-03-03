@@ -50,7 +50,7 @@ namespace castlecrawl
             message += context.maps.get().getChar(fightPos);
             message += "'";
             context.popup.setup(context, message);
-            context.state.setChangePending(State::Popup);
+            context.state.setChangePending(State::Popup, State::Play);
             
             StateDirection::m_closingEvent = {};
             context.process.action = Action::None;
@@ -82,7 +82,7 @@ namespace castlecrawl
                 message += context.maps.get().getChar(mapPosition);
                 message += "'";
                 context.popup.setup(context, message);
-                context.state.setChangePending(State::Popup);
+                context.state.setChangePending(State::Popup, State::Play);
                 return;
             }
         }
@@ -102,7 +102,7 @@ namespace castlecrawl
 
         if (sf::Keyboard::Space == event.key.code)
         {
-            context.state.setChangePending(State::Pause);
+            context.state.setChangePending(State::Pause, State::Play);
             return;
         }
 
@@ -110,14 +110,14 @@ namespace castlecrawl
         if (sf::Keyboard::P == event.key.code)
         {
             context.popup.setup(context, "All your bases are belong to us.");
-            context.state.setChangePending(State::Popup);
+            context.state.setChangePending(State::Popup, State::Play);
             return;
         }
 
         if (sf::Keyboard::F == event.key.code)
         {
             context.process.action = Action::Fight;
-            context.state.setChangePending(State::Direction);
+            context.state.setChangePending(State::Direction, State::Play);
             return;
         }
 

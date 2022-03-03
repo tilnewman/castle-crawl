@@ -17,12 +17,12 @@ namespace castlecrawl
 {
     struct Context;
 
-    //
     class StatePopup : public StatePlay
     {
       public:
         StatePopup(Context & context);
 
+        void onEnter(Context & context) override;
         void handleEvent(Context &, const sf::Event &) override;
         void draw(const Context &, sf::RenderTarget &, sf::RenderStates) const override;
     };

@@ -33,8 +33,6 @@ namespace castlecrawl
 
     using StateOpt_t = std::optional<State>;
 
-    //
-
     inline constexpr std::string_view toString(const State state) noexcept
     {
         switch (state)
@@ -50,7 +48,11 @@ namespace castlecrawl
         }
     }
 
-    //
+    inline constexpr bool requiresFallback(const State state) noexcept
+    {
+        return ((state == State::Popup) ||(state == State::Direction) || (state == State::Pause));
+    }
+
     inline std::ostream & operator<<(std::ostream & os, const State state)
     {
         os << toString(state);
@@ -58,6 +60,7 @@ namespace castlecrawl
     }
 
     //
+
     struct IState
     {
         virtual ~IState() = default;
@@ -73,6 +76,7 @@ namespace castlecrawl
     using IStateUPtr_t = std::unique_ptr<IState>;
 
     //
+
     class StateBase : public IState
     {
       protected:
@@ -101,6 +105,7 @@ namespace castlecrawl
     };
 
     //
+
     class StateInit : public StateBase
     {
       public:
@@ -109,7 +114,6 @@ namespace castlecrawl
         {}
     };
 
-    //
     class StateQuit : public StateBase
     {
       public:

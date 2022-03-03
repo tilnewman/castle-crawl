@@ -89,7 +89,7 @@ namespace castlecrawl
             keys::isArrow(event.key.code))
         {
             m_closingEvent = event;
-            context.state.setChangePending(State::Play);
+            context.state.setChangePendingToFallback();
         }
     }
 

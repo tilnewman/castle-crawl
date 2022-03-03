@@ -26,12 +26,13 @@ namespace castlecrawl
     class Player;
     class GameInPlay;
     class StateMachine;
+    class PopupManager;
 
     struct Board;
     struct MapLink;
     struct Process;
     struct GameConfig;
-    struct PopupManager;
+    
     //
 
     struct Context

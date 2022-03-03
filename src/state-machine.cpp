@@ -6,6 +6,7 @@
 #include "state-machine.hpp"
 
 #include "context.hpp"
+#include "check-macros.hpp"
 #include "state-pause.hpp"
 #include "state-play.hpp"
 #include "state-popup.hpp"
@@ -20,6 +21,7 @@ namespace castlecrawl
     StateMachine::StateMachine()
         : m_stateUPtr()
         , m_changePendingOpt(State::Init)
+        , m_fallbackOpt(std::nullopt)
     {
         m_stateUPtr = std::make_unique<StateInit>();
         m_changePendingOpt = m_stateUPtr->state();
@@ -61,6 +63,19 @@ namespace castlecrawl
                 return std::make_unique<StateQuit>(context);
             }
         };
+    }
+
+    void StateMachine::setChangePending(const State state, const StateOpt_t fallback)
+    {
+        m_changePendingOpt = state;
+        m_fallbackOpt = fallback;
+
+        if (requiresFallback(state))
+        {
+            M_CHECK(
+                (m_fallbackOpt.has_value()),
+                "Error:  Transitioned to state " << toString(state) << " without fallback!");
+        }
     }
 
 } // namespace castlecrawl
