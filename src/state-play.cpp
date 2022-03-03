@@ -15,6 +15,9 @@
 #include "settings.hpp"
 #include "state-machine.hpp"
 #include "util.hpp"
+#include "state-direction.hpp"
+#include "keys.hpp"
+#include "process.hpp"
 
 #include <iostream>
 
@@ -34,9 +37,24 @@ namespace castlecrawl
         m_fps.reset(context);
     }
 
-    void StatePlay::onEnter(Context &) 
+    void StatePlay::onEnter(Context & context) 
     {
+        if ((Action::Fight == context.process.action) &&
+            (StateDirection::m_closingEvent.type == sf::Event::KeyPressed) && 
+            keys::isArrow(StateDirection::m_closingEvent.key.code))
+        {
+            const MapPos_t fightPos = keys::moveIfDir(
+                context.board.player.position(), StateDirection::m_closingEvent.key.code);
 
+            StateDirection::m_closingEvent = {};
+
+            std::string message{ "You fight the '" };
+            message += context.maps.get().getChar(fightPos);
+            message += "'";
+            context.popup.setup(context, message);
+            context.state.setChangePending(State::Popup);
+            return;
+        }
     }
 
     void StatePlay::update(Context & context, const float frameTimeSec)
@@ -96,6 +114,7 @@ namespace castlecrawl
 
         if (sf::Keyboard::F == event.key.code)
         {
+            context.process.action = Action::Fight;
             context.state.setChangePending(State::Direction);
             return;
         }

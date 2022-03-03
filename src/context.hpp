@@ -29,6 +29,7 @@ namespace castlecrawl
 
     struct Board;
     struct MapLink;
+    struct Process;
     struct GameConfig;
     struct PopupManager;
     //
@@ -42,6 +43,7 @@ namespace castlecrawl
             Board & bor,
             const GameConfig & con,
             Layout & lay,
+            Process & pro,
             const Media & med,
             StateMachine & sta,
             PopupManager & pop,
@@ -55,6 +57,7 @@ namespace castlecrawl
             , board(bor)
             , config(con)
             , layout(lay)
+            , process(pro)
             , media(med)
             , state(sta)
             , popup(pop)
@@ -76,6 +79,7 @@ namespace castlecrawl
         Board & board;
         const GameConfig & config;
         Layout & layout;
+        Process & process;
         const Media & media;
         StateMachine & state;
         PopupManager & popup;

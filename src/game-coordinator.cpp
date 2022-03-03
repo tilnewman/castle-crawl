@@ -15,6 +15,7 @@ namespace castlecrawl
         , m_media()
         , m_board()
         , m_layout()
+        , m_process()
         , m_player()
         , m_game()
         , m_config()
@@ -31,6 +32,7 @@ namespace castlecrawl
               m_board,
               m_config,
               m_layout,
+              m_process,
               m_media,
               m_states,
               m_popups,

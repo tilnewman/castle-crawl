@@ -18,6 +18,7 @@
 #include "sound-player.hpp"
 #include "state-machine.hpp"
 #include "tile-image.hpp"
+#include "process.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
@@ -43,6 +44,7 @@ namespace castlecrawl
         Media m_media;
         Board m_board;
         Layout m_layout;
+        Process m_process;
         Player m_player;
         GameInPlay m_game;
         GameConfig m_config;
