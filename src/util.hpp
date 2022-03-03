@@ -239,7 +239,7 @@ namespace util
 
             return (wrapFront + content + wrapBack);
         }
-    };
+    }
 
     [[nodiscard]] inline const std::string colorToString(const sf::Color & C)
     {
@@ -689,50 +689,20 @@ namespace util
         return copy;
     }
 
-    // template <typename Output_t, typename Input_t>
-    // Output_t makeMultOf(const Input_t startingNumber, const Output_t mult, const bool willAdd)
-    //{
-    //    static_assert(std::is_integral_v<Output_t>);
-    //
-    //    Output_t result{ static_cast<Output_t>(startingNumber) };
-    //
-    //    while ((result % mult) != 0)
-    //    {
-    //        if (willAdd)
-    //        {
-    //            ++result;
-    //        }
-    //        else
-    //        {
-    //            if (result > 2)
-    //            {
-    //                --result;
-    //            }
-    //            else
-    //            {
-    //                result = 2;
-    //                break;
-    //            }
-    //        }
-    //    }
-    //
-    //    return result;
-    //};
-
     template <typename Output_t, typename Input_t>
     sf::Vector2<Output_t>
         makeVector2MultOf(const sf::Vector2<Input_t> & before, const sf::Vector2<Output_t> & mults)
     {
         static_assert(std::is_integral_v<Output_t>);
         return { makeMultOf(before.x, mults.x), makeMultOf(before.y, mults.y) };
-    };
+    }
 
     // vetor and euclidian math
 
     [[nodiscard]] inline float
         dotProduct(const sf::Vector2f & left, const sf::Vector2f & right) noexcept
     {
-        return static_cast<float>((left.x * right.x) + (left.y * right.y));
+        return ((left.x * right.x) + (left.y * right.y));
     }
 
     [[nodiscard]] inline sf::Vector2f
@@ -743,7 +713,7 @@ namespace util
 
     [[nodiscard]] inline float magnitude(const sf::Vector2f & vec) noexcept
     {
-        return std::sqrtf((vec.x * vec.x) + (vec.y * vec.y));
+        return std::sqrt((vec.x * vec.x) + (vec.y * vec.y));
     }
 
     [[nodiscard]] inline float distance(const sf::Vector2f & from, const sf::Vector2f & to) noexcept
@@ -776,7 +746,7 @@ namespace util
     [[nodiscard]] inline float angleFromVector(const sf::Vector2f & velocity)
     {
         const sf::Vector2f posDiffNormal{ normalize(velocity) };
-        const float angleRadians{ std::acosf(posDiffNormal.x) };
+        const float angleRadians{ std::acos(posDiffNormal.x) };
         const float angleDegrees{ radiansToDegrees(angleRadians) };
 
         // vertical or Y values that are positive move down, so have to flip
