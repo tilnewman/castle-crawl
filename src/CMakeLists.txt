@@ -69,6 +69,7 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
         -Wno-unused-command-line-argument
         -Wno-weak-vtables
         -Wno-poison-system-directories
+        -Wno-defaulted-function-deleted
         -Woverloaded-virtual
         -Wcast-align
         -Wformat=2)
