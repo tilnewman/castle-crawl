@@ -25,14 +25,40 @@ namespace castlecrawl
             std::string str;
             str.reserve(200);
 
-            str += "You find ";
-            str += std::to_string(gold);
-            str += " gold and:\n";
+            str += "You find";
 
-            for (const Item & item : items)
+            if ((0 == gold) && items.empty())
             {
-                str += item.name();
-                str += '\n';
+                str += " nothing.";
+                return str;
+            }
+
+            if (gold > 0)
+            {
+                str += ' ';
+                str += std::to_string(gold);
+                str += " gold";
+            }
+
+            if (items.empty())
+            {
+                str += '.';
+            }
+            else
+            {
+                if (gold > 0)
+                {
+                    str += " and";
+                }
+
+                str += ":\n";
+
+                for (const Item & item : items)
+                {
+                    str += "    ";
+                    str += item.name();
+                    str += '\n';
+                }
             }
 
             return str;
@@ -495,7 +521,7 @@ namespace castlecrawl
             Treasure treasure;
 
             // establish how much value this random find is worth
-            const int valuePerLevel{ 100 };
+            const int valuePerLevel{ 60 };
             int value = context.player.level().current() * valuePerLevel;
             value += context.random.fromTo(0, valuePerLevel);
             value = context.random.fromTo(0, value);

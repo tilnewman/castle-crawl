@@ -4,6 +4,7 @@
 // popup-manager.hpp
 //
 #include <string>
+#include <vector>
 
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
@@ -32,9 +33,9 @@ namespace castlecrawl
         void draw(sf::RenderTarget &, sf::RenderStates) const override;
 
       private:
-        sf::Text text;
-        sf::RectangleShape background_rectangle;
-        sf::RectangleShape fade_rectangle;
+        std::vector<sf::Text> m_texts;
+        sf::RectangleShape m_bgRectangle;
+        sf::RectangleShape m_fadeRectangle;
     };
 
 } // namespace castlecrawl

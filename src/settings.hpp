@@ -39,7 +39,7 @@ namespace castlecrawl
       public:
         Layout() = default;
 
-        // always call this setup first before setupBoardValues() below
+        // always call this first, before setupBoardValues() below
         void calcWindowValues(const GameConfig & config);
 
         // always call this just before each map::load()
