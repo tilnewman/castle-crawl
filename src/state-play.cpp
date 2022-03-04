@@ -130,6 +130,12 @@ namespace castlecrawl
             return;
         }
 
+        if (sf::Keyboard::I == event.key.code)
+        {
+            context.state.setChangePending(State::Inventory);
+            return;
+        }
+
         context.board.player.handleEvent(context, event);
     }
 

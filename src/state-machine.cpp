@@ -5,12 +5,13 @@
 //
 #include "state-machine.hpp"
 
-#include "context.hpp"
 #include "check-macros.hpp"
+#include "context.hpp"
+#include "state-direction.hpp"
+#include "state-inventory.hpp"
 #include "state-pause.hpp"
 #include "state-play.hpp"
 #include "state-popup.hpp"
-#include "state-direction.hpp"
 #include "state-splash.hpp"
 
 #include <iostream>
@@ -55,6 +56,7 @@ namespace castlecrawl
             case State::Popup:    { return std::make_unique<StatePopup>(context); }
             case State::Quit:     { return std::make_unique<StateQuit>(context);  }
             case State::Direction:{ return std::make_unique<StateDirection>(context); }
+            case State::Inventory:{ return std::make_unique<StateInventory>(context); }
             // clang-format on
             default: {
                 std::cerr << "ERROR:  StateMachine::makeState(\"" << state

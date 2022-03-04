@@ -28,6 +28,7 @@ namespace castlecrawl
         Pause,
         Popup,
         Direction,
+        Inventory,
         Quit,
     };
 
@@ -44,6 +45,7 @@ namespace castlecrawl
             case State::Pause: return "Pause";
             case State::Quit: return "Quit";
             case State::Direction: return "Direction";
+            case State::Inventory: return "Inventory";
             default: return "State::Invalid";
         }
     }
