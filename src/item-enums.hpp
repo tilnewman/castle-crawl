@@ -42,6 +42,7 @@ namespace castlecrawl
 
         struct EquipEffect
         {
+            int acc = 0;
             int arc = 0;
             int dex = 0;
             int dmg = 0;
@@ -53,6 +54,7 @@ namespace castlecrawl
 
             constexpr inline EquipEffect & operator+=(const EquipEffect & right) noexcept
             {
+                acc += right.acc;
                 arc += right.arc;
                 dex += right.dex;
                 dmg += right.dmg;
@@ -73,15 +75,19 @@ namespace castlecrawl
 
         inline void to_json(json & j, const EquipEffect & ee)
         {
-            j = json{ { "arc", ee.arc },
+            // clang-format off
+            j = json{ { "acc", ee.acc }, 
+                      { "arc", ee.arc },
                       { "dex", ee.dex },
                       { "dmg", ee.dmg },
                       { "lck", ee.lck },
                       { "str", ee.str } };
+            // clang-format on
         }
 
         inline void from_json(const json & j, EquipEffect & ee)
         {
+            j.at("acc").get_to(ee.acc);
             j.at("arc").get_to(ee.arc);
             j.at("dex").get_to(ee.dex);
             j.at("dmg").get_to(ee.dmg);

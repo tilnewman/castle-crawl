@@ -233,20 +233,29 @@ namespace castlecrawl
                     type,
                     WeaponMaterial::Steel,
                     std::string("Savage ").append(toString(type)),
-                    { .dmg = 4, .str = 2 }));
+                    { .acc = 1, .dmg = 4, .str = 2 }));
             }
 
-            items.push_back(
-                Item(Weapon::Dagger, WeaponMaterial::Steel, "Backstabber Dagger", { .dmg = 7 }));
+            items.push_back(Item(
+                Weapon::Dagger,
+                WeaponMaterial::Steel,
+                "Backstabber Dagger",
+                { .acc = 2, .dmg = 7 }));
 
-            items.push_back(
-                Item(Weapon::Shortsword, WeaponMaterial::Gold, "Lucky Shortsword", { .lck = 10 }));
+            items.push_back(Item(
+                Weapon::Shortsword,
+                WeaponMaterial::Gold,
+                "Lucky Shortsword",
+                { .acc = 4, .lck = 10 }));
 
             items.push_back(
                 Item(Weapon::Dagger, WeaponMaterial::Bronze, "Hobo Dagger", { .lck = 2 }));
 
             items.push_back(Item(
-                Weapon::Scythe, WeaponMaterial::Gold, "Sythe of the Lich", { .arc = 7, .dmg = 7 }));
+                Weapon::Scythe,
+                WeaponMaterial::Gold,
+                "Sythe of the Lich",
+                { .acc = 3, .arc = 7, .dmg = 7 }));
 
             items.push_back(
                 Item(Weapon::Handaxe, WeaponMaterial::Steel, "Maniac Handaxe", { .dmg = 5 }));
@@ -257,7 +266,10 @@ namespace castlecrawl
                 Item(Weapon::Warhammer, WeaponMaterial::Silver, "Requiem Warhammer", { .dmg = 6 }));
 
             items.push_back(Item(
-                Weapon::Longsword, WeaponMaterial::Silver, "Knightly Longsword", { .dmg = 6 }));
+                Weapon::Longsword,
+                WeaponMaterial::Silver,
+                "Knightly Longsword",
+                { .acc = 3, .dmg = 6 }));
 
             items.push_back(
                 Item(Weapon::Waraxe, WeaponMaterial::Bronze, "Orcish Waraxe", { .dmg = 3 }));
@@ -280,11 +292,17 @@ namespace castlecrawl
             items.push_back(
                 Item(Weapon::Dagger, WeaponMaterial::Obsidian, "Diabolic Dagger", { .dmg = 10 }));
 
-            items.push_back(
-                Item(Weapon::Longsword, WeaponMaterial::Silver, "Dancing Longsword", { .dmg = 8 }));
+            items.push_back(Item(
+                Weapon::Longsword,
+                WeaponMaterial::Silver,
+                "Dancing Longsword",
+                { .acc = 4, .dmg = 8 }));
 
-            items.push_back(
-                Item(Weapon::Longsword, WeaponMaterial::Steel, "Samurai Longsword", { .dmg = 2 }));
+            items.push_back(Item(
+                Weapon::Longsword,
+                WeaponMaterial::Steel,
+                "Samurai Longsword",
+                { .acc = 2, .dmg = 2 }));
 
             items.push_back(
                 Item(Weapon::Claymore, WeaponMaterial::Obsidian, "Gloom Claymore", { .dmg = 4 }));
@@ -317,7 +335,7 @@ namespace castlecrawl
                     type,
                     ArmorMaterial::DragonScale,
                     std::string("Dragon Slayer ").append(toString(type)),
-                    { .arc = 3, .dmg = 3, .str = 3 }));
+                    { .acc = 3, .dmg = 3, .str = 3 }));
             }
 
             for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
@@ -328,7 +346,7 @@ namespace castlecrawl
                     type,
                     ArmorMaterial::Silver,
                     std::string(toString(type)).append(" of Nobility"),
-                    { .arc = 1, .lck = 2, .str = 3 }));
+                    { .acc = 1, .lck = 2, .str = 3 }));
             }
 
             for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
@@ -339,7 +357,7 @@ namespace castlecrawl
                     type,
                     ArmorMaterial::Steel,
                     std::string("Gladiator ").append(toString(type)),
-                    { .str = 1 }));
+                    { .acc = 1, .str = 1 }));
             }
 
             for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
@@ -350,7 +368,7 @@ namespace castlecrawl
                     type,
                     ArmorMaterial::Gold,
                     std::string("Kingly ").append(toString(type)),
-                    { .str = 3 }));
+                    { .acc = 3, .str = 3 }));
             }
 
             for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
@@ -372,7 +390,7 @@ namespace castlecrawl
                     type,
                     ArmorMaterial::Leather,
                     std::string("Ranger ").append(toString(type)),
-                    { .lck = 1, .str = 3 }));
+                    { .acc = 2, .lck = 1, .str = 3 }));
             }
 
             items.push_back(
@@ -384,8 +402,8 @@ namespace castlecrawl
             items.push_back(
                 Item(Armor::Gauntlets, ArmorMaterial::Leather, "Mongoose Gauntlets", { .dex = 9 }));
 
-            items.push_back(
-                Item(Armor::Gauntlets, ArmorMaterial::Gold, "Glory Gauntlets", { .str = 5 }));
+            items.push_back(Item(
+                Armor::Gauntlets, ArmorMaterial::Gold, "Glory Gauntlets", { .acc = 3, .str = 5 }));
 
             items.push_back(
                 Item(Armor::Cuirass, ArmorMaterial::Silver, "Cuirass of Last Rites", { .arc = 7 }));

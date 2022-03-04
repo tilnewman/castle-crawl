@@ -9,7 +9,8 @@ namespace castlecrawl
 {
 
     Player::Player()
-        : m_arcane(statStart, statMin, statMax)
+        : m_accuracy(statStart, statMin, statMax)
+        , m_arcane(statStart, statMin, statMax)
         , m_dexterity(statStart, statMin, statMax)
         , m_luck(statStart, statMin, statMax)
         , m_strength(statStart, statMin, statMax)
