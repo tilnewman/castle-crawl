@@ -465,8 +465,6 @@ namespace castlecrawl
                 "Beastcall Greaves",
                 { .arc = 1, .str = 3 }));
 
-            //
-
             return items;
         }
 

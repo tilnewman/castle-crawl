@@ -6,7 +6,7 @@
 #include "item-enums.hpp"
 
 #include <compare>
-#include <ostream>
+#include <iosfwd>
 #include <string>
 #include <tuple>
 #include <vector>

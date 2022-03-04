@@ -9,7 +9,7 @@
 #include "settings.hpp"
 #include "state-machine.hpp"
 
-#include <iostream>
+#include <ostream>
 
 namespace castlecrawl
 {
@@ -19,5 +19,11 @@ namespace castlecrawl
     {}
 
     void StateQuit::onEnter(Context & context) { context.game.endGame(false); }
+
+    std::ostream & operator<<(std::ostream & os, const State state)
+    {
+        os << toString(state);
+        return os;
+    }
 
 } // namespace castlecrawl

@@ -3,8 +3,8 @@
 //
 // states.hpp
 //
+#include <iosfwd>
 #include <optional>
-#include <ostream>
 #include <string>
 
 #include <SFML/Graphics/RenderStates.hpp>
@@ -53,11 +53,7 @@ namespace castlecrawl
         return ((state == State::Popup) || (state == State::Direction) || (state == State::Pause));
     }
 
-    inline std::ostream & operator<<(std::ostream & os, const State state)
-    {
-        os << toString(state);
-        return os;
-    }
+    std::ostream & operator<<(std::ostream & os, const State state);
 
     //
 
