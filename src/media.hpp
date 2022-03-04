@@ -36,12 +36,6 @@ namespace castlecrawl
         Small
     };
 
-    enum class TextAlign
-    {
-        Left,
-        Center
-    };
-
     struct TextBlock
     {
         sf::Vector2f size;
