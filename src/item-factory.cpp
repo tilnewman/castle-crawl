@@ -521,7 +521,7 @@ namespace castlecrawl
             Treasure treasure;
 
             // establish how much value this random find is worth
-            const int valuePerLevel{ 600 };
+            const int valuePerLevel{ 60 };
             int value = context.player.level().current() * valuePerLevel;
             value += context.random.fromTo(0, valuePerLevel);
             value = context.random.fromTo(0, value);
