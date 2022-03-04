@@ -17,7 +17,7 @@ namespace util
     class SoundPlayer
     {
       public:
-        SoundPlayer(const Random & random, const std::string & pathStr = {});
+        explicit SoundPlayer(const Random & random, const std::string & pathStr = {});
 
         void reset();
 

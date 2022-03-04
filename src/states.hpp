@@ -50,7 +50,7 @@ namespace castlecrawl
 
     inline constexpr bool requiresFallback(const State state) noexcept
     {
-        return ((state == State::Popup) ||(state == State::Direction) || (state == State::Pause));
+        return ((state == State::Popup) || (state == State::Direction) || (state == State::Pause));
     }
 
     inline std::ostream & operator<<(std::ostream & os, const State state)
@@ -80,7 +80,7 @@ namespace castlecrawl
     class StateBase : public IState
     {
       protected:
-        StateBase(const State state);
+        explicit StateBase(const State state);
 
       public:
         virtual ~StateBase() override = default;
@@ -117,7 +117,7 @@ namespace castlecrawl
     class StateQuit : public StateBase
     {
       public:
-        StateQuit(Context &)
+        explicit StateQuit(Context &)
             : StateBase(State::Quit)
         {}
 

@@ -536,6 +536,7 @@ namespace castlecrawl
             {
                 ItemVec_t items = makeAll();
 
+                // remove items worth too much
                 items.erase(
                     std::remove_if(
                         std::begin(items),
@@ -543,6 +544,7 @@ namespace castlecrawl
                         [&](const Item & item) { return (item.value() > value); }),
                     std::end(items));
 
+                // remove items already found
                 for (const Item & alreadyFoundItem : treasure.items)
                 {
                     items.erase(
