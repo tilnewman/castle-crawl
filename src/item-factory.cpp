@@ -521,7 +521,7 @@ namespace castlecrawl
             Treasure treasure;
 
             // establish how much value this random find is worth
-            const int valuePerLevel{ 60 };
+            const int valuePerLevel{ 600 };
             int value = context.player.level().current() * valuePerLevel;
             value += context.random.fromTo(0, valuePerLevel);
             value = context.random.fromTo(0, value);
@@ -542,6 +542,23 @@ namespace castlecrawl
                         std::end(items),
                         [&](const Item & item) { return (item.value() > value); }),
                     std::end(items));
+
+                for (const Item & alreadyFoundItem : treasure.items)
+                {
+                    items.erase(
+                        std::remove_if(
+                            std::begin(items),
+                            std::end(items),
+                            [&](const Item & item) {
+                                return (item.name() == alreadyFoundItem.name());
+                            }),
+                        std::end(items));
+                }
+
+                if (items.empty())
+                {
+                    break;
+                }
 
                 const Item & item = treasure.items.emplace_back(context.random.from(items));
 
