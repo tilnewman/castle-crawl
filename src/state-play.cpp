@@ -46,8 +46,16 @@ namespace castlecrawl
             const MapPos_t fightPos = keys::moveIfDir(
                 context.board.player.position(), StateDirection::m_closingEvent.key.code);
 
-            if (context.maps.get().getChar(fightPos) == 'b')
+            const char fightChar = context.maps.get().getChar(fightPos);
+
+            if (fightChar == ' ')
             {
+                context.audio.play("miss.ogg");
+            }
+            else if (fightChar == 'b')
+            {
+                context.audio.play("barrel-break");
+
                 context.maps.get().setChar(fightPos, ' ');
                 context.maps.reloadAfterChange(context);
 
@@ -59,6 +67,10 @@ namespace castlecrawl
 
                 context.popup.setup(context, treasure.description());
                 context.state.setChangePending(State::Popup, State::Play);
+            }
+            else
+            {
+                context.audio.play("hit.ogg");
             }
 
             StateDirection::m_closingEvent = {};
