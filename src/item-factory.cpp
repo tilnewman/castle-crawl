@@ -75,7 +75,7 @@ namespace castlecrawl
         const ItemVec_t ItemFactory::makeAll() const
         {
             ItemVec_t items;
-            items.reserve(200); // acutally 168 as of 2022-3-2
+            items.reserve(300); // acutally 244 as of 2022-3-4
 
             for (const Item & item : makeWeapons())
             {
@@ -214,11 +214,36 @@ namespace castlecrawl
                     { .arc = 3, .dmg = 3 }));
             }
 
+            for (int i = 0; i < static_cast<int>(Weapon::Count); ++i)
+            {
+                const auto type = static_cast<Weapon>(i);
+
+                items.push_back(Item(
+                    type,
+                    WeaponMaterial::Obsidian,
+                    std::string("Dark ").append(toString(type)),
+                    { .arc = 1, .dmg = 1, .str = 1 }));
+            }
+
+            for (int i = 0; i < static_cast<int>(Weapon::Count); ++i)
+            {
+                const auto type = static_cast<Weapon>(i);
+
+                items.push_back(Item(
+                    type,
+                    WeaponMaterial::Steel,
+                    std::string("Savage ").append(toString(type)),
+                    { .dmg = 4, .str = 2 }));
+            }
+
             items.push_back(
                 Item(Weapon::Dagger, WeaponMaterial::Steel, "Backstabber Dagger", { .dmg = 7 }));
 
             items.push_back(
-                Item(Weapon::Dagger, WeaponMaterial::Gold, "Lucky Dagger", { .lck = 10 }));
+                Item(Weapon::Shortsword, WeaponMaterial::Gold, "Lucky Shortsword", { .lck = 10 }));
+
+            items.push_back(
+                Item(Weapon::Dagger, WeaponMaterial::Bronze, "Hobo Dagger", { .lck = 2 }));
 
             items.push_back(Item(
                 Weapon::Scythe, WeaponMaterial::Gold, "Sythe of the Lich", { .arc = 7, .dmg = 7 }));
@@ -227,6 +252,60 @@ namespace castlecrawl
                 Item(Weapon::Handaxe, WeaponMaterial::Steel, "Maniac Handaxe", { .dmg = 5 }));
 
             items.push_back(Item(Weapon::Mace, WeaponMaterial::Steel, "Brute Mace", { .dmg = 4 }));
+
+            items.push_back(
+                Item(Weapon::Warhammer, WeaponMaterial::Silver, "Requiem Warhammer", { .dmg = 6 }));
+
+            items.push_back(Item(
+                Weapon::Longsword, WeaponMaterial::Silver, "Knightly Longsword", { .dmg = 6 }));
+
+            items.push_back(
+                Item(Weapon::Waraxe, WeaponMaterial::Bronze, "Orcish Waraxe", { .dmg = 3 }));
+
+            items.push_back(Item(
+                Weapon::Claymore,
+                WeaponMaterial::Obsidian,
+                "Macabre Waraxe",
+                { .arc = 2, .dmg = 4 }));
+
+            items.push_back(Item(
+                Weapon::Shortsword,
+                WeaponMaterial::Steel,
+                "Scoundrel Shortsword",
+                { .dmg = 6, .lck = 3 }));
+
+            items.push_back(Item(
+                Weapon::Waraxe, WeaponMaterial::Steel, "Wicked Waraxe", { .dmg = 5, .lck = 1 }));
+
+            items.push_back(
+                Item(Weapon::Dagger, WeaponMaterial::Obsidian, "Diabolic Dagger", { .dmg = 10 }));
+
+            items.push_back(
+                Item(Weapon::Longsword, WeaponMaterial::Silver, "Dancing Longsword", { .dmg = 8 }));
+
+            items.push_back(
+                Item(Weapon::Longsword, WeaponMaterial::Steel, "Samurai Longsword", { .dmg = 2 }));
+
+            items.push_back(
+                Item(Weapon::Claymore, WeaponMaterial::Obsidian, "Gloom Claymore", { .dmg = 4 }));
+
+            items.push_back(Item(
+                Weapon::Dagger, WeaponMaterial::Silver, "Pirate Dagger", { .dmg = 2, .lck = 2 }));
+
+            items.push_back(Item(
+                Weapon::Longsword,
+                WeaponMaterial::Silver,
+                "Pirate Longsword",
+                { .dmg = 2, .lck = 2 }));
+
+            items.push_back(
+                Item(Weapon::Dagger, WeaponMaterial::Steel, "Bone Dagger", { .arc = 1, .dmg = 2 }));
+
+            items.push_back(Item(
+                Weapon::Handaxe,
+                WeaponMaterial::Bronze,
+                "Villan's Handaxe",
+                { .dmg = 1, .str = 1 }));
 
             // armor
 
@@ -259,8 +338,41 @@ namespace castlecrawl
                 items.push_back(Item(
                     type,
                     ArmorMaterial::Steel,
-                    std::string("Commander ").append(toString(type)),
+                    std::string("Gladiator ").append(toString(type)),
                     { .str = 1 }));
+            }
+
+            for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
+            {
+                const auto type = static_cast<Armor>(i);
+
+                items.push_back(Item(
+                    type,
+                    ArmorMaterial::Gold,
+                    std::string("Kingly ").append(toString(type)),
+                    { .str = 3 }));
+            }
+
+            for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
+            {
+                const auto type = static_cast<Armor>(i);
+
+                items.push_back(Item(
+                    type,
+                    ArmorMaterial::Leather,
+                    std::string("Druid ").append(toString(type)),
+                    { .arc = 2, .lck = 2 }));
+            }
+
+            for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
+            {
+                const auto type = static_cast<Armor>(i);
+
+                items.push_back(Item(
+                    type,
+                    ArmorMaterial::Leather,
+                    std::string("Ranger ").append(toString(type)),
+                    { .lck = 1, .str = 3 }));
             }
 
             items.push_back(
@@ -271,6 +383,71 @@ namespace castlecrawl
 
             items.push_back(
                 Item(Armor::Gauntlets, ArmorMaterial::Leather, "Mongoose Gauntlets", { .dex = 9 }));
+
+            items.push_back(
+                Item(Armor::Gauntlets, ArmorMaterial::Gold, "Glory Gauntlets", { .str = 5 }));
+
+            items.push_back(
+                Item(Armor::Cuirass, ArmorMaterial::Silver, "Cuirass of Last Rites", { .arc = 7 }));
+
+            items.push_back(
+                Item(Armor::Greaves, ArmorMaterial::Leather, "Burglar Greaves", { .lck = 7 }));
+
+            items.push_back(Item(
+                Armor::Boots, ArmorMaterial::Leather, "Sorcerer Boots", { .arc = 5, .lck = 1 }));
+
+            items.push_back(Item(
+                Armor::Cuirass, ArmorMaterial::Silver, "Sorcerer Cuirass", { .arc = 5, .lck = 1 }));
+
+            items.push_back(Item(
+                Armor::Greaves, ArmorMaterial::Silver, "Sorcerer Greaves", { .arc = 5, .lck = 1 }));
+
+            items.push_back(
+                Item(Armor::Boots, ArmorMaterial::Leather, "Shaman Boots", { .arc = 2 }));
+
+            items.push_back(
+                Item(Armor::Cuirass, ArmorMaterial::Leather, "Shaman Cuirass", { .arc = 2 }));
+
+            items.push_back(
+                Item(Armor::Greaves, ArmorMaterial::Leather, "Shaman Greaves", { .arc = 2 }));
+
+            items.push_back(
+                Item(Armor::Helm, ArmorMaterial::Leather, "Monster Helm", { .str = 8 }));
+
+            items.push_back(
+                Item(Armor::Boots, ArmorMaterial::Leather, "Bearskin Boots", { .str = 1 }));
+
+            items.push_back(
+                Item(Armor::Bracers, ArmorMaterial::Leather, "Bearskin Bracers", { .str = 1 }));
+
+            items.push_back(
+                Item(Armor::Cuirass, ArmorMaterial::Leather, "Bearskin Cuirass", { .str = 1 }));
+
+            items.push_back(
+                Item(Armor::Greaves, ArmorMaterial::Leather, "Bearskin Greaves", { .str = 1 }));
+
+            items.push_back(Item(
+                Armor::Boots, ArmorMaterial::Leather, "Beastcall Boots", { .arc = 1, .str = 3 }));
+
+            items.push_back(Item(
+                Armor::Bracers,
+                ArmorMaterial::Leather,
+                "Beastcall Bracers",
+                { .arc = 1, .str = 3 }));
+
+            items.push_back(Item(
+                Armor::Cuirass,
+                ArmorMaterial::Leather,
+                "Beastcall Cuirass",
+                { .arc = 1, .str = 3 }));
+
+            items.push_back(Item(
+                Armor::Greaves,
+                ArmorMaterial::Leather,
+                "Beastcall Greaves",
+                { .arc = 1, .str = 3 }));
+
+            //
 
             return items;
         }

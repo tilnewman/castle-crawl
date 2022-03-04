@@ -245,7 +245,7 @@ namespace castlecrawl
 
             if (!m_equipEffect.empty())
             {
-                str += ", and grants ";
+                str += " and grants ";
 
                 const EquipEffect & ef = m_equipEffect;
 
