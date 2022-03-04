@@ -9,16 +9,16 @@
 #include "item-factory.hpp"
 #include "keys.hpp"
 #include "maps.hpp"
+#include "media.hpp"
 #include "player-piece.hpp"
 #include "player.hpp"
 #include "popup-manager.hpp"
+#include "process.hpp"
 #include "random.hpp"
-#include "resources.hpp"
 #include "settings.hpp"
 #include "sound-player.hpp"
 #include "state-machine.hpp"
 #include "tile-image.hpp"
-#include "process.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 

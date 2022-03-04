@@ -6,7 +6,7 @@
 #include "state-pause.hpp"
 
 #include "context.hpp"
-#include "resources.hpp"
+#include "media.hpp"
 #include "settings.hpp"
 #include "sound-player.hpp"
 #include "state-machine.hpp"

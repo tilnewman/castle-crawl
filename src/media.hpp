@@ -1,7 +1,7 @@
-#ifndef CASTLECRAWL_RESOURCES_HPP_INCLUDED
-#define CASTLECRAWL_RESOURCES_HPP_INCLUDED
+#ifndef CASTLECRAWL_MEDIA_HPP_INCLUDED
+#define CASTLECRAWL_MEDIA_HPP_INCLUDED
 //
-// resources.hpp
+// media.hpp
 //
 #include "check-macros.hpp"
 #include "sound-player.hpp"
@@ -107,4 +107,4 @@ namespace castlecrawl
 
 } // namespace castlecrawl
 
-#endif // #define CASTLECRAWL_RESOURCES_HPP_INCLUDED
+#endif // #define CASTLECRAWL_MEDIA_HPP_INCLUDED

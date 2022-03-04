@@ -8,8 +8,8 @@
 #include "check-macros.hpp"
 #include "context.hpp"
 #include "keys.hpp"
+#include "media.hpp"
 #include "random.hpp"
-#include "resources.hpp"
 #include "settings.hpp"
 #include "sound-player.hpp"
 #include "util.hpp"
@@ -70,7 +70,7 @@ namespace castlecrawl
         target.draw(m_sprite, states);
     }
 
-    void PieceBase::update(Context & context, const float frameTimeSec) 
+    void PieceBase::update(Context & context, const float frameTimeSec)
     {
         m_shakeTimerSec -= frameTimeSec;
         if (m_shakeTimerSec > 0.0f)
@@ -80,7 +80,7 @@ namespace castlecrawl
         }
     }
 
-    void PieceBase::shake(Context& context) 
+    void PieceBase::shake(Context & context)
     {
         sf::Vector2f pos{ util::position(context.layout.cellBounds(m_position)) };
         pos.x += m_shaker.adjustment();

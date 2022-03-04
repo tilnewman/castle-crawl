@@ -6,7 +6,7 @@
 #include "popup-manager.hpp"
 
 #include "context.hpp"
-#include "resources.hpp"
+#include "media.hpp"
 #include "settings.hpp"
 #include "util.hpp"
 
