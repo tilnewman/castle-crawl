@@ -1004,6 +1004,24 @@ namespace util
         // clang-format on
     }
 
+    inline void appendLineVerts(
+        const sf::FloatRect & rect, std::vector<sf::Vertex> & verts, const sf::Color & color)
+    {
+        const sf::Vector2f pos{ util::position(rect) };
+        const sf::Vector2f size{ util::size(rect) };
+        verts.push_back(sf::Vertex{ pos + sf::Vector2f(0.0f, 0.0f), color });
+        verts.push_back(sf::Vertex{ pos + sf::Vector2f(size.x, 0.0f), color });
+
+        verts.push_back(sf::Vertex{ pos + sf::Vector2f(size.x, 0.0f), color });
+        verts.push_back(sf::Vertex{ pos + sf::Vector2f(size.x, size.y), color });
+
+        verts.push_back(sf::Vertex{ pos + sf::Vector2f(size.x, size.y), color });
+        verts.push_back(sf::Vertex{ pos + sf::Vector2f(0.0f, size.y), color });
+
+        verts.push_back(sf::Vertex{ pos + sf::Vector2f(0.0f, size.y), color });
+        verts.push_back(sf::Vertex{ pos + sf::Vector2f(0.0f, 0.0f), color });
+    }
+
     // slow running but handy debugging shapes
 
     [[nodiscard]] inline sf::VertexArray

@@ -5,8 +5,8 @@
 //
 #include "state-play.hpp"
 
-#include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/Vertex.hpp>
 #include <SFML/Window/Event.hpp>
 
@@ -29,7 +29,11 @@ namespace castlecrawl
         void draw(const Context &, sf::RenderTarget &, sf::RenderStates) const override;
 
       private:
+        sf::FloatRect m_statsRegion;
+        sf::FloatRect m_unItemsRegion;
+        sf::FloatRect m_eqItemsRegion;
         std::vector<sf::Vertex> m_bgFadeVerts;
+        std::vector<sf::Vertex> m_bgBorderVerts;
     };
 
 } // namespace castlecrawl
