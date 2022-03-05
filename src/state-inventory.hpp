@@ -3,8 +3,10 @@
 //
 // state-inventory.hpp
 //
+#include "gui-stat-bar.hpp"
 #include "state-play.hpp"
 
+#include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/Vertex.hpp>
@@ -34,6 +36,13 @@ namespace castlecrawl
         sf::FloatRect m_eqItemsRegion;
         std::vector<sf::Vertex> m_bgFadeVerts;
         std::vector<sf::Vertex> m_bgBorderVerts;
+        StatBar m_healthBar;
+        StatBar m_manaBar;
+        sf::Text m_statTextStr;
+        sf::Text m_statTextAcc;
+        sf::Text m_statTextDex;
+        sf::Text m_statTextLck;
+        sf::Text m_statTextArc;
     };
 
 } // namespace castlecrawl
