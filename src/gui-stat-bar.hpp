@@ -30,7 +30,7 @@ namespace castlecrawl
 
         const sf::FloatRect getGlobalBounds() const { return m_rectangle.getGlobalBounds(); }
 
-        void draw(sf::RenderTarget & target, sf::RenderStates states) const;
+        void draw(sf::RenderTarget & target, sf::RenderStates states) const override;
 
       private:
         sf::Color m_color;
