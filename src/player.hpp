@@ -61,11 +61,18 @@ namespace castlecrawl
 
     inline void to_json(json & j, const Player & p)
     {
-        j = json{ { "accuracy", p.m_accuracy },   { "arcane", p.m_arcane },
-                  { "dexterity", p.m_dexterity }, { "luck", p.m_luck },
-                  { "strength", p.m_strength },   { "health", p.m_health },
-                  { "mana", p.m_mana },           { "level", p.m_level },
-                  { "gold", p.m_gold },           { "inventory", p.m_inventory } };
+        // clang-format off
+        j = json{ { "accuracy", p.m_accuracy },
+                  { "arcane", p.m_arcane },
+                  { "dexterity", p.m_dexterity },
+                  { "luck", p.m_luck },
+                  { "strength", p.m_strength },
+                  { "health", p.m_health },
+                  { "mana", p.m_mana },
+                  { "level", p.m_level },
+                  { "gold", p.m_gold },
+                  { "inventory", p.m_inventory } };
+        // clang-format on
     }
 
     inline void from_json(const json & j, Player & p)
