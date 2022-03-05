@@ -12,6 +12,8 @@
 #include <SFML/Graphics/Vertex.hpp>
 #include <SFML/Window/Event.hpp>
 
+#include <vector>
+
 namespace sf
 {
     class RenderTarget;
@@ -26,6 +28,7 @@ namespace castlecrawl
       public:
         StateInventory(Context & context);
 
+        void update(Context & context, const float frameTimeSec) override;
         void onEnter(Context & context) override;
         void handleEvent(Context &, const sf::Event &) override;
         void draw(const Context &, sf::RenderTarget &, sf::RenderStates) const override;

@@ -10,12 +10,15 @@
 #include "keys.hpp"
 #include "media.hpp"
 #include "player-piece.hpp"
+#include "player.hpp"
 #include "popup-manager.hpp"
 #include "process.hpp"
 #include "settings.hpp"
 #include "sound-player.hpp"
 #include "state-machine.hpp"
 #include "util.hpp"
+
+#include <string>
 
 namespace castlecrawl
 {
@@ -34,6 +37,32 @@ namespace castlecrawl
         , m_statTextLck()
         , m_statTextArc()
     {}
+
+    void StateInventory::update(Context & context, const float)
+    {
+        m_healthBar.updateValue(context.player.health().ratio());
+        m_manaBar.updateValue(context.player.mana().ratio());
+
+        m_statTextStr.setString(
+            std::string("Strength:    ") + std::to_string(context.player.strength().current()) +
+            "/" + std::to_string(context.player.strength().normal()));
+
+        m_statTextAcc.setString(
+            std::string("Accuracy:   ") + std::to_string(context.player.accuracy().current()) +
+            "/" + std::to_string(context.player.accuracy().normal()));
+
+        m_statTextDex.setString(
+            std::string("Dexterity:  ") + std::to_string(context.player.dexterity().current()) +
+            "/" + std::to_string(context.player.dexterity().normal()));
+
+        m_statTextLck.setString(
+            std::string("Luck:           ") + std::to_string(context.player.luck().current()) +
+            "/" + std::to_string(context.player.luck().normal()));
+
+        m_statTextArc.setString(
+            std::string("Arcane:       ") + std::to_string(context.player.arcane().current()) +
+            "/" + std::to_string(context.player.arcane().normal()));
+    }
 
     void StateInventory::onEnter(Context & context)
     {
@@ -81,26 +110,26 @@ namespace castlecrawl
         util::appendLineVerts(m_eqItemsRegion, m_bgBorderVerts, borderColor);
 
         // stats text
-        m_statTextStr = context.media.makeText(statFontSizeEnum, "Strength:    10/10");
-        m_statTextAcc = context.media.makeText(statFontSizeEnum, "Accuracy:   10/10");
-        m_statTextDex = context.media.makeText(statFontSizeEnum, "Dexterity:  10/10");
-        m_statTextLck = context.media.makeText(statFontSizeEnum, "Luck:           10/10");
-        m_statTextArc = context.media.makeText(statFontSizeEnum, "Arcane:       10/10");
+        m_statTextStr = context.media.makeText(statFontSizeEnum, "");
+        m_statTextAcc = context.media.makeText(statFontSizeEnum, "");
+        m_statTextDex = context.media.makeText(statFontSizeEnum, "");
+        m_statTextLck = context.media.makeText(statFontSizeEnum, "");
+        m_statTextArc = context.media.makeText(statFontSizeEnum, "");
 
         m_statTextStr.setPosition(
             util::position(m_statsRegion) + sf::Vector2f(statsRegionPad, statsRegionPad));
 
         m_statTextAcc.setPosition(
-            m_statTextStr.getPosition().x, util::bottom(m_statTextStr) + 1.0f);
+            m_statTextStr.getPosition().x, util::bottom(m_statTextStr) + statFontSize.y);
 
         m_statTextDex.setPosition(
-            m_statTextStr.getPosition().x, util::bottom(m_statTextAcc) + 1.0f);
+            m_statTextStr.getPosition().x, util::bottom(m_statTextAcc) + statFontSize.y);
 
         m_statTextLck.setPosition(
-            m_statTextStr.getPosition().x, util::bottom(m_statTextDex) + 1.0f);
+            m_statTextStr.getPosition().x, util::bottom(m_statTextDex) + statFontSize.y);
 
         m_statTextArc.setPosition(
-            m_statTextStr.getPosition().x, util::bottom(m_statTextLck) + 1.0f);
+            m_statTextStr.getPosition().x, util::bottom(m_statTextLck) + statFontSize.y);
 
         // health and mana bars
         const float statBarWidth{ std::floor(m_statsRegion.width * 0.6f) };
@@ -115,14 +144,12 @@ namespace castlecrawl
                                          (m_statsRegion.top + (m_statsRegion.height * 0.2f)) };
 
         m_healthBar.setup(healthBarPos, barSize, barLineThickness, sf::Color(235, 50, 50));
-        m_healthBar.updateValue(0.5f);
 
         const sf::Vector2f manaBarPos{
             healthBarPos.x, (util::bottom(m_healthBar) + (m_statsRegion.height * 0.2f))
         };
 
         m_manaBar.setup(manaBarPos, barSize, barLineThickness, sf::Color(60, 145, 240));
-        m_manaBar.updateValue(1.0f);
     }
 
     void StateInventory::handleEvent(Context & context, const sf::Event & event)
