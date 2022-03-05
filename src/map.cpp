@@ -467,4 +467,50 @@ namespace castlecrawl
         }
     }
 
+    const std::vector<char> Map::charsAround(const MapPos_t & pos) const
+    {
+        std::vector<char> chars;
+        chars.reserve(8);
+
+        for (int y(pos.y - 1); y <= (pos.y + 1); ++y)
+        {
+            for (int x(pos.x - 1); x <= (pos.x + 1); ++x)
+            {
+                const MapPos_t nextPos{ x, y };
+
+                // skip the center
+                if (nextPos == pos)
+                {
+                    continue;
+                }
+
+                if (!isPosValid(nextPos))
+                {
+                    continue;
+                }
+
+                chars.push_back(getChar(nextPos));
+            }
+        }
+
+        return chars;
+    }
+
+    std::size_t Map::countCharsAround(const MapPos_t & pos, const char ch) const
+    {
+        const std::vector<char> chars = charsAround(pos);
+
+        std::size_t count = 0;
+
+        for (const char nextChar : chars)
+        {
+            if (nextChar == ch)
+            {
+                ++count;
+            }
+        }
+
+        return count;
+    }
+
 } // namespace castlecrawl

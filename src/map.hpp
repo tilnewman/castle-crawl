@@ -53,6 +53,9 @@ namespace castlecrawl
 
         const MapChars_t & strings() const { return m_chars; }
 
+        const std::vector<char> charsAround(const MapPos_t & pos) const;
+        std::size_t countCharsAround(const MapPos_t & pos, const char ch) const;
+
       private:
         void addWalls();
         void addWallCorners();

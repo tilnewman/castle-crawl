@@ -63,7 +63,6 @@ namespace util
 
         // load and start new
         auto & entryUPtr = m_entrys.emplace_back(std::make_unique<Entry>());
-        entryUPtr->filename = filename;
 
         if (!entryUPtr->music.openFromFile(path.string()))
         {
@@ -74,6 +73,7 @@ namespace util
             return;
         }
 
+        entryUPtr->filename = filename;
         entryUPtr->music.setVolume(volume);
         entryUPtr->music.play();
     }
@@ -88,9 +88,6 @@ namespace util
                 return;
             }
         }
-
-        std::cerr << "MusicPlayer::stop(\"" << filename
-                  << "\") -but there are none with that filename!" << m_path << std::endl;
     }
 
     void MusicPlayer::stopAll()

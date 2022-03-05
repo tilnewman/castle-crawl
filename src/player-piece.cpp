@@ -12,6 +12,7 @@
 #include "door-piece.hpp"
 #include "keys.hpp"
 #include "maps.hpp"
+#include "music-player.hpp"
 #include "settings.hpp"
 #include "sound-player.hpp"
 
@@ -50,6 +51,7 @@ namespace castlecrawl
 
         const MapPos_t newPos = keys::moveIfDir(position(), arrowKey);
 
+        // leave the map cases
         for (const MapLink & link : context.maps.get().links())
         {
             if (link.from_pos == newPos)
@@ -68,6 +70,7 @@ namespace castlecrawl
 
         const char newChar = context.maps.get().getChar(newPos);
 
+        // wall bump cases
         if ((newChar != ' ') && (newChar != 'D') && (newChar != 'd') && (newChar != 'S') &&
             (newChar != 's'))
         {
@@ -87,6 +90,7 @@ namespace castlecrawl
             return;
         }
 
+        // walk onto door cases
         for (const DoorPiece & door : context.board.doors)
         {
             if (door.position() != newPos)
@@ -109,6 +113,26 @@ namespace castlecrawl
 
         move(context, arrowKey);
         context.audio.play("tick-on-2.ogg");
+
+        const std::size_t lavaAroundCount = context.maps.get().countCharsAround(position(), 'l');
+        if (lavaAroundCount == 0)
+        {
+            context.music.stop("lava.ogg");
+        }
+        else
+        {
+            context.music.start("lava.ogg");
+        }
+
+        const std::size_t waterAroundCount = context.maps.get().countCharsAround(position(), 'w');
+        if (waterAroundCount == 0)
+        {
+            context.music.stop("water-bubbles.ogg");
+        }
+        else
+        {
+            context.music.start("water-bubbles.ogg");
+        }
     }
 
 } // namespace castlecrawl
