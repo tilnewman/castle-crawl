@@ -24,6 +24,7 @@ namespace castlecrawl
         , m_items()
         , m_random()
         , m_audio(m_random)
+        , m_music()
         , m_anim(m_random)
         , m_context(
               m_game,
@@ -39,6 +40,7 @@ namespace castlecrawl
               m_items,
               m_random,
               m_audio,
+              m_music,
               m_anim)
     {}
 
@@ -70,6 +72,9 @@ namespace castlecrawl
 
         m_audio.setMediaPath((m_config.media_dir_path / "sfx").string());
         m_audio.volume(75.0f);
+
+        m_music.setup(m_config.media_dir_path / "music");
+        m_music.start("music.ogg", 18.0f);
 
         m_anim.setMediaPath((m_config.media_dir_path / "anim").string());
 

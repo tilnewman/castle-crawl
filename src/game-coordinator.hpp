@@ -10,6 +10,7 @@
 #include "keys.hpp"
 #include "maps.hpp"
 #include "media.hpp"
+#include "music-player.hpp"
 #include "player-piece.hpp"
 #include "player.hpp"
 #include "popup-manager.hpp"
@@ -53,6 +54,7 @@ namespace castlecrawl
         item::ItemFactory m_items;
         util::Random m_random;
         util::SoundPlayer m_audio;
+        util::MusicPlayer m_music;
         util::AnimationPlayer m_anim;
 
         Context m_context;

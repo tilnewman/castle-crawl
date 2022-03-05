@@ -8,6 +8,7 @@ namespace util
 {
     class Random;
     class SoundPlayer;
+    class MusicPlayer;
     class AnimationPlayer;
 } // namespace util
 
@@ -32,7 +33,7 @@ namespace castlecrawl
     struct MapLink;
     struct Process;
     struct GameConfig;
-    
+
     //
 
     struct Context
@@ -51,6 +52,7 @@ namespace castlecrawl
             item::ItemFactory & ifa,
             const util::Random & ran,
             util::SoundPlayer & aud,
+            util::MusicPlayer & mus,
             util::AnimationPlayer & ani)
             : game(gam)
             , player(pla)
@@ -65,6 +67,7 @@ namespace castlecrawl
             , items(ifa)
             , random(ran)
             , audio(aud)
+            , music(mus)
             , anim(ani)
         {}
 
@@ -87,6 +90,7 @@ namespace castlecrawl
         item::ItemFactory & items;
         const util::Random & random;
         util::SoundPlayer & audio;
+        util::MusicPlayer & music;
         util::AnimationPlayer & anim;
     };
 } // namespace castlecrawl
