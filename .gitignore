@@ -51,3 +51,4 @@
 *.vcxproj.filters
 *.vcxproj.user
 *.cpt_backup
+src/.clang-tidy
