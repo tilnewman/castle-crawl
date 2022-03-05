@@ -159,7 +159,7 @@ namespace castlecrawl
             return;
         }
 
-        if (sf::Keyboard::Escape == event.key.code)
+        if ((sf::Keyboard::Escape == event.key.code) || (sf::Keyboard::I == event.key.code))
         {
             context.state.setChangePending(State::Play);
         }
