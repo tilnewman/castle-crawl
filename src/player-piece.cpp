@@ -34,39 +34,12 @@ namespace castlecrawl
         const sf::Keyboard::Key key{ event.key.code };
 
         handleArrowKey(context, key);
-
-        // TODO REMOVE TEMP ANIMATION TEST
-        if (sf::Keyboard::Num1 == key)
-        {
-            util::AnimConfig config(1.0f, sf::Color(150, 255, 255), sf::BlendAdd);
-
-            sf::FloatRect rect = context.layout.cellBounds(position());
-            const float cellDimm{ context.layout.mapCellDimm() };
-            rect.left -= (cellDimm * 0.25f);
-            rect.top -= (cellDimm * 0.25f);
-            rect.width *= 1.5f;
-            rect.height *= 1.5f;
-
-            context.anim.play("sparkle-burst", rect, config);
-            shake();
-        }
-        else if (sf::Keyboard::Num2 == key)
-        {
-            util::AnimConfig config(1.0f, sf::Color(255, 255, 150), sf::BlendAdd);
-
-            sf::FloatRect rect = context.layout.cellBounds(position());
-            const float cellDimm{ context.layout.mapCellDimm() };
-            rect.left -= (cellDimm * 1.0f);
-            rect.top -= (cellDimm * 1.0f);
-            rect.width *= 3.0f;
-            rect.height *= 3.0f;
-
-            context.anim.play("star-flash", rect, config);
-            shake();
-        }
     }
 
-    void PlayerPiece::update(Context & context, const float frameTimeSec) { PieceBase::update(context, frameTimeSec); }
+    void PlayerPiece::update(Context & context, const float frameTimeSec)
+    {
+        PieceBase::update(context, frameTimeSec);
+    }
 
     void PlayerPiece::handleArrowKey(Context & context, const sf::Keyboard::Key arrowKey)
     {
@@ -98,7 +71,19 @@ namespace castlecrawl
         if ((newChar != ' ') && (newChar != 'D') && (newChar != 'd') && (newChar != 'S') &&
             (newChar != 's'))
         {
-            context.audio.play("tap-wood-low.ogg");
+            if (newChar == 'l')
+            {
+                context.audio.play("burn.ogg");
+            }
+            else if (newChar == 'w')
+            {
+                context.audio.play("splash.ogg");
+            }
+            else
+            {
+                context.audio.play("tap-wood-low.ogg");
+            }
+
             return;
         }
 
