@@ -118,7 +118,7 @@ namespace castlecrawl
                 for (int m = 0; m < static_cast<int>(WeaponMaterial::Count); ++m)
                 {
                     const auto material = static_cast<WeaponMaterial>(m);
-                    items.push_back(Item(type, material));
+                    items.emplace_back(type, material);
                 }
             }
 
@@ -139,7 +139,7 @@ namespace castlecrawl
                 for (int m = 0; m < static_cast<int>(ArmorMaterial::Count); ++m)
                 {
                     const auto material = static_cast<ArmorMaterial>(m);
-                    items.push_back(Item(type, material));
+                    items.emplace_back(type, material);
                 }
             }
 
@@ -168,12 +168,12 @@ namespace castlecrawl
                 {
                     const auto material = static_cast<MiscMaterial>(m);
 
-                    items.push_back(Item(
+                    items.emplace_back(
                         type,
                         material,
                         UseStrength::Normal,
-                        {},
-                        miscMaterialEquipEffect(material)));
+                        UseEffect{},
+                        miscMaterialEquipEffect(material));
                 }
             }
 
@@ -200,6 +200,7 @@ namespace castlecrawl
             // All custom magical items must have a unique name!
 
             ItemVec_t items;
+            items.reserve(200);
 
             // weapons
 
@@ -207,11 +208,11 @@ namespace castlecrawl
             {
                 const auto type = static_cast<Weapon>(i);
 
-                items.push_back(Item(
+                items.emplace_back(
                     type,
                     WeaponMaterial::Obsidian,
                     std::string(toString(type)).append(" of Night"),
-                    { .arc = 3, .dmg = 3 }));
+                    EquipEffect{ .arc = 3, .dmg = 3 });
             }
 
             for (int i = 0; i < static_cast<int>(Weapon::Count); ++i)
@@ -222,7 +223,7 @@ namespace castlecrawl
                     type,
                     WeaponMaterial::Obsidian,
                     std::string("Dark ").append(toString(type)),
-                    { .arc = 1, .dmg = 1, .str = 1 }));
+                    EquipEffect{ .arc = 1, .dmg = 1, .str = 1 }));
             }
 
             for (int i = 0; i < static_cast<int>(Weapon::Count); ++i)
@@ -233,7 +234,7 @@ namespace castlecrawl
                     type,
                     WeaponMaterial::Steel,
                     std::string("Savage ").append(toString(type)),
-                    { .acc = 1, .dmg = 4, .str = 2 }));
+                    EquipEffect{ .acc = 1, .dmg = 4, .str = 2 }));
             }
 
             items.push_back(Item(
@@ -331,66 +332,66 @@ namespace castlecrawl
             {
                 const auto type = static_cast<Armor>(i);
 
-                items.push_back(Item(
+                items.emplace_back(
                     type,
                     ArmorMaterial::DragonScale,
                     std::string("Dragon Slayer ").append(toString(type)),
-                    { .acc = 3, .dmg = 3, .str = 3 }));
+                    EquipEffect{ .acc = 3, .dmg = 3, .str = 3 });
             }
 
             for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
             {
                 const auto type = static_cast<Armor>(i);
 
-                items.push_back(Item(
+                items.emplace_back(
                     type,
                     ArmorMaterial::Silver,
                     std::string(toString(type)).append(" of Nobility"),
-                    { .acc = 1, .lck = 2, .str = 3 }));
+                    EquipEffect{ .acc = 1, .lck = 2, .str = 3 });
             }
 
             for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
             {
                 const auto type = static_cast<Armor>(i);
 
-                items.push_back(Item(
+                items.emplace_back(
                     type,
                     ArmorMaterial::Steel,
                     std::string("Gladiator ").append(toString(type)),
-                    { .acc = 1, .str = 1 }));
+                    EquipEffect{ .acc = 1, .str = 1 });
             }
 
             for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
             {
                 const auto type = static_cast<Armor>(i);
 
-                items.push_back(Item(
+                items.emplace_back(
                     type,
                     ArmorMaterial::Gold,
                     std::string("Kingly ").append(toString(type)),
-                    { .acc = 3, .str = 3 }));
+                    EquipEffect{ .acc = 3, .str = 3 });
             }
 
             for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
             {
                 const auto type = static_cast<Armor>(i);
 
-                items.push_back(Item(
+                items.emplace_back(
                     type,
                     ArmorMaterial::Leather,
                     std::string("Druid ").append(toString(type)),
-                    { .arc = 2, .lck = 2 }));
+                    EquipEffect{ .arc = 2, .lck = 2 });
             }
 
             for (int i = 0; i < static_cast<int>(Armor::Count); ++i)
             {
                 const auto type = static_cast<Armor>(i);
 
-                items.push_back(Item(
+                items.emplace_back(
                     type,
                     ArmorMaterial::Leather,
                     std::string("Ranger ").append(toString(type)),
-                    { .acc = 2, .lck = 1, .str = 3 }));
+                    EquipEffect{ .acc = 2, .lck = 1, .str = 3 });
             }
 
             items.push_back(
