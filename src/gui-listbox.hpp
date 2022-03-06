@@ -42,8 +42,6 @@ namespace castlecrawl
         void redraw();
 
       private:
-        std::size_t positionToIndex(const sf::Vector2f & pos);
-
       private:
         bool m_hasFocus;
         const sf::Color m_highlightColor;

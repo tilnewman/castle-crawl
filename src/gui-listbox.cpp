@@ -99,10 +99,4 @@ namespace castlecrawl
         }
     }
 
-    std::size_t Listbox::positionToIndex(const sf::Vector2f &)
-    {
-        // TODO
-        return 0;
-    }
-
 } // namespace castlecrawl
