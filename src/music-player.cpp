@@ -54,6 +54,7 @@ namespace util
 
                 if (entryUPtr->music.getStatus() != sf::SoundSource::Playing)
                 {
+                    entryUPtr->music.setLoop(true);
                     entryUPtr->music.play();
                 }
 
@@ -75,6 +76,7 @@ namespace util
 
         entryUPtr->filename = filename;
         entryUPtr->music.setVolume(volume);
+        entryUPtr->music.setLoop(true);
         entryUPtr->music.play();
     }
 

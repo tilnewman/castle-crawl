@@ -39,14 +39,19 @@ namespace castlecrawl
         void handleEvent(const sf::Event & event);
         void draw(sf::RenderTarget & target, sf::RenderStates states) const override;
 
+        void redraw();
+
       private:
-        void reset();
         std::size_t positionToIndex(const sf::Vector2f & pos);
 
       private:
         bool m_hasFocus;
         const sf::Color m_highlightColor;
         sf::RectangleShape m_bgRectangle;
+        std::size_t m_displayIndex;
+        std::size_t m_selectIndex;
+        std::vector<sf::FloatRect> m_rowRects;
+        std::vector<sf::Vertex> m_rowVerts;
     };
 
 } // namespace castlecrawl
