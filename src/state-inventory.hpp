@@ -3,6 +3,7 @@
 //
 // state-inventory.hpp
 //
+#include "gui-listbox.hpp"
 #include "gui-stat-bar.hpp"
 #include "state-play.hpp"
 
@@ -35,8 +36,8 @@ namespace castlecrawl
 
       private:
         sf::FloatRect m_statsRegion;
-        sf::FloatRect m_unItemsRegion;
-        sf::FloatRect m_eqItemsRegion;
+        Listbox m_unListbox;
+        Listbox m_eqListbox;
         std::vector<sf::Vertex> m_bgFadeVerts;
         std::vector<sf::Vertex> m_bgBorderVerts;
         StatBar m_healthBar;

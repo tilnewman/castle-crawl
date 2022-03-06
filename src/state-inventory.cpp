@@ -7,6 +7,7 @@
 
 #include "board.hpp"
 #include "context.hpp"
+#include "item-factory.hpp"
 #include "keys.hpp"
 #include "media.hpp"
 #include "player-piece.hpp"
@@ -25,8 +26,8 @@ namespace castlecrawl
     StateInventory::StateInventory(Context & context)
         : StatePlay(context)
         , m_statsRegion()
-        , m_unItemsRegion()
-        , m_eqItemsRegion()
+        , m_unListbox()
+        , m_eqListbox()
         , m_bgFadeVerts()
         , m_bgBorderVerts()
         , m_healthBar()
@@ -89,25 +90,25 @@ namespace castlecrawl
         const float betweenPad{ std::ceil(m_statsRegion.height * 0.02f) };
 
         // unequipped items region
-        m_unItemsRegion.width = std::floor(windowSize.x * 0.375f);
-        m_unItemsRegion.height = (m_statsRegion.height * 2.0f);
-        m_unItemsRegion.top = (util::bottom(m_statsRegion) + betweenPad);
+        m_unListbox.setupSize(
+            context, FontSize::Medium, context.items.textExtents().longest_name, 10_st);
 
-        m_unItemsRegion.left =
-            ((windowSize.x * 0.5f) - m_unItemsRegion.width) - (betweenPad * 0.5f);
+        const float listboxTop = (util::bottom(m_statsRegion) + betweenPad);
+
+        const float unEquippedPosLeft =
+            ((windowSize.x * 0.5f) - m_unListbox.getGlobalBounds().width) - (betweenPad * 0.5f);
+
+        m_unListbox.setPosition({ unEquippedPosLeft, listboxTop });
 
         // equipped items region
-        m_eqItemsRegion = m_unItemsRegion;
-        m_eqItemsRegion.left = ((windowSize.x * 0.5f) + (betweenPad * 0.5f));
+        m_eqListbox.setupSize(
+            context, FontSize::Medium, context.items.textExtents().longest_name, 10_st);
+
+        m_eqListbox.setPosition({ ((windowSize.x * 0.5f) + (betweenPad * 0.5f)), listboxTop });
 
         // region quads and lines
         util::appendQuadVerts(m_statsRegion, m_bgFadeVerts, backgroundColor);
-        util::appendQuadVerts(m_unItemsRegion, m_bgFadeVerts, backgroundColor);
-        util::appendQuadVerts(m_eqItemsRegion, m_bgFadeVerts, backgroundColor);
-
         util::appendLineVerts(m_statsRegion, m_bgBorderVerts, borderColor);
-        util::appendLineVerts(m_unItemsRegion, m_bgBorderVerts, borderColor);
-        util::appendLineVerts(m_eqItemsRegion, m_bgBorderVerts, borderColor);
 
         // stats text
         m_statTextStr = context.media.makeText(statFontSizeEnum, "");
@@ -154,6 +155,21 @@ namespace castlecrawl
 
     void StateInventory::handleEvent(Context & context, const sf::Event & event)
     {
+        if (sf::Event::MouseButtonPressed == event.type)
+        {
+            const sf::Vector2f mousePos{ sf::Mouse::getPosition() };
+            if (m_unListbox.getGlobalBounds().contains(mousePos))
+            {
+                m_unListbox.setFocus(true);
+                m_eqListbox.setFocus(false);
+            }
+            else if (m_eqListbox.getGlobalBounds().contains(mousePos))
+            {
+                m_unListbox.setFocus(false);
+                m_eqListbox.setFocus(true);
+            }
+        }
+
         if (sf::Event::KeyPressed != event.type)
         {
             return;
@@ -181,6 +197,9 @@ namespace castlecrawl
         target.draw(m_statTextDex, states);
         target.draw(m_statTextLck, states);
         target.draw(m_statTextArc, states);
+
+        target.draw(m_unListbox);
+        target.draw(m_eqListbox);
     }
 
 } // namespace castlecrawl
