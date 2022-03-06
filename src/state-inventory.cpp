@@ -162,6 +162,10 @@ namespace castlecrawl
 
         m_statTextMisc.setPosition(
             manaBarPos.x, util::bottom(m_manaBar.getGlobalBounds()) + (windowSize.y * 0.01f));
+
+        // set initial focuses
+        m_unListbox.setFocus(true);
+        m_eqListbox.setFocus(false);
     }
 
     void StateInventory::handleEvent(Context & context, const sf::Event & event)
@@ -192,6 +196,44 @@ namespace castlecrawl
         if ((sf::Keyboard::Escape == event.key.code) || (sf::Keyboard::I == event.key.code))
         {
             context.state.setChangePending(State::Play);
+        }
+        else if (sf::Keyboard::Left == event.key.code)
+        {
+            m_unListbox.setFocus(true);
+            m_eqListbox.setFocus(false);
+        }
+        else if (sf::Keyboard::Right == event.key.code)
+        {
+            m_unListbox.setFocus(false);
+            m_eqListbox.setFocus(true);
+        }
+        else if (sf::Keyboard::E == event.key.code)
+        {
+            if (m_unListbox.hasFocus() && !m_unListbox.empty())
+            {
+                const std::string rejectReason =
+                    context.player.inventory().equip(m_unListbox.selectedIndex());
+
+                if (rejectReason.empty())
+                {
+                    m_unListbox.redraw();
+                    m_eqListbox.redraw();
+                }
+                else
+                {
+                    context.popup.setup(context, rejectReason);
+                    context.state.setChangePending(State::Popup, State::Inventory);
+                }
+            }
+        }
+        else if (sf::Keyboard::U == event.key.code)
+        {
+            if (m_eqListbox.hasFocus() && !m_eqListbox.empty())
+            {
+                context.player.inventory().unequip(m_eqListbox.selectedIndex());
+                m_unListbox.redraw();
+                m_eqListbox.redraw();
+            }
         }
     }
 

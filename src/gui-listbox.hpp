@@ -32,9 +32,15 @@ namespace castlecrawl
             const std::size_t widthCharsMax,
             const std::size_t heightRows);
 
+        bool empty() const { return m_items.empty(); }
+
         bool hasFocus() const { return m_hasFocus; }
         void setFocus(const bool hasFocus);
+
+        std::size_t selectedIndex() const { return (m_displayIndex + m_selectIndex); }
+
         const sf::FloatRect getGlobalBounds() const { return m_bgRectangle.getGlobalBounds(); }
+
         void setPosition(const sf::Vector2f & pos);
 
         void handleEvent(const sf::Event & event);
