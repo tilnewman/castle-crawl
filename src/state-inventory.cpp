@@ -185,9 +185,6 @@ namespace castlecrawl
             }
         }
 
-        m_unListbox.handleEvent(event);
-        m_eqListbox.handleEvent(event);
-
         if (sf::Event::KeyPressed != event.type)
         {
             return;
@@ -206,6 +203,40 @@ namespace castlecrawl
         {
             m_unListbox.setFocus(false);
             m_eqListbox.setFocus(true);
+        }
+        else if (sf::Keyboard::Up == event.key.code)
+        {
+            if (m_unListbox.hasFocus())
+            {
+                if (m_unListbox.selectPrev())
+                {
+                    context.audio.play("tick-off");
+                }
+            }
+            else
+            {
+                if (m_eqListbox.selectPrev())
+                {
+                    context.audio.play("tick-off");
+                }
+            }
+        }
+        else if (sf::Keyboard::Down == event.key.code)
+        {
+            if (m_unListbox.hasFocus())
+            {
+                if (m_unListbox.selectNext())
+                {
+                    context.audio.play("tick-off");
+                }
+            }
+            else
+            {
+                if (m_eqListbox.selectNext())
+                {
+                    context.audio.play("tick-off");
+                }
+            }
         }
         else if (sf::Keyboard::E == event.key.code)
         {

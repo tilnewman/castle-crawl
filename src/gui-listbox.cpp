@@ -108,36 +108,39 @@ namespace castlecrawl
         }
     }
 
-    void Listbox::handleEvent(const sf::Event & event)
+    void Listbox::handleEvent(const sf::Event &)
     {
         if (!m_hasFocus || m_items.empty())
         {
             return;
         }
+    }
 
-        if (sf::Event::KeyPressed != event.type)
+    bool Listbox::selectNext()
+    {
+        if ((m_selectIndex < (m_items.size() - 1_st)) && (m_selectIndex < (m_rowRects.size() - 1)))
         {
-            return;
-        }
-
-        if (sf::Keyboard::Up == event.key.code)
-        {
-            if (m_selectIndex > 0)
-            {
-                --m_selectIndex;
-            }
-
+            ++m_selectIndex;
             redraw();
+            return true;
         }
-        else if (sf::Keyboard::Down == event.key.code)
+        else
         {
-            if ((m_selectIndex < (m_items.size() - 1_st)) &&
-                (m_selectIndex < (m_rowRects.size() - 1)))
-            {
-                ++m_selectIndex;
-            }
+            return false;
+        }
+    }
 
+    bool Listbox::selectPrev()
+    {
+        if (m_selectIndex > 0)
+        {
+            --m_selectIndex;
             redraw();
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 

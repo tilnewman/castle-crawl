@@ -46,6 +46,9 @@ namespace castlecrawl
         void handleEvent(const sf::Event & event);
         void draw(sf::RenderTarget & target, sf::RenderStates states) const override;
 
+        bool selectNext();
+        bool selectPrev();
+
         void redraw();
 
       private:
