@@ -52,3 +52,4 @@
 *.vcxproj.user
 *.cpt_backup
 *.clang-tidy
+src/.clang-tidy
