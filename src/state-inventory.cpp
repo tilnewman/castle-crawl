@@ -37,6 +37,7 @@ namespace castlecrawl
         , m_statTextDex()
         , m_statTextLck()
         , m_statTextArc()
+        , m_statTextMisc()
     {}
 
     void StateInventory::update(Context & context, const float)
@@ -63,6 +64,17 @@ namespace castlecrawl
         m_statTextArc.setString(
             std::string("Arcane:       ") + std::to_string(context.player.arcane().current()) +
             "/" + std::to_string(context.player.arcane().normal()));
+
+        std::string miscStr;
+        miscStr.reserve(50);
+        miscStr += "Level: ";
+        miscStr += std::to_string(context.player.level().current());
+        miscStr += "\t\tArmor Rating: ";
+        miscStr += std::to_string(context.player.inventory().armorRating());
+        miscStr += "\t\tGold: ";
+        miscStr += std::to_string(context.player.gold());
+
+        m_statTextMisc.setString(miscStr);
     }
 
     void StateInventory::onEnter(Context & context)
@@ -83,7 +95,7 @@ namespace castlecrawl
         const float statsRegionPad{ std::floor(windowSize.x * 0.01f) };
 
         m_statsRegion.width = std::floor(windowSize.x * 0.5f);
-        m_statsRegion.height = (totalTextHeight + (statsRegionPad * 3.0f));
+        m_statsRegion.height = (totalTextHeight + (statsRegionPad * 2.0f));
         m_statsRegion.top = topPad;
         m_statsRegion.left = ((windowSize.x * 0.5f) - (m_statsRegion.width * 0.5f));
 
@@ -110,31 +122,24 @@ namespace castlecrawl
         util::appendQuadVerts(m_statsRegion, m_bgFadeVerts, backgroundColor);
         util::appendLineVerts(m_statsRegion, m_bgBorderVerts, borderColor);
 
-        // stats text
-        m_statTextStr = context.media.makeText(statFontSizeEnum, "");
-        m_statTextAcc = context.media.makeText(statFontSizeEnum, "");
-        m_statTextDex = context.media.makeText(statFontSizeEnum, "");
-        m_statTextLck = context.media.makeText(statFontSizeEnum, "");
-        m_statTextArc = context.media.makeText(statFontSizeEnum, "");
+        // stats text (use any text that is long enough to get measurements from)
+        m_statTextStr = context.media.makeText(statFontSizeEnum, "Accuracy:        ");
+        m_statTextAcc = context.media.makeText(statFontSizeEnum, "Accuracy:        ");
+        m_statTextDex = context.media.makeText(statFontSizeEnum, "Accuracy:        ");
+        m_statTextLck = context.media.makeText(statFontSizeEnum, "Accuracy:        ");
+        m_statTextArc = context.media.makeText(statFontSizeEnum, "Accuracy:        ");
 
         m_statTextStr.setPosition(
             util::position(m_statsRegion) + sf::Vector2f(statsRegionPad, statsRegionPad));
 
-        m_statTextAcc.setPosition(
-            m_statTextStr.getPosition().x, util::bottom(m_statTextStr) + statFontSize.y);
-
-        m_statTextDex.setPosition(
-            m_statTextStr.getPosition().x, util::bottom(m_statTextAcc) + statFontSize.y);
-
-        m_statTextLck.setPosition(
-            m_statTextStr.getPosition().x, util::bottom(m_statTextDex) + statFontSize.y);
-
-        m_statTextArc.setPosition(
-            m_statTextStr.getPosition().x, util::bottom(m_statTextLck) + statFontSize.y);
+        m_statTextAcc.setPosition(m_statTextStr.getPosition().x, util::bottom(m_statTextStr));
+        m_statTextDex.setPosition(m_statTextStr.getPosition().x, util::bottom(m_statTextAcc));
+        m_statTextLck.setPosition(m_statTextStr.getPosition().x, util::bottom(m_statTextDex));
+        m_statTextArc.setPosition(m_statTextStr.getPosition().x, util::bottom(m_statTextLck));
 
         // health and mana bars
         const float statBarWidth{ std::floor(m_statsRegion.width * 0.6f) };
-        const float statBarHeight{ std::ceil(m_statsRegion.height * 0.15f) };
+        const float statBarHeight{ std::ceil(m_statsRegion.height * 0.1f) };
 
         const sf::Vector2f barSize{ statBarWidth, statBarHeight };
 
@@ -147,10 +152,16 @@ namespace castlecrawl
         m_healthBar.setup(healthBarPos, barSize, barLineThickness, sf::Color(235, 50, 50));
 
         const sf::Vector2f manaBarPos{
-            healthBarPos.x, (util::bottom(m_healthBar) + (m_statsRegion.height * 0.2f))
+            healthBarPos.x, (util::bottom(m_healthBar) + (m_statsRegion.height * 0.1f))
         };
 
         m_manaBar.setup(manaBarPos, barSize, barLineThickness, sf::Color(60, 145, 240));
+
+        // misc stats (level, armor rating, gold, etc)
+        m_statTextMisc = context.media.makeText(FontSize::Medium, "");
+
+        m_statTextMisc.setPosition(
+            manaBarPos.x, util::bottom(m_manaBar.getGlobalBounds()) + (windowSize.y * 0.01f));
     }
 
     void StateInventory::handleEvent(Context & context, const sf::Event & event)
@@ -200,6 +211,7 @@ namespace castlecrawl
         target.draw(m_statTextDex, states);
         target.draw(m_statTextLck, states);
         target.draw(m_statTextArc, states);
+        target.draw(m_statTextMisc, states);
 
         target.draw(m_unListbox);
         target.draw(m_eqListbox);

@@ -47,6 +47,7 @@ namespace castlecrawl
         sf::Text m_statTextDex;
         sf::Text m_statTextLck;
         sf::Text m_statTextArc;
+        sf::Text m_statTextMisc;
     };
 
 } // namespace castlecrawl

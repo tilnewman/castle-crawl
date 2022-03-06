@@ -28,6 +28,7 @@ namespace castlecrawl
             ItemVec_t & eqItems() { return m_eqItems; }
 
             const EquipEffect totalEquipEffects() const;
+            int armorRating() const;
 
             friend void to_json(json & j, const Inventory & i);
             friend void from_json(const json & j, Inventory & i);

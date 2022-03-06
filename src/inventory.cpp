@@ -16,8 +16,8 @@ namespace castlecrawl
             : m_items()
         {}
 
-        void Inventory::add(const ItemVec_t & items) 
-        { 
+        void Inventory::add(const ItemVec_t & items)
+        {
             for (const Item & item : items)
             {
                 m_items.push_back(item);
@@ -94,6 +94,21 @@ namespace castlecrawl
             }
 
             return equipEffect;
+        }
+
+        int Inventory::armorRating() const
+        {
+            int armorRating = 0;
+
+            for (const Item & item : m_eqItems)
+            {
+                if (item.isArmor())
+                {
+                    armorRating += item.armorRating();
+                }
+            }
+
+            return armorRating;
         }
 
         bool Inventory::hasWeaponEquipped() const
