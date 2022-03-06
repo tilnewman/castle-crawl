@@ -210,14 +210,14 @@ namespace castlecrawl
             {
                 if (m_unListbox.selectPrev())
                 {
-                    context.audio.play("tick-off");
+                    context.audio.play("tick-off-1");
                 }
             }
             else
             {
                 if (m_eqListbox.selectPrev())
                 {
-                    context.audio.play("tick-off");
+                    context.audio.play("tick-off-1");
                 }
             }
         }
@@ -227,14 +227,14 @@ namespace castlecrawl
             {
                 if (m_unListbox.selectNext())
                 {
-                    context.audio.play("tick-off");
+                    context.audio.play("tick-off-1");
                 }
             }
             else
             {
                 if (m_eqListbox.selectNext())
                 {
-                    context.audio.play("tick-off");
+                    context.audio.play("tick-off-1");
                 }
             }
         }
@@ -247,11 +247,13 @@ namespace castlecrawl
 
                 if (rejectReason.empty())
                 {
+                    context.audio.play("thud-1", 1.25f);
                     m_unListbox.redraw();
                     m_eqListbox.redraw();
                 }
                 else
                 {
+                    context.audio.play("drum-double");
                     context.popup.setup(context, rejectReason);
                     context.state.setChangePending(State::Popup, State::Inventory);
                 }
@@ -261,6 +263,7 @@ namespace castlecrawl
         {
             if (m_eqListbox.hasFocus() && !m_eqListbox.empty())
             {
+                context.audio.play("thud-1", 0.75f);
                 context.player.inventory().unequip(m_eqListbox.selectedIndex());
                 m_unListbox.redraw();
                 m_eqListbox.redraw();
