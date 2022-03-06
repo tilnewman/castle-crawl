@@ -8,16 +8,21 @@
 #include "context.hpp"
 #include "util.hpp"
 
+#include <SFML/Window/Event.hpp>
+
 namespace castlecrawl
 {
-    Listbox::Listbox()
-        : m_hasFocus()
+    Listbox::Listbox(item::ItemVec_t & items)
+        : m_items(items)
+        , m_hasFocus()
         , m_highlightColor(20, 20, 20, 20)
         , m_bgRectangle()
         , m_displayIndex(0)
         , m_selectIndex(0)
         , m_rowRects()
-        , m_rowVerts()
+        , m_rowLineVerts()
+        , m_rowTexts()
+        , m_selectionRectangle()
     {}
 
     void Listbox::setupSize(
@@ -42,6 +47,23 @@ namespace castlecrawl
             m_rowRects.push_back(rect);
         }
 
+        m_rowTexts.clear();
+        for (std::size_t i = 0; i < heightRows; ++i)
+        {
+            std::string rowString;
+            if (i < m_items.size())
+            {
+                rowString = m_items[i].name();
+            }
+
+            sf::Text & text = m_rowTexts.emplace_back(context.media.makeText(fontSize, rowString));
+            text.setPosition(util::position(m_rowRects[i]));
+        }
+
+        m_selectionRectangle.setFillColor(sf::Color(255, 255, 255, 20));
+        m_selectionRectangle.setOutlineThickness(0.0f);
+        m_selectionRectangle.setSize(util::size(m_rowRects[0]));
+
         redraw();
     }
 
@@ -62,20 +84,60 @@ namespace castlecrawl
             rect.top += move.y;
         }
 
+        for (sf::Text & text : m_rowTexts)
+        {
+            text.move(move);
+        }
+
         redraw();
     }
 
     void Listbox::draw(sf::RenderTarget & target, sf::RenderStates states) const
     {
-        target.draw(&m_rowVerts[0], m_rowVerts.size(), sf::PrimitiveType::Lines);
+        target.draw(&m_rowLineVerts[0], m_rowLineVerts.size(), sf::PrimitiveType::Lines);
         target.draw(m_bgRectangle, states);
+
+        for (const sf::Text & text : m_rowTexts)
+        {
+            target.draw(text, states);
+        }
+
+        if (m_hasFocus && !m_items.empty())
+        {
+            target.draw(m_selectionRectangle, states);
+        }
     }
 
-    void Listbox::handleEvent(const sf::Event &)
+    void Listbox::handleEvent(const sf::Event & event)
     {
-        if (!m_hasFocus)
+        if (!m_hasFocus || m_items.empty())
         {
             return;
+        }
+
+        if (sf::Event::KeyPressed != event.type)
+        {
+            return;
+        }
+
+        if (sf::Keyboard::Up == event.key.code)
+        {
+            if (m_selectIndex > 0)
+            {
+                --m_selectIndex;
+            }
+
+            redraw();
+        }
+        else if (sf::Keyboard::Down == event.key.code)
+        {
+            if ((m_selectIndex < (m_items.size() - 1_st)) &&
+                (m_selectIndex < (m_rowRects.size() - 1)))
+            {
+                ++m_selectIndex;
+            }
+
+            redraw();
         }
     }
 
@@ -92,11 +154,24 @@ namespace castlecrawl
             m_bgRectangle.setOutlineColor(m_bgRectangle.getOutlineColor() + m_highlightColor);
         }
 
-        m_rowVerts.clear();
+        m_rowLineVerts.clear();
         for (const sf::FloatRect & rect : m_rowRects)
         {
-            util::appendLineVerts(rect, m_rowVerts, sf::Color(100, 100, 100, 127));
+            util::appendLineVerts(rect, m_rowLineVerts, sf::Color(100, 100, 100, 127));
         }
+
+        for (std::size_t i = 0; i < m_rowRects.size(); ++i)
+        {
+            std::string rowString;
+            if (i < m_items.size())
+            {
+                rowString = m_items[i].name();
+            }
+
+            m_rowTexts[i].setString(rowString);
+        }
+
+        m_selectionRectangle.setPosition(util::position(m_rowRects[m_selectIndex]));
     }
 
 } // namespace castlecrawl

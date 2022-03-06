@@ -26,8 +26,8 @@ namespace castlecrawl
     StateInventory::StateInventory(Context & context)
         : StatePlay(context)
         , m_statsRegion()
-        , m_unListbox()
-        , m_eqListbox()
+        , m_unListbox(context.player.inventory().unItems())
+        , m_eqListbox(context.player.inventory().eqItems())
         , m_bgFadeVerts()
         , m_bgBorderVerts()
         , m_healthBar()
@@ -169,6 +169,9 @@ namespace castlecrawl
                 m_eqListbox.setFocus(true);
             }
         }
+
+        m_unListbox.handleEvent(event);
+        m_eqListbox.handleEvent(event);
 
         if (sf::Event::KeyPressed != event.type)
         {

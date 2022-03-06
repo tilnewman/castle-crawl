@@ -3,6 +3,7 @@
 //
 // gui-listbox.hpp
 //
+#include "item.hpp"
 #include "media.hpp"
 
 #include <SFML/Graphics/Drawable.hpp>
@@ -23,7 +24,7 @@ namespace castlecrawl
     class Listbox : public sf::Drawable
     {
       public:
-        Listbox();
+        Listbox(item::ItemVec_t & items);
 
         void setupSize(
             const Context & context,
@@ -42,14 +43,16 @@ namespace castlecrawl
         void redraw();
 
       private:
-      private:
+        item::ItemVec_t & m_items;
         bool m_hasFocus;
         const sf::Color m_highlightColor;
         sf::RectangleShape m_bgRectangle;
         std::size_t m_displayIndex;
         std::size_t m_selectIndex;
         std::vector<sf::FloatRect> m_rowRects;
-        std::vector<sf::Vertex> m_rowVerts;
+        std::vector<sf::Vertex> m_rowLineVerts;
+        std::vector<sf::Text> m_rowTexts;
+        sf::RectangleShape m_selectionRectangle;
     };
 
 } // namespace castlecrawl

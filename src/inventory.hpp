@@ -24,8 +24,8 @@ namespace castlecrawl
             const std::string equip(const std::size_t index);
             void unequip(const std::size_t index);
 
-            const ItemVec_t items() const { return m_items; }
-            const ItemVec_t eqItems() const { return m_eqItems; }
+            ItemVec_t & unItems() { return m_items; }
+            ItemVec_t & eqItems() { return m_eqItems; }
 
             const EquipEffect totalEquipEffects() const;
 
