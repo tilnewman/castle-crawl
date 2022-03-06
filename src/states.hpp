@@ -23,6 +23,7 @@ namespace castlecrawl
     enum class State : std::size_t
     {
         Init = 0,
+        Load,
         Splash,
         Play,
         Pause,
@@ -39,6 +40,7 @@ namespace castlecrawl
         switch (state)
         {
             case State::Init: return "Init";
+            case State::Load: return "Load";
             case State::Splash: return "Splash";
             case State::Popup: return "Popup";
             case State::Play: return "Play";
@@ -110,6 +112,16 @@ namespace castlecrawl
         StateInit()
             : StateBase(State::Init)
         {}
+    };
+
+    class StateLoad : public StateBase
+    {
+      public:
+        StateLoad()
+            : StateBase(State::Load)
+        {}
+
+        void onEnter(Context & context) override;
     };
 
     class StateQuit : public StateBase

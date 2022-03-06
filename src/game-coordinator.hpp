@@ -33,7 +33,7 @@ namespace castlecrawl
         void run(const GameConfig & config);
 
       protected:
-        void setup(const GameConfig & config);
+        void configureAndOpenWindow(const GameConfig & config);
         void handleEvents();
         void update(const float elapsedTimeSec);
         void draw();

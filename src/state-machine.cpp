@@ -49,12 +49,13 @@ namespace castlecrawl
         switch (state)
         {
             // clang-format off
-            case State::Init:     { return std::make_unique<StateInit>();         }
-            case State::Splash:   { return std::make_unique<StateSplash>();       }
-            case State::Play:     { return std::make_unique<StatePlay>(context);  }
-            case State::Pause:    { return std::make_unique<StatePause>(context); }
-            case State::Popup:    { return std::make_unique<StatePopup>(context); }
-            case State::Quit:     { return std::make_unique<StateQuit>(context);  }
+            case State::Init:     { return std::make_unique<StateInit>();             }
+            case State::Load:     { return std::make_unique<StateLoad>();             }
+            case State::Splash:   { return std::make_unique<StateSplash>();           }
+            case State::Play:     { return std::make_unique<StatePlay>(context);      }
+            case State::Pause:    { return std::make_unique<StatePause>(context);     }
+            case State::Popup:    { return std::make_unique<StatePopup>(context);     }
+            case State::Quit:     { return std::make_unique<StateQuit>(context);      }
             case State::Direction:{ return std::make_unique<StateDirection>(context); }
             case State::Inventory:{ return std::make_unique<StateInventory>(context); }
             // clang-format on

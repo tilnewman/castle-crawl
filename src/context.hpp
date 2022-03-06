@@ -46,7 +46,7 @@ namespace castlecrawl
             const GameConfig & con,
             Layout & lay,
             Process & pro,
-            const Media & med,
+            Media & med,
             StateMachine & sta,
             PopupManager & pop,
             item::ItemFactory & ifa,
@@ -84,7 +84,7 @@ namespace castlecrawl
         const GameConfig & config;
         Layout & layout;
         Process & process;
-        const Media & media;
+        Media & media;
         StateMachine & state;
         PopupManager & popup;
         item::ItemFactory & items;

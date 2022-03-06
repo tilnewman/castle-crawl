@@ -44,13 +44,9 @@ namespace castlecrawl
               m_anim)
     {}
 
-    void GameCoordinator::setup(const GameConfig & configOrig)
+    void GameCoordinator::configureAndOpenWindow(const GameConfig & configOrig)
     {
-        // Note that m_context is not safe to use until this function completes
-
         m_config = configOrig;
-
-        m_game.reset();
 
         m_window.create(m_config.video_mode, "Castle Crawl", sf::Style::Fullscreen);
 
@@ -59,37 +55,21 @@ namespace castlecrawl
             "Error:  Failed to create() the fullscreen graphics window at "
                 << m_config.video_mode.width << 'x' << m_config.video_mode.height);
 
+        m_window.setFramerateLimit(m_config.frame_rate_limit);
+        m_window.setKeyRepeatEnabled(false);
+
         m_config.setup(sf::VideoMode{
             m_window.getSize().x,
             m_window.getSize().y,
             m_window.getSettings().depthBits,
         });
-
-        m_window.setFramerateLimit(m_config.frame_rate_limit);
-        m_window.setKeyRepeatEnabled(false);
-
-        m_layout.calcWindowValues(m_config);
-
-        m_audio.setMediaPath((m_config.media_dir_path / "sfx").string());
-        m_audio.volume(75.0f);
-
-        m_music.setup(m_config.media_dir_path / "music");
-        m_music.start("music.ogg", 18.0f);
-
-        m_anim.setMediaPath((m_config.media_dir_path / "anim").string());
-
-        m_media.load(m_config, m_layout, m_audio);
-
-        m_maps.loadAll(m_random);
-
-        m_states.setChangePending(State::Splash);
-
-        m_maps.switchTo(m_context, { { 0, 0 }, "level-1-first-room", { 5, 3 } });
     }
 
     void GameCoordinator::run(const GameConfig & configOrig)
     {
-        setup(configOrig);
+        configureAndOpenWindow(configOrig);
+
+        m_context.state.setChangePending(State::Load);
 
         sf::Clock frameClock;
         while (m_window.isOpen() && !m_game.isGameOver())
