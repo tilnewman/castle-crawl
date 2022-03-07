@@ -118,7 +118,8 @@ namespace castlecrawl
 
     bool Listbox::selectNext()
     {
-        if ((m_selectIndex < (m_items.size() - 1_st)) && (m_selectIndex < (m_rowRects.size() - 1)))
+        if (!m_items.empty() && (m_selectIndex < (m_items.size() - 1_st)) &&
+            (m_selectIndex < (m_rowRects.size() - 1)))
         {
             ++m_selectIndex;
             redraw();
@@ -132,7 +133,7 @@ namespace castlecrawl
 
     bool Listbox::selectPrev()
     {
-        if (m_selectIndex > 0)
+        if (!m_items.empty() && (m_selectIndex > 0))
         {
             --m_selectIndex;
             redraw();

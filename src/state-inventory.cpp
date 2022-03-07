@@ -122,7 +122,7 @@ namespace castlecrawl
         util::appendQuadVerts(m_statsRegion, m_bgFadeVerts, backgroundColor);
         util::appendLineVerts(m_statsRegion, m_bgBorderVerts, borderColor);
 
-        // stats text (use any text that is long enough to get measurements from)
+        // stats text (use any text of correct length to get measurements from)
         m_statTextStr = context.media.makeText(statFontSizeEnum, "Accuracy:        ");
         m_statTextAcc = context.media.makeText(statFontSizeEnum, "Accuracy:        ");
         m_statTextDex = context.media.makeText(statFontSizeEnum, "Accuracy:        ");
@@ -177,11 +177,13 @@ namespace castlecrawl
             {
                 m_unListbox.setFocus(true);
                 m_eqListbox.setFocus(false);
+                context.audio.play("tick-on-2.ogg");
             }
             else if (m_eqListbox.getGlobalBounds().contains(mousePos))
             {
                 m_unListbox.setFocus(false);
                 m_eqListbox.setFocus(true);
+                context.audio.play("tick-on-2.ogg");
             }
         }
 
@@ -198,11 +200,13 @@ namespace castlecrawl
         {
             m_unListbox.setFocus(true);
             m_eqListbox.setFocus(false);
+            context.audio.play("tick-on-2.ogg");
         }
         else if (sf::Keyboard::Right == event.key.code)
         {
             m_unListbox.setFocus(false);
             m_eqListbox.setFocus(true);
+            context.audio.play("tick-on-2.ogg");
         }
         else if (sf::Keyboard::Up == event.key.code)
         {
@@ -210,14 +214,14 @@ namespace castlecrawl
             {
                 if (m_unListbox.selectPrev())
                 {
-                    context.audio.play("tick-off-1");
+                    context.audio.play("tick-off-1.ogg");
                 }
             }
             else
             {
                 if (m_eqListbox.selectPrev())
                 {
-                    context.audio.play("tick-off-1");
+                    context.audio.play("tick-off-1.ogg");
                 }
             }
         }
@@ -227,14 +231,14 @@ namespace castlecrawl
             {
                 if (m_unListbox.selectNext())
                 {
-                    context.audio.play("tick-off-1");
+                    context.audio.play("tick-off-1.ogg");
                 }
             }
             else
             {
                 if (m_eqListbox.selectNext())
                 {
-                    context.audio.play("tick-off-1");
+                    context.audio.play("tick-off-1.ogg");
                 }
             }
         }
@@ -247,13 +251,13 @@ namespace castlecrawl
 
                 if (rejectReason.empty())
                 {
-                    context.audio.play("thud-1", 1.25f);
+                    context.audio.play("thud-1.ogg", 1.25f);
                     m_unListbox.redraw();
                     m_eqListbox.redraw();
                 }
                 else
                 {
-                    context.audio.play("drum-double");
+                    context.audio.play("drum-double.ogg");
                     context.popup.setup(context, rejectReason);
                     context.state.setChangePending(State::Popup, State::Inventory);
                 }
@@ -263,10 +267,19 @@ namespace castlecrawl
         {
             if (m_eqListbox.hasFocus() && !m_eqListbox.empty())
             {
-                context.audio.play("thud-1", 0.75f);
+                context.audio.play("thud-1.ogg", 0.75f);
                 context.player.inventory().unequip(m_eqListbox.selectedIndex());
                 m_unListbox.redraw();
                 m_eqListbox.redraw();
+            }
+        }
+        else if (sf::Keyboard::D == event.key.code)
+        {
+            if (m_unListbox.hasFocus() && !m_unListbox.empty())
+            {
+                context.player.inventory().remove(m_unListbox.selectedIndex());
+                context.audio.play("drop.ogg");
+                m_unListbox.redraw();
             }
         }
     }
