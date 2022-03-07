@@ -24,7 +24,7 @@ namespace castlecrawl
     void StatePause::onEnter(Context & context)
     {
         context.music.pauseAll();
-        context.audio.play("pause");
+        context.audio.play("pause.ogg");
 
         // setup fade out the background and draw a center bar
         m_bgFadeVerts.clear();
@@ -61,7 +61,7 @@ namespace castlecrawl
     {
         if ((sf::Event::KeyPressed == event.type) || (sf::Event::MouseButtonPressed == event.type))
         {
-            context.audio.play("pause");
+            context.audio.play("pause.ogg");
             context.state.setChangePendingToFallback();
             return;
         }

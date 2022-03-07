@@ -15,6 +15,7 @@
 #include "music-player.hpp"
 #include "settings.hpp"
 #include "sound-player.hpp"
+#include "tile-image.hpp"
 
 #include <SFML/Window/Event.hpp>
 
@@ -22,7 +23,7 @@ namespace castlecrawl
 {
     void PlayerPiece::reset(Context & context, const MapPos_t & pos)
     {
-        PieceBase::reset(context, pos, 'p', false);
+        PieceBase::reset(context, pos, tileImageChar(TileImage::Player), false);
     }
 
     void PlayerPiece::handleEvent(Context & context, const sf::Event & event)
@@ -58,7 +59,8 @@ namespace castlecrawl
             {
                 const char currentChar = context.maps.get().getChar(position());
 
-                if ((currentChar == 'S') || (currentChar == 's'))
+                if ((currentChar == tileImageChar(TileImage::StairUp)) ||
+                    (currentChar == tileImageChar(TileImage::StairDown)))
                 {
                     context.audio.play("stairs.ogg");
                 }
@@ -71,14 +73,16 @@ namespace castlecrawl
         const char newChar = context.maps.get().getChar(newPos);
 
         // wall bump cases
-        if ((newChar != ' ') && (newChar != 'D') && (newChar != 'd') && (newChar != 'S') &&
-            (newChar != 's'))
+        if ((newChar != ' ') && (newChar != tileImageChar(TileImage::DoorLocked)) &&
+            (newChar != tileImageChar(TileImage::Door)) &&
+            (newChar != tileImageChar(TileImage::StairUp)) &&
+            (newChar != tileImageChar(TileImage::StairDown)))
         {
-            if (newChar == 'l')
+            if (newChar == tileImageChar(TileImage::Lava))
             {
                 context.audio.play("burn.ogg");
             }
-            else if (newChar == 'w')
+            else if (newChar == tileImageChar(TileImage::Water))
             {
                 context.audio.play("splash.ogg");
             }

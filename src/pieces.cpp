@@ -36,7 +36,7 @@ namespace castlecrawl
     {
         m_mapChar = mapChar;
         m_isObstacle = isObstacle;
-        m_sprite = context.media.sprite(mapCharToTileImage(mapChar));
+        m_sprite = context.media.sprite(tileImage(mapChar));
         m_position = pos;
         m_sprite.setPosition(util::position(context.layout.cellBounds(pos)));
     }

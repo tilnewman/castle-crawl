@@ -37,6 +37,7 @@ namespace castlecrawl
         Player,
         Barrel,
         Door,
+        DoorLocked,
         Coffin,
         Chest,
         StairUp,
@@ -52,7 +53,56 @@ namespace castlecrawl
         Count
     };
 
-    inline constexpr TileImage mapCharToTileImage(const char mapChar) noexcept
+    inline constexpr char tileImageChar(const TileImage tileImage) noexcept
+    {
+        // clang-format off
+        switch (tileImage)
+        {
+            case TileImage::Wood1:          { return '0'; }
+            case TileImage::Wood2:          { return '1'; }
+            case TileImage::Wood3:          { return '2'; }
+            case TileImage::Wood4:          { return '3'; }
+            case TileImage::Wood5:          { return '4'; }
+            case TileImage::Wood6:          { return '5'; }
+            case TileImage::Stone1:         { return '6'; }
+            case TileImage::Stone2:         { return '7'; }
+            case TileImage::Stone3:         { return '8'; }
+            case TileImage::Stone4:         { return '9'; }
+            case TileImage::Stone5:         { return ':'; }
+            case TileImage::Stone6:         { return ';'; }
+            case TileImage::Lava:           { return 'l'; }
+            case TileImage::Water:          { return 'w'; }
+            case TileImage::WallBlock:      { return 'B'; }
+            case TileImage::WallTopLeft:    { return 'C'; }
+            case TileImage::WallTop:        { return 'T'; }
+            case TileImage::WallHoriz:      { return '-'; }
+            case TileImage::WallVert:       { return '|'; }
+            case TileImage::Barrel:         { return 'b'; }
+            case TileImage::Door:           { return 'd'; }
+            case TileImage::DoorLocked:     { return 'D'; }
+            case TileImage::Coffin:         { return 'k'; }
+            case TileImage::Chest:          { return 'c'; }
+            case TileImage::StairUp:        { return 'S'; }
+            case TileImage::StairDown:      { return 's'; }
+            case TileImage::Player:         { return 'p'; }
+            case TileImage::Empty:          { return ' '; }
+            case TileImage::WallHorizShadow:
+            case TileImage::Black:
+            case TileImage::StoneTopLft:
+            case TileImage::StoneTop:
+            case TileImage::StoneTopRgt:
+            case TileImage::StoneLft:
+            case TileImage::StoneRgt:
+            case TileImage::StoneBotLft:
+            case TileImage::StoneBot:
+            case TileImage::StoneBotRgt:
+            case TileImage::Count:
+            default:                        { return '.'; }
+        }
+        // clang-format on
+    }
+
+    inline constexpr TileImage tileImage(const char mapChar) noexcept
     {
         switch (mapChar)
         {
@@ -60,11 +110,10 @@ namespace castlecrawl
             case 'C': return TileImage::WallTopLeft;
             case 'T': return TileImage::WallTop;
             case '-': return TileImage::WallHoriz;
-            // skip shadow
             case '|': return TileImage::WallVert;
             case 'p': return TileImage::Player;
             case 'b': return TileImage::Barrel;
-            case 'D': return TileImage::Door; // door can be upper or lower case
+            case 'D': return TileImage::DoorLocked;
             case 'd': return TileImage::Door;
             case 'k': return TileImage::Coffin;
             case 'c': return TileImage::Chest;
@@ -102,6 +151,7 @@ namespace castlecrawl
             case TileImage::Player:          return sf::IntRect( 96,32,32,32);
             case TileImage::Barrel:          return sf::IntRect( 96, 0,32,32);
             case TileImage::Door:            return sf::IntRect( 96,96,32,32);
+            case TileImage::DoorLocked:      return sf::IntRect( 96,96,32,32);
             case TileImage::Chest:           return sf::IntRect( 96,64,32,32);
             case TileImage::Coffin:          return sf::IntRect(160,64,32,32);
             case TileImage::StairUp:         return sf::IntRect(128, 0,32,32);
