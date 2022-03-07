@@ -50,7 +50,8 @@ namespace castlecrawl
 
         context.maps.switchTo(context, { { 0, 0 }, "level-1-first-room", { 5, 3 } });
 
-        std::cout << "Load time: " << clock.getElapsedTime().asMilliseconds() << "ms" << std::endl;
+        const int loadTimeMs = clock.getElapsedTime().asMilliseconds();
+        std::cout << "Load time: " << loadTimeMs << "ms" << std::endl;
 
         context.state.setChangePending(State::Splash);
     }
