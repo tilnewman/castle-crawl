@@ -53,6 +53,8 @@ namespace castlecrawl
         m_rowTexts.clear();
         for (std::size_t i = 0; i < m_rowRects.size(); ++i)
         {
+            // The string "Tyjp" is used because the T char reaches high and the others reach low
+            // This makes the string typical in terms of height so that the setPosition() works.
             sf::Text & text = m_rowTexts.emplace_back(context.media.makeText(fontSize, "Tyjp"));
             text.setPosition(util::position(m_rowRects[i]));
         }
