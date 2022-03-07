@@ -15,10 +15,11 @@ namespace castlecrawl
     Listbox::Listbox(const item::ItemVec_t & items)
         : m_items(items)
         , m_hasFocus()
+        , m_rowCount(0)
         , m_highlightColor(20, 20, 20, 20)
         , m_bgRectangle()
         , m_displayIndex(0)
-        , m_selectIndex(0)
+        , m_offsetIndex(0)
         , m_rowRects()
         , m_rowLineVerts()
         , m_rowTexts()
@@ -31,6 +32,8 @@ namespace castlecrawl
         const std::size_t widthCharsMax,
         const std::size_t heightRows)
     {
+        m_rowCount = heightRows;
+
         const sf::Vector2f letterSize = context.media.fontExtent(fontSize).letter_size;
 
         m_bgRectangle.setSize({ (letterSize.x * static_cast<float>(widthCharsMax)),
@@ -48,15 +51,9 @@ namespace castlecrawl
         }
 
         m_rowTexts.clear();
-        for (std::size_t i = 0; i < heightRows; ++i)
+        for (std::size_t i = 0; i < m_rowRects.size(); ++i)
         {
-            std::string rowString;
-            if (i < m_items.size())
-            {
-                rowString = m_items[i].name();
-            }
-
-            sf::Text & text = m_rowTexts.emplace_back(context.media.makeText(fontSize, rowString));
+            sf::Text & text = m_rowTexts.emplace_back(context.media.makeText(fontSize, "Tyjp"));
             text.setPosition(util::position(m_rowRects[i]));
         }
 
@@ -108,48 +105,51 @@ namespace castlecrawl
         }
     }
 
-    void Listbox::handleEvent(const sf::Event &)
-    {
-        if (!m_hasFocus || m_items.empty())
-        {
-            return;
-        }
-    }
-
     bool Listbox::selectNext()
     {
-        if (!m_items.empty() && (m_selectIndex < (m_items.size() - 1_st)) &&
-            (m_selectIndex < (m_rowRects.size() - 1)))
-        {
-            ++m_selectIndex;
-            redraw();
-            return true;
-        }
-        else
+        if (m_items.empty() || (selectedIndex() >= (m_items.size() - 1_st)))
         {
             return false;
         }
+
+        if (m_offsetIndex < (m_rowCount - 1_st))
+        {
+            ++m_offsetIndex;
+        }
+        else
+        {
+            ++m_displayIndex;
+        }
+
+        redraw();
+        return true;
     }
 
     bool Listbox::selectPrev()
     {
-        if (!m_items.empty() && (m_selectIndex > 0))
-        {
-            --m_selectIndex;
-            redraw();
-            return true;
-        }
-        else
+        if (m_items.empty() || (0 == selectedIndex()))
         {
             return false;
         }
+
+        if (m_offsetIndex > 0)
+        {
+            --m_offsetIndex;
+        }
+        else
+        {
+            --m_displayIndex;
+        }
+
+        redraw();
+        return true;
     }
 
     void Listbox::redraw()
     {
         if (m_items.empty())
         {
-            m_selectIndex = 0;
+            m_offsetIndex = 0;
             m_displayIndex = 0;
         }
 
@@ -175,18 +175,20 @@ namespace castlecrawl
             util::appendLineVerts(rect, m_rowLineVerts, sf::Color(100, 100, 100, 127));
         }
 
-        for (std::size_t i = 0; i < m_rowRects.size(); ++i)
+        for (std::size_t offset = 0; offset < m_rowTexts.size(); ++offset)
         {
             std::string rowString;
-            if (i < m_items.size())
+
+            const std::size_t itemIndex{ m_displayIndex + offset };
+            if (itemIndex < m_items.size())
             {
-                rowString = m_items[i].name();
+                rowString = m_items[itemIndex].name();
             }
 
-            m_rowTexts[i].setString(rowString);
+            m_rowTexts[offset].setString(rowString);
         }
 
-        m_selectionRectangle.setPosition(util::position(m_rowRects[selectedIndex()]));
+        m_selectionRectangle.setPosition(util::position(m_rowRects[m_offsetIndex]));
     }
 
 } // namespace castlecrawl

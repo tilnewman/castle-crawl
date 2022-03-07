@@ -14,7 +14,6 @@
 namespace sf
 {
     class RenderTarget;
-    class Event;
 } // namespace sf
 
 namespace castlecrawl
@@ -37,13 +36,12 @@ namespace castlecrawl
         bool hasFocus() const { return m_hasFocus; }
         void setFocus(const bool hasFocus);
 
-        std::size_t selectedIndex() const { return (m_displayIndex + m_selectIndex); }
+        std::size_t selectedIndex() const { return (m_displayIndex + m_offsetIndex); }
 
         const sf::FloatRect getGlobalBounds() const { return m_bgRectangle.getGlobalBounds(); }
 
         void setPosition(const sf::Vector2f & pos);
 
-        void handleEvent(const sf::Event & event);
         void draw(sf::RenderTarget & target, sf::RenderStates states) const override;
 
         bool selectNext();
@@ -54,10 +52,11 @@ namespace castlecrawl
       private:
         const item::ItemVec_t & m_items;
         bool m_hasFocus;
+        std::size_t m_rowCount;
         const sf::Color m_highlightColor;
         sf::RectangleShape m_bgRectangle;
         std::size_t m_displayIndex;
-        std::size_t m_selectIndex;
+        std::size_t m_offsetIndex;
         std::vector<sf::FloatRect> m_rowRects;
         std::vector<sf::Vertex> m_rowLineVerts;
         std::vector<sf::Text> m_rowTexts;
