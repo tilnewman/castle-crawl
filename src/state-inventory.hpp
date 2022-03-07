@@ -52,6 +52,7 @@ namespace castlecrawl
         sf::Text m_statTextArc;
         sf::Text m_statTextMisc;
         sf::Text m_descText;
+        sf::Text m_weaponText;
     };
 
 } // namespace castlecrawl

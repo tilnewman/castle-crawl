@@ -5,6 +5,7 @@
 //
 #include "item.hpp"
 
+#include <optional>
 #include <vector>
 
 namespace castlecrawl
@@ -29,12 +30,13 @@ namespace castlecrawl
 
             const EquipEffect totalEquipEffects() const;
             int armorRating() const;
+            bool hasWeaponEquipped() const;
+            const std::optional<Item> weaponEquipped() const;
 
             friend void to_json(json & j, const Inventory & i);
             friend void from_json(const json & j, Inventory & i);
 
           private:
-            bool hasWeaponEquipped() const;
             bool hasEquipped(const Armor armor) const;
             std::size_t countOfEquipped(const Misc misc) const;
 

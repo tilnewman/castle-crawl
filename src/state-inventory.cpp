@@ -39,6 +39,7 @@ namespace castlecrawl
         , m_statTextArc()
         , m_statTextMisc()
         , m_descText()
+        , m_weaponText()
     {}
 
     void StateInventory::update(Context & context, const float)
@@ -67,15 +68,33 @@ namespace castlecrawl
             "/" + std::to_string(context.player.arcane().normal()));
 
         std::string miscStr;
-        miscStr.reserve(50);
+        miscStr.reserve(100);
         miscStr += "Level: ";
         miscStr += std::to_string(context.player.level().current());
         miscStr += "\t\tArmor Rating: ";
         miscStr += std::to_string(context.player.inventory().armorRating());
         miscStr += "\t\tGold: ";
         miscStr += std::to_string(context.player.gold());
-
         m_statTextMisc.setString(miscStr);
+
+        miscStr.clear();
+        miscStr += "Weapon \'";
+        const auto weaponOpt = context.player.inventory().weaponEquipped();
+        if (weaponOpt.has_value())
+        {
+            const item::Item & weapon = weaponOpt.value();
+            miscStr += weapon.name();
+            miscStr += "\' does ";
+            miscStr += std::to_string(weapon.damageMin());
+            miscStr += '-';
+            miscStr += std::to_string(weapon.damageMax());
+            miscStr += " damage.";
+        }
+        else
+        {
+            miscStr += "Fists\' does 1-2 damage.";
+        }
+        m_weaponText.setString(miscStr);
     }
 
     void StateInventory::onEnter(Context & context)
@@ -148,7 +167,7 @@ namespace castlecrawl
 
         const sf::Vector2f healthBarPos{ ((util::right(m_statsRegion) - statBarWidth) -
                                           (m_statsRegion.width * 0.1f)),
-                                         (m_statsRegion.top + (m_statsRegion.height * 0.2f)) };
+                                         (m_statsRegion.top + (m_statsRegion.height * 0.1f)) };
 
         m_healthBar.setup(healthBarPos, barSize, barLineThickness, sf::Color(235, 50, 50));
 
@@ -159,12 +178,17 @@ namespace castlecrawl
         m_manaBar.setup(manaBarPos, barSize, barLineThickness, sf::Color(60, 145, 240));
 
         // misc stats (level, armor rating, gold, etc)
-        m_statTextMisc = context.media.makeText(FontSize::Medium, "");
+        m_statTextMisc = context.media.makeText(FontSize::Medium, "Ty");
 
-        m_statTextMisc.setPosition(
-            manaBarPos.x, util::bottom(m_manaBar.getGlobalBounds()) + (windowSize.y * 0.01f));
+        m_statTextMisc.setPosition(manaBarPos.x, util::bottom(m_manaBar) + (windowSize.y * 0.015f));
 
-        // set initial focuses
+        // weapon text
+        m_weaponText = context.media.makeText(FontSize::Medium, "");
+
+        m_weaponText.setPosition(
+            m_statTextMisc.getPosition().x, util::bottom(m_statTextMisc) + (windowSize.y * 0.005f));
+
+        // set initial focus
         m_unListbox.setFocus(true);
         m_eqListbox.setFocus(false);
 
@@ -340,6 +364,7 @@ namespace castlecrawl
         target.draw(m_statTextLck, states);
         target.draw(m_statTextArc, states);
         target.draw(m_statTextMisc, states);
+        target.draw(m_weaponText, states);
 
         target.draw(m_unListbox);
         target.draw(m_eqListbox);

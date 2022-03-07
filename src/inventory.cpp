@@ -124,6 +124,19 @@ namespace castlecrawl
             return false;
         }
 
+        const std::optional<Item> Inventory::weaponEquipped() const
+        {
+            for (const Item & item : m_eqItems)
+            {
+                if (item.isWeapon())
+                {
+                    return item;
+                }
+            }
+
+            return std::nullopt;
+        }
+
         bool Inventory::hasEquipped(const Armor armor) const
         {
             for (const Item & item : m_eqItems)
