@@ -48,13 +48,13 @@ namespace castlecrawl
 
             const char fightChar = context.maps.get().getChar(fightPos);
 
-            if (fightChar == ' ')
+            if (fightChar == tileImageChar(TileImage::Empty))
             {
                 context.audio.play("miss.ogg");
             }
-            else if (fightChar == 'b')
+            else if (fightChar == tileImageChar(TileImage::Barrel))
             {
-                context.audio.play("barrel-break");
+                context.audio.play("barrel-break.ogg");
 
                 context.maps.get().setChar(fightPos, ' ');
                 context.maps.reloadAfterChange(context);

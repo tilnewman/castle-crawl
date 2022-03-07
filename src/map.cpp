@@ -278,7 +278,7 @@ namespace castlecrawl
             char prevMapChar(0);
             for (const char mapChar : mapLine)
             {
-                tileSprite = context.media.sprite(mapCharToTileImage(mapChar));
+                tileSprite = context.media.sprite(tileImage(mapChar));
                 tileSprite.setPosition(pos);
 
                 util::appendQuadVerts(
