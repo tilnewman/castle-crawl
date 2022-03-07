@@ -24,7 +24,7 @@ namespace castlecrawl
     class Listbox : public sf::Drawable
     {
       public:
-        Listbox(item::ItemVec_t & items);
+        Listbox(const item::ItemVec_t & items);
 
         void setupSize(
             const Context & context,
@@ -52,7 +52,7 @@ namespace castlecrawl
         void redraw();
 
       private:
-        item::ItemVec_t & m_items;
+        const item::ItemVec_t & m_items;
         bool m_hasFocus;
         const sf::Color m_highlightColor;
         sf::RectangleShape m_bgRectangle;

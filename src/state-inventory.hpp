@@ -35,6 +35,9 @@ namespace castlecrawl
         void draw(const Context &, sf::RenderTarget &, sf::RenderStates) const override;
 
       private:
+        void setupItemDescriptionText(Context & context);
+
+      private:
         sf::FloatRect m_statsRegion;
         Listbox m_unListbox;
         Listbox m_eqListbox;
@@ -48,6 +51,7 @@ namespace castlecrawl
         sf::Text m_statTextLck;
         sf::Text m_statTextArc;
         sf::Text m_statTextMisc;
+        sf::Text m_descText;
     };
 
 } // namespace castlecrawl

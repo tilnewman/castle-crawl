@@ -12,7 +12,7 @@
 
 namespace castlecrawl
 {
-    Listbox::Listbox(item::ItemVec_t & items)
+    Listbox::Listbox(const item::ItemVec_t & items)
         : m_items(items)
         , m_hasFocus()
         , m_highlightColor(20, 20, 20, 20)
@@ -147,6 +147,17 @@ namespace castlecrawl
 
     void Listbox::redraw()
     {
+        if (m_items.empty())
+        {
+            m_selectIndex = 0;
+            m_displayIndex = 0;
+        }
+
+        while (!m_items.empty() && (selectedIndex() >= m_items.size()))
+        {
+            selectPrev();
+        }
+
         m_bgRectangle.setOutlineThickness(1.0f);
 
         m_bgRectangle.setFillColor(sf::Color(40, 40, 40, 127));
@@ -175,7 +186,7 @@ namespace castlecrawl
             m_rowTexts[i].setString(rowString);
         }
 
-        m_selectionRectangle.setPosition(util::position(m_rowRects[m_selectIndex]));
+        m_selectionRectangle.setPosition(util::position(m_rowRects[selectedIndex()]));
     }
 
 } // namespace castlecrawl

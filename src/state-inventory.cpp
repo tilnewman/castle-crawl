@@ -38,6 +38,7 @@ namespace castlecrawl
         , m_statTextLck()
         , m_statTextArc()
         , m_statTextMisc()
+        , m_descText()
     {}
 
     void StateInventory::update(Context & context, const float)
@@ -166,6 +167,9 @@ namespace castlecrawl
         // set initial focuses
         m_unListbox.setFocus(true);
         m_eqListbox.setFocus(false);
+
+        // item descrption text
+        setupItemDescriptionText(context);
     }
 
     void StateInventory::handleEvent(Context & context, const sf::Event & event)
@@ -178,12 +182,14 @@ namespace castlecrawl
                 m_unListbox.setFocus(true);
                 m_eqListbox.setFocus(false);
                 context.audio.play("tick-on-2.ogg");
+                setupItemDescriptionText(context);
             }
             else if (m_eqListbox.getGlobalBounds().contains(mousePos))
             {
                 m_unListbox.setFocus(false);
                 m_eqListbox.setFocus(true);
                 context.audio.play("tick-on-2.ogg");
+                setupItemDescriptionText(context);
             }
         }
 
@@ -201,12 +207,14 @@ namespace castlecrawl
             m_unListbox.setFocus(true);
             m_eqListbox.setFocus(false);
             context.audio.play("tick-on-2.ogg");
+            setupItemDescriptionText(context);
         }
         else if (sf::Keyboard::Right == event.key.code)
         {
             m_unListbox.setFocus(false);
             m_eqListbox.setFocus(true);
             context.audio.play("tick-on-2.ogg");
+            setupItemDescriptionText(context);
         }
         else if (sf::Keyboard::Up == event.key.code)
         {
@@ -215,6 +223,7 @@ namespace castlecrawl
                 if (m_unListbox.selectPrev())
                 {
                     context.audio.play("tick-off-1.ogg");
+                    setupItemDescriptionText(context);
                 }
             }
             else
@@ -222,6 +231,7 @@ namespace castlecrawl
                 if (m_eqListbox.selectPrev())
                 {
                     context.audio.play("tick-off-1.ogg");
+                    setupItemDescriptionText(context);
                 }
             }
         }
@@ -232,6 +242,7 @@ namespace castlecrawl
                 if (m_unListbox.selectNext())
                 {
                     context.audio.play("tick-off-1.ogg");
+                    setupItemDescriptionText(context);
                 }
             }
             else
@@ -239,6 +250,7 @@ namespace castlecrawl
                 if (m_eqListbox.selectNext())
                 {
                     context.audio.play("tick-off-1.ogg");
+                    setupItemDescriptionText(context);
                 }
             }
         }
@@ -261,6 +273,8 @@ namespace castlecrawl
                     context.popup.setup(context, rejectReason);
                     context.state.setChangePending(State::Popup, State::Inventory);
                 }
+
+                setupItemDescriptionText(context);
             }
         }
         else if (sf::Keyboard::U == event.key.code)
@@ -271,6 +285,7 @@ namespace castlecrawl
                 context.player.inventory().unequip(m_eqListbox.selectedIndex());
                 m_unListbox.redraw();
                 m_eqListbox.redraw();
+                setupItemDescriptionText(context);
             }
         }
         else if (sf::Keyboard::D == event.key.code)
@@ -280,8 +295,32 @@ namespace castlecrawl
                 context.player.inventory().remove(m_unListbox.selectedIndex());
                 context.audio.play("drop.ogg");
                 m_unListbox.redraw();
+                setupItemDescriptionText(context);
             }
         }
+    }
+
+    void StateInventory::setupItemDescriptionText(Context & context)
+    {
+        item::Inventory & inventory = context.player.inventory();
+        std::string desc;
+
+        if (m_unListbox.hasFocus() && !m_unListbox.empty())
+        {
+            desc = inventory.unItems().at(m_unListbox.selectedIndex()).description();
+        }
+        else if (m_eqListbox.hasFocus() && !m_eqListbox.empty())
+        {
+            desc = inventory.eqItems().at(m_eqListbox.selectedIndex()).description();
+        }
+
+        m_descText = context.media.makeText(FontSize::Small, desc);
+
+        const float vertPad{ context.layout.windowSize().y * 0.01f };
+
+        m_descText.setPosition(
+            ((context.layout.windowSize().x * 0.5f) - (m_descText.getGlobalBounds().width * 0.5f)),
+            (util::bottom(m_unListbox) + vertPad));
     }
 
     void StateInventory::draw(
@@ -304,6 +343,8 @@ namespace castlecrawl
 
         target.draw(m_unListbox);
         target.draw(m_eqListbox);
+
+        target.draw(m_descText, states);
     }
 
 } // namespace castlecrawl
