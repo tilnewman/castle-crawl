@@ -55,7 +55,11 @@ namespace castlecrawl
         context.state.setChangePending(State::Splash);
     }
 
-    void StateQuit::onEnter(Context & context) { context.game.endGame(false); }
+    void StateQuit::onEnter(Context & context)
+    {
+        context.music.stopAll();
+        context.game.endGame(false);
+    }
 
     std::ostream & operator<<(std::ostream & os, const State state)
     {

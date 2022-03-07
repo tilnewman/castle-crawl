@@ -7,6 +7,7 @@
 
 #include "context.hpp"
 #include "media.hpp"
+#include "music-player.hpp"
 #include "settings.hpp"
 #include "sound-player.hpp"
 #include "state-machine.hpp"
@@ -22,6 +23,7 @@ namespace castlecrawl
 
     void StatePause::onEnter(Context & context)
     {
+        context.music.pauseAll();
         context.audio.play("pause");
 
         // setup fade out the background and draw a center bar
@@ -52,6 +54,8 @@ namespace castlecrawl
         util::setOriginToPosition(m_text);
         util::fitAndCenterInside(m_text, textRect);
     }
+
+    void StatePause::onExit(Context & context) { context.music.pauseAll(); }
 
     void StatePause::handleEvent(Context & context, const sf::Event & event)
     {

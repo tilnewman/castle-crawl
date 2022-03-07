@@ -26,6 +26,7 @@ namespace castlecrawl
         StatePause(Context & context);
 
         void onEnter(Context & context) override;
+        void onExit(Context & context) override;
         void handleEvent(Context &, const sf::Event &) override;
         void draw(const Context &, sf::RenderTarget &, sf::RenderStates) const override;
 

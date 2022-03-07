@@ -80,6 +80,41 @@ namespace util
         entryUPtr->music.play();
     }
 
+    void MusicPlayer::pause(const std::string & filename)
+    {
+        for (auto & entryUPtr : m_entrys)
+        {
+            if (entryUPtr->filename == filename)
+            {
+                if (entryUPtr->music.getStatus() == sf::SoundSource::Paused)
+                {
+                    entryUPtr->music.play();
+                }
+                else
+                {
+                    entryUPtr->music.pause();
+                }
+
+                return;
+            }
+        }
+    }
+
+    void MusicPlayer::pauseAll()
+    {
+        for (auto & entryUPtr : m_entrys)
+        {
+            if (entryUPtr->music.getStatus() == sf::SoundSource::Paused)
+            {
+                entryUPtr->music.play();
+            }
+            else
+            {
+                entryUPtr->music.pause();
+            }
+        }
+    }
+
     void MusicPlayer::stop(const std::string & filename)
     {
         for (auto & entryUPtr : m_entrys)

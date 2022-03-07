@@ -23,6 +23,10 @@ namespace util
         void reset();
 
         void start(const std::string & filename, const float volume = 100.0f);
+
+        void pause(const std::string & filename);
+        void pauseAll();
+
         void stop(const std::string & filename);
         void stopAll();
 
