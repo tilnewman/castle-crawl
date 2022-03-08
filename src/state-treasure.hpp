@@ -27,8 +27,10 @@ namespace castlecrawl
 
         void onEnter(Context & context) override;
         void onExit(Context & context) override;
+        void update(Context & context, const float frameTimeSec) override;
         void handleEvent(Context &, const sf::Event &) override;
         void draw(const Context &, sf::RenderTarget &, sf::RenderStates) const override;
+        void redraw(Context & context);
 
         static inline item::Treasure treasure = {};
 
@@ -38,6 +40,8 @@ namespace castlecrawl
         sf::Text m_goldText;
         std::vector<sf::Text> m_itemTexts;
         sf::RectangleShape m_bgRectangle;
+        sf::RectangleShape m_selectRectangle;
+        std::size_t m_selectIndex;
     };
 
 } // namespace castlecrawl

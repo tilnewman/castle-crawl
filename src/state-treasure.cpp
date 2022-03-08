@@ -23,6 +23,7 @@ namespace castlecrawl
         , m_goldText()
         , m_itemTexts()
         , m_bgRectangle()
+        , m_selectIndex(0)
     {}
 
     void StateTreasure::onEnter(Context & context)
@@ -84,6 +85,8 @@ namespace castlecrawl
             (util::bottom(m_titleText) + vertPad));
 
         // item texts
+        const FontExtent fontExtent = context.media.fontExtent(FontSize::Medium);
+        float textWidest{ 0.0f };
         float itemTextPosY{ util::bottom(m_goldText) + vertPad };
         for (const item::Item & item : treasure.items)
         {
@@ -94,16 +97,41 @@ namespace castlecrawl
                 ((context.layout.windowSize().x * 0.5f) - (text.getGlobalBounds().width * 0.5f)),
                 itemTextPosY);
 
-            itemTextPosY += context.media.fontExtent(FontSize::Medium).letter_size.y;
+            itemTextPosY += fontExtent.letter_size.y;
+
+            if (text.getGlobalBounds().width > textWidest)
+            {
+                textWidest = text.getGlobalBounds().width;
+            }
         }
 
+        // finish the cyan blusih bar
         const float bgRectangleHeight{ (itemTextPosY - m_bgRectangle.getGlobalBounds().top) +
                                        vertPad };
 
         m_bgRectangle.setSize(sf::Vector2f{ context.layout.windowSize().x, bgRectangleHeight });
+
+        // selection highlight rectangle
+        if (m_itemTexts.empty())
+        {
+            m_selectRectangle.setFillColor(sf::Color::Transparent);
+        }
+        else
+        {
+            m_selectRectangle.setFillColor(sf::Color(0, 0, 0, 100));
+            m_selectRectangle.setOutlineThickness(0.0f);
+            m_selectRectangle.setSize({ textWidest, fontExtent.letter_size.y });
+
+            m_selectRectangle.setPosition(
+                ((context.layout.windowSize().x * 0.5f) -
+                 (m_selectRectangle.getGlobalBounds().width * 0.5f)),
+                m_itemTexts[0].getGlobalBounds().top);
+        }
     }
 
     void StateTreasure::onExit(Context &) { treasure = {}; }
+
+    void StateTreasure::update(Context &, const float) {}
 
     void StateTreasure::handleEvent(Context & context, const sf::Event & event)
     {
@@ -117,6 +145,36 @@ namespace castlecrawl
             context.state.setChangePending(State::Play);
             return;
         }
+
+        if (sf::Keyboard::Enter == event.key.code)
+        {
+            if (m_itemTexts.empty())
+            {
+                context.state.setChangePending(State::Play);
+                return;
+            }
+            else
+            {
+                context.audio.play("thud-1.ogg", 1.25f);
+
+                const auto itemIter =
+                    (std::begin(treasure.items) + static_cast<std::ptrdiff_t>(m_selectIndex));
+
+                context.player.inventory().add(*itemIter);
+
+                treasure.items.erase(itemIter);
+
+                if (treasure.items.empty())
+                {
+                    context.state.setChangePending(State::Play);
+                    return;
+                }
+                else
+                {
+                    redraw(context);
+                }
+            }
+        }
     }
 
     void StateTreasure::draw(
@@ -128,11 +186,47 @@ namespace castlecrawl
         target.draw(m_bgRectangle, states);
         target.draw(m_titleText, states);
         target.draw(m_goldText, states);
+        target.draw(m_selectRectangle, states);
 
         for (const sf::Text & text : m_itemTexts)
         {
             target.draw(text, states);
         }
+    }
+
+    void StateTreasure::redraw(Context & context)
+    {
+        const float vertPad{ context.layout.windowSize().y * 0.015f };
+
+        m_itemTexts.clear();
+
+        if (treasure.items.empty())
+        {
+            return;
+        }
+
+        float itemTextPosY{ util::bottom(m_goldText) + vertPad };
+        for (const item::Item & item : treasure.items)
+        {
+            sf::Text & text =
+                m_itemTexts.emplace_back(context.media.makeText(FontSize::Medium, item.name()));
+
+            text.setPosition(
+                ((context.layout.windowSize().x * 0.5f) - (text.getGlobalBounds().width * 0.5f)),
+                itemTextPosY);
+
+            itemTextPosY += context.media.fontExtent(FontSize::Medium).letter_size.y;
+        }
+
+        if (m_selectIndex >= treasure.items.size())
+        {
+            m_selectIndex = (treasure.items.size() - 1_st);
+        }
+
+        m_selectRectangle.setPosition(
+            ((context.layout.windowSize().x * 0.5f) -
+             (m_selectRectangle.getGlobalBounds().width * 0.5f)),
+            m_itemTexts.at(m_selectIndex).getGlobalBounds().top);
     }
 
 } // namespace castlecrawl
