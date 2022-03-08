@@ -131,8 +131,6 @@ namespace castlecrawl
 
     void StateTreasure::onExit(Context &) { treasure = {}; }
 
-    void StateTreasure::update(Context &, const float) {}
-
     void StateTreasure::handleEvent(Context & context, const sf::Event & event)
     {
         if (sf::Event::KeyPressed != event.type)

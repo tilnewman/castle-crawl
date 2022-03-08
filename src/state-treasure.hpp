@@ -27,7 +27,6 @@ namespace castlecrawl
 
         void onEnter(Context & context) override;
         void onExit(Context & context) override;
-        void update(Context & context, const float frameTimeSec) override;
         void handleEvent(Context &, const sf::Event &) override;
         void draw(const Context &, sf::RenderTarget &, sf::RenderStates) const override;
         void redraw(Context & context);
