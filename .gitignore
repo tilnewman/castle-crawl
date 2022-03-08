@@ -52,4 +52,5 @@
 *.vcxproj.user
 *.cpt_backup
 *.clang-tidy
+*.csv
 src/.clang-tidy

@@ -33,6 +33,7 @@ namespace castlecrawl
         context.game.reset();
 
         context.items.processAll();
+        // context.items.printSummaries();
 
         context.layout.calcWindowValues(context.config);
 

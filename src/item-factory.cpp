@@ -11,6 +11,7 @@
 #include "random.hpp"
 
 #include <algorithm>
+#include <fstream>
 #include <iostream>
 #include <set>
 #include <vector>
@@ -530,13 +531,6 @@ namespace castlecrawl
         {
             const ItemVec_t items{ makeAll() };
 
-            std::cout << std::endl << "All Descriptions:" << std::endl;
-
-            for (const Item & item : items)
-            {
-                std::cout << '\t' << item.description() << '\n';
-            }
-
             std::cout << std::endl << "All Non-Magical:" << std::endl;
 
             for (const Item & item : items)
@@ -574,17 +568,52 @@ namespace castlecrawl
 
             std::cout << std::endl;
 
-            std::cout << items.size() << " total unique items" << std::endl << std::endl;
+            json j = items.back();
+            std::cout << "JSON:\n" << std::setw(4) << j << std::endl;
+
+            std::cout << std::endl;
+
+            std::cout << items.size() << " total items" << std::endl << std::endl;
 
             std::cout << "longest name=" << m_textExtent.longest_name << std::endl;
             std::cout << "longest desc=" << m_textExtent.longest_desc << std::endl;
 
             std::cout << std::endl;
 
-            json j = items.back();
-            std::cout << "JSON:\n" << std::setw(4) << j << std::endl;
+            // write out all items to a spreadsheet
+            {
+                std::ofstream fileStream("items.csv", std::ios_base::trunc);
 
-            std::cout << std::endl;
+                for (const Item & item : items)
+                {
+                    if (item.isArmor())
+                    {
+                        fileStream << "armor,";
+                    }
+                    else if (item.isWeapon())
+                    {
+                        fileStream << "weapon,";
+                    }
+                    else
+                    {
+                        fileStream << "misc,";
+                    }
+
+                    fileStream << std::to_string(item.value()) << ',';
+
+                    if (item.isMagical())
+                    {
+                        fileStream << "magic,";
+                    }
+                    else
+                    {
+                        fileStream << "non-magic,";
+                    }
+
+                    fileStream << item.name() << ',';
+                    fileStream << item.description() << "\n";
+                }
+            }
         }
 
         void ItemFactory::throwIfInvalid(const Item & item) const
