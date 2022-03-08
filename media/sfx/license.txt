@@ -13,7 +13,7 @@ License:       CC-BY 3.0
 Link:          creativecommons.org/licenses/by/3.0/
 
 
-File:	       footsteps-wood.ogg
+File:	       stairs.ogg
 By:            sinatra314
 Original Name: "footsteps-wooden-floor-loop"
 From:          footsteps-wood__freesound.org/people/sinatra314/sounds/58454
