@@ -26,7 +26,9 @@ namespace castlecrawl
             , m_damageMax(0)
             , m_useEffect()
             , m_equipEffect()
-        {}
+        {
+            m_value = calcValue();
+        }
 
         Item::Item(const Weapon weapon, const WeaponMaterial material)
             : m_value(0)
@@ -267,11 +269,11 @@ namespace castlecrawl
 
         int Item::calcValue() const
         {
-            int value = 1;
+            int value = 0;
 
-            value += (m_armorRating * 6);
-            value += (m_damageMin * 2);
-            value += (m_damageMax * 2);
+            value += ((m_armorRating * m_armorRating) * 5);
+            value += ((m_damageMin * m_damageMin) * 5);
+            value += ((m_damageMax * m_damageMax) * 5);
 
             if (isUseable())
             {
@@ -285,10 +287,10 @@ namespace castlecrawl
 
             value += miscMaterialValue(m_miscMaterial);
 
-            value += (m_equipEffect.total() ^ 2);
+            value += (m_equipEffect.total() * m_equipEffect.total());
             value += (m_equipEffect.total() * 100);
 
-            value += ((m_useEffect.total() / 2) ^ 2);
+            value += ((m_useEffect.total() / 2) * m_useEffect.total());
             value += (m_useEffect.total() * 25);
 
             return value;
