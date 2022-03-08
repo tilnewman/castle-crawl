@@ -58,18 +58,6 @@ namespace castlecrawl
         // clang-format off
         switch (tileImage)
         {
-            case TileImage::Wood1:          { return '0'; }
-            case TileImage::Wood2:          { return '1'; }
-            case TileImage::Wood3:          { return '2'; }
-            case TileImage::Wood4:          { return '3'; }
-            case TileImage::Wood5:          { return '4'; }
-            case TileImage::Wood6:          { return '5'; }
-            case TileImage::Stone1:         { return '6'; }
-            case TileImage::Stone2:         { return '7'; }
-            case TileImage::Stone3:         { return '8'; }
-            case TileImage::Stone4:         { return '9'; }
-            case TileImage::Stone5:         { return ':'; }
-            case TileImage::Stone6:         { return ';'; }
             case TileImage::Lava:           { return 'l'; }
             case TileImage::Water:          { return 'w'; }
             case TileImage::WallBlock:      { return 'B'; }
@@ -86,6 +74,18 @@ namespace castlecrawl
             case TileImage::StairDown:      { return 's'; }
             case TileImage::Player:         { return 'p'; }
             case TileImage::Empty:          { return ' '; }
+            case TileImage::Wood1:
+            case TileImage::Wood2:
+            case TileImage::Wood3:
+            case TileImage::Wood4:
+            case TileImage::Wood5:
+            case TileImage::Wood6:
+            case TileImage::Stone1:
+            case TileImage::Stone2:
+            case TileImage::Stone3:
+            case TileImage::Stone4:
+            case TileImage::Stone5:
+            case TileImage::Stone6:
             case TileImage::WallHorizShadow:
             case TileImage::Black:
             case TileImage::StoneTopLft:
