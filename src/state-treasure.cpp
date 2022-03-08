@@ -38,25 +38,39 @@ namespace castlecrawl
         m_bgRectangle.setOutlineThickness(2.0f);
         m_bgRectangle.setPosition(0.0f, (context.layout.windowSize().y * 0.2f));
 
+        std::string titleStr{ "Treasure!" };
+        if (treasure.empty())
+        {
+            titleStr.clear();
+        }
+
+        m_titleText = context.media.makeText(FontSize::Large, titleStr);
+
         const float vertPad{ context.layout.windowSize().y * 0.015f };
 
-        const sf::Vector2f pos{ ((context.layout.windowSize().x * 0.5f) -
-                                 (textBlock.size.x * 0.5f)),
-                                (m_bgRectangle.getGlobalBounds().top + vertPad) };
+        const sf::Vector2f titlePos{ ((context.layout.windowSize().x * 0.5f) -
+                                      (m_titleText.getGlobalBounds().width * 0.5f)),
+                                     (m_bgRectangle.getGlobalBounds().top + vertPad) };
+
+        m_titleText.setPosition(titlePos);
+
+        const sf::Vector2f listPos{ ((context.layout.windowSize().x * 0.5f) -
+                                     (textBlock.size.x * 0.5f)),
+                                    (util::bottom(m_titleText) + vertPad) };
 
         for (sf::Text & text : m_texts)
         {
-            text.move(pos);
+            text.move(listPos);
         }
 
-        const float bgRectangleHeight{ (util::bottom(m_texts.back().getGlobalBounds()) -
-                                        m_bgRectangle.getGlobalBounds().top) +
-                                       vertPad };
+        const float bgRectangleHeight{
+            (util::bottom(m_texts.back()) - m_bgRectangle.getGlobalBounds().top) + vertPad
+        };
 
         m_bgRectangle.setSize(sf::Vector2f{ context.layout.windowSize().x, bgRectangleHeight });
     }
 
-    void StateTreasure::onExit(Context & context) { treasure = {}; }
+    void StateTreasure::onExit(Context &) { treasure = {}; }
 
     void StateTreasure::handleEvent(Context & context, const sf::Event & event)
     {
@@ -78,6 +92,7 @@ namespace castlecrawl
         StatePlay::draw(context, target, states);
         target.draw(&m_bgFadeVerts[0], m_bgFadeVerts.size(), sf::PrimitiveType::Quads);
         target.draw(m_bgRectangle, states);
+        target.draw(m_titleText, states);
 
         for (const sf::Text & text : m_texts)
         {

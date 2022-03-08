@@ -16,6 +16,7 @@ namespace castlecrawl
             int gold = 0;
             ItemVec_t items;
 
+            bool empty() const { return ((0 == gold) && items.empty()); }
             const std::string description() const;
         };
 
