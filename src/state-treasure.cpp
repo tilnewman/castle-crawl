@@ -151,7 +151,6 @@ namespace castlecrawl
             if (m_itemTexts.empty())
             {
                 context.state.setChangePending(State::Play);
-                return;
             }
             else
             {
@@ -167,12 +166,35 @@ namespace castlecrawl
                 if (treasure.items.empty())
                 {
                     context.state.setChangePending(State::Play);
-                    return;
                 }
                 else
                 {
                     redraw(context);
                 }
+            }
+
+            return;
+        }
+
+        if ((sf::Keyboard::Up == event.key.code) && !m_itemTexts.empty())
+        {
+            if (m_selectIndex > 0)
+            {
+                context.audio.play("tick-off-1.ogg");
+                --m_selectIndex;
+                redraw(context);
+                return;
+            }
+        }
+
+        if ((sf::Keyboard::Down == event.key.code) && !m_itemTexts.empty())
+        {
+            if (m_selectIndex < (m_itemTexts.size() - 1_st))
+            {
+                context.audio.play("tick-off-1.ogg");
+                ++m_selectIndex;
+                redraw(context);
+                return;
             }
         }
     }
