@@ -19,6 +19,7 @@
 #include "settings.hpp"
 #include "state-direction.hpp"
 #include "state-machine.hpp"
+#include "state-treasure.hpp"
 #include "util.hpp"
 
 #include <iostream>
@@ -60,13 +61,9 @@ namespace castlecrawl
                 context.maps.reloadAfterChange(context);
 
                 using namespace item;
-                const Treasure treasure = context.items.randomTreasureFind(context);
+                StateTreasure::treasure = context.items.randomTreasureFind(context);
 
-                context.player.adjGold(treasure.gold);
-                context.player.inventory().add(treasure.items);
-
-                context.popup.setup(context, treasure.description());
-                context.state.setChangePending(State::Popup, State::Play);
+                context.state.setChangePending(State::Treasure);
             }
             else
             {

@@ -13,6 +13,7 @@
 #include "state-play.hpp"
 #include "state-popup.hpp"
 #include "state-splash.hpp"
+#include "state-treasure.hpp"
 
 #include <iostream>
 
@@ -58,6 +59,7 @@ namespace castlecrawl
             case State::Quit:     { return std::make_unique<StateQuit>(context);      }
             case State::Direction:{ return std::make_unique<StateDirection>(context); }
             case State::Inventory:{ return std::make_unique<StateInventory>(context); }
+            case State::Treasure:{ return std::make_unique<StateTreasure>(context); }
             // clang-format on
             default: {
                 std::cerr << "ERROR:  StateMachine::makeState(\"" << state

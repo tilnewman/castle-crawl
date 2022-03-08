@@ -30,6 +30,7 @@ namespace castlecrawl
         Popup,
         Direction,
         Inventory,
+        Treasure,
         Quit,
     };
 
@@ -48,6 +49,7 @@ namespace castlecrawl
             case State::Quit: return "Quit";
             case State::Direction: return "Direction";
             case State::Inventory: return "Inventory";
+            case State::Treasure: return "Treasure";
             default: return "State::Invalid";
         }
     }
