@@ -288,7 +288,7 @@ namespace castlecrawl
             value += miscMaterialValue(m_miscMaterial);
 
             value += (m_equipEffect.total() * m_equipEffect.total());
-            value += (m_equipEffect.total() * 100);
+            value += (m_equipEffect.total() * 250);
 
             value += ((m_useEffect.total() / 2) * m_useEffect.total());
             value += (m_useEffect.total() * 25);
