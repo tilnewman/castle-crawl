@@ -35,7 +35,8 @@ namespace castlecrawl
       private:
         std::vector<sf::Vertex> m_bgFadeVerts;
         sf::Text m_titleText;
-        std::vector<sf::Text> m_texts;
+        sf::Text m_goldText;
+        std::vector<sf::Text> m_itemTexts;
         sf::RectangleShape m_bgRectangle;
     };
 

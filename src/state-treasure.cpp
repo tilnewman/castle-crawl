@@ -19,26 +19,29 @@ namespace castlecrawl
     StateTreasure::StateTreasure(Context & context)
         : StatePlay(context)
         , m_bgFadeVerts()
+        , m_titleText()
+        , m_goldText()
+        , m_itemTexts()
+        , m_bgRectangle()
     {}
 
     void StateTreasure::onEnter(Context & context)
     {
+        // always take the gold even if you don't take any items
         context.player.adjGold(treasure.gold);
 
+        // fade out the background
         util::appendQuadVerts(
             context.layout.windowBounds(), m_bgFadeVerts, sf::Color(0, 0, 0, 150));
 
-        const TextBlock textBlock =
-            context.media.makeTextBlock(FontSize::Medium, treasure.description());
-
-        m_texts = textBlock.lines;
-
+        // cyan bluish bar so the text can be white on top of it
         m_bgRectangle.setFillColor(sf::Color(25, 100, 115, 200));
         m_bgRectangle.setOutlineColor(sf::Color(255, 255, 255, 200));
         m_bgRectangle.setOutlineThickness(2.0f);
         m_bgRectangle.setPosition(0.0f, (context.layout.windowSize().y * 0.2f));
 
-        std::string titleStr{ "Treasure!" };
+        // title text
+        std::string titleStr{ "Treasure" };
         if (treasure.empty())
         {
             titleStr.clear();
@@ -48,24 +51,54 @@ namespace castlecrawl
 
         const float vertPad{ context.layout.windowSize().y * 0.015f };
 
-        const sf::Vector2f titlePos{ ((context.layout.windowSize().x * 0.5f) -
-                                      (m_titleText.getGlobalBounds().width * 0.5f)),
-                                     (m_bgRectangle.getGlobalBounds().top + vertPad) };
+        m_titleText.setPosition(
+            ((context.layout.windowSize().x * 0.5f) - (m_titleText.getGlobalBounds().width * 0.5f)),
+            (m_bgRectangle.getGlobalBounds().top + vertPad));
 
-        m_titleText.setPosition(titlePos);
-
-        const sf::Vector2f listPos{ ((context.layout.windowSize().x * 0.5f) -
-                                     (textBlock.size.x * 0.5f)),
-                                    (util::bottom(m_titleText) + vertPad) };
-
-        for (sf::Text & text : m_texts)
+        // gold text
+        std::string goldStr;
+        if (treasure.empty())
         {
-            text.move(listPos);
+            goldStr = "You find nothing.";
+        }
+        else if (treasure.gold > 0)
+        {
+            goldStr = "You find ";
+            goldStr += std::to_string(treasure.gold);
+            goldStr += " gold coins";
+
+            if (treasure.items.empty())
+            {
+                goldStr += '.';
+            }
+            else
+            {
+                goldStr += " and:";
+            }
         }
 
-        const float bgRectangleHeight{
-            (util::bottom(m_texts.back()) - m_bgRectangle.getGlobalBounds().top) + vertPad
-        };
+        m_goldText = context.media.makeText(FontSize::Medium, goldStr);
+
+        m_goldText.setPosition(
+            ((context.layout.windowSize().x * 0.5f) - (m_goldText.getGlobalBounds().width * 0.5f)),
+            (util::bottom(m_titleText) + vertPad));
+
+        // item texts
+        float itemTextPosY{ util::bottom(m_goldText) + vertPad };
+        for (const item::Item & item : treasure.items)
+        {
+            sf::Text & text =
+                m_itemTexts.emplace_back(context.media.makeText(FontSize::Medium, item.name()));
+
+            text.setPosition(
+                ((context.layout.windowSize().x * 0.5f) - (text.getGlobalBounds().width * 0.5f)),
+                itemTextPosY);
+
+            itemTextPosY += context.media.fontExtent(FontSize::Medium).letter_size.y;
+        }
+
+        const float bgRectangleHeight{ (itemTextPosY - m_bgRectangle.getGlobalBounds().top) +
+                                       vertPad };
 
         m_bgRectangle.setSize(sf::Vector2f{ context.layout.windowSize().x, bgRectangleHeight });
     }
@@ -90,11 +123,13 @@ namespace castlecrawl
         const Context & context, sf::RenderTarget & target, sf::RenderStates states) const
     {
         StatePlay::draw(context, target, states);
+
         target.draw(&m_bgFadeVerts[0], m_bgFadeVerts.size(), sf::PrimitiveType::Quads);
         target.draw(m_bgRectangle, states);
         target.draw(m_titleText, states);
+        target.draw(m_goldText, states);
 
-        for (const sf::Text & text : m_texts)
+        for (const sf::Text & text : m_itemTexts)
         {
             target.draw(text, states);
         }
