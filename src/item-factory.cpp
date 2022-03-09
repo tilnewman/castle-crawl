@@ -562,7 +562,7 @@ namespace castlecrawl
 
                 if (item.isWeapon() || item.isArmor())
                 {
-                    std::cout << "\t" << item.value() << "\t" << item.description() << '\n';
+                    std::cout << '\t ' << item.value() << '\t' << item.description() << '\n';
                 }
             }
 
@@ -578,6 +578,7 @@ namespace castlecrawl
             std::cout << "longest name=" << m_textExtent.longest_name << std::endl;
             std::cout << "longest desc=" << m_textExtent.longest_desc << std::endl;
 
+            std::cout << "An Item is " << sizeof(Item) << "bytes" << std::endl;
             std::cout << std::endl;
 
             // write out all items to a spreadsheet
