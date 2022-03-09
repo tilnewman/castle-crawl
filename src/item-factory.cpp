@@ -562,7 +562,7 @@ namespace castlecrawl
 
                 if (item.isWeapon() || item.isArmor())
                 {
-                    std::cout << '\t ' << item.value() << '\t' << item.description() << '\n';
+                    std::cout << '\t' << item.value() << '\t' << item.description() << '\n';
                 }
             }
 
