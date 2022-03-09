@@ -3,7 +3,6 @@
 //
 // board.hpp
 //
-#include "piece-player.hpp"
 #include "pieces.hpp"
 
 #include <optional>

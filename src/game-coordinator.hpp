@@ -11,7 +11,6 @@
 #include "maps.hpp"
 #include "media.hpp"
 #include "music-player.hpp"
-#include "piece-player.hpp"
 #include "player.hpp"
 #include "popup-manager.hpp"
 #include "process.hpp"

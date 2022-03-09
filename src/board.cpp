@@ -6,7 +6,6 @@
 #include "board.hpp"
 
 #include "context.hpp"
-#include "piece-door.hpp"
 #include "util.hpp"
 
 #include <sstream>
