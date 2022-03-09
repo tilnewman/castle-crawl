@@ -7,6 +7,9 @@
 #include "shaker.hpp"
 #include "tile-image.hpp"
 
+#include <functional>
+#include <optional>
+
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/Sprite.hpp>
@@ -99,6 +102,8 @@ namespace castlecrawl
         float m_shakeTimerSec;
         MapPos_t m_position;
     };
+
+    using PieceOpt_t = std::optional<std::reference_wrapper<Piece>>;
 
 } // namespace castlecrawl
 

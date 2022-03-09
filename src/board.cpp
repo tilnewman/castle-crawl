@@ -32,7 +32,7 @@ namespace castlecrawl
         return Pieces::None;
     }
 
-    std::optional<Piece> Board::at(const MapPos_t pos)
+    PieceOpt_t Board::at(const MapPos_t pos)
     {
         for (Piece & piece : m_pieces)
         {
