@@ -22,7 +22,7 @@
 namespace castlecrawl
 {
 
-    PieceBase::PieceBase(const Piece which)
+    Piece::Piece(const Pieces which)
         : m_which(which)
         , m_sprite()
         , m_shaker()
@@ -30,8 +30,7 @@ namespace castlecrawl
         , m_position()
     {}
 
-    PieceBase::PieceBase(
-        Context & context, const Piece which, const char mapChar, const MapPos_t & pos)
+    Piece::Piece(Context & context, const Pieces which, const char mapChar, const MapPos_t & pos)
         : m_which(which)
         , m_sprite(context.media.sprite(tileImage(mapChar)))
         , m_shaker()
@@ -41,23 +40,23 @@ namespace castlecrawl
         position(context, pos); // to set the sprite's position
     }
 
-    void PieceBase::position(Context & context, const MapPos_t pos)
+    void Piece::position(Context & context, const MapPos_t pos)
     {
         m_position = pos;
         m_sprite.setPosition(util::position(context.layout.cellBounds(pos)));
     }
 
-    void PieceBase::move(Context & context, const sf::Keyboard::Key key)
+    void Piece::move(Context & context, const sf::Keyboard::Key key)
     {
         position(context, keys::moveIfDir(m_position, key));
     }
 
-    void PieceBase::draw(sf::RenderTarget & target, sf::RenderStates states) const
+    void Piece::draw(sf::RenderTarget & target, sf::RenderStates states) const
     {
         target.draw(m_sprite, states);
     }
 
-    void PieceBase::update(Context & context, const float frameTimeSec)
+    void Piece::update(Context & context, const float frameTimeSec)
     {
         m_shakeTimerSec -= frameTimeSec;
         if (m_shakeTimerSec > 0.0f)
@@ -67,7 +66,7 @@ namespace castlecrawl
         }
     }
 
-    void PieceBase::shake(Context & context)
+    void Piece::shake(Context & context)
     {
         sf::Vector2f pos{ util::position(context.layout.cellBounds(m_position)) };
         pos.x += m_shaker.adjustment();

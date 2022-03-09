@@ -26,17 +26,15 @@ namespace castlecrawl
 
         void clear() { m_pieces.clear(); }
 
-        void add(Context & context, const Piece piece, const char mapChar, const MapPos_t pos);
+        void add(Context & context, const Pieces which, const char mapChar, const MapPos_t pos);
         void update(Context & context, const float frameTimeSec);
         void draw(sf::RenderTarget &, sf::RenderStates) const override;
 
-        PlayerPiece & player() { return m_player; }
+        Piece & player() { return m_player; }
 
       private:
-        PlayerPiece m_player;
-
-        // only ONE piece may be in each map position, which is why m_player is not in this vector
-        std::vector<IPieceUPtr_t> m_pieces;
+        Piece m_player;
+        std::vector<Piece> m_pieces;
     };
 
 } // namespace castlecrawl

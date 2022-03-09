@@ -13,6 +13,7 @@
 #include "map.hpp"
 #include "maps.hpp"
 #include "media.hpp"
+#include "music-player.hpp"
 #include "player.hpp"
 #include "popup-manager.hpp"
 #include "process.hpp"
@@ -157,35 +158,96 @@ namespace castlecrawl
             return;
         }
 
-        // TODO REMOVE TEMP ANIMATION TEST
-        if (sf::Keyboard::Num1 == event.key.code)
+        // everything else is handling arrow keys
+        if (!keys::isArrow(event.key.code))
         {
-            util::AnimConfig config(1.0f, sf::Color(150, 255, 255), sf::BlendAdd);
-
-            sf::FloatRect rect = context.layout.cellBounds(context.board.player().position());
-            const float cellDimm{ context.layout.mapCellDimm() };
-            rect.left -= (cellDimm * 0.25f);
-            rect.top -= (cellDimm * 0.25f);
-            rect.width *= 1.5f;
-            rect.height *= 1.5f;
-
-            context.anim.play("sparkle-burst", rect, config);
-        }
-        else if (sf::Keyboard::Num2 == event.key.code)
-        {
-            util::AnimConfig config(1.0f, sf::Color(255, 255, 150), sf::BlendAdd);
-
-            sf::FloatRect rect = context.layout.cellBounds(context.board.player().position());
-            const float cellDimm{ context.layout.mapCellDimm() };
-            rect.left -= (cellDimm * 1.0f);
-            rect.top -= (cellDimm * 1.0f);
-            rect.width *= 3.0f;
-            rect.height *= 3.0f;
-
-            context.anim.play("star-flash", rect, config);
+            return;
         }
 
-        context.board.player().handleEvent(context, event);
+        const MapPos_t oldPos = context.board.player().position();
+        const char oldChar = context.maps.get().getChar(oldPos);
+        const MapPos_t newPos = keys::moveIfDir(oldPos, event.key.code);
+        const char newChar = context.maps.get().getChar(newPos);
+
+        // leave the map cases
+        for (const MapLink & link : context.maps.get().links())
+        {
+            if (link.from_pos == newPos)
+            {
+                if ((oldChar == tileImageChar(TileImage::StairUp)) ||
+                    (oldChar == tileImageChar(TileImage::StairDown)))
+                {
+                    context.audio.play("stairs.ogg");
+                }
+
+                context.maps.switchTo(context, link);
+                return;
+            }
+        }
+
+        // obstacle bump cases
+        // if (newChar != ' ')
+        //{
+        //    if (newChar == tileImageChar(TileImage::Lava))
+        //    {
+        //        context.audio.play("burn.ogg");
+        //    }
+        //    else if (newChar == tileImageChar(TileImage::Water))
+        //    {
+        //        context.audio.play("splash.ogg");
+        //    }
+        //    else
+        //    {
+        //        context.audio.play("tap-wood-low.ogg");
+        //    }
+        //
+        //    return;
+        //}
+
+        // TODO
+        // walk onto door cases
+        // for (const DoorPiece & door : context.board.doors)
+        //{
+        //    if (door.position() != newPos)
+        //    {
+        //        continue;
+        //    }
+        //
+        //    if (door.isLocked())
+        //    {
+        //        context.audio.play("locked.ogg");
+        //        return;
+        //    }
+        //    else
+        //    {
+        //        move(context, arrowKey);
+        //        context.audio.play("door-open.ogg");
+        //        return;
+        //    }
+        //}
+
+        context.board.player().move(context, event.key.code);
+        context.audio.play("tick-on-2.ogg");
+
+        const std::size_t lavaAroundCount = context.maps.get().countCharsAround(newPos, 'l');
+        if (lavaAroundCount == 0)
+        {
+            context.music.stop("lava.ogg");
+        }
+        else
+        {
+            context.music.start("lava.ogg");
+        }
+
+        const std::size_t waterAroundCount = context.maps.get().countCharsAround(newPos, 'w');
+        if (waterAroundCount == 0)
+        {
+            context.music.stop("water-bubbles.ogg");
+        }
+        else
+        {
+            context.music.start("water-bubbles.ogg");
+        }
     }
 
     void StatePlay::draw(

@@ -16,7 +16,7 @@
 namespace castlecrawl
 {
     Board::Board()
-        : m_player()
+        : m_player(Pieces::Player)
         , m_pieces()
     {}
 
@@ -24,49 +24,25 @@ namespace castlecrawl
     {
         m_player.update(context, frameTimeSec);
 
-        for (IPieceUPtr_t & pieceUPtr : m_pieces)
+        for (Piece & piece : m_pieces)
         {
-            pieceUPtr->update(context, frameTimeSec);
+            piece.update(context, frameTimeSec);
         }
     }
 
     void Board::draw(sf::RenderTarget & target, sf::RenderStates states) const
     {
-        for (const IPieceUPtr_t & pieceUPtr : m_pieces)
+        for (const Piece & piece : m_pieces)
         {
-            target.draw(*pieceUPtr, states);
+            target.draw(piece, states);
         }
 
         target.draw(m_player, states);
     }
 
-    void Board::add(Context & context, const Piece piece, const char mapChar, const MapPos_t pos)
+    void Board::add(Context & context, const Pieces which, const char mapChar, const MapPos_t pos)
     {
-        // clang-format off
-        switch (piece)
-        {
-            case Piece::DoorLocked:     { m_pieces.emplace_back(std::make_unique<DoorPiece>(context, piece, mapChar, pos)); break; }
-            case Piece::DoorUnlocked:   { m_pieces.emplace_back(std::make_unique<DoorPiece>(context, piece, mapChar, pos)); break; }
-            case Piece::Wall:           { m_pieces.emplace_back(std::make_unique<WallPiece>(context, piece, mapChar, pos)); break; }
-            case Piece::Player:         
-            case Piece::Barrel:
-            case Piece::Coffin:
-            case Piece::Chest:
-            case Piece::Lava:
-            case Piece::Water:
-            case Piece::StairsUp:
-            case Piece::StairsDown:
-            default:
-            {
-                std::ostringstream ss;
-                
-                ss << "ERROR:  Board::add(" << toString(piece) << ", \'" << mapChar << ", " << pos
-                          << "\") -That piece not handled in switch.  Nothing added!";
-
-                throw std::runtime_error(ss.str());
-            }
-        }
-        // clang-format on
+        m_pieces.push_back(Piece(context, which, mapChar, pos));
     }
 
 } // namespace castlecrawl

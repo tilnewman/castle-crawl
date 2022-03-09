@@ -44,12 +44,6 @@ namespace castlecrawl
             util::fit(m_tileSprites.at(i), layout.mapCellSize());
         }
 
-        m_tileSprites.at(static_cast<std::size_t>(TileImage::Door))
-            .setColor(sf::Color(160, 130, 100));
-
-        m_tileSprites.at(static_cast<std::size_t>(TileImage::Barrel))
-            .setColor(sf::Color(110, 60, 10));
-
         m_tileSprites.at(static_cast<std::size_t>(TileImage::Coffin))
             .setColor(sf::Color(130, 75, 40));
 
