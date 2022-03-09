@@ -97,7 +97,7 @@ namespace castlecrawl
 
         //
 
-        enum class Weapon
+        enum class Weapon : std::int_fast8_t
         {
             Dagger = 0,
             Handaxe,
@@ -151,7 +151,7 @@ namespace castlecrawl
             // clang-format on
         }
 
-        enum class WeaponMaterial
+        enum class WeaponMaterial : std::int_fast8_t
         {
             Bronze = 0,
             Steel,
@@ -193,7 +193,7 @@ namespace castlecrawl
             // clang-format on
         }
 
-        enum class Armor
+        enum class Armor : std::int_fast8_t
         {
             Helm = 0,
             Cuirass,
@@ -238,7 +238,7 @@ namespace castlecrawl
             // clang-format on
         }
 
-        enum class ArmorMaterial
+        enum class ArmorMaterial : std::int_fast8_t
         {
             Leather = 0,
             Bronze,
@@ -284,7 +284,7 @@ namespace castlecrawl
         }
 
         // there are only equipable and useable misc items
-        enum class Misc
+        enum class Misc : std::int_fast8_t
         {
             Amulet = 0,
             Ring,
@@ -344,7 +344,7 @@ namespace castlecrawl
             return !isMiscEquipable(misc);
         }
 
-        enum class MiscMaterial
+        enum class MiscMaterial : std::int_fast8_t
         {
             Iron = 0,
             Bronze,
@@ -439,7 +439,7 @@ namespace castlecrawl
             // clang-format on
         }
 
-        enum class UseStrength
+        enum class UseStrength : std::int_fast8_t
         {
             Weak,
             Normal,
