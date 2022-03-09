@@ -27,7 +27,7 @@ namespace castlecrawl
         m_width = size.x;
 
         m_rectangle.setFillColor(sf::Color::Transparent);
-        m_rectangle.setOutlineColor(color + sf::Color(50, 50, 50));
+        m_rectangle.setOutlineColor(color + sf::Color(100, 100, 100));
         m_rectangle.setOutlineThickness(lineThickness);
         m_rectangle.setPosition(pos);
         m_rectangle.setSize(size);

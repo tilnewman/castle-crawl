@@ -29,7 +29,7 @@ namespace castlecrawl
         // setup fade out the background and draw a center bar
         m_bgFadeVerts.clear();
         util::appendQuadVerts(
-            context.layout.windowBounds(), m_bgFadeVerts, sf::Color(0, 0, 0, 200));
+            context.layout.windowBounds(), m_bgFadeVerts, sf::Color(0, 0, 0, 100));
 
         const sf::Vector2f windowSize{ context.layout.windowSize() };
         const float centerBarheight{ windowSize.y * 0.06f };
@@ -42,7 +42,7 @@ namespace castlecrawl
 
         // setup the "PAUSE" text for display
         m_text.setCharacterSize(99);
-        m_text.setFillColor(sf::Color(100, 100, 100));
+        m_text.setFillColor(sf::Color(150, 150, 150));
         m_text.setFont(context.media.font());
         m_text.setString("PAUSE");
 
