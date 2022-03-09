@@ -70,4 +70,24 @@ namespace castlecrawl
         m_pieces.push_back(Piece(context, which, mapChar, pos));
     }
 
+    void Board::remove(const MapPos_t pos)
+    {
+        m_pieces.erase(
+            std::remove_if(
+                std::begin(m_pieces),
+                std::end(m_pieces),
+                [&](const Piece & piece) { return (piece.position() == pos); }),
+            std::end(m_pieces));
+    }
+
+    void Board::remove(const Pieces which)
+    {
+        m_pieces.erase(
+            std::remove_if(
+                std::begin(m_pieces),
+                std::end(m_pieces),
+                [&](const Piece & piece) { return (piece.which() == which); }),
+            std::end(m_pieces));
+    }
+
 } // namespace castlecrawl

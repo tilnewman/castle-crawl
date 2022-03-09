@@ -27,7 +27,11 @@ namespace castlecrawl
 
         Pieces whichAt(const MapPos_t pos) const;
         PieceOpt_t at(const MapPos_t pos);
+
         void add(Context & context, const Pieces which, const char mapChar, const MapPos_t pos);
+        void remove(const MapPos_t pos);
+        void remove(const Pieces which);
+
         void update(Context & context, const float frameTimeSec);
         void draw(sf::RenderTarget &, sf::RenderStates) const override;
 
