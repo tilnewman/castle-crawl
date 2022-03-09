@@ -107,25 +107,6 @@ namespace castlecrawl
 
     void StatePlay::handleEvent(Context & context, const sf::Event & event)
     {
-        if (sf::Event::MouseButtonPressed == event.type)
-        {
-            const sf::Vector2f mousePosition = sf::Vector2f{ sf::Mouse::getPosition() };
-            const MapPos_t mapPosition = context.layout.cellPosition(mousePosition);
-            if (context.layout.isPositionValid(mapPosition))
-            {
-                std::string message{ "The map char at " };
-                message += std::to_string(mapPosition.x);
-                message += ',';
-                message += std::to_string(mapPosition.y);
-                message += " is '";
-                message += context.maps.get().getChar(mapPosition);
-                message += "'";
-                context.popup.setup(context, message);
-                context.state.setChangePending(State::Popup, State::Play);
-                return;
-            }
-        }
-
         // all that remain are keystrokes
         if (sf::Event::KeyPressed != event.type)
         {
@@ -142,14 +123,6 @@ namespace castlecrawl
         if (sf::Keyboard::Space == event.key.code)
         {
             context.state.setChangePending(State::Pause, State::Play);
-            return;
-        }
-
-        // TEMP TODO REMOVE after testing
-        if (sf::Keyboard::P == event.key.code)
-        {
-            context.popup.setup(context, "All your bases are belong to us.");
-            context.state.setChangePending(State::Popup, State::Play);
             return;
         }
 
