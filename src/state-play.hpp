@@ -32,6 +32,12 @@ namespace castlecrawl
         void draw(const Context &, sf::RenderTarget &, sf::RenderStates) const override;
 
       private:
+        void updateReplenish(Context & context, const float frameTimeSec);
+
+      private:
+        static inline constexpr float m_replenishIntervalSec = 10.0f;
+        static inline float m_replenishTimerSec = m_replenishIntervalSec;
+
         FramesPerSecond m_fps;
         sf::RectangleShape m_bgRectangle;
     };

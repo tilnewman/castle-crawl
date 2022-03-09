@@ -82,6 +82,18 @@ namespace castlecrawl
         context.anim.update(frameTimeSec);
         context.board.update(context, frameTimeSec);
         m_fps.update();
+        updateReplenish(context, frameTimeSec);
+    }
+
+    void StatePlay::updateReplenish(Context & context, const float frameTimeSec)
+    {
+        m_replenishTimerSec -= frameTimeSec;
+        if (m_replenishTimerSec < 0.0f)
+        {
+            m_replenishTimerSec = m_replenishIntervalSec;
+            context.player.health().adjCurrent(1);
+            context.player.mana().adjCurrent(1);
+        }
     }
 
     void StatePlay::handleEvent(Context & context, const sf::Event & event)

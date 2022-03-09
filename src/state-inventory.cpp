@@ -42,8 +42,10 @@ namespace castlecrawl
         , m_weaponText()
     {}
 
-    void StateInventory::update(Context & context, const float)
+    void StateInventory::update(Context & context, const float frameTimeSec)
     {
+        StatePlay::update(context, frameTimeSec);
+
         m_healthBar.updateValue(context.player.health().ratio());
         m_manaBar.updateValue(context.player.mana().ratio());
 
