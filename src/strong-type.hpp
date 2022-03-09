@@ -16,9 +16,17 @@ namespace util
     template <typename T, typename Parameter_t>
     struct StrongType
     {
-        explicit StrongType(const T & value = T{})
+        StrongType() = default;
+
+        explicit StrongType(const T & value)
             : m_value(value)
         {}
+
+        StrongType(const StrongType &) noexcept = default;
+        StrongType(StrongType &&) noexcept = default;
+
+        StrongType & operator=(const StrongType &) noexcept = default;
+        StrongType & operator=(StrongType &&) noexcept = default;
 
         T & get() noexcept { return m_value; }
         const T & get() const noexcept { return m_value; }
@@ -36,12 +44,6 @@ namespace util
         }
 
         const StrongType abs() const { return StrongType<T, Parameter_t>(std::abs(this->m_value)); }
-
-        StrongType & operator=(const StrongType & rhs)
-        {
-            this->m_value = rhs.m_value;
-            return *this;
-        }
 
         StrongType & operator+=(const StrongType & rhs)
         {
@@ -112,6 +114,14 @@ namespace util
       private:
         T m_value;
     };
+
+    namespace test
+    {
+        struct TestTag;
+        static_assert(
+            std::is_trivial<StrongType<int, TestTag>>::value,
+            "StrongTypes of simple numeric types like int should be trivial!");
+    } // namespace test
 
     template <typename T, typename Parameter_t>
     inline void to_json(json & j, const StrongType<T, Parameter_t> & st)
