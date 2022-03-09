@@ -92,8 +92,16 @@ namespace castlecrawl
         if (m_replenishTimerSec < 0.0f)
         {
             m_replenishTimerSec = m_replenishIntervalSec;
-            context.player.health().adjCurrent(1);
-            context.player.mana().adjCurrent(1);
+
+            if (context.player.health().current() < context.player.health().normal())
+            {
+                context.player.health().adjCurrent(1);
+            }
+
+            if (context.player.mana().current() < context.player.mana().normal())
+            {
+                context.player.mana().adjCurrent(1);
+            }
         }
     }
 
