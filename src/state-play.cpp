@@ -165,17 +165,16 @@ namespace castlecrawl
         }
 
         const MapPos_t oldPos = context.board.player().position();
-        const char oldChar = context.maps.get().getChar(oldPos);
+        const Pieces oldPiece = context.board.whichAt(oldPos);
         const MapPos_t newPos = keys::moveIfDir(oldPos, event.key.code);
-        const char newChar = context.maps.get().getChar(newPos);
+        const Pieces newPiece = context.board.whichAt(newPos);
 
         // leave the map cases
         for (const MapLink & link : context.maps.get().links())
         {
             if (link.from_pos == newPos)
             {
-                if ((oldChar == tileImageChar(TileImage::StairUp)) ||
-                    (oldChar == tileImageChar(TileImage::StairDown)))
+                if ((oldPiece == Pieces::StairsUp) || (oldPiece == Pieces::StairsDown))
                 {
                     context.audio.play("stairs.ogg");
                 }
@@ -186,48 +185,38 @@ namespace castlecrawl
         }
 
         // obstacle bump cases
-        // if (newChar != ' ')
-        //{
-        //    if (newChar == tileImageChar(TileImage::Lava))
-        //    {
-        //        context.audio.play("burn.ogg");
-        //    }
-        //    else if (newChar == tileImageChar(TileImage::Water))
-        //    {
-        //        context.audio.play("splash.ogg");
-        //    }
-        //    else
-        //    {
-        //        context.audio.play("tap-wood-low.ogg");
-        //    }
-        //
-        //    return;
-        //}
+        if (isPieceObstacle(newPiece))
+        {
+            if (newPiece == Pieces::Lava)
+            {
+                context.audio.play("burn.ogg");
+            }
+            else if (newPiece == Pieces::Water)
+            {
+                context.audio.play("splash.ogg");
+            }
+            else if (newPiece == Pieces::DoorLocked)
+            {
+                context.audio.play("locked.ogg");
+            }
+            else
+            {
+                context.audio.play("tap-wood-low.ogg");
+            }
 
-        // TODO
-        // walk onto door cases
-        // for (const DoorPiece & door : context.board.doors)
-        //{
-        //    if (door.position() != newPos)
-        //    {
-        //        continue;
-        //    }
-        //
-        //    if (door.isLocked())
-        //    {
-        //        context.audio.play("locked.ogg");
-        //        return;
-        //    }
-        //    else
-        //    {
-        //        move(context, arrowKey);
-        //        context.audio.play("door-open.ogg");
-        //        return;
-        //    }
-        //}
+            return;
+        }
 
         context.board.player().move(context, event.key.code);
-        context.audio.play("tick-on-2.ogg");
+
+        if (newPiece == Pieces::None)
+        {
+            context.audio.play("tick-on-2.ogg");
+        }
+        else if (newPiece == Pieces::DoorUnlocked)
+        {
+            context.audio.play("door-open.ogg");
+        }
 
         const std::size_t lavaAroundCount = context.maps.get().countCharsAround(newPos, 'l');
         if (lavaAroundCount == 0)
@@ -254,8 +243,9 @@ namespace castlecrawl
         const Context & context, sf::RenderTarget & target, sf::RenderStates states) const
     {
         target.draw(m_bgRectangle, states);
-        context.maps.drawCurrent(context, target, states);
+        context.maps.drawCurrentLower(context, target, states);
         target.draw(context.board, states);
+        context.maps.drawCurrentUpper(context, target, states);
         target.draw(context.anim, states);
         target.draw(m_fps, states);
     }

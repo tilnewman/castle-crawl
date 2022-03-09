@@ -24,6 +24,7 @@ namespace castlecrawl
 
     enum class Pieces
     {
+        None,
         Player,
         DoorLocked,
         DoorUnlocked,
@@ -39,7 +40,10 @@ namespace castlecrawl
 
     inline constexpr bool isPieceObstacle(const Pieces piece) noexcept
     {
-        return !((Pieces::Player == piece) || (Pieces::DoorUnlocked == piece));
+        return !(
+            (Pieces::None == piece) || (Pieces::Player == piece) ||
+            (Pieces::DoorUnlocked == piece) || (Pieces::StairsUp == piece) ||
+            (Pieces::StairsDown == piece));
     }
 
     inline constexpr std::string_view toString(const Pieces piece) noexcept
@@ -58,6 +62,7 @@ namespace castlecrawl
             case Pieces::Water:         { return "Water"; }
             case Pieces::StairsUp:      { return "StairsUp"; }
             case Pieces::StairsDown:    { return "StairsDown"; }
+            case Pieces::None:
             default:                    { return "Piece::Invalid"; }
         }
         // clang-format on

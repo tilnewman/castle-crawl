@@ -20,6 +20,32 @@ namespace castlecrawl
         , m_pieces()
     {}
 
+    Pieces Board::whichAt(const MapPos_t pos) const
+    {
+        for (const Piece & piece : m_pieces)
+        {
+            if (piece.position() == pos)
+            {
+                return piece.which();
+            }
+        }
+
+        return Pieces::None;
+    }
+
+    std::optional<Piece> Board::at(const MapPos_t pos)
+    {
+        for (Piece & piece : m_pieces)
+        {
+            if (piece.position() == pos)
+            {
+                return piece;
+            }
+        }
+
+        return std::nullopt;
+    }
+
     void Board::update(Context & context, const float frameTimeSec)
     {
         m_player.update(context, frameTimeSec);

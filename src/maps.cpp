@@ -243,7 +243,7 @@ namespace castlecrawl
         m_currentMapPtr->load(context, m_verts, context.board.player().position());
     }
 
-    void Maps::drawCurrent(
+    void Maps::drawCurrentLower(
         const Context & context, sf::RenderTarget & target, sf::RenderStates states) const
     {
         states.texture = &context.media.tileTexture();
@@ -258,6 +258,12 @@ namespace castlecrawl
             // do not use states because these verts have no texture
             target.draw(&m_verts.border[0], m_verts.border.size(), sf::Quads);
         }
+    }
+
+    void Maps::drawCurrentUpper(
+        const Context & context, sf::RenderTarget & target, sf::RenderStates states) const
+    {
+        states.texture = &context.media.tileTexture();
 
         if (!m_verts.transition.empty())
         {
