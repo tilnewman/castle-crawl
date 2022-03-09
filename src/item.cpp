@@ -220,7 +220,7 @@ namespace castlecrawl
                 }
 
                 str += " armor that has a rating of ";
-                str += std::to_string(m_armorRating);
+                str += std::to_string(m_armorRating.get());
             }
             else // must be a misc item
             {
@@ -271,7 +271,7 @@ namespace castlecrawl
         {
             int value = 0;
 
-            value += ((m_armorRating * m_armorRating) * 5);
+            value += ((m_armorRating * m_armorRating) * 5_armor).get();
             value += ((m_damageMin * m_damageMin) * 5);
             value += ((m_damageMax * m_damageMax) * 5);
 
@@ -315,7 +315,7 @@ namespace castlecrawl
                 os << ",Misc";
             }
 
-            if (item.armorRating() != 0)
+            if (item.armorRating() != 0_armor)
             {
                 os << ",armorRating=" << item.armorRating();
             }

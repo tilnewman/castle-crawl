@@ -4,6 +4,7 @@
 // item.hpp
 //
 #include "item-enums.hpp"
+#include "strong-types.hpp"
 
 #include <compare>
 #include <iosfwd>
@@ -56,7 +57,7 @@ namespace castlecrawl
             Armor armorType() const { return m_armor; }
             Misc miscType() const { return m_misc; }
 
-            int armorRating() const { return m_armorRating; }
+            Armor_t armorRating() const { return m_armorRating; }
             int damageMin() const { return m_damageMin; }
             int damageMax() const { return m_damageMax; }
             int value() const { return m_value; }
@@ -104,7 +105,7 @@ namespace castlecrawl
 
             UseStrength m_useStrength;
 
-            int m_armorRating;
+            Armor_t m_armorRating;
             int m_damageMin;
             int m_damageMax;
 

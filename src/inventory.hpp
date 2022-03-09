@@ -29,7 +29,7 @@ namespace castlecrawl
             const ItemVec_t & eqItems() const { return m_eqItems; }
 
             const EquipEffect totalEquipEffects() const;
-            int armorRating() const;
+            Armor_t armorRating() const;
             bool hasWeaponEquipped() const;
             const std::optional<Item> weaponEquipped() const;
 

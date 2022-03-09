@@ -656,7 +656,7 @@ namespace castlecrawl
             if (item.isArmor())
             {
                 M_CHECK(
-                    (item.armorRating() >= 1),
+                    (item.armorRating() >= 1_armor),
                     "Error:  Armor Item's amor_rating invalid: " << item);
 
                 M_CHECK(

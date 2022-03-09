@@ -72,7 +72,7 @@ namespace castlecrawl
         miscStr += "Level: ";
         miscStr += std::to_string(context.player.level().current());
         miscStr += "\t\tArmor Rating: ";
-        miscStr += std::to_string(context.player.inventory().armorRating());
+        miscStr += std::to_string(context.player.inventory().armorRating().get());
         miscStr += "\t\tGold: ";
         miscStr += std::to_string(context.player.gold());
         m_statTextMisc.setString(miscStr);

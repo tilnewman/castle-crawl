@@ -96,9 +96,9 @@ namespace castlecrawl
             return equipEffect;
         }
 
-        int Inventory::armorRating() const
+        Armor_t Inventory::armorRating() const
         {
-            int armorRating = 0;
+            Armor_t armorRating{ 0_armor };
 
             for (const Item & item : m_eqItems)
             {
