@@ -4,8 +4,8 @@
 // pieces.hpp
 //
 #include "map-types.hpp"
-#include "tile-image.hpp"
 #include "shaker.hpp"
+#include "tile-image.hpp"
 
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/Sprite.hpp>
@@ -30,7 +30,6 @@ namespace castlecrawl
 
         virtual MapPos_t position() const = 0;
 
-        // does NOT change the map!
         virtual void move(Context & context, const sf::Keyboard::Key dir) = 0;
 
         virtual void handleEvent(Context &, const sf::Event &) = 0;
@@ -52,10 +51,8 @@ namespace castlecrawl
         bool isObstacle() const override final { return m_isObstacle; }
         MapPos_t position() const override final { return m_position; }
 
-        // keep this this ONLY way to move pieces, intentionally NOT changing the map!
         void move(Context & context, const sf::Keyboard::Key dir) override final;
 
-        // does nothing by default
         void handleEvent(Context &, const sf::Event &) override {}
 
         void draw(sf::RenderTarget & target, sf::RenderStates states) const override;
@@ -75,7 +72,7 @@ namespace castlecrawl
         char m_mapChar;
         bool m_isObstacle;
         sf::Sprite m_sprite;
-        
+
       private:
         Shaker m_shaker;
         float m_shakeTimerSec;

@@ -1,7 +1,7 @@
-#ifndef CASTLECRAWL_DOOR_PIECE_HPP_INCLUDED
-#define CASTLECRAWL_DOOR_PIECE_HPP_INCLUDED
+#ifndef CASTLECRAWL_PIECE_DOOR_HPP_INCLUDED
+#define CASTLECRAWL_PIECE_DOOR_HPP_INCLUDED
 //
-// door.hpp
+// piece-door.hpp
 //
 #include "pieces.hpp"
 
@@ -13,7 +13,7 @@ namespace castlecrawl
     {
       public:
         void reset(Context & context, const MapPos_t & pos, const bool isLocked);
-        
+
         bool isLocked() const { return isObstacle(); }
         void isLocked(const bool isLocked) { m_isObstacle = isLocked; }
     };

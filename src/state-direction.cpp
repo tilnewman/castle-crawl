@@ -9,7 +9,7 @@
 #include "context.hpp"
 #include "keys.hpp"
 #include "media.hpp"
-#include "player-piece.hpp"
+#include "piece-player.hpp"
 #include "popup-manager.hpp"
 #include "process.hpp"
 #include "settings.hpp"

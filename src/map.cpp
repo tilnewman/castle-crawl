@@ -7,8 +7,8 @@
 
 #include "board.hpp"
 #include "context.hpp"
-#include "door-piece.hpp"
 #include "media.hpp"
+#include "piece-door.hpp"
 #include "random.hpp"
 #include "settings.hpp"
 #include "util.hpp"

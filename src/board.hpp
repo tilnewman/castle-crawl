@@ -3,8 +3,8 @@
 //
 // board.hpp
 //
-#include "door-piece.hpp"
-#include "player-piece.hpp"
+#include "piece-door.hpp"
+#include "piece-player.hpp"
 
 #include <vector>
 
