@@ -21,10 +21,13 @@
 
 namespace castlecrawl
 {
-    void PlayerPiece::reset(Context & context, const MapPos_t & pos)
-    {
-        PieceBase::reset(context, pos, tileImageChar(TileImage::Player), false);
-    }
+    PlayerPiece::PlayerPiece()
+        : PieceBase(Piece::Player)
+    {}
+
+    PlayerPiece::PlayerPiece(Context & context, const MapPos_t pos)
+        : PieceBase(context, Piece::Player, tileImageChar(TileImage::Player), pos)
+    {}
 
     void PlayerPiece::handleEvent(Context & context, const sf::Event & event)
     {
@@ -70,50 +73,51 @@ namespace castlecrawl
             }
         }
 
-        const char newChar = context.maps.get().getChar(newPos);
-
+        // TODO
         // wall bump cases
-        if ((newChar != ' ') && (newChar != tileImageChar(TileImage::DoorLocked)) &&
-            (newChar != tileImageChar(TileImage::Door)) &&
-            (newChar != tileImageChar(TileImage::StairUp)) &&
-            (newChar != tileImageChar(TileImage::StairDown)))
-        {
-            if (newChar == tileImageChar(TileImage::Lava))
-            {
-                context.audio.play("burn.ogg");
-            }
-            else if (newChar == tileImageChar(TileImage::Water))
-            {
-                context.audio.play("splash.ogg");
-            }
-            else
-            {
-                context.audio.play("tap-wood-low.ogg");
-            }
+        // const char newChar = context.maps.get().getChar(newPos);
+        // if ((newChar != ' ') && (newChar != tileImageChar(TileImage::DoorLocked)) &&
+        //    (newChar != tileImageChar(TileImage::Door)) &&
+        //    (newChar != tileImageChar(TileImage::StairUp)) &&
+        //    (newChar != tileImageChar(TileImage::StairDown)))
+        //{
+        //    if (newChar == tileImageChar(TileImage::Lava))
+        //    {
+        //        context.audio.play("burn.ogg");
+        //    }
+        //    else if (newChar == tileImageChar(TileImage::Water))
+        //    {
+        //        context.audio.play("splash.ogg");
+        //    }
+        //    else
+        //    {
+        //        context.audio.play("tap-wood-low.ogg");
+        //    }
+        //
+        //    return;
+        //}
 
-            return;
-        }
-
+        // TODO
         // walk onto door cases
-        for (const DoorPiece & door : context.board.doors)
-        {
-            if (door.position() != newPos)
-            {
-                continue;
-            }
-
-            if (door.isLocked())
-            {
-                context.audio.play("locked.ogg");
-                return;
-            }
-            else
-            {
-                move(context, arrowKey);
-                context.audio.play("door-open.ogg");
-                return;
-            }
-        }
+        // for (const DoorPiece & door : context.board.doors)
+        //{
+        //    if (door.position() != newPos)
+        //    {
+        //        continue;
+        //    }
+        //
+        //    if (door.isLocked())
+        //    {
+        //        context.audio.play("locked.ogg");
+        //        return;
+        //    }
+        //    else
+        //    {
+        //        move(context, arrowKey);
+        //        context.audio.play("door-open.ogg");
+        //        return;
+        //    }
+        //}
 
         move(context, arrowKey);
         context.audio.play("tick-on-2.ogg");

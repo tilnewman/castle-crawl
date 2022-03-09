@@ -235,8 +235,12 @@ namespace castlecrawl
         m_currentMapPtr = &iter->second;
 
         context.layout.calcBoardValues(m_currentMapPtr->size());
-        m_currentMapPtr->load(context, m_verts);
-        context.board.player.reset(context, link.to_pos);
+        m_currentMapPtr->load(context, m_verts, link.to_pos);
+    }
+
+    void Maps::reloadAfterChange(Context & context)
+    {
+        m_currentMapPtr->load(context, m_verts, context.board.player().position());
     }
 
     void Maps::drawCurrent(
@@ -253,11 +257,6 @@ namespace castlecrawl
         {
             // do not use states because these verts have no texture
             target.draw(&m_verts.border[0], m_verts.border.size(), sf::Quads);
-        }
-
-        if (!m_verts.wall.empty())
-        {
-            target.draw(&m_verts.wall[0], m_verts.wall.size(), sf::Quads, states);
         }
 
         if (!m_verts.transition.empty())

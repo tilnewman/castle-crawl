@@ -16,7 +16,6 @@ namespace castlecrawl
     {
         VertVec_t floor;
         VertVec_t border;
-        VertVec_t wall;
         VertVec_t transition;
 
         void reset();
@@ -32,7 +31,7 @@ namespace castlecrawl
             const MapChars_t &,
             const MapLinks_t &);
 
-        void load(Context & context, MapVerts & verts);
+        void load(Context & context, MapVerts & verts, const MapPos_t playerPos);
         void updateMapChars(const util::Random & random);
 
         MapPos_t size() const;
@@ -60,7 +59,7 @@ namespace castlecrawl
         void addWalls();
         void addWallCorners();
         void randomizeFloorTiles(const util::Random & random);
-        void resetDoors(Context &);
+        void resetPieces(Context & context, const MapPos_t playerPos);
 
         static void makeBorderVerts(const Context & context, const MapChars_t &, VertVec_t &);
         void makeStoneTransitionVerts(const Context &, VertVec_t &);

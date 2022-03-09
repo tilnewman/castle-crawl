@@ -36,10 +36,10 @@ namespace castlecrawl
         // TODO which sfx to play?
         // context.audio.play("pause");
 
-        const MapPos_t upPos{ context.board.player.position() + MapPos_t{ 0, -1 } };
-        const MapPos_t downPos{ context.board.player.position() + MapPos_t{ 0, 1 } };
-        const MapPos_t leftPos{ context.board.player.position() + MapPos_t{ -1, 0 } };
-        const MapPos_t rightPos{ context.board.player.position() + MapPos_t{ 1, 0 } };
+        const MapPos_t upPos{ context.board.player().position() + MapPos_t{ 0, -1 } };
+        const MapPos_t downPos{ context.board.player().position() + MapPos_t{ 0, 1 } };
+        const MapPos_t leftPos{ context.board.player().position() + MapPos_t{ -1, 0 } };
+        const MapPos_t rightPos{ context.board.player().position() + MapPos_t{ 1, 0 } };
 
         if (context.layout.isPositionValid(upPos))
         {

@@ -45,7 +45,7 @@ namespace castlecrawl
         if ((Action::Fight == context.process.action) && StateDirection::isClosingEventValid())
         {
             const MapPos_t fightPos = keys::moveIfDir(
-                context.board.player.position(), StateDirection::m_closingEvent.key.code);
+                context.board.player().position(), StateDirection::m_closingEvent.key.code);
 
             const char fightChar = context.maps.get().getChar(fightPos);
 
@@ -162,7 +162,7 @@ namespace castlecrawl
         {
             util::AnimConfig config(1.0f, sf::Color(150, 255, 255), sf::BlendAdd);
 
-            sf::FloatRect rect = context.layout.cellBounds(context.board.player.position());
+            sf::FloatRect rect = context.layout.cellBounds(context.board.player().position());
             const float cellDimm{ context.layout.mapCellDimm() };
             rect.left -= (cellDimm * 0.25f);
             rect.top -= (cellDimm * 0.25f);
@@ -175,7 +175,7 @@ namespace castlecrawl
         {
             util::AnimConfig config(1.0f, sf::Color(255, 255, 150), sf::BlendAdd);
 
-            sf::FloatRect rect = context.layout.cellBounds(context.board.player.position());
+            sf::FloatRect rect = context.layout.cellBounds(context.board.player().position());
             const float cellDimm{ context.layout.mapCellDimm() };
             rect.left -= (cellDimm * 1.0f);
             rect.top -= (cellDimm * 1.0f);
@@ -185,7 +185,7 @@ namespace castlecrawl
             context.anim.play("star-flash", rect, config);
         }
 
-        context.board.player.handleEvent(context, event);
+        context.board.player().handleEvent(context, event);
     }
 
     void StatePlay::draw(

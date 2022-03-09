@@ -21,13 +21,11 @@ namespace castlecrawl
     {
         floor.clear();
         border.clear();
-        wall.clear();
         transition.clear();
 
         // these reserve values found after trials of the biggest maps
         floor.reserve(4000);
         border.reserve(2000);
-        wall.reserve(4000);
         transition.reserve(1000);
     }
 
@@ -61,15 +59,13 @@ namespace castlecrawl
         randomizeFloorTiles(random);
     }
 
-    void Map::load(Context & context, MapVerts & verts)
+    void Map::load(Context & context, MapVerts & verts, const MapPos_t playerPos)
     {
-        resetDoors(context);
+        resetPieces(context, playerPos);
 
         verts.reset();
-
         makeVerts(context, m_floorChars, verts.floor);
         makeBorderVerts(context, m_floorChars, verts.border);
-        makeVerts(context, m_chars, verts.wall);
         makeStoneTransitionVerts(context, verts.transition);
     }
 
@@ -436,9 +432,10 @@ namespace castlecrawl
         }
     }
 
-    void Map::resetDoors(Context & context)
+    void Map::resetPieces(Context & context, const MapPos_t playerPos)
     {
-        context.board.doors.clear();
+        context.board.clear();
+        context.board.player() = PlayerPiece(context, playerPos);
 
         if (empty())
         {
@@ -451,18 +448,26 @@ namespace castlecrawl
         {
             for (int x(0); x < mapSize.x; ++x)
             {
-                const MapPos_t mapPos{ x, y };
-                const char ch{ getChar(mapPos) };
+                const MapPos_t pos{ x, y };
+                const char ch{ getChar(pos) };
 
-                if ((ch != 'D') && (ch != 'd'))
+                if (ch == tileImageChar(TileImage::Door))
                 {
-                    continue;
+                    context.board.add(context, Piece::DoorUnlocked, ch, pos);
                 }
-
-                // add piece to board
-                DoorPiece door;
-                door.reset(context, mapPos, (ch == 'D'));
-                context.board.doors.push_back(door);
+                else if (ch == tileImageChar(TileImage::DoorLocked))
+                {
+                    context.board.add(context, Piece::DoorLocked, ch, pos);
+                }
+                else if (
+                    (tileImageChar(TileImage::WallBlock) == ch) ||
+                    (tileImageChar(TileImage::WallHoriz) == ch) ||
+                    (tileImageChar(TileImage::WallTop) == ch) ||
+                    (tileImageChar(TileImage::WallTopLeft) == ch) ||
+                    (tileImageChar(TileImage::WallVert) == ch))
+                {
+                    context.board.add(context, Piece::Wall, ch, pos);
+                }
             }
         }
     }

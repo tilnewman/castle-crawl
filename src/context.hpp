@@ -23,13 +23,13 @@ namespace castlecrawl
     class Map;
     class Maps;
     class Media;
+    class Board;
     class Layout;
     class Player;
     class GameInPlay;
     class StateMachine;
     class PopupManager;
 
-    struct Board;
     struct MapLink;
     struct Process;
     struct GameConfig;

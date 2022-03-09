@@ -12,10 +12,9 @@ namespace castlecrawl
     class DoorPiece : public PieceBase
     {
       public:
-        void reset(Context & context, const MapPos_t & pos, const bool isLocked);
-
-        bool isLocked() const { return isObstacle(); }
-        void isLocked(const bool isLocked) { m_isObstacle = isLocked; }
+        DoorPiece(Context & context, const Piece piece, const char mapChar, const MapPos_t & pos)
+            : PieceBase(context, piece, mapChar, pos)
+        {}
     };
 
 } // namespace castlecrawl

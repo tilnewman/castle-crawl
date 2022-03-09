@@ -17,6 +17,7 @@ namespace sf
 
 namespace castlecrawl
 {
+    struct Context;
 
     class Maps
     {
@@ -29,8 +30,8 @@ namespace castlecrawl
         const Map & get() const { return *m_currentMapPtr; }
 
         void switchTo(Context & context, const MapLink & link);
-        
-        void reloadAfterChange(Context & context) { m_currentMapPtr->load(context, m_verts); }
+
+        void reloadAfterChange(Context & context);
 
         void drawCurrent(
             const Context & context, sf::RenderTarget & target, sf::RenderStates states) const;
