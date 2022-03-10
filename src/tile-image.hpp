@@ -25,7 +25,15 @@ namespace castlecrawl
         Stone4,
         Stone5,
         Stone6,
-        Black,
+        Dirt1,
+        Dirt2,
+        Dirt3,
+        Dirt4,
+        Dirt5,
+        Plant1,
+        Plant2,
+        Plant3,
+        Plant4,
         Lava,
         Water,
         WallBlock,
@@ -53,6 +61,7 @@ namespace castlecrawl
         Count
     };
 
+    // only bother to implement the obstacles and Empty
     inline constexpr char tileImageChar(const TileImage tileImage) noexcept
     {
         // clang-format off
@@ -73,7 +82,16 @@ namespace castlecrawl
             case TileImage::StairUp:        { return 'S'; }
             case TileImage::StairDown:      { return 's'; }
             case TileImage::Player:         { return 'p'; }
+            case TileImage::Plant1:         { return '@'; }
+            case TileImage::Plant2:         { return '#'; }
+            case TileImage::Plant3:         { return '$'; }
+            case TileImage::Plant4:         { return '%'; }
             case TileImage::Empty:          { return ' '; }
+            case TileImage::Dirt1:
+            case TileImage::Dirt2:
+            case TileImage::Dirt3:
+            case TileImage::Dirt4:
+            case TileImage::Dirt5:
             case TileImage::Wood1:
             case TileImage::Wood2:
             case TileImage::Wood3:
@@ -87,7 +105,6 @@ namespace castlecrawl
             case TileImage::Stone5:
             case TileImage::Stone6:
             case TileImage::WallHorizShadow:
-            case TileImage::Black:
             case TileImage::StoneTopLft:
             case TileImage::StoneTop:
             case TileImage::StoneTopRgt:
@@ -133,6 +150,15 @@ namespace castlecrawl
             case ';': return TileImage::Stone6;
             case 'l': return TileImage::Lava;
             case 'w': return TileImage::Water;
+            case '[': return TileImage::Dirt1;
+            case ']': return TileImage::Dirt2;
+            case '{': return TileImage::Dirt3;
+            case '}': return TileImage::Dirt4;
+            case '<': return TileImage::Dirt5;
+            case '@': return TileImage::Plant1;
+            case '#': return TileImage::Plant2;
+            case '$': return TileImage::Plant3;
+            case '%': return TileImage::Plant4;
             default: return TileImage::Empty;
         }
     }
@@ -180,11 +206,22 @@ namespace castlecrawl
             case TileImage::StoneBot:        return sf::IntRect(128,192,32,32);
             case TileImage::StoneBotRgt:     return sf::IntRect(160,192,32,32);
             //
-            case TileImage::Black:           return sf::IntRect( 0,192,32,32);
             case TileImage::Lava:            return sf::IntRect(32,192,32,32);
             case TileImage::Water:           return sf::IntRect(64,192,32,32);
             //
-            case TileImage::Empty:                 
+            case TileImage::Dirt1:           return sf::IntRect(160,0,32,32);
+            case TileImage::Dirt2:           return sf::IntRect(192,0,32,32);
+            case TileImage::Dirt3:           return sf::IntRect(160,32,32,32);
+            case TileImage::Dirt4:           return sf::IntRect(192,32,32,32);
+            case TileImage::Dirt5:           return sf::IntRect(224,192,32,32);
+            //           
+            case TileImage::Plant1:          return sf::IntRect(0,224,32,32);
+            case TileImage::Plant2:          return sf::IntRect(32,224,32,32);
+            case TileImage::Plant3:          return sf::IntRect(64,224,32,32);
+            case TileImage::Plant4:          return sf::IntRect(96,224,32,32);
+            //
+            case TileImage::Empty:           return sf::IntRect(0,192,32,32);
+            //
             case TileImage::Count:
             default:                         return sf::IntRect(0,0,0,0);
         }

@@ -12,6 +12,8 @@
 #include "settings.hpp"
 #include "util.hpp"
 
+#include <array>
+
 #include <SFML/Graphics/Sprite.hpp>
 
 namespace castlecrawl
@@ -300,7 +302,7 @@ namespace castlecrawl
     void Map::makeBorderVerts(
         const Context & context, const MapChars_t & mapChars, VertVec_t & verts)
     {
-        sf::Sprite sprite = context.media.tileSprite(TileImage::Black);
+        sf::Sprite sprite = context.media.tileSprite(TileImage::Lava); // any non-empty works here
         sprite.setColor(context.config.background_color);
         sprite.scale(1.5f, 1.5f);
 
@@ -487,6 +489,22 @@ namespace castlecrawl
                 else if (ch == tileImageChar(TileImage::Chest))
                 {
                     context.board.add(Piece(context, Pieces::Chest, ch, pos));
+                }
+                else if (ch == tileImageChar(TileImage::Plant1))
+                {
+                    context.board.add(Piece(context, Pieces::Plant, ch, pos));
+                }
+                else if (ch == tileImageChar(TileImage::Plant2))
+                {
+                    context.board.add(Piece(context, Pieces::Plant, ch, pos));
+                }
+                else if (ch == tileImageChar(TileImage::Plant3))
+                {
+                    context.board.add(Piece(context, Pieces::Plant, ch, pos));
+                }
+                else if (ch == tileImageChar(TileImage::Plant4))
+                {
+                    context.board.add(Piece(context, Pieces::Plant, ch, pos));
                 }
                 else if (
                     (tileImageChar(TileImage::WallBlock) == ch) ||

@@ -41,7 +41,8 @@ namespace castlecrawl
         StairsUp,
         StairsDown,
         SpiderWeb,
-        Spider
+        Spider,
+        Plant
     };
 
     inline constexpr bool isPieceObstacle(const Pieces piece) noexcept
@@ -63,29 +64,8 @@ namespace castlecrawl
             case Pieces::StairsDown:    { return false; }
             case Pieces::SpiderWeb:     { return true;  }
             case Pieces::Spider:        { return false; }
+            case Pieces::Plant:         { return true;  }
             default:                    { return false; }
-        }
-        // clang-format on
-    }
-
-    inline constexpr std::string_view toString(const Pieces piece) noexcept
-    {
-        // clang-format off
-        switch (piece)
-        {
-            case Pieces::Player:        { return "Player"; }
-            case Pieces::DoorLocked:    { return "DoorLocked"; }
-            case Pieces::DoorUnlocked:  { return "DoorUnlocked"; }
-            case Pieces::Wall:          { return "Wall"; }
-            case Pieces::Barrel:        { return "Barrel"; }
-            case Pieces::Coffin:        { return "Coffin"; }
-            case Pieces::Chest:         { return "Chest"; }
-            case Pieces::Lava:          { return "Lava"; }
-            case Pieces::Water:         { return "Water"; }
-            case Pieces::StairsUp:      { return "StairsUp"; }
-            case Pieces::StairsDown:    { return "StairsDown"; }
-            case Pieces::None:
-            default:                    { return "Piece::Invalid"; }
         }
         // clang-format on
     }
