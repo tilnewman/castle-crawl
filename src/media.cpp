@@ -9,8 +9,6 @@
 #include "settings.hpp"
 #include "util.hpp"
 
-#include <filesystem>
-
 namespace castlecrawl
 {
     void Media::load(const GameConfig & config, const Layout & layout, util::SoundPlayer & audio)
@@ -21,6 +19,7 @@ namespace castlecrawl
         calcFontExtents();
 
         loadTileSprites(config, layout);
+        loadSummonSprites(config, layout);
 
         audio.loadAll();
     }
@@ -30,7 +29,7 @@ namespace castlecrawl
         const std::size_t imageCount = static_cast<std::size_t>(TileImage::Count);
         m_tileSprites.resize(imageCount);
 
-        load((config.media_dir_path / "image/tile.png"), m_tileTexture);
+        load((config.media_dir_path / "image" / "tile.png"), m_tileTexture);
 
         for (sf::Sprite & sprite : m_tileSprites)
         {
@@ -40,8 +39,8 @@ namespace castlecrawl
         // keep in sync with enum declaration
         for (std::size_t i(0); i < imageCount; ++i)
         {
-            m_tileSprites.at(i).setTextureRect(tileImageToTileRect(static_cast<TileImage>(i)));
-            util::fit(m_tileSprites.at(i), layout.mapCellSize());
+            m_tileSprites[i].setTextureRect(tileImageToTileRect(static_cast<TileImage>(i)));
+            util::fit(m_tileSprites[i], layout.mapCellSize());
         }
 
         m_tileSprites.at(static_cast<std::size_t>(TileImage::Coffin))
@@ -50,14 +49,47 @@ namespace castlecrawl
         m_tileSprites.at(static_cast<std::size_t>(TileImage::Empty)) = m_defaultSprite;
     }
 
+    void Media::loadSummonSprites(const GameConfig & config, const Layout & layout)
+    {
+        const std::size_t imageCount{ static_cast<std::size_t>(SummonImage::Count) };
+        m_summonSprites.resize(imageCount);
+
+        load((config.media_dir_path / "image" / "summon.png"), m_summonTexture);
+
+        for (sf::Sprite & sprite : m_summonSprites)
+        {
+            sprite.setTexture(m_summonTexture);
+        }
+
+        // keep in sync with enum declaration
+        for (std::size_t i(0); i < imageCount; ++i)
+        {
+            m_summonSprites[i].setTextureRect(summonImageRect(static_cast<SummonImage>(i)));
+            util::fit(m_summonSprites[i], layout.mapCellSize());
+        }
+    }
+
     const sf::Font & Media::font() const { return m_font; }
 
-    const sf::Sprite & Media::sprite(const TileImage image) const
+    const sf::Sprite & Media::tileSprite(const TileImage image) const
     {
         const std::size_t index = static_cast<std::size_t>(image);
         if (index < m_tileSprites.size())
         {
-            return m_tileSprites.at(index);
+            return m_tileSprites[index];
+        }
+        else
+        {
+            return m_defaultSprite;
+        }
+    }
+
+    const sf::Sprite & Media::summonSprite(const SummonImage image) const
+    {
+        const std::size_t index = static_cast<std::size_t>(image);
+        if (index < m_tileSprites.size())
+        {
+            return m_tileSprites[index];
         }
         else
         {

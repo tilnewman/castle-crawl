@@ -5,6 +5,7 @@
 //
 #include "check-macros.hpp"
 #include "sound-player.hpp"
+#include "summon-image.hpp"
 #include "tile-image.hpp"
 
 #include <filesystem>
@@ -56,7 +57,8 @@ namespace castlecrawl
         void load(const GameConfig &, const Layout &, util::SoundPlayer &);
 
         const sf::Font & font() const;
-        const sf::Sprite & sprite(const TileImage) const;
+        const sf::Sprite & tileSprite(const TileImage image) const;
+        const sf::Sprite & summonSprite(const SummonImage image) const;
         const sf::Texture & tileTexture() const { return m_tileTexture; }
         const FontExtent fontExtent(const FontSize size) const;
 
@@ -72,7 +74,8 @@ namespace castlecrawl
 
       protected:
         void makeDefaults();
-        void loadTileSprites(const GameConfig & config, const Layout &);
+        void loadTileSprites(const GameConfig & config, const Layout & layout);
+        void loadSummonSprites(const GameConfig & config, const Layout & layout);
         void calcFontExtents();
 
         template <typename T>
@@ -87,8 +90,12 @@ namespace castlecrawl
 
       protected:
         sf::Font m_font;
-        std::vector<sf::Sprite> m_tileSprites;
+
         sf::Texture m_tileTexture;
+        std::vector<sf::Sprite> m_tileSprites;
+
+        sf::Texture m_summonTexture;
+        std::vector<sf::Sprite> m_summonSprites;
 
         FontExtent m_fontExtentHuge;
         FontExtent m_fontExtentLarge;

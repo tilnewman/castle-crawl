@@ -3,6 +3,8 @@
 //
 // summon-image.hpp
 //
+#include "random.hpp"
+
 #include <cstddef>
 
 #include <SFML/Graphics/Rect.hpp>
@@ -78,7 +80,15 @@ namespace castlecrawl
         Count
     };
 
-    inline sf::IntRect summonImageToTileRect(const SummonImage image)
+    inline SummonImage
+        randomSummonImage(const util::Random & random, const SummonImage summoner)
+    {
+        const std::size_t summonerIndex{ static_cast<std::size_t>(summoner) };
+        const std::size_t randomIndex{ summonerIndex + random.fromTo<std::size_t>(1, 6) };
+        return static_cast<SummonImage>(randomIndex);
+    }
+
+    inline sf::IntRect summonImageRect(const SummonImage image) noexcept
     {
         // clang-format off
         switch (image)

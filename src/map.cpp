@@ -261,8 +261,8 @@ namespace castlecrawl
 
     void Map::makeVerts(const Context & context, const MapChars_t & mapChars, VertVec_t & verts)
     {
-        sf::Sprite tileSprite = context.media.sprite(TileImage::Empty);
-        sf::Sprite shadowSprite = context.media.sprite(TileImage::WallHorizShadow);
+        sf::Sprite tileSprite = context.media.tileSprite(TileImage::Empty);
+        sf::Sprite shadowSprite = context.media.tileSprite(TileImage::WallHorizShadow);
 
         const float mapCellDimm{ context.layout.mapCellDimm() };
         const sf::Vector2f boardPos{ util::position(context.layout.boardBounds()) };
@@ -273,7 +273,7 @@ namespace castlecrawl
             char prevMapChar(0);
             for (const char mapChar : mapLine)
             {
-                tileSprite = context.media.sprite(tileImage(mapChar));
+                tileSprite = context.media.tileSprite(tileImage(mapChar));
                 tileSprite.setPosition(pos);
 
                 util::appendQuadVerts(
@@ -300,7 +300,7 @@ namespace castlecrawl
     void Map::makeBorderVerts(
         const Context & context, const MapChars_t & mapChars, VertVec_t & verts)
     {
-        sf::Sprite sprite = context.media.sprite(TileImage::Black);
+        sf::Sprite sprite = context.media.tileSprite(TileImage::Black);
         sprite.setColor(context.config.background_color);
         sprite.scale(1.5f, 1.5f);
 
@@ -342,7 +342,7 @@ namespace castlecrawl
 
         auto notLiq = [](const char ch) { return ((ch != 'l') && (ch != 'w')); };
 
-        sf::Sprite sprite = context.media.sprite(TileImage::Empty);
+        sf::Sprite sprite = context.media.tileSprite(TileImage::Empty);
 
         const float mapCellDimm{ context.layout.mapCellDimm() };
         const sf::Vector2f boardPos{ util::position(context.layout.boardBounds()) };
@@ -369,56 +369,56 @@ namespace castlecrawl
 
                 if (notLiq(up) && notLiq(left))
                 {
-                    sprite = context.media.sprite(TileImage::StoneTopLft);
+                    sprite = context.media.tileSprite(TileImage::StoneTopLft);
                     sprite.setPosition(pos);
                     util::appendQuadVerts(sprite.getGlobalBounds(), sprite.getTextureRect(), verts);
                 }
 
                 if (notLiq(up) && notLiq(right))
                 {
-                    sprite = context.media.sprite(TileImage::StoneTopRgt);
+                    sprite = context.media.tileSprite(TileImage::StoneTopRgt);
                     sprite.setPosition(pos);
                     util::appendQuadVerts(sprite.getGlobalBounds(), sprite.getTextureRect(), verts);
                 }
 
                 if (notLiq(down) && notLiq(left))
                 {
-                    sprite = context.media.sprite(TileImage::StoneBotLft);
+                    sprite = context.media.tileSprite(TileImage::StoneBotLft);
                     sprite.setPosition(pos);
                     util::appendQuadVerts(sprite.getGlobalBounds(), sprite.getTextureRect(), verts);
                 }
 
                 if (notLiq(down) && notLiq(right))
                 {
-                    sprite = context.media.sprite(TileImage::StoneBotRgt);
+                    sprite = context.media.tileSprite(TileImage::StoneBotRgt);
                     sprite.setPosition(pos);
                     util::appendQuadVerts(sprite.getGlobalBounds(), sprite.getTextureRect(), verts);
                 }
 
                 if (notLiq(up))
                 {
-                    sprite = context.media.sprite(TileImage::StoneTop);
+                    sprite = context.media.tileSprite(TileImage::StoneTop);
                     sprite.setPosition(pos);
                     util::appendQuadVerts(sprite.getGlobalBounds(), sprite.getTextureRect(), verts);
                 }
 
                 if (notLiq(down))
                 {
-                    sprite = context.media.sprite(TileImage::StoneBot);
+                    sprite = context.media.tileSprite(TileImage::StoneBot);
                     sprite.setPosition(pos);
                     util::appendQuadVerts(sprite.getGlobalBounds(), sprite.getTextureRect(), verts);
                 }
 
                 if (notLiq(left))
                 {
-                    sprite = context.media.sprite(TileImage::StoneLft);
+                    sprite = context.media.tileSprite(TileImage::StoneLft);
                     sprite.setPosition(pos);
                     util::appendQuadVerts(sprite.getGlobalBounds(), sprite.getTextureRect(), verts);
                 }
 
                 if (notLiq(right))
                 {
-                    sprite = context.media.sprite(TileImage::StoneRgt);
+                    sprite = context.media.tileSprite(TileImage::StoneRgt);
                     sprite.setPosition(pos);
                     util::appendQuadVerts(sprite.getGlobalBounds(), sprite.getTextureRect(), verts);
                 }
