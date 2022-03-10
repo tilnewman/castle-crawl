@@ -31,14 +31,9 @@ namespace castlecrawl
 
         load((config.media_dir_path / "image" / "tile.png"), m_tileTexture);
 
-        for (sf::Sprite & sprite : m_tileSprites)
-        {
-            sprite.setTexture(m_tileTexture);
-        }
-
-        // keep in sync with enum declaration
         for (std::size_t i(0); i < imageCount; ++i)
         {
+            m_tileSprites[i].setTexture(m_tileTexture);
             m_tileSprites[i].setTextureRect(tileImageToTileRect(static_cast<TileImage>(i)));
             util::fit(m_tileSprites[i], layout.mapCellSize());
         }
@@ -56,14 +51,9 @@ namespace castlecrawl
 
         load((config.media_dir_path / "image" / "summon.png"), m_summonTexture);
 
-        for (sf::Sprite & sprite : m_summonSprites)
-        {
-            sprite.setTexture(m_summonTexture);
-        }
-
-        // keep in sync with enum declaration
         for (std::size_t i(0); i < imageCount; ++i)
         {
+            m_summonSprites[i].setTexture(m_summonTexture);
             m_summonSprites[i].setTextureRect(summonImageRect(static_cast<SummonImage>(i)));
             util::fit(m_summonSprites[i], layout.mapCellSize());
         }
@@ -87,9 +77,9 @@ namespace castlecrawl
     const sf::Sprite & Media::summonSprite(const SummonImage image) const
     {
         const std::size_t index = static_cast<std::size_t>(image);
-        if (index < m_tileSprites.size())
+        if (index < m_summonSprites.size())
         {
-            return m_tileSprites[index];
+            return m_summonSprites[index];
         }
         else
         {
@@ -100,7 +90,7 @@ namespace castlecrawl
     void Media::makeDefaults()
     {
         sf::Image image;
-        image.create(1, 1, sf::Color::Transparent);
+        image.create(1, 1, sf::Color::White);
         m_defaultTexture.loadFromImage(image);
         m_defaultSprite.setTexture(m_defaultTexture, true);
     }
