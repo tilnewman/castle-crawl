@@ -65,11 +65,6 @@ namespace castlecrawl
         target.draw(m_player, states);
     }
 
-    void Board::add(Context & context, const Pieces which, const char mapChar, const MapPos_t pos)
-    {
-        m_pieces.push_back(Piece(context, which, mapChar, pos));
-    }
-
     void Board::remove(const MapPos_t pos)
     {
         m_pieces.erase(

@@ -28,7 +28,7 @@ namespace castlecrawl
         Pieces whichAt(const MapPos_t pos) const;
         PieceOpt_t at(const MapPos_t pos);
 
-        void add(Context & context, const Pieces which, const char mapChar, const MapPos_t pos);
+        void add(const Piece piece) { m_pieces.push_back(piece); }
         void remove(const MapPos_t pos);
         void remove(const Pieces which);
 

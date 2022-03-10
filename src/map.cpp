@@ -454,39 +454,39 @@ namespace castlecrawl
 
                 if (ch == tileImageChar(TileImage::Door))
                 {
-                    context.board.add(context, Pieces::DoorUnlocked, ch, pos);
+                    context.board.add(Piece(context, Pieces::DoorUnlocked, ch, pos));
                 }
                 else if (ch == tileImageChar(TileImage::DoorLocked))
                 {
-                    context.board.add(context, Pieces::DoorLocked, ch, pos);
+                    context.board.add(Piece(context, Pieces::DoorLocked, ch, pos));
                 }
                 else if (ch == tileImageChar(TileImage::Water))
                 {
-                    context.board.add(context, Pieces::Water, ch, pos);
+                    context.board.add(Piece(context, Pieces::Water, ch, pos));
                 }
                 else if (ch == tileImageChar(TileImage::Lava))
                 {
-                    context.board.add(context, Pieces::Lava, ch, pos);
+                    context.board.add(Piece(context, Pieces::Lava, ch, pos));
                 }
                 else if (ch == tileImageChar(TileImage::StairUp))
                 {
-                    context.board.add(context, Pieces::StairsUp, ch, pos);
+                    context.board.add(Piece(context, Pieces::StairsUp, ch, pos));
                 }
                 else if (ch == tileImageChar(TileImage::StairDown))
                 {
-                    context.board.add(context, Pieces::StairsDown, ch, pos);
+                    context.board.add(Piece(context, Pieces::StairsDown, ch, pos));
                 }
                 else if (ch == tileImageChar(TileImage::Barrel))
                 {
-                    context.board.add(context, Pieces::Barrel, ch, pos);
+                    context.board.add(Piece(context, Pieces::Barrel, ch, pos));
                 }
                 else if (ch == tileImageChar(TileImage::Coffin))
                 {
-                    context.board.add(context, Pieces::Coffin, ch, pos);
+                    context.board.add(Piece(context, Pieces::Coffin, ch, pos));
                 }
                 else if (ch == tileImageChar(TileImage::Chest))
                 {
-                    context.board.add(context, Pieces::Chest, ch, pos);
+                    context.board.add(Piece(context, Pieces::Chest, ch, pos));
                 }
                 else if (
                     (tileImageChar(TileImage::WallBlock) == ch) ||
@@ -495,7 +495,7 @@ namespace castlecrawl
                     (tileImageChar(TileImage::WallTopLeft) == ch) ||
                     (tileImageChar(TileImage::WallVert) == ch))
                 {
-                    context.board.add(context, Pieces::Wall, ch, pos);
+                    context.board.add(Piece(context, Pieces::Wall, ch, pos));
                 }
             }
         }
