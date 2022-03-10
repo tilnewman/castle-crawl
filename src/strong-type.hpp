@@ -7,6 +7,7 @@
 
 #include <compare>
 #include <ostream>
+#include <type_traits>
 
 namespace util
 {
@@ -16,7 +17,11 @@ namespace util
     template <typename T, typename Parameter_t>
     struct StrongType
     {
-        StrongType() = default;
+        static_assert(
+            (std::is_integral_v<T> && !std::is_same_v<T, bool>),
+            "This class was designed for integer types only.  No biscuit.");
+
+        StrongType() noexcept = default;
 
         explicit StrongType(const T & value)
             : m_value(value)
@@ -119,8 +124,8 @@ namespace util
     {
         struct TestTag;
         static_assert(
-            std::is_trivial<StrongType<int, TestTag>>::value,
-            "StrongTypes of simple numeric types like int should be trivial!");
+            std::is_trivial_v<StrongType<int, TestTag>>,
+            "StrongTypes of simple numeric types like int SHOULD be trivial.  No biscuit.");
     } // namespace test
 
     template <typename T, typename Parameter_t>
