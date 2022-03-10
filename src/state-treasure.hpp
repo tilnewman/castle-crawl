@@ -41,6 +41,7 @@ namespace castlecrawl
         sf::RectangleShape m_bgRectangle;
         sf::RectangleShape m_selectRectangle;
         std::size_t m_selectIndex;
+        sf::Text m_doneText;
     };
 
 } // namespace castlecrawl

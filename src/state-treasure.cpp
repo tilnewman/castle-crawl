@@ -24,6 +24,7 @@ namespace castlecrawl
         , m_itemTexts()
         , m_bgRectangle()
         , m_selectIndex(0)
+        , m_doneText()
     {}
 
     void StateTreasure::onEnter(Context & context)
@@ -105,9 +106,24 @@ namespace castlecrawl
             }
         }
 
+        // done text
+        if (treasure.items.empty())
+        {
+            m_doneText = context.media.makeText(FontSize::Small, "(press Enter to exit)");
+        }
+        else
+        {
+            m_doneText = context.media.makeText(FontSize::Medium, "(Exit)");
+        }
+
+        m_doneText.setPosition(
+            ((context.layout.windowSize().x * 0.5f) - (m_doneText.getGlobalBounds().width * 0.5f)),
+            (itemTextPosY + (vertPad * 1.5f)));
+
         // finish the cyan blusih bar
-        const float bgRectangleHeight{ (itemTextPosY - m_bgRectangle.getGlobalBounds().top) +
-                                       vertPad };
+        const float bgRectangleHeight{
+            (util::bottom(m_doneText) - m_bgRectangle.getGlobalBounds().top) + vertPad
+        };
 
         m_bgRectangle.setSize(sf::Vector2f{ context.layout.windowSize().x, bgRectangleHeight });
 
@@ -140,17 +156,19 @@ namespace castlecrawl
 
         if (sf::Keyboard::Escape == event.key.code)
         {
+            context.audio.play("thock-3.ogg");
             context.state.setChangePending(State::Play);
             return;
         }
 
         if (sf::Keyboard::Enter == event.key.code)
         {
-            if (m_itemTexts.empty())
+            if (m_itemTexts.empty() || (m_selectIndex == m_itemTexts.size()))
             {
+                context.audio.play("thock-3.ogg");
                 context.state.setChangePending(State::Play);
             }
-            else
+            else if (m_selectIndex < m_itemTexts.size())
             {
                 context.audio.play("thud-1.ogg", 1.25f);
 
@@ -161,14 +179,7 @@ namespace castlecrawl
 
                 treasure.items.erase(itemIter);
 
-                if (treasure.items.empty())
-                {
-                    context.state.setChangePending(State::Play);
-                }
-                else
-                {
-                    redraw(context);
-                }
+                redraw(context);
             }
 
             return;
@@ -185,9 +196,10 @@ namespace castlecrawl
             }
         }
 
-        if ((sf::Keyboard::Down == event.key.code) && !m_itemTexts.empty())
+        if (((sf::Keyboard::Down == event.key.code) || (sf::Keyboard::Space == event.key.code)) &&
+            !m_itemTexts.empty())
         {
-            if (m_selectIndex < (m_itemTexts.size() - 1_st))
+            if (m_selectIndex < m_itemTexts.size())
             {
                 context.audio.play("tick-off-1.ogg");
                 ++m_selectIndex;
@@ -207,6 +219,7 @@ namespace castlecrawl
         target.draw(m_titleText, states);
         target.draw(m_goldText, states);
         target.draw(m_selectRectangle, states);
+        target.draw(m_doneText, states);
 
         for (const sf::Text & text : m_itemTexts)
         {
@@ -222,6 +235,11 @@ namespace castlecrawl
 
         if (treasure.items.empty())
         {
+            m_selectRectangle.setPosition(
+                ((context.layout.windowSize().x * 0.5f) -
+                 (m_selectRectangle.getGlobalBounds().width * 0.5f)),
+                m_doneText.getGlobalBounds().top);
+
             return;
         }
 
@@ -238,15 +256,20 @@ namespace castlecrawl
             itemTextPosY += context.media.fontExtent(FontSize::Medium).letter_size.y;
         }
 
-        if (m_selectIndex >= treasure.items.size())
+        if (m_selectIndex < treasure.items.size())
         {
-            m_selectIndex = (treasure.items.size() - 1_st);
+            m_selectRectangle.setPosition(
+                ((context.layout.windowSize().x * 0.5f) -
+                 (m_selectRectangle.getGlobalBounds().width * 0.5f)),
+                m_itemTexts.at(m_selectIndex).getGlobalBounds().top);
         }
-
-        m_selectRectangle.setPosition(
-            ((context.layout.windowSize().x * 0.5f) -
-             (m_selectRectangle.getGlobalBounds().width * 0.5f)),
-            m_itemTexts.at(m_selectIndex).getGlobalBounds().top);
+        else
+        {
+            m_selectRectangle.setPosition(
+                ((context.layout.windowSize().x * 0.5f) -
+                 (m_selectRectangle.getGlobalBounds().width * 0.5f)),
+                m_doneText.getGlobalBounds().top);
+        }
     }
 
 } // namespace castlecrawl
