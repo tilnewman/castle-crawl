@@ -1,4 +1,4 @@
-File:          splash.png and summon-image.png
+File:          splash.png and summon.png
 Comment:       Some of the images in these files are from "lorc"
 From:          game-icons.net
 Original Name: castle--lorc.svg
