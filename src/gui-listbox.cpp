@@ -162,7 +162,7 @@ namespace castlecrawl
 
         m_bgRectangle.setOutlineThickness(1.0f);
 
-        m_bgRectangle.setFillColor(sf::Color(40, 40, 40, 127));
+        m_bgRectangle.setFillColor(sf::Color(80, 80, 80, 127));
         m_bgRectangle.setOutlineColor(sf::Color(150, 150, 150, 127));
 
         if (m_hasFocus)

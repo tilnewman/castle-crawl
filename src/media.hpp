@@ -60,6 +60,7 @@ namespace castlecrawl
         const sf::Sprite & tileSprite(const TileImage image) const;
         const sf::Sprite & summonSprite(const SummonImage image) const;
         const sf::Texture & tileTexture() const { return m_tileTexture; }
+        const sf::Texture & titleTexture() const { return m_titleTexture; }
         const FontExtent fontExtent(const FontSize size) const;
 
         const sf::Text makeText(
@@ -101,6 +102,8 @@ namespace castlecrawl
         FontExtent m_fontExtentLarge;
         FontExtent m_fontExtentMedium;
         FontExtent m_fontExtentSmall;
+
+        sf::Texture m_titleTexture;
 
         static inline sf::Texture m_defaultTexture;
         static inline sf::Sprite m_defaultSprite;

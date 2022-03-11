@@ -5,9 +5,9 @@
 //
 #include "frames-per-sec.hpp"
 #include "states.hpp"
+#include "top-panel.hpp"
 
 #include <SFML/Graphics/RectangleShape.hpp>
-
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
@@ -29,7 +29,9 @@ namespace castlecrawl
         void onEnter(Context & context) override;
         void update(Context & context, const float frameTimeSec) override;
         void handleEvent(Context & context, const sf::Event & event) override;
-        void draw(const Context &, sf::RenderTarget &, sf::RenderStates) const override;
+
+        void draw(const Context & context, sf::RenderTarget & target, sf::RenderStates states)
+            const override;
 
       private:
         void updateReplenish(Context & context, const float frameTimeSec);
@@ -40,6 +42,7 @@ namespace castlecrawl
 
         FramesPerSecond m_fps;
         sf::RectangleShape m_bgRectangle;
+        TopPanel m_topPanel;
     };
 
 } // namespace castlecrawl
