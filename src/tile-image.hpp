@@ -213,7 +213,7 @@ namespace castlecrawl
             case TileImage::Dirt2:           return sf::IntRect(192,0,32,32);
             case TileImage::Dirt3:           return sf::IntRect(160,32,32,32);
             case TileImage::Dirt4:           return sf::IntRect(192,32,32,32);
-            case TileImage::Dirt5:           return sf::IntRect(224,192,32,32);
+            case TileImage::Dirt5:           return sf::IntRect(224,32,32,32);
             //           
             case TileImage::Plant1:          return sf::IntRect(0,224,32,32);
             case TileImage::Plant2:          return sf::IntRect(32,224,32,32);

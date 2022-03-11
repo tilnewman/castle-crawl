@@ -24,6 +24,13 @@ namespace castlecrawl
         void reset();
     };
 
+    enum class Floor
+    {
+        Wood,
+        Stone,
+        Dirt
+    };
+
     //
 
     class Map
@@ -31,10 +38,7 @@ namespace castlecrawl
       public:
         Map();
 
-        Map(const util::Random & random,
-            const bool isFloorStone,
-            const MapChars_t &,
-            const MapLinks_t &);
+        Map(const util::Random & random, const Floor floor, const MapChars_t &, const MapLinks_t &);
 
         void load(Context & context, MapVerts & verts, const MapPos_t playerPos);
 
@@ -75,8 +79,7 @@ namespace castlecrawl
         friend void from_json(const json & j, Map & m);
 
       private:
-        bool m_isFloorStone;
-
+        Floor m_floor;
         MapChars_t m_chars;
         MapChars_t m_floorChars;
         MapLinks_t m_links;
@@ -84,13 +87,15 @@ namespace castlecrawl
 
     inline void to_json(json & j, const Map & m)
     {
-        j = json{ { "chars", m.m_chars },
+        j = json{ { "floor", m.m_floor },
+                  { "chars", m.m_chars },
                   { "floor_chars", m.m_floorChars },
                   { "links", m.m_links } };
     }
 
     inline void from_json(const json & j, Map & m)
     {
+        j.at("floor").get_to(m.m_floor);
         j.at("chars").get_to(m.m_chars);
         j.at("floor_chars").get_to(m.m_floorChars);
         j.at("links").get_to(m.m_links);

@@ -34,7 +34,7 @@ namespace castlecrawl
         // clang-format off
         m_maps["level-1-first-room"] = Map {
             random,
-            true,
+            Floor::Stone,
             MapChars_t {
                 "...........",
                 "...........",
@@ -55,7 +55,7 @@ namespace castlecrawl
         
         m_maps["level-1-cell-block"] = Map {
             random,
-            false,
+            Floor::Wood,
             MapChars_t {
                 ".....d............................",
                 "..... ............................",
@@ -88,7 +88,7 @@ namespace castlecrawl
         
         m_maps["level-1-main-hall"] = Map {
             random,
-            false,
+            Floor::Wood,
             MapChars_t {
                 "................d.................",
                 "................ .................",
@@ -123,7 +123,7 @@ namespace castlecrawl
 
         m_maps["level-1-boiler-room"] = Map {
             random,
-            true,
+            Floor::Stone,
             MapChars_t {
                 "..S..........................",
                 ".. ..........................",
@@ -155,7 +155,7 @@ namespace castlecrawl
         
         m_maps["level-1-hidden-passage"] = Map {
             random,
-            false,
+            Floor::Wood,
             MapChars_t {
                 "...................",
                 "...................",
@@ -187,7 +187,7 @@ namespace castlecrawl
 
         m_maps["level-1-coffin-room"] = Map {
             random,
-            true,
+            Floor::Stone,
             MapChars_t {
                 ".................................",
                 ".................................",

@@ -31,7 +31,7 @@ namespace castlecrawl
     }
 
     Map::Map()
-        : m_isFloorStone(false)
+        : m_floor(Floor::Stone)
         , m_chars()
         , m_floorChars()
         , m_links()
@@ -40,10 +40,10 @@ namespace castlecrawl
 
     Map::Map(
         const util::Random & random,
-        const bool isFloorStone,
+        const Floor floor,
         const MapChars_t & chars,
         const MapLinks_t & links)
-        : m_isFloorStone(isFloorStone)
+        : m_floor(floor)
         , m_chars(chars)
         , m_floorChars()
         , m_links(links)
@@ -112,16 +112,21 @@ namespace castlecrawl
             {
                 if ('.' != ch)
                 {
-                    if (m_isFloorStone)
+                    if (Floor::Stone == m_floor)
                     {
                         ch = '6';
+                        ch += random.fromTo<char>(0, 5);
+                    }
+                    else if (Floor::Wood == m_floor)
+                    {
+                        ch = '0';
+                        ch += random.fromTo<char>(0, 5);
                     }
                     else
                     {
-                        ch = '0';
+                        const std::array<char, 5> dirtChars{ '[', ']', '{', '}', '<' };
+                        ch = random.from(dirtChars);
                     }
-
-                    ch += random.fromTo<char>(0, 5);
                 }
             }
         }
