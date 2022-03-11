@@ -33,6 +33,7 @@ namespace castlecrawl
         : StateBase(State::Play)
         , m_fps()
         , m_bgRectangle()
+        , m_topPanel()
     {
         m_bgRectangle.setPosition(0.0f, 0.0f);
         m_bgRectangle.setSize(context.layout.windowSize());
@@ -40,6 +41,8 @@ namespace castlecrawl
         m_bgRectangle.setOutlineThickness(0.0f);
 
         m_fps.reset(context);
+
+        m_topPanel.setup(context);
     }
 
     void StatePlay::onEnter(Context & context)
@@ -247,9 +250,10 @@ namespace castlecrawl
         const Context & context, sf::RenderTarget & target, sf::RenderStates states) const
     {
         target.draw(m_bgRectangle, states);
-        context.maps.drawCurrentLower(context, target, states);
+        context.maps.drawLower(context, target, states);
         target.draw(context.board, states);
-        context.maps.drawCurrentUpper(context, target, states);
+        context.maps.drawUpper(context, target, states);
+        target.draw(m_topPanel, states);
         target.draw(context.anim, states);
         target.draw(m_fps, states);
     }

@@ -244,7 +244,7 @@ namespace castlecrawl
         m_currentMapPtr->load(context, m_verts, context.board.player().position());
     }
 
-    void Maps::drawCurrentLower(
+    void Maps::drawLower(
         const Context & context, sf::RenderTarget & target, sf::RenderStates states) const
     {
         states.texture = &context.media.tileTexture();
@@ -261,7 +261,7 @@ namespace castlecrawl
         }
     }
 
-    void Maps::drawCurrentUpper(
+    void Maps::drawUpper(
         const Context & context, sf::RenderTarget & target, sf::RenderStates states) const
     {
         states.texture = &context.media.tileTexture();

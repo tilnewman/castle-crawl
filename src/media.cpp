@@ -21,6 +21,8 @@ namespace castlecrawl
         loadTileSprites(config, layout);
         loadSummonSprites(config, layout);
 
+        load((config.media_dir_path / "image" / "title.png"), m_titleTexture);
+
         audio.loadAll();
     }
 

@@ -36,10 +36,10 @@ namespace castlecrawl
 
         void reloadAfterChange(Context & context);
 
-        void drawCurrentLower(
+        void drawLower(
             const Context & context, sf::RenderTarget & target, sf::RenderStates states) const;
 
-        void drawCurrentUpper(
+        void drawUpper(
             const Context & context, sf::RenderTarget & target, sf::RenderStates states) const;
 
         void dumpAllToFile() const;
