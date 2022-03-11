@@ -4,6 +4,7 @@
 // item.hpp
 //
 #include "item-enums.hpp"
+#include "json.hpp"
 #include "strong-types.hpp"
 
 #include <compare>
@@ -14,6 +15,8 @@
 
 namespace castlecrawl
 {
+    using json = nlohmann::json;
+
     namespace item
     {
 

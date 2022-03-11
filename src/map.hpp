@@ -3,6 +3,7 @@
 //
 // map.hpp
 //
+#include "json.hpp"
 #include "map-types.hpp"
 #include "random.hpp"
 
@@ -10,6 +11,8 @@
 
 namespace castlecrawl
 {
+    using json = nlohmann::json;
+
     struct Context;
 
     struct MapVerts
@@ -20,6 +23,8 @@ namespace castlecrawl
 
         void reset();
     };
+
+    //
 
     class Map
     {
@@ -32,7 +37,6 @@ namespace castlecrawl
             const MapLinks_t &);
 
         void load(Context & context, MapVerts & verts, const MapPos_t playerPos);
-        void updateMapChars(const util::Random & random);
 
         MapPos_t size() const;
         bool empty() const { return !((size().x > 0) && (size().y > 0)); }
@@ -56,14 +60,19 @@ namespace castlecrawl
         std::size_t countCharsAround(const MapPos_t & pos, const char ch) const;
 
       private:
-        void addWalls();
-        void addWallCorners();
+        void convertMapChars(const util::Random & random);
+
+        void convertWalls();
+        void convertWallCorners();
         void randomizeFloorTiles(const util::Random & random);
         void resetPieces(Context & context, const MapPos_t playerPos);
 
         static void makeBorderVerts(const Context & context, const MapChars_t &, VertVec_t &);
         void makeStoneTransitionVerts(const Context &, VertVec_t &);
         static void makeVerts(const Context &, const MapChars_t &, VertVec_t &);
+
+        friend void to_json(json & j, const Map & m);
+        friend void from_json(const json & j, Map & m);
 
       private:
         bool m_isFloorStone;
@@ -72,6 +81,20 @@ namespace castlecrawl
         MapChars_t m_floorChars;
         MapLinks_t m_links;
     };
+
+    inline void to_json(json & j, const Map & m)
+    {
+        j = json{ { "chars", m.m_chars },
+                  { "floor_chars", m.m_floorChars },
+                  { "links", m.m_links } };
+    }
+
+    inline void from_json(const json & j, Map & m)
+    {
+        j.at("chars").get_to(m.m_chars);
+        j.at("floor_chars").get_to(m.m_floorChars);
+        j.at("links").get_to(m.m_links);
+    }
 
 } // namespace castlecrawl
 

@@ -3,6 +3,8 @@
 //
 // flat-map.hpp
 //
+#include "json.hpp"
+
 #include <algorithm>
 #include <cstddef>
 #include <stdexcept>
@@ -11,6 +13,7 @@
 
 namespace util
 {
+    using json = nlohmann::json;
 
     // Replacement for std::map for those times when you wish it was just a vector.
     // Not sorted to favor speed, therefore linear run-time and duplicates are possible.
@@ -165,19 +168,35 @@ namespace util
         constexpr const_reverse_iterator_t crbegin() const noexcept { return rbegin(); }
         constexpr const_reverse_iterator_t crend() const noexcept { return rend(); }
 
-        // clang-format off
-        template<typename T, typename U>
-        friend bool
-            operator==(const FlatMap<T, U> & left, const FlatMap<T, U> & right);
+        template <typename T, typename U>
+        friend bool operator==(const FlatMap<T, U> & left, const FlatMap<T, U> & right);
 
-        template<typename T, typename U>
-        friend bool
-            operator<(const FlatMap<T, U> & left, const FlatMap<T, U> & right);
-        // clang-format on
+        template <typename T, typename U>
+        friend bool operator<(const FlatMap<T, U> & left, const FlatMap<T, U> & right);
+
+        template <typename T, typename U>
+        friend void to_json(json & j, const FlatMap<T, U> & fm);
+
+        template <typename T, typename U>
+        friend void from_json(const json & j, FlatMap<T, U> & fm);
 
       private:
         container_t m_vector;
     };
+
+    //
+
+    template <typename T, typename U>
+    inline void to_json(json & j, const FlatMap<T, U> & fm)
+    {
+        j = json{ "vector", fm.m_vector };
+    }
+
+    template <typename T, typename U>
+    inline void from_json(const json & j, FlatMap<T, U> & fm)
+    {
+        j.at("vector").get_to(fm.m_vector);
+    }
 
     //
 

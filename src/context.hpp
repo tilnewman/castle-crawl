@@ -32,6 +32,7 @@ namespace castlecrawl
 
     struct MapLink;
     struct Process;
+    struct SaveGame;
     struct GameConfig;
 
     //
@@ -49,6 +50,7 @@ namespace castlecrawl
             Media & med,
             StateMachine & sta,
             PopupManager & pop,
+            SaveGame & sav,
             item::ItemFactory & ifa,
             const util::Random & ran,
             util::SoundPlayer & aud,
@@ -64,6 +66,7 @@ namespace castlecrawl
             , media(med)
             , state(sta)
             , popup(pop)
+            , save(sav)
             , items(ifa)
             , random(ran)
             , audio(aud)
@@ -87,6 +90,7 @@ namespace castlecrawl
         Media & media;
         StateMachine & state;
         PopupManager & popup;
+        SaveGame & save;
         item::ItemFactory & items;
         const util::Random & random;
         util::SoundPlayer & audio;

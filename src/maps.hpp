@@ -29,6 +29,8 @@ namespace castlecrawl
         Map & get() { return *m_currentMapPtr; }
         const Map & get() const { return *m_currentMapPtr; }
 
+        const std::string getName() const { return m_currentMapName; }
+
         void switchTo(Context & context, const MapLink & link);
 
         void reloadAfterChange(Context & context);
@@ -40,6 +42,8 @@ namespace castlecrawl
             const Context & context, sf::RenderTarget & target, sf::RenderStates states) const;
 
         void dumpAllToFile() const;
+
+        void save(Context & context) const;
 
       private:
         util::FlatMap<std::string, Map> m_maps;

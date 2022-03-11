@@ -33,7 +33,7 @@ namespace castlecrawl
     Map::Map()
         : m_isFloorStone(false)
         , m_chars()
-        , m_floorChars(false)
+        , m_floorChars()
         , m_links()
 
     {}
@@ -48,13 +48,13 @@ namespace castlecrawl
         , m_floorChars()
         , m_links(links)
     {
-        updateMapChars(random);
+        convertMapChars(random);
     }
 
-    void Map::updateMapChars(const util::Random & random)
+    void Map::convertMapChars(const util::Random & random)
     {
-        addWalls();
-        addWallCorners();
+        convertWalls();
+        convertWallCorners();
 
         m_floorChars = m_chars;
         randomizeFloorTiles(random);
@@ -127,7 +127,7 @@ namespace castlecrawl
         }
     }
 
-    void Map::addWallCorners()
+    void Map::convertWallCorners()
     {
         if (empty())
         {
@@ -207,7 +207,7 @@ namespace castlecrawl
         }
     }
 
-    void Map::addWalls()
+    void Map::convertWalls()
     {
         if (empty())
         {

@@ -9,6 +9,7 @@
 #include "check-macros.hpp"
 #include "context.hpp"
 #include "media.hpp"
+#include "save-game.hpp"
 #include "settings.hpp"
 #include "util.hpp"
 
@@ -286,6 +287,12 @@ namespace castlecrawl
 
             fileStream << "\n\n";
         }
+    }
+
+    void Maps::save(Context & context) const
+    {
+        context.save.maps = m_maps;
+        context.save.map_name = m_currentMapName;
     }
 
 } // namespace castlecrawl

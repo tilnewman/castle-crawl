@@ -54,3 +54,4 @@
 *.clang-tidy
 *.csv
 src/.clang-tidy
+saved-game.txt

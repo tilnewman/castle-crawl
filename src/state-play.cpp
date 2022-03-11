@@ -17,6 +17,7 @@
 #include "player.hpp"
 #include "popup-manager.hpp"
 #include "process.hpp"
+#include "save-game.hpp"
 #include "settings.hpp"
 #include "state-direction.hpp"
 #include "state-machine.hpp"
@@ -113,6 +114,7 @@ namespace castlecrawl
             return;
         }
 
+        // TODO TEMP remove after dev
         if ((sf::Keyboard::Escape == event.key.code) || (sf::Keyboard::Q == event.key.code))
         {
             std::cout << "Player pressed 'Q' or 'Escape'.  Quitting." << std::endl;
@@ -120,12 +122,23 @@ namespace castlecrawl
             return;
         }
 
+        // save game
+        if (sf::Keyboard::F2 == event.key.code)
+        {
+            context.save.saveToFile(context);
+            context.popup.setup(context, "Game Saved");
+            context.state.setChangePending(State::Popup, State::Play);
+            return;
+        }
+
+        // pause
         if (sf::Keyboard::Space == event.key.code)
         {
             context.state.setChangePending(State::Pause, State::Play);
             return;
         }
 
+        // fight
         if (sf::Keyboard::F == event.key.code)
         {
             context.process.action = Action::Fight;
@@ -133,6 +146,7 @@ namespace castlecrawl
             return;
         }
 
+        // inventory
         if (sf::Keyboard::I == event.key.code)
         {
             context.state.setChangePending(State::Inventory);

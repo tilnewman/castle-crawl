@@ -15,6 +15,7 @@
 #include "popup-manager.hpp"
 #include "process.hpp"
 #include "random.hpp"
+#include "save-game.hpp"
 #include "settings.hpp"
 #include "sound-player.hpp"
 #include "state-machine.hpp"
@@ -44,10 +45,11 @@ namespace castlecrawl
         Media m_media;
         Board m_board;
         Layout m_layout;
-        Process m_process;
         Player m_player;
+        Process m_process;
         GameInPlay m_game;
         GameConfig m_config;
+        SaveGame m_saveGame;
         StateMachine m_states;
         PopupManager m_popups;
         item::ItemFactory m_items;
