@@ -18,6 +18,7 @@ namespace sf
 namespace castlecrawl
 {
     struct Context;
+    struct SaveGame;
 
     class Maps
     {
@@ -44,6 +45,7 @@ namespace castlecrawl
         void dumpAllToFile() const;
 
         void save(Context & context) const;
+        void load(Context & context);
 
       private:
         util::FlatMap<std::string, Map> m_maps;

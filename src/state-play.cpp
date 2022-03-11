@@ -123,10 +123,19 @@ namespace castlecrawl
         }
 
         // save game
-        if (sf::Keyboard::F2 == event.key.code)
+        if (sf::Keyboard::S == event.key.code)
         {
             context.save.saveToFile(context);
             context.popup.setup(context, "Game Saved");
+            context.state.setChangePending(State::Popup, State::Play);
+            return;
+        }
+
+        // load game
+        if (sf::Keyboard::L == event.key.code)
+        {
+            context.save.loadFromFile(context);
+            context.popup.setup(context, "Game Loaded");
             context.state.setChangePending(State::Popup, State::Play);
             return;
         }

@@ -5,6 +5,7 @@
 //
 #include "save-game.hpp"
 
+#include "board.hpp"
 #include "context.hpp"
 
 #include <fstream>
@@ -14,14 +15,33 @@ namespace castlecrawl
 
     void SaveGame::saveToFile(Context & context)
     {
-        // serialize
+        // gather data
         context.maps.save(context);
-        context.save.player = context.player;
+        player = context.player;
+        player_pos = context.board.player().position();
+
+        // serialize
         json j = *this;
 
         // save to file
         std::ofstream fileStream("saved-game.txt", std::ios_base::trunc);
         fileStream << std::setw(4) << j;
+    }
+
+    void SaveGame::loadFromFile(Context & context)
+    {
+        // load from file
+        std::ifstream fileStream("saved-game.txt", std::ios_base::in);
+        json j;
+        fileStream >> j;
+
+        // deserialize
+        *this = j.get<SaveGame>();
+
+        // distribute data
+        context.board.player().position(context, player_pos);
+        context.player = player;
+        context.maps.load(context);
     }
 
 } // namespace castlecrawl

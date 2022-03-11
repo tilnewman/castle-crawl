@@ -295,4 +295,21 @@ namespace castlecrawl
         context.save.map_name = m_currentMapName;
     }
 
+    void Maps::load(Context & context)
+    {
+        m_maps = context.save.maps;
+        m_currentMapName = context.save.map_name;
+
+        const auto iter = m_maps.find(m_currentMapName);
+
+        M_CHECK(
+            (!iter->second.empty()),
+            "Map not found!  Trying to load(\"" << m_currentMapName << "\")");
+
+        m_currentMapPtr = &iter->second;
+
+        context.layout.calcBoardValues(m_currentMapPtr->size());
+        m_currentMapPtr->load(context, m_verts, context.save.player_pos);
+    }
+
 } // namespace castlecrawl

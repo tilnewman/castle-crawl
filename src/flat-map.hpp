@@ -189,7 +189,7 @@ namespace util
     template <typename T, typename U>
     inline void to_json(json & j, const FlatMap<T, U> & fm)
     {
-        j = json{ "vector", fm.m_vector };
+        j = json{ { "vector", fm.m_vector } };
     }
 
     template <typename T, typename U>
