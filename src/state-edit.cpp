@@ -30,6 +30,8 @@ namespace castlecrawl
 
     void StateEdit::onEnter(Context & context)
     {
+        const std::filesystem::path filePath = m_editor.getFirstAvailableFilePath();
+        m_editor.setFilename(filePath.filename().string());
         m_editor.setup(context);
 
         m_windowOutline.setPosition(util::position(context.layout.boardBounds()));
