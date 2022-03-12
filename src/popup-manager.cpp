@@ -74,8 +74,13 @@ namespace castlecrawl
         }();
 
         const sf::Vector2f windowSize{ context.layout.windowSize() };
+        const float paperWidth{ windowSize.x * 0.3f };
 
-        m_paperSprite.setPosition((windowSize * 0.5f) - (util::size(m_paperSprite) * 0.5f));
+        const sf::FloatRect sizingRect{
+            ((windowSize.x * 0.5f) - (paperWidth * 0.5f)), 0.0f, paperWidth, windowSize.y
+        };
+
+        util::fitAndCenterInside(m_paperSprite, sizingRect);
 
         sf::FloatRect textRegion = [&]() {
             if (PopupBackground::Paper1 == background)
@@ -87,6 +92,14 @@ namespace castlecrawl
                 return context.media.paper2InnerRect();
             }
         }();
+
+        const float paperLocalWidth{ static_cast<float>(m_paperSprite.getLocalBounds().width) };
+        const float resizeRatio{ 1.0f - ((paperLocalWidth - paperWidth) / paperLocalWidth) };
+
+        textRegion.left *= resizeRatio;
+        textRegion.top *= resizeRatio;
+        textRegion.width *= resizeRatio;
+        textRegion.height *= resizeRatio;
 
         textRegion.left += util::position(m_paperSprite).x;
         textRegion.top += util::position(m_paperSprite).y;

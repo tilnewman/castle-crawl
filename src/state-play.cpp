@@ -132,7 +132,7 @@ namespace castlecrawl
             context.popup.setupPaper(
                 context,
                 PopupBackground::Paper2,
-                FontSize::Small,
+                FontSize::Medium,
                 sf::Color::Black,
                 "You wake up in an ancient but somehow still sturdy cell, cold and hungry.  The "
                 "stinging lump on your head was the only gift given by the guards.  They took "

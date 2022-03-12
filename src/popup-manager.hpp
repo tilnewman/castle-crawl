@@ -27,6 +27,7 @@ namespace castlecrawl
     };
 
     //
+
     class PopupManager : public sf::Drawable
     {
       public:
