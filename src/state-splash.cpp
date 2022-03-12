@@ -53,9 +53,20 @@ namespace castlecrawl
 
     void StateSplash::handleEvent(Context & context, const sf::Event & event)
     {
+        if ((sf::Event::KeyPressed == event.type) && (sf::Keyboard::E == event.key.code) &&
+            event.key.shift)
+        {
+            context.state.setChangePending(State::Edit);
+            return;
+        }
+
         if ((sf::Event::KeyPressed == event.type) || (sf::Event::MouseButtonPressed == event.type))
         {
-            context.state.setChangePending(State::Play);
+            if (!event.key.shift)
+            {
+                context.state.setChangePending(State::Play);
+                return;
+            }
         }
     }
 

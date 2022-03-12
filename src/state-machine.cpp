@@ -8,6 +8,7 @@
 #include "check-macros.hpp"
 #include "context.hpp"
 #include "state-direction.hpp"
+#include "state-edit.hpp"
 #include "state-inventory.hpp"
 #include "state-pause.hpp"
 #include "state-play.hpp"
@@ -59,7 +60,8 @@ namespace castlecrawl
             case State::Quit:     { return std::make_unique<StateQuit>(context);      }
             case State::Direction:{ return std::make_unique<StateDirection>(context); }
             case State::Inventory:{ return std::make_unique<StateInventory>(context); }
-            case State::Treasure:{ return std::make_unique<StateTreasure>(context); }
+            case State::Treasure: { return std::make_unique<StateTreasure>(context);  }
+            case State::Edit:     { return std::make_unique<StateEdit>(context);      }
             // clang-format on
             default: {
                 std::cerr << "ERROR:  StateMachine::makeState(\"" << state

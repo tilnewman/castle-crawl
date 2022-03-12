@@ -124,8 +124,7 @@ namespace castlecrawl
                     }
                     else
                     {
-                        const std::array<char, 5> dirtChars{ '[', ']', '{', '}', '<' };
-                        ch = random.from(dirtChars);
+                        ch = random.from({ '[', ']', '{', '}', '<' });
                     }
                 }
             }

@@ -31,6 +31,7 @@ namespace castlecrawl
         Direction,
         Inventory,
         Treasure,
+        Edit,
         Quit,
     };
 
@@ -50,6 +51,7 @@ namespace castlecrawl
             case State::Direction: return "Direction";
             case State::Inventory: return "Inventory";
             case State::Treasure: return "Treasure";
+            case State::Edit: return "Edit";
             default: return "State::Invalid";
         }
     }

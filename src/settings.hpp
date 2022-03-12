@@ -57,6 +57,7 @@ namespace castlecrawl
         // these change with the map
         const sf::FloatRect boardBounds() const { return m_boardBounds; }
         const sf::Vector2i cellCounts() const { return m_cellCounts; }
+        const sf::Vector2i cellCountsMax() const { return { 41, 23 }; }
         const sf::FloatRect cellBounds(const MapPos_t & pos) const;
         bool isPositionValid(const MapPos_t & pos) const;
 
