@@ -45,7 +45,6 @@ namespace castlecrawl
         void draw(sf::RenderTarget &, sf::RenderStates) const override;
 
       private:
-        PopupBackground m_backgroundType = PopupBackground::Banner;
         std::vector<sf::Text> m_texts;
         sf::RectangleShape m_bgRectangle;
         sf::Sprite m_paperSprite;
