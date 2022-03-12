@@ -65,7 +65,6 @@ namespace castlecrawl
 
     void Editor::reset(Context & context)
     {
-        m_mapVerts.reset();
         m_floor = Floor::Stone;
         m_position = context.layout.cellCountsMax() / 2;
         m_mapStrings = m_defaultMapStrings;
@@ -73,7 +72,7 @@ namespace castlecrawl
         m_cursorRectangle.setPosition(util::position(context.layout.cellBounds(m_position)));
     }
 
-    void Editor::draw(
+    void Editor::drawLower(
         const Context & context, sf::RenderTarget & target, sf::RenderStates & states) const
     {
         states.texture = &context.media.tileTexture();
@@ -85,9 +84,15 @@ namespace castlecrawl
 
         if (!m_mapVerts.border.empty())
         {
-            // do not use states because these verts have no texture
+            // do not use states because these verts have no texture only color
             target.draw(&m_mapVerts.border[0], m_mapVerts.border.size(), sf::Quads);
         }
+    }
+
+    void Editor::drawUpper(
+        const Context & context, sf::RenderTarget & target, sf::RenderStates & states) const
+    {
+        states.texture = &context.media.tileTexture();
 
         if (!m_mapVerts.transition.empty())
         {

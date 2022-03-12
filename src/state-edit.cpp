@@ -120,6 +120,7 @@ namespace castlecrawl
         else if (sf::Keyboard::B == event.key.code)     m_editor.setCell(context, 'b');
         else if (sf::Keyboard::W == event.key.code)     m_editor.setCell(context, 'w');
         else if (sf::Keyboard::C == event.key.code)     m_editor.setCell(context, 'c');
+        else if (sf::Keyboard::K == event.key.code)     m_editor.setCell(context, 'k');
         // clang-format on
 
         if ((sf::Keyboard::Period == event.key.code) || (sf::Keyboard::Delete == event.key.code) ||
@@ -127,6 +128,41 @@ namespace castlecrawl
         {
             m_editor.setCell(context, '.');
             return;
+        }
+
+        if (event.key.shift)
+        {
+            if (sf::Keyboard::Num2 == event.key.code)
+            {
+                m_editor.setCell(context, '@');
+            }
+            else if (sf::Keyboard::Num3 == event.key.code)
+            {
+                m_editor.setCell(context, '#');
+            }
+            else if (sf::Keyboard::Num4 == event.key.code)
+            {
+                m_editor.setCell(context, '$');
+            }
+            else if (sf::Keyboard::Num5 == event.key.code)
+            {
+                m_editor.setCell(context, '%');
+            }
+        }
+        else
+        {
+            if (sf::Keyboard::Num1 == event.key.code)
+            {
+                m_editor.setFloor(context, Floor::Stone);
+            }
+            else if (sf::Keyboard::Num2 == event.key.code)
+            {
+                m_editor.setFloor(context, Floor::Wood);
+            }
+            else if (sf::Keyboard::Num3 == event.key.code)
+            {
+                m_editor.setFloor(context, Floor::Dirt);
+            }
         }
 
         if (sf::Keyboard::D == event.key.code)
@@ -161,19 +197,6 @@ namespace castlecrawl
             return;
         }
 
-        if (sf::Keyboard::Num1 == event.key.code)
-        {
-            m_editor.setFloor(context, Floor::Stone);
-        }
-        else if (sf::Keyboard::Num2 == event.key.code)
-        {
-            m_editor.setFloor(context, Floor::Wood);
-        }
-        else if (sf::Keyboard::Num3 == event.key.code)
-        {
-            m_editor.setFloor(context, Floor::Dirt);
-        }
-
         if (sf::Keyboard::H == event.key.code)
         {
             // clang-format off
@@ -204,8 +227,9 @@ namespace castlecrawl
     void StateEdit::draw(
         const Context & context, sf::RenderTarget & target, sf::RenderStates states) const
     {
-        m_editor.draw(context, target, states);
+        m_editor.drawLower(context, target, states);
         target.draw(context.board, states);
+        m_editor.drawUpper(context, target, states);
         target.draw(m_windowOutline, states);
     }
 

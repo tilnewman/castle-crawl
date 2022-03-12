@@ -28,7 +28,10 @@ namespace castlecrawl
         void setup(Context & context);
         void reset(Context & context);
 
-        void draw(
+        void drawLower(
+            const Context & context, sf::RenderTarget & target, sf::RenderStates & states) const;
+
+        void drawUpper(
             const Context & context, sf::RenderTarget & target, sf::RenderStates & states) const;
 
         void setCell(Context & context, const char ch);
