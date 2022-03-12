@@ -11,6 +11,7 @@
 #include "player.hpp"
 #include "popup-manager.hpp"
 #include "settings.hpp"
+#include "sound-player.hpp"
 #include "state-machine.hpp"
 #include "util.hpp"
 

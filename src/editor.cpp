@@ -198,7 +198,7 @@ namespace castlecrawl
             }
         }
 
-        context.popup.setup(context, "Saved: " + path.string());
+        context.popup.setupBanner(context, "Saved: " + path.string());
         context.state.setChangePending(State::Popup, State::Edit);
     }
 

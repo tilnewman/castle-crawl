@@ -4,7 +4,6 @@
 // media.hpp
 //
 #include "check-macros.hpp"
-#include "sound-player.hpp"
 #include "summon-image.hpp"
 #include "tile-image.hpp"
 
@@ -59,8 +58,15 @@ namespace castlecrawl
         const sf::Font & font() const;
         const sf::Sprite & tileSprite(const TileImage image) const;
         const sf::Sprite & summonSprite(const SummonImage image) const;
+
         const sf::Texture & tileTexture() const { return m_tileTexture; }
         const sf::Texture & titleTexture() const { return m_titleTexture; }
+        const sf::Texture & paper1Texture() const { return m_paper1Texture; }
+        const sf::Texture & paper2Texture() const { return m_paper2Texture; }
+
+        const sf::FloatRect paper1InnerRect() const { return { 32.0f, 32.0f, 436.0f, 266.0f }; }
+        const sf::FloatRect paper2InnerRect() const { return { 32.0f, 32.0f, 430.0f, 430.0f }; }
+
         const FontExtent fontExtent(const FontSize size) const;
 
         const sf::Text makeText(
@@ -104,6 +110,8 @@ namespace castlecrawl
         FontExtent m_fontExtentSmall;
 
         sf::Texture m_titleTexture;
+        sf::Texture m_paper1Texture;
+        sf::Texture m_paper2Texture;
 
         static inline sf::Texture m_defaultTexture;
         static inline sf::Sprite m_defaultSprite;

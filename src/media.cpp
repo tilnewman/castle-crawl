@@ -7,6 +7,7 @@
 
 #include "context.hpp"
 #include "settings.hpp"
+#include "sound-player.hpp"
 #include "util.hpp"
 
 namespace castlecrawl
@@ -22,6 +23,8 @@ namespace castlecrawl
         loadSummonSprites(config, layout);
 
         load((config.media_dir_path / "image" / "title.png"), m_titleTexture);
+        load((config.media_dir_path / "image" / "paper-1.png"), m_paper1Texture);
+        load((config.media_dir_path / "image" / "paper-2.png"), m_paper2Texture);
 
         audio.loadAll();
     }
@@ -121,7 +124,7 @@ namespace castlecrawl
     {
         sf::Text text;
         const std::string widthStr{ "M" };
-        const std::string heightStr{ "TMBLyjp" };
+        const std::string heightStr{ "|g" };
 
         m_fontExtentHuge.char_size = 120;
         text = makeText(FontSize::Huge, widthStr);

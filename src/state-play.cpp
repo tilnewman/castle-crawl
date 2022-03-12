@@ -19,6 +19,7 @@
 #include "process.hpp"
 #include "save-game.hpp"
 #include "settings.hpp"
+#include "sound-player.hpp"
 #include "state-direction.hpp"
 #include "state-machine.hpp"
 #include "state-treasure.hpp"
@@ -125,11 +126,27 @@ namespace castlecrawl
             return;
         }
 
+        // TODO TEMP remove after testing
+        if (sf::Keyboard::P == event.key.code)
+        {
+            context.popup.setupPaper(
+                context,
+                PopupBackground::Paper2,
+                FontSize::Small,
+                sf::Color::Black,
+                "You wake up in an ancient but somehow still sturdy cell, cold and hungry.  The "
+                "stinging lump on your head was the only gift given by the guards.  They took "
+                "everything except your clothes.");
+
+            context.state.setChangePending(State::Popup, State::Play);
+            return;
+        }
+
         // save game
         if (sf::Keyboard::S == event.key.code)
         {
             context.save.saveToFile(context);
-            context.popup.setup(context, "Game Saved");
+            context.popup.setupBanner(context, "Game Saved");
             context.state.setChangePending(State::Popup, State::Play);
             return;
         }
@@ -138,7 +155,7 @@ namespace castlecrawl
         if (sf::Keyboard::L == event.key.code)
         {
             context.save.loadFromFile(context);
-            context.popup.setup(context, "Game Loaded");
+            context.popup.setupBanner(context, "Game Loaded");
             context.state.setChangePending(State::Popup, State::Play);
             return;
         }

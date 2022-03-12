@@ -295,7 +295,7 @@ namespace castlecrawl
                 else
                 {
                     context.audio.play("drum-double.ogg");
-                    context.popup.setup(context, rejectReason);
+                    context.popup.setupBanner(context, rejectReason);
                     context.state.setChangePending(State::Popup, State::Inventory);
                 }
 

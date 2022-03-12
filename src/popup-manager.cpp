@@ -6,6 +6,7 @@
 #include "popup-manager.hpp"
 
 #include "context.hpp"
+#include "gui-text.hpp"
 #include "media.hpp"
 #include "settings.hpp"
 #include "util.hpp"
@@ -13,7 +14,7 @@
 namespace castlecrawl
 {
 
-    void PopupManager::setup(Context & context, const std::string & message)
+    void PopupManager::setupBanner(Context & context, const std::string & message)
     {
         const TextBlock textBlock = context.media.makeTextBlock(FontSize::Medium, message);
         m_texts = textBlock.lines;
@@ -42,12 +43,62 @@ namespace castlecrawl
                                        vertPad };
 
         m_bgRectangle.setSize(sf::Vector2f{ context.layout.windowSize().x, bgRectangleHeight });
+
+        m_paperSprite = {};
+    }
+
+    void PopupManager::setupPaper(
+        Context & context,
+        const PopupBackground background,
+        const FontSize fontSize,
+        const sf::Color & color,
+        const std::string & text)
+    {
+        m_fadeRectangle.setSize(context.layout.windowSize());
+        m_fadeRectangle.setFillColor(sf::Color(0, 0, 0, 64));
+
+        m_bgRectangle.setFillColor(sf::Color::Transparent);
+        m_bgRectangle.setOutlineColor(sf::Color::Transparent);
+        m_bgRectangle.setOutlineThickness(0.0f);
+        m_bgRectangle.setSize({ 0.0f, 0.0f });
+
+        m_paperSprite = [&]() {
+            if (PopupBackground::Paper1 == background)
+            {
+                return sf::Sprite(context.media.paper1Texture());
+            }
+            else
+            {
+                return sf::Sprite(context.media.paper2Texture());
+            }
+        }();
+
+        const sf::Vector2f windowSize{ context.layout.windowSize() };
+
+        m_paperSprite.setPosition((windowSize * 0.5f) - (util::size(m_paperSprite) * 0.5f));
+
+        sf::FloatRect textRegion = [&]() {
+            if (PopupBackground::Paper1 == background)
+            {
+                return context.media.paper1InnerRect();
+            }
+            else
+            {
+                return context.media.paper2InnerRect();
+            }
+        }();
+
+        textRegion.left += util::position(m_paperSprite).x;
+        textRegion.top += util::position(m_paperSprite).y;
+
+        m_texts = typeset(context, fontSize, color, textRegion, text);
     }
 
     void PopupManager::draw(sf::RenderTarget & target, sf::RenderStates states) const
     {
         target.draw(m_fadeRectangle, states);
         target.draw(m_bgRectangle, states);
+        target.draw(m_paperSprite, states);
 
         for (const sf::Text & text : m_texts)
         {
