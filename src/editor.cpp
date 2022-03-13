@@ -7,9 +7,9 @@
 
 #include "check-macros.hpp"
 #include "context.hpp"
+#include "layout.hpp"
 #include "media.hpp"
 #include "popup-manager.hpp"
-#include "settings.hpp"
 #include "sound-player.hpp"
 #include "state-machine.hpp"
 #include "util.hpp"

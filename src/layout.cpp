@@ -1,9 +1,9 @@
 // This is an open source non-commercial project. Dear PVS-Studio, please check it.
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 //
-// settings.cpp
+// layout.cpp
 //
-#include "settings.hpp"
+#include "layout.hpp"
 
 #include "check-macros.hpp"
 #include "context.hpp"

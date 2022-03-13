@@ -7,7 +7,7 @@
 
 #include "config.hpp"
 #include "context.hpp"
-#include "settings.hpp"
+#include "layout.hpp"
 #include "sound-player.hpp"
 #include "util.hpp"
 

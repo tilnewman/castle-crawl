@@ -8,9 +8,9 @@
 #include "board.hpp"
 #include "check-macros.hpp"
 #include "context.hpp"
+#include "layout.hpp"
 #include "media.hpp"
 #include "save-game.hpp"
-#include "settings.hpp"
 #include "util.hpp"
 
 #include <fstream>

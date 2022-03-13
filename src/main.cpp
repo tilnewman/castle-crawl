@@ -4,7 +4,7 @@
 // main.cpp
 //
 #include "game-coordinator.hpp"
-#include "settings.hpp"
+#include "layout.hpp"
 
 #include <cstddef>
 #include <filesystem>

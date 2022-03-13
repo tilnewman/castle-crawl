@@ -8,9 +8,9 @@
 #include "check-macros.hpp"
 #include "context.hpp"
 #include "keys.hpp"
+#include "layout.hpp"
 #include "media.hpp"
 #include "random.hpp"
-#include "settings.hpp"
 #include "sound-player.hpp"
 #include "util.hpp"
 

@@ -8,9 +8,9 @@
 #include "board.hpp"
 #include "config.hpp"
 #include "context.hpp"
+#include "layout.hpp"
 #include "media.hpp"
 #include "random.hpp"
-#include "settings.hpp"
 #include "util.hpp"
 
 #include <array>

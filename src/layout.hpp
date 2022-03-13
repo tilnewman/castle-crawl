@@ -1,7 +1,7 @@
-#ifndef CASTLECRAWL_SETTINGS_HPP_INCLUDED
-#define CASTLECRAWL_SETTINGS_HPP_INCLUDED
+#ifndef CASTLECRAWL_LAYOUT_HPP_INCLUDED
+#define CASTLECRAWL_LAYOUT_HPP_INCLUDED
 //
-// settings.hpp
+// layout.hpp
 //
 #include "config.hpp"
 #include "map-types.hpp"
@@ -59,4 +59,4 @@ namespace castlecrawl
 
 } // namespace castlecrawl
 
-#endif // CASTLECRAWL_SETTINGS_HPP_INCLUDED
+#endif // CASTLECRAWL_LAYOUT_HPP_INCLUDED

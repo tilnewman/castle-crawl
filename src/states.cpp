@@ -9,10 +9,10 @@
 #include "context.hpp"
 #include "game.hpp"
 #include "item-factory.hpp"
+#include "layout.hpp"
 #include "maps.hpp"
 #include "media.hpp"
 #include "music-player.hpp"
-#include "settings.hpp"
 #include "sound-player.hpp"
 #include "state-machine.hpp"
 

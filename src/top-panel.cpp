@@ -6,8 +6,8 @@
 #include "top-panel.hpp"
 
 #include "context.hpp"
+#include "layout.hpp"
 #include "media.hpp"
-#include "settings.hpp"
 #include "util.hpp"
 
 namespace castlecrawl

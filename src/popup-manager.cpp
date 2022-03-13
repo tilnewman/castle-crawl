@@ -7,8 +7,8 @@
 
 #include "context.hpp"
 #include "gui-text.hpp"
+#include "layout.hpp"
 #include "media.hpp"
-#include "settings.hpp"
 #include "util.hpp"
 
 namespace castlecrawl

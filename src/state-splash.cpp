@@ -8,7 +8,7 @@
 #include "check-macros.hpp"
 #include "config.hpp"
 #include "context.hpp"
-#include "settings.hpp"
+#include "layout.hpp"
 #include "state-machine.hpp"
 #include "util.hpp"
 

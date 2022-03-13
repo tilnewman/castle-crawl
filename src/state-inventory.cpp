@@ -9,11 +9,11 @@
 #include "context.hpp"
 #include "item-factory.hpp"
 #include "keys.hpp"
+#include "layout.hpp"
 #include "media.hpp"
 #include "player.hpp"
 #include "popup-manager.hpp"
 #include "process.hpp"
-#include "settings.hpp"
 #include "sound-player.hpp"
 #include "state-machine.hpp"
 #include "util.hpp"
@@ -179,7 +179,7 @@ namespace castlecrawl
         m_manaBar.setup(manaBarPos, barSize, barLineThickness, sf::Color(60, 145, 240));
 
         // misc stats (level, armor rating, gold, etc)
-        m_statTextMisc = context.media.makeText(FontSize::Medium, "Ty");
+        m_statTextMisc = context.media.makeText(FontSize::Medium, "|y");
 
         m_statTextMisc.setPosition(manaBarPos.x, util::bottom(m_manaBar) + (windowSize.y * 0.015f));
 
