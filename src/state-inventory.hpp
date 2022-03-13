@@ -31,6 +31,7 @@ namespace castlecrawl
 
         void update(Context & context, const float frameTimeSec) override;
         void onEnter(Context & context) override;
+        void onExit(Context & context) override;
         void handleEvent(Context &, const sf::Event &) override;
         void draw(const Context &, sf::RenderTarget &, sf::RenderStates) const override;
 
@@ -40,7 +41,9 @@ namespace castlecrawl
       private:
         sf::FloatRect m_statsRegion;
         Listbox m_unListbox;
+        inline static ListboxIndex m_unListboxIndexes = {};
         Listbox m_eqListbox;
+        inline static ListboxIndex m_eqListboxIndexes = {};
         std::vector<sf::Vertex> m_bgFadeVerts;
         std::vector<sf::Vertex> m_bgBorderVerts;
         StatBar m_healthBar;

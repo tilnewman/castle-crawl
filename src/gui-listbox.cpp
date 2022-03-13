@@ -18,8 +18,7 @@ namespace castlecrawl
         , m_rowCount(0)
         , m_highlightColor(20, 20, 20, 20)
         , m_bgRectangle()
-        , m_displayIndex(0)
-        , m_offsetIndex(0)
+        , m_indexes()
         , m_rowRects()
         , m_rowLineVerts()
         , m_rowTexts()
@@ -114,13 +113,13 @@ namespace castlecrawl
             return false;
         }
 
-        if (m_offsetIndex < (m_rowCount - 1_st))
+        if (m_indexes.offset < (m_rowCount - 1_st))
         {
-            ++m_offsetIndex;
+            ++m_indexes.offset;
         }
         else
         {
-            ++m_displayIndex;
+            ++m_indexes.display;
         }
 
         redraw();
@@ -134,13 +133,13 @@ namespace castlecrawl
             return false;
         }
 
-        if (m_offsetIndex > 0)
+        if (m_indexes.offset > 0)
         {
-            --m_offsetIndex;
+            --m_indexes.offset;
         }
         else
         {
-            --m_displayIndex;
+            --m_indexes.display;
         }
 
         redraw();
@@ -151,8 +150,8 @@ namespace castlecrawl
     {
         if (m_items.empty())
         {
-            m_offsetIndex = 0;
-            m_displayIndex = 0;
+            m_indexes.offset = 0;
+            m_indexes.display = 0;
         }
 
         while (!m_items.empty() && (selectedIndex() >= m_items.size()))
@@ -181,7 +180,7 @@ namespace castlecrawl
         {
             std::string rowString;
 
-            const std::size_t itemIndex{ m_displayIndex + offset };
+            const std::size_t itemIndex{ m_indexes.display + offset };
             if (itemIndex < m_items.size())
             {
                 rowString = m_items[itemIndex].name();
@@ -190,7 +189,13 @@ namespace castlecrawl
             m_rowTexts[offset].setString(rowString);
         }
 
-        m_selectionRectangle.setPosition(util::position(m_rowRects[m_offsetIndex]));
+        m_selectionRectangle.setPosition(util::position(m_rowRects[m_indexes.offset]));
+    }
+
+    void Listbox::setIndexes(const ListboxIndex & indexes)
+    {
+        m_indexes = indexes;
+        redraw();
     }
 
 } // namespace castlecrawl

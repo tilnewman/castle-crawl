@@ -195,6 +195,15 @@ namespace castlecrawl
 
         // item descrption text
         setupItemDescriptionText(context);
+
+        m_unListbox.setIndexes(m_unListboxIndexes);
+        m_eqListbox.setIndexes(m_eqListboxIndexes);
+    }
+
+    void StateInventory::onExit(Context & context)
+    {
+        m_unListboxIndexes = m_unListbox.getIndexes();
+        m_eqListboxIndexes = m_eqListbox.getIndexes();
     }
 
     void StateInventory::handleEvent(Context & context, const sf::Event & event)

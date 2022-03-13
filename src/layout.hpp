@@ -42,7 +42,6 @@ namespace castlecrawl
         const sf::Vector2i cellCountsMax() const { return { 41, 23 }; }
         const sf::FloatRect cellBounds(const MapPos_t & pos) const;
         bool isPositionValid(const MapPos_t & pos) const;
-
         const MapPos_t cellPosition(const sf::Vector2f & windowPosition) const;
 
       protected:

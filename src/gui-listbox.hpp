@@ -20,6 +20,14 @@ namespace castlecrawl
 {
     struct Context;
 
+    struct ListboxIndex
+    {
+        std::size_t display = 0;
+        std::size_t offset = 0;
+    };
+
+    //
+
     class Listbox : public sf::Drawable
     {
       public:
@@ -36,7 +44,7 @@ namespace castlecrawl
         bool hasFocus() const { return m_hasFocus; }
         void setFocus(const bool hasFocus);
 
-        std::size_t selectedIndex() const { return (m_displayIndex + m_offsetIndex); }
+        std::size_t selectedIndex() const { return (m_indexes.display + m_indexes.offset); }
 
         const sf::FloatRect getGlobalBounds() const { return m_bgRectangle.getGlobalBounds(); }
 
@@ -49,14 +57,16 @@ namespace castlecrawl
 
         void redraw();
 
+        const ListboxIndex getIndexes() const { return m_indexes; }
+        void setIndexes(const ListboxIndex & indexes);
+
       private:
         const item::ItemVec_t & m_items;
         bool m_hasFocus;
         std::size_t m_rowCount;
         const sf::Color m_highlightColor;
         sf::RectangleShape m_bgRectangle;
-        std::size_t m_displayIndex;
-        std::size_t m_offsetIndex;
+        ListboxIndex m_indexes;
         std::vector<sf::FloatRect> m_rowRects;
         std::vector<sf::Vertex> m_rowLineVerts;
         std::vector<sf::Text> m_rowTexts;
