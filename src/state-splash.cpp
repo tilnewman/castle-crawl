@@ -6,6 +6,7 @@
 #include "state-splash.hpp"
 
 #include "check-macros.hpp"
+#include "config.hpp"
 #include "context.hpp"
 #include "settings.hpp"
 #include "state-machine.hpp"

@@ -5,6 +5,7 @@
 //
 #include "media.hpp"
 
+#include "config.hpp"
 #include "context.hpp"
 #include "settings.hpp"
 #include "sound-player.hpp"

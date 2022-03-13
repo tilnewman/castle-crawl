@@ -6,6 +6,7 @@
 #include "map.hpp"
 
 #include "board.hpp"
+#include "config.hpp"
 #include "context.hpp"
 #include "media.hpp"
 #include "random.hpp"

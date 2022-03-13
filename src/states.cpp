@@ -30,7 +30,7 @@ namespace castlecrawl
 
         sf::Clock clock;
 
-        context.game.reset();
+        context.game.setup();
 
         context.items.processAll();
         // context.items.printSummaries();

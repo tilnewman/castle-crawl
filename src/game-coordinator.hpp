@@ -5,6 +5,7 @@
 //
 #include "animation-player.hpp"
 #include "board.hpp"
+#include "config.hpp"
 #include "context.hpp"
 #include "item-factory.hpp"
 #include "keys.hpp"

@@ -7,6 +7,7 @@
 
 #include "animation-player.hpp"
 #include "board.hpp"
+#include "config.hpp"
 #include "context.hpp"
 #include "item-factory.hpp"
 #include "keys.hpp"
@@ -131,8 +132,8 @@ namespace castlecrawl
         {
             context.popup.setupPaper(
                 context,
-                PopupBackground::Paper2,
-                FontSize::Medium,
+                PopupBackground::Paper1,
+                FontSize::Small,
                 sf::Color::Black,
                 "You wake up in an ancient but somehow still sturdy looking cell.  The cold and "
                 "hunger hurt, but the stinging lump on your head was what woke you.  It's the only "

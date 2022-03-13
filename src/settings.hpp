@@ -3,6 +3,7 @@
 //
 // settings.hpp
 //
+#include "config.hpp"
 #include "map-types.hpp"
 #include "tile-image.hpp"
 
@@ -16,21 +17,6 @@ namespace castlecrawl
 {
     class Map;
     struct Context;
-
-    // All settings about the game that must be set before...well before everything else.
-    // No need for an interface class since this will be const in Context.
-    struct GameConfig
-    {
-        GameConfig();
-
-        void setup(const sf::VideoMode & videoModeActual);
-
-        std::filesystem::path media_dir_path;
-        sf::VideoMode video_mode;
-        unsigned frame_rate_limit;
-        sf::Color background_color;
-        sf::Vector2i cell_counts;
-    };
 
     // Everything about the window that can only be calculated once BOTH the window is open and the
     // map has been parsed.
@@ -81,11 +67,11 @@ namespace castlecrawl
       public:
         GameInPlay() = default;
 
-        void reset();
-
-        int score() const { return m_score; }
-        void score(const int newScore) { m_score = newScore; }
-        int scoreAdj(const int adj);
+        void setup()
+        {
+            m_isGameOver = false;
+            m_didPlayerWin = false;
+        }
 
         bool isGameOver() const { return m_isGameOver; }
 
@@ -106,7 +92,6 @@ namespace castlecrawl
         }
 
       protected:
-        int m_score{ 0 };
         bool m_isGameOver{ false };
         bool m_didPlayerWin{ false };
     };
