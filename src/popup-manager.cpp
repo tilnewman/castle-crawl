@@ -93,7 +93,7 @@ namespace castlecrawl
             }
         }();
 
-        const float paperLocalWidth{ static_cast<float>(m_paperSprite.getLocalBounds().width) };
+        const float paperLocalWidth{ m_paperSprite.getLocalBounds().width };
         const float resizeRatio{ 1.0f - ((paperLocalWidth - paperWidth) / paperLocalWidth) };
 
         textRegion.left *= resizeRatio;
