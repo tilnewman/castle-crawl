@@ -29,4 +29,4 @@ namespace castlecrawl
 
 } // namespace castlecrawl
 
-#endif // CASTLECRAWL_SETTINGS_HPP_INCLUDED
+#endif // CASTLECRAWL_CONFIG_HPP_INCLUDED

@@ -7,11 +7,7 @@
 #include "map-types.hpp"
 #include "tile-image.hpp"
 
-#include <filesystem>
-
-#include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
-#include <SFML/Window/VideoMode.hpp>
 
 namespace castlecrawl
 {
@@ -59,41 +55,6 @@ namespace castlecrawl
         // these members change with the map
         sf::FloatRect m_boardBounds;
         sf::Vector2i m_cellCounts;
-    };
-
-    // All info about a game in progress that can changes during play.
-    class GameInPlay
-    {
-      public:
-        GameInPlay() = default;
-
-        void setup()
-        {
-            m_isGameOver = false;
-            m_didPlayerWin = false;
-        }
-
-        bool isGameOver() const { return m_isGameOver; }
-
-        void endGame(const bool didPlayerWin)
-        {
-            m_isGameOver = true;
-            m_didPlayerWin = didPlayerWin;
-        }
-
-        bool didPlayerWin() const
-        {
-            if (!m_isGameOver)
-            {
-                return false;
-            }
-
-            return m_didPlayerWin;
-        }
-
-      protected:
-        bool m_isGameOver{ false };
-        bool m_didPlayerWin{ false };
     };
 
 } // namespace castlecrawl

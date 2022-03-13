@@ -7,6 +7,7 @@
 #include "board.hpp"
 #include "config.hpp"
 #include "context.hpp"
+#include "game.hpp"
 #include "item-factory.hpp"
 #include "keys.hpp"
 #include "maps.hpp"

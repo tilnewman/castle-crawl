@@ -7,6 +7,7 @@
 
 #include "animation-player.hpp"
 #include "context.hpp"
+#include "game.hpp"
 #include "item-factory.hpp"
 #include "maps.hpp"
 #include "media.hpp"
