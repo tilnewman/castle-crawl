@@ -51,6 +51,18 @@ namespace castlecrawl
         lineText.setPosition(pos);
         for (auto wordIter = std::begin(words); wordIter != std::end(words); ++wordIter)
         {
+            if ("<paragraph>" == *wordIter)
+            {
+                lineTexts.push_back(lineText);
+                pos.y += fontExtent.letter_size.y;
+                pos.y += fontExtent.letter_size.y;
+                lineStr.clear();
+                lineText.setString(lineStr);
+                util::setOriginToPosition(lineText);
+                lineText.setPosition(pos);
+                continue;
+            }
+
             const std::string tempStr{ lineStr + " " + *wordIter };
 
             sf::Text tempText{ lineText };

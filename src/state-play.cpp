@@ -134,9 +134,13 @@ namespace castlecrawl
                 PopupBackground::Paper2,
                 FontSize::Medium,
                 sf::Color::Black,
-                "You wake up in an ancient but somehow still sturdy cell, cold and hungry.  The "
-                "stinging lump on your head was the only gift given by the guards.  They took "
-                "everything except your clothes.");
+                "You wake up in an ancient but somehow still sturdy looking cell.  The cold and "
+                "hunger hurt, but the stinging lump on your head was what woke you.  It's the only "
+                "gift given by the guards.  They took "
+                "everything else, except your clothes. <paragraph> In the distance you can hear "
+                "the cries "
+                "and moans of other prisoners.  Your gut drops at the thought of being one of "
+                "them.  Fearsome stories of this castle prison are know wide and far.");
 
             context.state.setChangePending(State::Popup, State::Play);
             return;
