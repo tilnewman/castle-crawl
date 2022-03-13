@@ -73,7 +73,7 @@ namespace castlecrawl
         const ItemVec_t ItemFactory::makeAll() const
         {
             ItemVec_t items;
-            items.reserve(300); // acutally 244 as of 2022-3-4
+            items.reserve(1000); // acutally 883 as of 2022-3-13
 
             for (const Item & item : makeWeapons())
             {
@@ -195,10 +195,10 @@ namespace castlecrawl
 
         const ItemVec_t ItemFactory::makeCustom() const
         {
-            // All custom magical items must have a unique name!
+            // All items, custom magical or not, must have a unique name!
 
             ItemVec_t items;
-            items.reserve(200);
+            items.reserve(200); // actually 110 as of 2022-3-13
 
             // weapons
 
@@ -531,56 +531,6 @@ namespace castlecrawl
         {
             const ItemVec_t items{ makeAll() };
 
-            std::cout << std::endl << "All Non-Magical:" << std::endl;
-
-            for (const Item & item : items)
-            {
-                if (!item.isMagical())
-                {
-                    std::cout << '\t' << item.value() << "\t" << item << '\n';
-                }
-            }
-
-            std::cout << std::endl << "All Useable Names:" << std::endl;
-
-            for (const Item & item : items)
-            {
-                if (item.isUseable())
-                {
-                    std::cout << '\t' << item.value() << "\t" << item.name() << '\n';
-                }
-            }
-
-            std::cout << std::endl << "All Magical Weapons and Armor:" << std::endl;
-
-            for (const Item & item : items)
-            {
-                if (!item.isMagical())
-                {
-                    continue;
-                }
-
-                if (item.isWeapon() || item.isArmor())
-                {
-                    std::cout << '\t' << item.value() << '\t' << item.description() << '\n';
-                }
-            }
-
-            std::cout << std::endl;
-
-            json j = items.back();
-            std::cout << "JSON:\n" << std::setw(4) << j << std::endl;
-
-            std::cout << std::endl;
-
-            std::cout << items.size() << " total items" << std::endl << std::endl;
-
-            std::cout << "longest name=" << m_textExtent.longest_name << std::endl;
-            std::cout << "longest desc=" << m_textExtent.longest_desc << std::endl;
-
-            std::cout << "An Item is " << sizeof(Item) << "bytes" << std::endl;
-            std::cout << std::endl;
-
             // write out all items to a spreadsheet
             {
                 std::ofstream fileStream("items.csv", std::ios_base::trunc);
@@ -615,12 +565,62 @@ namespace castlecrawl
                     fileStream << item.description() << "\n";
                 }
             }
+
+            std::cout << std::endl << "All Useable Names:" << std::endl;
+
+            for (const Item & item : items)
+            {
+                if (item.isUseable())
+                {
+                    std::cout << '\t' << item.value() << "\t" << item.name() << '\n';
+                }
+            }
+
+            std::cout << std::endl << "All Non-Magical:" << std::endl;
+
+            for (const Item & item : items)
+            {
+                if (!item.isMagical())
+                {
+                    std::cout << '\t' << item.value() << "\t" << item << '\n';
+                }
+            }
+
+            std::cout << std::endl << "All Magical Weapons and Armor:" << std::endl;
+
+            for (const Item & item : items)
+            {
+                if (!item.isMagical())
+                {
+                    continue;
+                }
+
+                if (item.isWeapon() || item.isArmor())
+                {
+                    std::cout << '\t' << item.value() << '\t' << item.description() << '\n';
+                }
+            }
+
+            std::cout << std::endl;
+
+            json j = items.back();
+            std::cout << "JSON:\n" << std::setw(4) << j << std::endl;
+
+            std::cout << std::endl;
+
+            std::cout << items.size() << " total items" << std::endl << std::endl;
+
+            std::cout << "longest name=" << m_textExtent.longest_name << std::endl;
+            std::cout << "longest desc=" << m_textExtent.longest_desc << std::endl;
+
+            std::cout << "An Item is " << sizeof(Item) << "bytes" << std::endl;
+            std::cout << std::endl;
         }
 
         void ItemFactory::throwIfInvalid(const Item & item) const
         {
-            {
-                std::size_t count = 0;
+            const std::size_t typeCount = [&]() {
+                std::size_t count{ 0 };
                 if (item.isArmor())
                 {
                     ++count;
@@ -636,11 +636,13 @@ namespace castlecrawl
                     ++count;
                 }
 
-                M_CHECK(
-                    (count == 1),
-                    "Error:  Item's basic type of Weapon/Armor/Misc count is "
-                        << count << " (not essential and mutually exclusive): " << item);
-            }
+                return count;
+            }();
+
+            M_CHECK(
+                (typeCount == 1),
+                "Error:  Item's basic type of Weapon/Armor/Misc count is "
+                    << typeCount << " (not essential and mutually exclusive): " << item);
 
             M_CHECK(!item.name().empty(), "Error:  Item has no name: " << item);
 
