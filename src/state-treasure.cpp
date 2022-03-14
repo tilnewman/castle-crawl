@@ -135,7 +135,7 @@ namespace castlecrawl
         }
         else
         {
-            m_selectRectangle.setFillColor(sf::Color(0, 0, 0, 100));
+            m_selectRectangle.setFillColor(sf::Color(0, 0, 0, 64));
             m_selectRectangle.setOutlineThickness(0.0f);
             m_selectRectangle.setSize({ textWidest, fontExtent.letter_size.y });
 
