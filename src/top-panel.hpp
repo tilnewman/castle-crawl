@@ -3,6 +3,8 @@
 //
 // top-panel.hpp
 //
+#include "gui-stat-bar.hpp"
+
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
@@ -16,12 +18,14 @@ namespace castlecrawl
         TopPanel();
 
         void setup(Context & context);
-        void update();
+        void update(Context & context, const float frameTimeSec);
         void draw(sf::RenderTarget & target, sf::RenderStates states) const override;
 
       private:
         sf::Sprite m_titleSprite;
         sf::RectangleShape m_rectangle;
+        StatBar m_healthBar;
+        StatBar m_manaBar;
     };
 
 } // namespace castlecrawl
