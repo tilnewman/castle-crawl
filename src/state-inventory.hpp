@@ -40,9 +40,9 @@ namespace castlecrawl
 
       private:
         sf::FloatRect m_statsRegion;
-        Listbox m_unListbox;
+        Listbox<item::Item> m_unListbox;
         inline static ListboxIndex m_unListboxIndexes = {};
-        Listbox m_eqListbox;
+        Listbox<item::Item> m_eqListbox;
         inline static ListboxIndex m_eqListboxIndexes = {};
         std::vector<sf::Vertex> m_bgFadeVerts;
         std::vector<sf::Vertex> m_bgBorderVerts;

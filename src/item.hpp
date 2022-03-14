@@ -155,8 +155,10 @@ namespace castlecrawl
             j.at("use_effect").get_to(i.m_useEffect);
             j.at("equip_effect").get_to(i.m_equipEffect);
         }
-
     } // namespace item
+
+    inline const std::string toString(const item::Item & item) { return item.name(); }
+
 } // namespace castlecrawl
 
 #endif // CASTLECRAWL_ITEM_HPP_INCLUDED
