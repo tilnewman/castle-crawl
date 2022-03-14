@@ -19,7 +19,7 @@ namespace castlecrawl
         , m_pieces()
     {}
 
-    Pieces Board::whichAt(const MapPos_t pos) const
+    Pieces Board::whichAt(const MapPos_t & pos) const
     {
         for (const Piece & piece : m_pieces)
         {
@@ -32,7 +32,7 @@ namespace castlecrawl
         return Pieces::None;
     }
 
-    PieceOpt_t Board::at(const MapPos_t pos)
+    PieceOpt_t Board::at(const MapPos_t & pos)
     {
         for (Piece & piece : m_pieces)
         {
@@ -65,7 +65,7 @@ namespace castlecrawl
         target.draw(m_player, states);
     }
 
-    void Board::remove(const MapPos_t pos)
+    void Board::remove(const MapPos_t & pos)
     {
         m_pieces.erase(
             std::remove_if(

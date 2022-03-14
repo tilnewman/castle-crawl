@@ -34,16 +34,16 @@ namespace castlecrawl
         StateOpt_t getChangePending() const { return m_changePendingOpt; }
         StateOpt_t getFallback() const { return m_fallbackOpt; }
 
-        void setChangePending(const State state, const StateOpt_t fallback = std::nullopt);
+        void setChangePending(const State state, const StateOpt_t & fallback = std::nullopt);
 
-        void setChangePendingToFallback() 
-        { 
+        void setChangePendingToFallback()
+        {
             if (m_fallbackOpt.has_value())
             {
                 m_changePendingOpt = m_fallbackOpt;
             }
         }
-        
+
         void changeIfPending(Context & context);
 
       private:

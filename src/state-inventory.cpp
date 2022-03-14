@@ -83,7 +83,7 @@ namespace castlecrawl
         const auto weaponOpt = context.player.inventory().weaponEquipped();
         if (weaponOpt.has_value())
         {
-            const item::Item & weapon = weaponOpt.value();
+            const item::Item & weapon = *weaponOpt;
             miscStr += weapon.name();
             miscStr += "\' does ";
             miscStr += std::to_string(weapon.damageMin());

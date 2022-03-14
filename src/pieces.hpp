@@ -83,7 +83,7 @@ namespace castlecrawl
         bool isObstacle() const { return isPieceObstacle(m_which); }
 
         MapPos_t position() const { return m_position; }
-        void position(Context & context, const MapPos_t pos);
+        void position(Context & context, const MapPos_t & pos);
 
         void move(Context & context, const sf::Keyboard::Key dir);
 

@@ -217,22 +217,22 @@ namespace castlecrawl
             {
                 const auto type = static_cast<Weapon>(i);
 
-                items.push_back(Item(
+                items.emplace_back(
                     type,
                     WeaponMaterial::Obsidian,
                     std::string("Dark ").append(toString(type)),
-                    EquipEffect{ .arc = 1, .dmg = 1, .str = 1 }));
+                    EquipEffect{ .arc = 1, .dmg = 1, .str = 1 });
             }
 
             for (int i = 0; i < static_cast<int>(Weapon::Count); ++i)
             {
                 const auto type = static_cast<Weapon>(i);
 
-                items.push_back(Item(
+                items.emplace_back(
                     type,
                     WeaponMaterial::Steel,
                     std::string("Savage ").append(toString(type)),
-                    EquipEffect{ .acc = 1, .dmg = 4, .str = 2 }));
+                    EquipEffect{ .acc = 1, .dmg = 4, .str = 2 });
             }
 
             items.push_back(Item(

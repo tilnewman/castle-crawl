@@ -51,7 +51,7 @@ namespace castlecrawl
         position(context, pos); // to set the sprite's position
     }
 
-    void Piece::position(Context & context, const MapPos_t pos)
+    void Piece::position(Context & context, const MapPos_t & pos)
     {
         m_position = pos;
         m_sprite.setPosition(util::position(context.layout.cellBounds(pos)));

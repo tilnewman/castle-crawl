@@ -252,11 +252,11 @@ namespace castlecrawl
                 const EquipEffect & ef = m_equipEffect;
 
                 // clang-format off
-                if (ef.arc > 0) str += "+" + std::to_string(ef.arc) + "arc, ";
-                if (ef.dex > 0) str += "+" + std::to_string(ef.dex) + "dex, ";
-                if (ef.dmg > 0) str += "+" + std::to_string(ef.dmg) + "dmg, ";
-                if (ef.lck > 0) str += "+" + std::to_string(ef.lck) + "lck, ";
-                if (ef.str > 0) str += "+" + std::to_string(ef.str) + "str, ";
+                if (ef.arc > 0) { str += "+" + std::to_string(ef.arc) + "arc, "; }
+                if (ef.dex > 0) { str += "+" + std::to_string(ef.dex) + "dex, "; }
+                if (ef.dmg > 0) { str += "+" + std::to_string(ef.dmg) + "dmg, "; }
+                if (ef.lck > 0) { str += "+" + std::to_string(ef.lck) + "lck, "; }
+                if (ef.str > 0) { str += "+" + std::to_string(ef.str) + "str, "; }
                 // clang-format on
 
                 str.pop_back();
@@ -346,14 +346,14 @@ namespace castlecrawl
             const UseEffect & uf = item.useEffect();
 
             // clang-format off
-            if (ef.arc > 0) os << ",+" << ef.arc << "arc";
-            if (ef.dex > 0) os << ",+" << ef.dex << "dex";
-            if (ef.dmg > 0) os << ",+" << ef.dmg << "dmg";
-            if (ef.lck > 0) os << ",+" << ef.lck << "lck";
-            if (ef.str > 0) os << ",+" << ef.str << "str";
+            if (ef.arc > 0) { os << ",+" << ef.arc << "arc"; }
+            if (ef.dex > 0) { os << ",+" << ef.dex << "dex"; }
+            if (ef.dmg > 0) { os << ",+" << ef.dmg << "dmg"; }
+            if (ef.lck > 0) { os << ",+" << ef.lck << "lck"; }
+            if (ef.str > 0) { os << ",+" << ef.str << "str"; }
             //
-            if (uf.health > 0) os << ",+" << uf.health << "health";
-            if (uf.mana > 0)   os << ",+" << uf.mana << "mana";
+            if (uf.health > 0) { os << ",+" << uf.health << "health"; }
+            if (uf.mana > 0)   { os << ",+" << uf.mana << "mana";     }
             // clang-format on
 
             os << ",value=" << item.value();

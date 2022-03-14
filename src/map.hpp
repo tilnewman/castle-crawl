@@ -69,7 +69,7 @@ namespace castlecrawl
         void convertWalls();
         void convertWallCorners();
         void randomizeFloorTiles(const util::Random & random);
-        void resetPieces(Context & context, const MapPos_t playerPos);
+        void resetPieces(Context & context, const MapPos_t & playerPos);
 
         static void makeBorderVerts(const Context & context, const MapChars_t &, VertVec_t &);
         void makeStoneTransitionVerts(const Context &, VertVec_t &);

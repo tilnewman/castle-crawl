@@ -438,7 +438,7 @@ namespace castlecrawl
         }
     }
 
-    void Map::resetPieces(Context & context, const MapPos_t playerPos)
+    void Map::resetPieces(Context & context, const MapPos_t & playerPos)
     {
         context.board.clear();
 

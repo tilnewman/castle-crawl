@@ -1009,17 +1009,17 @@ namespace util
     {
         const sf::Vector2f pos{ util::position(rect) };
         const sf::Vector2f size{ util::size(rect) };
-        verts.push_back(sf::Vertex{ pos + sf::Vector2f(0.0f, 0.0f), color });
-        verts.push_back(sf::Vertex{ pos + sf::Vector2f(size.x, 0.0f), color });
+        verts.emplace_back(pos + sf::Vector2f(0.0f, 0.0f), color);
+        verts.emplace_back(pos + sf::Vector2f(size.x, 0.0f), color);
 
-        verts.push_back(sf::Vertex{ pos + sf::Vector2f(size.x, 0.0f), color });
-        verts.push_back(sf::Vertex{ pos + sf::Vector2f(size.x, size.y), color });
+        verts.emplace_back(pos + sf::Vector2f(size.x, 0.0f), color);
+        verts.emplace_back(pos + sf::Vector2f(size.x, size.y), color);
 
-        verts.push_back(sf::Vertex{ pos + sf::Vector2f(size.x, size.y), color });
-        verts.push_back(sf::Vertex{ pos + sf::Vector2f(0.0f, size.y), color });
+        verts.emplace_back(pos + sf::Vector2f(size.x, size.y), color);
+        verts.emplace_back(pos + sf::Vector2f(0.0f, size.y), color);
 
-        verts.push_back(sf::Vertex{ pos + sf::Vector2f(0.0f, size.y), color });
-        verts.push_back(sf::Vertex{ pos + sf::Vector2f(0.0f, 0.0f), color });
+        verts.emplace_back(pos + sf::Vector2f(0.0f, size.y), color);
+        verts.emplace_back(pos + sf::Vector2f(0.0f, 0.0f), color);
     }
 
     // slow running but handy debugging shapes

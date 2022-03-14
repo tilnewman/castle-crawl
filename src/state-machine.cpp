@@ -72,7 +72,7 @@ namespace castlecrawl
         };
     }
 
-    void StateMachine::setChangePending(const State state, const StateOpt_t fallback)
+    void StateMachine::setChangePending(const State state, const StateOpt_t & fallback)
     {
         m_changePendingOpt = state;
         m_fallbackOpt = fallback;

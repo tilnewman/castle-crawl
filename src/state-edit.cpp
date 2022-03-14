@@ -115,12 +115,12 @@ namespace castlecrawl
         }
 
         // clang-format off
-        if      (sf::Keyboard::Space == event.key.code) m_editor.setCell(context, ' ');
-        else if (sf::Keyboard::L == event.key.code)     m_editor.setCell(context, 'l');
-        else if (sf::Keyboard::B == event.key.code)     m_editor.setCell(context, 'b');
-        else if (sf::Keyboard::W == event.key.code)     m_editor.setCell(context, 'w');
-        else if (sf::Keyboard::C == event.key.code)     m_editor.setCell(context, 'c');
-        else if (sf::Keyboard::K == event.key.code)     m_editor.setCell(context, 'k');
+        if      (sf::Keyboard::Space == event.key.code) { m_editor.setCell(context, ' '); }
+        else if (sf::Keyboard::L == event.key.code)     { m_editor.setCell(context, 'l'); }
+        else if (sf::Keyboard::B == event.key.code)     { m_editor.setCell(context, 'b'); }
+        else if (sf::Keyboard::W == event.key.code)     { m_editor.setCell(context, 'w'); }
+        else if (sf::Keyboard::C == event.key.code)     { m_editor.setCell(context, 'c'); }
+        else if (sf::Keyboard::K == event.key.code)     { m_editor.setCell(context, 'k'); }
         // clang-format on
 
         if ((sf::Keyboard::Period == event.key.code) || (sf::Keyboard::Delete == event.key.code) ||
