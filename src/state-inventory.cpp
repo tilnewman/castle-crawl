@@ -164,7 +164,7 @@ namespace castlecrawl
 
         const sf::Vector2f barSize{ statBarWidth, statBarHeight };
 
-        const float barLineThickness{ windowSize.x * 0.001f };
+        const float barLineThickness{ windowSize.x * 0.00075f };
 
         const sf::Vector2f healthBarPos{ ((util::right(m_statsRegion) - statBarWidth) -
                                           (m_statsRegion.width * 0.1f)),
@@ -200,7 +200,7 @@ namespace castlecrawl
         m_eqListbox.setIndexes(m_eqListboxIndexes);
     }
 
-    void StateInventory::onExit(Context & context)
+    void StateInventory::onExit(Context &)
     {
         m_unListboxIndexes = m_unListbox.getIndexes();
         m_eqListboxIndexes = m_eqListbox.getIndexes();
