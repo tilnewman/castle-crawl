@@ -332,6 +332,40 @@ namespace castlecrawl
                 setupItemDescriptionText(context);
             }
         }
+        else if (sf::Keyboard::Enter == event.key.code)
+        {
+            if (!m_unListbox.hasFocus() || m_unListbox.empty())
+            {
+                return;
+            }
+
+            const auto & item =
+                context.player.inventory().unItems().at(m_unListbox.selectedIndex());
+
+            if (!item.isUseable())
+            {
+                context.audio.play("drum-double.ogg");
+                context.popup.setupBanner(context, item.name() + " is not useable");
+                context.state.setChangePending(State::Popup, State::Inventory);
+                return;
+            }
+
+            if (item.miscType() == item::Misc::Potion)
+            {
+                context.audio.play("bottle.ogg");
+            }
+            else
+            {
+                context.audio.play("herbs.ogg");
+            }
+
+            context.player.health().adjCurrentNormalClamped(item.useEffect().health);
+            context.player.mana().adjCurrentNormalClamped(item.useEffect().mana);
+
+            context.player.inventory().remove(m_unListbox.selectedIndex());
+            m_unListbox.redraw();
+            setupItemDescriptionText(context);
+        }
     }
 
     void StateInventory::setupItemDescriptionText(Context & context)

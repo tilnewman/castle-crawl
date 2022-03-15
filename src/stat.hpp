@@ -34,6 +34,12 @@ namespace castlecrawl
         void adjCurrent(const int adjustment) { current(m_current + adjustment); }
         void adjNormal(const int adjustment) { normal(m_normal + adjustment); }
 
+        void adjCurrentNormalClamped(const int adjustment)
+        {
+            adjCurrent(adjustment);
+            m_current = std::clamp(m_current, m_min, m_normal);
+        }
+
         void current(const int newValue)
         {
             m_current = newValue;
