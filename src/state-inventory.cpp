@@ -290,37 +290,42 @@ namespace castlecrawl
         }
         else if (sf::Keyboard::E == event.key.code)
         {
-            if (m_unListbox.hasFocus() && !m_unListbox.empty())
+            if (!m_unListbox.hasFocus() || m_unListbox.empty())
             {
-                const std::string rejectReason =
-                    context.player.inventory().equip(m_unListbox.selectedIndex());
+                return;
+            }
 
-                if (rejectReason.empty())
-                {
-                    context.audio.play("thud-1.ogg", 1.25f);
-                    m_unListbox.redraw();
-                    m_eqListbox.redraw();
-                }
-                else
-                {
-                    context.audio.play("drum-double.ogg");
-                    context.popup.setupBanner(context, rejectReason);
-                    context.state.setChangePending(State::Popup, State::Inventory);
-                }
+            const std::string rejectReason =
+                context.player.inventory().equip(m_unListbox.selectedIndex());
 
+            if (rejectReason.empty())
+            {
+                context.audio.play("thud-1.ogg", 1.25f);
+                m_unListbox.redraw();
+                m_eqListbox.redraw();
                 setupItemDescriptionText(context);
+                context.player.updateEquipEffects();
+            }
+            else
+            {
+                context.audio.play("drum-double.ogg");
+                context.popup.setupBanner(context, rejectReason);
+                context.state.setChangePending(State::Popup, State::Inventory);
             }
         }
         else if (sf::Keyboard::U == event.key.code)
         {
-            if (m_eqListbox.hasFocus() && !m_eqListbox.empty())
+            if (!m_eqListbox.hasFocus() || m_eqListbox.empty())
             {
-                context.audio.play("thud-1.ogg", 0.75f);
-                context.player.inventory().unequip(m_eqListbox.selectedIndex());
-                m_unListbox.redraw();
-                m_eqListbox.redraw();
-                setupItemDescriptionText(context);
+                return;
             }
+
+            context.audio.play("thud-1.ogg", 0.75f);
+            context.player.inventory().unequip(m_eqListbox.selectedIndex());
+            m_unListbox.redraw();
+            m_eqListbox.redraw();
+            setupItemDescriptionText(context);
+            context.player.updateEquipEffects();
         }
         else if (sf::Keyboard::D == event.key.code)
         {

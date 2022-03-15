@@ -252,6 +252,7 @@ namespace castlecrawl
                 const EquipEffect & ef = m_equipEffect;
 
                 // clang-format off
+                if (ef.acc > 0) { str += "+" + std::to_string(ef.acc) + "acc, "; }
                 if (ef.arc > 0) { str += "+" + std::to_string(ef.arc) + "arc, "; }
                 if (ef.dex > 0) { str += "+" + std::to_string(ef.dex) + "dex, "; }
                 if (ef.dmg > 0) { str += "+" + std::to_string(ef.dmg) + "dmg, "; }
@@ -346,6 +347,7 @@ namespace castlecrawl
             const UseEffect & uf = item.useEffect();
 
             // clang-format off
+            if (ef.acc > 0) { os << ",+" << ef.acc << "acc"; }
             if (ef.arc > 0) { os << ",+" << ef.arc << "arc"; }
             if (ef.dex > 0) { os << ",+" << ef.dex << "dex"; }
             if (ef.dmg > 0) { os << ",+" << ef.dmg << "dmg"; }

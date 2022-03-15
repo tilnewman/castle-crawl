@@ -33,6 +33,8 @@ namespace castlecrawl
 
         item::Inventory & inventory() { return m_inventory; }
 
+        void updateEquipEffects();
+
         friend void to_json(json & j, const Player & p);
         friend void from_json(const json & j, Player & p);
 
@@ -57,6 +59,8 @@ namespace castlecrawl
         int m_gold;
 
         item::Inventory m_inventory;
+
+        item::EquipEffect m_equipEffects;
     };
 
     inline void to_json(json & j, const Player & p)
@@ -71,13 +75,14 @@ namespace castlecrawl
                   { "mana", p.m_mana },
                   { "level", p.m_level },
                   { "gold", p.m_gold },
-                  { "inventory", p.m_inventory } };
+                  { "inventory", p.m_inventory },
+                  { "equip_effects", p.m_equipEffects } };
         // clang-format on
     }
 
     inline void from_json(const json & j, Player & p)
     {
-        j.at("accuracy").get_to(p.m_arcane);
+        j.at("accuracy").get_to(p.m_accuracy);
         j.at("arcane").get_to(p.m_arcane);
         j.at("dexterity").get_to(p.m_dexterity);
         j.at("luck").get_to(p.m_luck);
@@ -87,6 +92,7 @@ namespace castlecrawl
         j.at("level").get_to(p.m_level);
         j.at("gold").get_to(p.m_gold);
         j.at("inventory").get_to(p.m_inventory);
+        j.at("equip_effects").get_to(p.m_equipEffects);
     }
 
 } // namespace castlecrawl
