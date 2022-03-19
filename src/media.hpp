@@ -4,6 +4,7 @@
 // media.hpp
 //
 #include "check-macros.hpp"
+#include "splat-image.hpp"
 #include "summon-image.hpp"
 #include "tile-image.hpp"
 
@@ -48,6 +49,8 @@ namespace castlecrawl
         sf::Vector2f letter_size;
     };
 
+    //
+
     class Media
     {
       public:
@@ -63,6 +66,8 @@ namespace castlecrawl
         const sf::Texture & titleTexture() const { return m_titleTexture; }
         const sf::Texture & paper1Texture() const { return m_paper1Texture; }
         const sf::Texture & paper2Texture() const { return m_paper2Texture; }
+
+        const sf::Sprite & splatSprite(const SplatImage image) const;
 
         const sf::FloatRect paper1InnerRect() const { return { 32.0f, 32.0f, 436.0f, 266.0f }; }
         const sf::FloatRect paper2InnerRect() const { return { 32.0f, 32.0f, 430.0f, 430.0f }; }
@@ -83,6 +88,8 @@ namespace castlecrawl
         void makeDefaults();
         void loadTileSprites(const GameConfig & config, const Layout & layout);
         void loadSummonSprites(const GameConfig & config, const Layout & layout);
+        void loadSplatSprites(const GameConfig & config, const Layout & layout);
+
         void calcFontExtents();
 
         template <typename T>
@@ -112,6 +119,9 @@ namespace castlecrawl
         sf::Texture m_titleTexture;
         sf::Texture m_paper1Texture;
         sf::Texture m_paper2Texture;
+
+        sf::Texture m_splatTexture;
+        std::vector<sf::Sprite> m_splatSprites;
 
         static inline sf::Texture m_defaultTexture;
         static inline sf::Sprite m_defaultSprite;
