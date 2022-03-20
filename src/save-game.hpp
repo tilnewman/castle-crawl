@@ -8,6 +8,8 @@
 #include "maps.hpp"
 #include "player.hpp"
 
+#include <string>
+
 namespace castlecrawl
 {
     struct Context;
@@ -20,7 +22,7 @@ namespace castlecrawl
         std::string map_name;
 
         void saveToFile(Context & context);
-        void loadFromFile(Context & context);
+        std::string loadFromFile(Context & context);
     };
 
     //

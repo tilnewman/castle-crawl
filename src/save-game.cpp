@@ -8,6 +8,7 @@
 #include "board.hpp"
 #include "context.hpp"
 
+#include <filesystem>
 #include <fstream>
 
 namespace castlecrawl
@@ -28,20 +29,49 @@ namespace castlecrawl
         fileStream << std::setw(4) << j;
     }
 
-    void SaveGame::loadFromFile(Context & context)
+    std::string SaveGame::loadFromFile(Context & context)
     {
-        // load from file
-        std::ifstream fileStream("saved-game.txt", std::ios_base::in);
-        json j;
-        fileStream >> j;
+        try
+        {
+            // check that file exists
+            const std::filesystem::path path{ "saved-game.txt" };
+            if (!std::filesystem::exists(path))
+            {
+                throw std::runtime_error("Error:  No saved game to load!");
+            }
 
-        // deserialize
-        *this = j.get<SaveGame>();
+            // open file
+            std::ifstream fileStream(path.string(), std::ios_base::in);
+            if (!fileStream.good())
+            {
+                throw std::runtime_error("Error:  Unable to open saved game file!");
+            }
 
-        // distribute data
-        context.board.player().position(context, player_pos);
-        context.player = player;
-        context.maps.load(context);
+            try
+            {
+                // load from file
+                json j;
+                fileStream >> j;
+
+                // deserialize
+                *this = j.get<SaveGame>();
+            }
+            catch (...)
+            {
+                throw std::runtime_error("Error:  Saved game file contains errors!");
+            }
+
+            // distribute data
+            context.board.player().position(context, player_pos);
+            context.player = player;
+            context.maps.load(context);
+
+            return "";
+        }
+        catch (const std::exception & ex)
+        {
+            return ex.what();
+        }
     }
 
 } // namespace castlecrawl

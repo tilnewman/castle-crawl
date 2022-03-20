@@ -185,8 +185,8 @@ namespace castlecrawl
         // load game
         if (sf::Keyboard::L == event.key.code)
         {
-            context.save.loadFromFile(context);
-            context.popup.setupBanner(context, "Game Loaded");
+            const std::string loadResult{ context.save.loadFromFile(context) };
+            context.popup.setupBanner(context, ((loadResult.empty()) ? "Game Loaded" : loadResult));
             context.state.setChangePending(State::Popup, State::Play);
             return;
         }
