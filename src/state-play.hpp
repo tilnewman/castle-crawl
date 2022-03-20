@@ -9,6 +9,7 @@
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
 namespace sf
@@ -35,6 +36,7 @@ namespace castlecrawl
 
       private:
         void updateReplenish(Context & context, const float frameTimeSec);
+        void updateSplat(const float frameTimeSec);
 
       private:
         static inline constexpr float m_replenishIntervalSec = 10.0f;
@@ -43,6 +45,9 @@ namespace castlecrawl
         FramesPerSecond m_fps;
         sf::RectangleShape m_bgRectangle;
         TopPanel m_topPanel;
+
+        float m_splatTimerSec;
+        sf::Sprite m_splatSprite;
     };
 
 } // namespace castlecrawl

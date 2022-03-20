@@ -77,7 +77,7 @@ namespace castlecrawl
         {
             m_splatSprites[i].setTexture(m_splatTexture);
             m_splatSprites[i].setTextureRect(splatImageRect(static_cast<SplatImage>(i)));
-            m_splatSprites[i].setColor(sf::Color::Red);
+            m_splatSprites[i].setColor(sf::Color(255, 0, 0, 200));
             util::fit(m_splatSprites[i], layout.mapCellSize());
         }
     }

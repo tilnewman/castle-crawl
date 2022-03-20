@@ -36,6 +36,8 @@ namespace castlecrawl
         , m_fps()
         , m_bgRectangle()
         , m_topPanel()
+        , m_splatTimerSec(0.0f)
+        , m_splatSprite()
     {
         m_bgRectangle.setPosition(0.0f, 0.0f);
         m_bgRectangle.setSize(context.layout.windowSize());
@@ -91,6 +93,17 @@ namespace castlecrawl
         context.board.update(context, frameTimeSec);
         m_fps.update();
         updateReplenish(context, frameTimeSec);
+        updateSplat(frameTimeSec);
+    }
+
+    void StatePlay::updateSplat(const float frameTimeSec)
+    {
+        m_splatTimerSec -= frameTimeSec;
+        if (m_splatTimerSec < 0.0f)
+        {
+            m_splatTimerSec = 0.0f;
+            m_splatSprite = sf::Sprite();
+        }
     }
 
     void StatePlay::updateReplenish(Context & context, const float frameTimeSec)
@@ -138,6 +151,25 @@ namespace castlecrawl
                 "them.  Fearsome stories of this castle prison are know wide and far.");
 
             context.state.setChangePending(State::Popup, State::Play);
+            return;
+        }
+
+        // TODO TEMP remove after testing
+        if (sf::Keyboard::M == event.key.code)
+        {
+            m_splatTimerSec = 1.0f;
+
+            const std::size_t splatImageIndex{ context.random.fromTo(
+                0_st, static_cast<std::size_t>(SplatImage::Count) - 1_st) };
+
+            m_splatSprite = context.media.splatSprite(static_cast<SplatImage>(splatImageIndex));
+
+            const sf::FloatRect playerRect{ context.layout.cellBounds(
+                context.board.player().position()) };
+
+            util::fitAndCenterInside(m_splatSprite, playerRect);
+
+            context.board.player().shakeStart();
             return;
         }
 
@@ -272,6 +304,7 @@ namespace castlecrawl
         target.draw(m_topPanel, states);
         target.draw(context.anim, states);
         target.draw(m_fps, states);
+        target.draw(m_splatSprite, states);
     }
 
 } // namespace castlecrawl

@@ -73,11 +73,11 @@ namespace castlecrawl
         if (m_shakeTimerSec > 0.0f)
         {
             m_shaker.update(frameTimeSec);
-            shake(context);
+            shakeUpdate(context);
         }
     }
 
-    void Piece::shake(Context & context)
+    void Piece::shakeUpdate(Context & context)
     {
         sf::Vector2f pos{ util::position(context.layout.cellBounds(m_position)) };
         pos.x += m_shaker.adjustment();

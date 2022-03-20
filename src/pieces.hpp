@@ -90,10 +90,10 @@ namespace castlecrawl
         void update(Context & context, const float frameTimeSec);
         void draw(sf::RenderTarget & target, sf::RenderStates states) const override;
 
-        void shake() { m_shakeTimerSec = 1.0f; }
+        void shakeStart() { m_shakeTimerSec = 1.0f; }
 
       private:
-        void shake(Context & context);
+        void shakeUpdate(Context & context);
 
       protected:
         Pieces m_which;
