@@ -36,6 +36,6 @@ namespace castlecrawl
             std::end(m_enemies));
     }
 
-    void Enemies::act(Context & context) {}
+    void Enemies::act(Context &) {}
 
 } // namespace castlecrawl

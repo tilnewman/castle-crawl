@@ -39,7 +39,7 @@ namespace castlecrawl
             Piece(context, piece(si.summoner), summonImage(si.summoner), si.position));
     }
 
-    void Summoners::remove(const MapPos_t & pos)
+    void Summoners::remove(Context & context, const MapPos_t & pos)
     {
         m_summoners.erase(
             std::remove_if(
@@ -47,8 +47,10 @@ namespace castlecrawl
                 std::end(m_summoners),
                 [&](const SummonerInstance & si) { return (si.position == pos); }),
             std::end(m_summoners));
+
+        context.board.remove(pos);
     }
 
-    void Summoners::summon(Context & context) {}
+    void Summoners::summon(Context &) {}
 
 } // namespace castlecrawl

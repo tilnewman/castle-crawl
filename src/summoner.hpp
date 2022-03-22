@@ -101,7 +101,7 @@ namespace castlecrawl
 
         void update(Context & context, const float frmaeTimeSec);
         void add(Context & context, const SummonerInstance & si);
-        void remove(const MapPos_t & position);
+        void remove(Context & context, const MapPos_t & position);
 
       private:
         void summon(Context & context);
