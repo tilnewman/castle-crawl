@@ -15,12 +15,12 @@ namespace castlecrawl
     enum class SummonImage : std::size_t
     {
         SnakeBag = 0,
-        Snkake1,
-        Snkake2,
-        Snkake3,
-        Snkake4,
-        Snkake5,
-        Snkake6,
+        Snake1,
+        Snake2,
+        Snake3,
+        Snake4,
+        Snake5,
+        Snake6,
         SpiderWeb,
         Spider1,
         Spider2,
@@ -80,11 +80,10 @@ namespace castlecrawl
         Count
     };
 
-    inline SummonImage
-        randomSummonImage(const util::Random & random, const SummonImage summoner)
+    inline SummonImage randomSummonImage(const util::Random & random, const SummonImage summoner)
     {
         const std::size_t summonerIndex{ static_cast<std::size_t>(summoner) };
-        const std::size_t randomIndex{ summonerIndex + random.fromTo<std::size_t>(1, 6) };
+        const std::size_t randomIndex{ summonerIndex + random.fromTo<std::size_t>(0, 5) };
         return static_cast<SummonImage>(randomIndex);
     }
 
@@ -94,12 +93,12 @@ namespace castlecrawl
         switch (image)
         {
             case SummonImage::SnakeBag:     return sf::IntRect(   0,   0,  64,  64);
-            case SummonImage::Snkake1:      return sf::IntRect(  64,   0,  64,  64);
-            case SummonImage::Snkake2:      return sf::IntRect( 128,   0,  64,  64);
-            case SummonImage::Snkake3:      return sf::IntRect( 192,   0,  64,  64);
-            case SummonImage::Snkake4:      return sf::IntRect( 256,   0,  64,  64);
-            case SummonImage::Snkake5:      return sf::IntRect( 320,   0,  64,  64);
-            case SummonImage::Snkake6:      return sf::IntRect( 384,   0,  64,  64);
+            case SummonImage::Snake1:       return sf::IntRect(  64,   0,  64,  64);
+            case SummonImage::Snake2:       return sf::IntRect( 128,   0,  64,  64);
+            case SummonImage::Snake3:       return sf::IntRect( 192,   0,  64,  64);
+            case SummonImage::Snake4:       return sf::IntRect( 256,   0,  64,  64);
+            case SummonImage::Snake5:       return sf::IntRect( 320,   0,  64,  64);
+            case SummonImage::Snake6:       return sf::IntRect( 384,   0,  64,  64);
             case SummonImage::SpiderWeb:    return sf::IntRect(   0,  64,  64,  64);
             case SummonImage::Spider1:      return sf::IntRect(  64,  64,  64,  64);
             case SummonImage::Spider2:      return sf::IntRect( 128,  64,  64,  64);

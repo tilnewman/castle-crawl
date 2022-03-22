@@ -40,9 +40,27 @@ namespace castlecrawl
         Water,
         StairsUp,
         StairsDown,
+        Plant,
+        //
+        SnakeBag,
         SpiderWeb,
+        GoblinPot,
+        BirdMask,
+        PixieGoblet,
+        SkeletonGrave,
+        DemonDoor,
+        DragonBreath,
+        WizardTomb,
+        //
+        Snake,
         Spider,
-        Plant
+        Goblin,
+        Bat,
+        Pixie,
+        Skeleton,
+        Demon,
+        Dragon,
+        Wizard
     };
 
     inline constexpr bool isPieceObstacle(const Pieces piece) noexcept
@@ -62,9 +80,28 @@ namespace castlecrawl
             case Pieces::Water:         { return true;  }
             case Pieces::StairsUp:      { return false; }
             case Pieces::StairsDown:    { return false; }
-            case Pieces::SpiderWeb:     { return true;  }
-            case Pieces::Spider:        { return false; }
             case Pieces::Plant:         { return true;  }
+            //
+            case Pieces::SnakeBag:      { return true;  }
+            case Pieces::SpiderWeb:     { return true;  }
+            case Pieces::GoblinPot:     { return true;  }
+            case Pieces::BirdMask:      { return true;  }
+            case Pieces::PixieGoblet:   { return true;  }
+            case Pieces::SkeletonGrave: { return true;  }
+            case Pieces::DemonDoor:     { return true;  }
+            case Pieces::DragonBreath:  { return true;  }
+            case Pieces::WizardTomb:    { return true;  }
+            //
+            case Pieces::Snake:         { return true;  }
+            case Pieces::Spider:        { return true;  }
+            case Pieces::Goblin:        { return true;  }
+            case Pieces::Bat:           { return true;  }
+            case Pieces::Pixie:         { return true;  }
+            case Pieces::Skeleton:      { return true;  }
+            case Pieces::Demon:         { return true;  }
+            case Pieces::Dragon:        { return true;  }
+            case Pieces::Wizard:        { return true;  }
+            //
             default:                    { return false; }
         }
         // clang-format on

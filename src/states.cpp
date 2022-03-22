@@ -17,6 +17,7 @@
 #include "player.hpp"
 #include "sound-player.hpp"
 #include "state-machine.hpp"
+#include "summoner.hpp"
 
 #include <ostream>
 
@@ -58,6 +59,13 @@ namespace castlecrawl
         std::cout << "Load time: " << loadTimeMs << "ms" << std::endl;
 
         context.state.setChangePending(State::Splash);
+
+        // TODO TEMP remove after testing
+        SummonerInstance si;
+        si.position = { 7, 2 };
+        si.summoner = Summoner::SpiderWeb;
+        si.timer_sec = 10.0f;
+        context.summon.add(context, si);
     }
 
     void StateQuit::onEnter(Context & context)

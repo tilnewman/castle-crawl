@@ -26,6 +26,7 @@ namespace castlecrawl
     class Board;
     class Layout;
     class Player;
+    class Summoners;
     class GameInPlay;
     class StateMachine;
     class PopupManager;
@@ -48,6 +49,7 @@ namespace castlecrawl
             Layout & lay,
             Process & pro,
             Media & med,
+            Summoners & sum,
             StateMachine & sta,
             PopupManager & pop,
             SaveGame & sav,
@@ -64,6 +66,7 @@ namespace castlecrawl
             , layout(lay)
             , process(pro)
             , media(med)
+            , summon(sum)
             , state(sta)
             , popup(pop)
             , save(sav)
@@ -88,6 +91,7 @@ namespace castlecrawl
         Layout & layout;
         Process & process;
         Media & media;
+        Summoners & summon;
         StateMachine & state;
         PopupManager & popup;
         SaveGame & save;

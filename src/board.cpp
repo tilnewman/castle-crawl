@@ -8,6 +8,7 @@
 #include "context.hpp"
 #include "util.hpp"
 
+#include <algorithm>
 #include <sstream>
 
 #include <SFML/Graphics/RenderTarget.hpp>

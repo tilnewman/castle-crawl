@@ -21,6 +21,7 @@
 #include "save-game.hpp"
 #include "sound-player.hpp"
 #include "state-machine.hpp"
+#include "summoner.hpp"
 #include "tile-image.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -52,6 +53,7 @@ namespace castlecrawl
         GameInPlay m_game;
         GameConfig m_config;
         SaveGame m_saveGame;
+        Summoners m_summoner;
         StateMachine m_states;
         PopupManager m_popups;
         item::ItemFactory m_items;
