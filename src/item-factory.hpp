@@ -35,6 +35,7 @@ namespace castlecrawl
             void printSummaries() const;
             const TextExtent textExtents() const { return m_textExtent; }
             const Treasure randomTreasureFind(Context & context) const;
+            const Treasure randomHerbFind(Context & context) const;
             const ItemVec_t makeAll() const;
 
           private:

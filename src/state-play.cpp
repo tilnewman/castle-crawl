@@ -74,6 +74,22 @@ namespace castlecrawl
 
                 context.state.setChangePending(State::Treasure);
             }
+            else if (
+                (fightChar == tileImageChar(TileImage::Plant1)) ||
+                (fightChar == tileImageChar(TileImage::Plant2)) ||
+                (fightChar == tileImageChar(TileImage::Plant3)) ||
+                (fightChar == tileImageChar(TileImage::Plant4)))
+            {
+                context.audio.play("chop.ogg");
+
+                context.maps.get().setChar(fightPos, ' ');
+                context.maps.reloadAfterChange(context);
+
+                using namespace item;
+                StateTreasure::treasure = context.items.randomHerbFind(context);
+
+                context.state.setChangePending(State::Treasure);
+            }
             else
             {
                 context.audio.play("hit.ogg");

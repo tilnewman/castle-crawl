@@ -793,6 +793,24 @@ namespace castlecrawl
             return treasure;
         }
 
+        const Treasure ItemFactory::randomHerbFind(Context & context) const
+        {
+            Treasure treasure;
+
+            ItemVec_t miscItems{ makeMisc() };
+
+            miscItems.erase(
+                std::remove_if(
+                    std::begin(miscItems),
+                    std::end(miscItems),
+                    [](const Item & item) { return (item.miscType() != Misc::Herbs); }),
+                std::end(miscItems));
+
+            treasure.items.push_back(context.random.from(miscItems));
+
+            return treasure;
+        }
+
     } // namespace item
 
 } // namespace castlecrawl
