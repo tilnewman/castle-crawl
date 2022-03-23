@@ -4,7 +4,7 @@
 // enemy.hpp
 //
 #include "map-types.hpp"
-#include "summon-image.hpp"
+#include "tile-image.hpp"
 
 #include <vector>
 
@@ -31,21 +31,19 @@ namespace castlecrawl
         Wizard
     };
 
-    inline SummonImage randomSummonImage(const util::Random & random, const Enemy enemy) noexcept
+    inline TileImage tileImage(const Enemy enemy) noexcept
     {
         // clang-format off
         switch (enemy)
         {
-            case Enemy::Snake:    { return randomSummonImage(random, SummonImage::Snake1); }
-            case Enemy::Spider:   { return randomSummonImage(random, SummonImage::Spider1); }
-            case Enemy::Goblin:   { return randomSummonImage(random, SummonImage::Goblin1); }
-            case Enemy::Bat:      { return randomSummonImage(random, SummonImage::Bat1); }
-            case Enemy::Pixie:    { return randomSummonImage(random, SummonImage::Pixie1); }
-            case Enemy::Skeleton: { return randomSummonImage(random, SummonImage::Skeleton1); }
-            case Enemy::Demon:    { return randomSummonImage(random, SummonImage::Demon1); }
-            case Enemy::Dragon:   { return randomSummonImage(random, SummonImage::Dragon1); }
-            case Enemy::Wizard:   
-            default:              { return randomSummonImage(random, SummonImage::Wizard1); }
+            case Enemy::Snake:    { return TileImage::Snake; }
+            case Enemy::Spider:   { return TileImage::Spider; }
+            case Enemy::Goblin:   { return TileImage::Goblin; }
+            case Enemy::Bat:      { return TileImage::Bat; }
+            case Enemy::Skeleton: { return TileImage::Skeleton; }
+            case Enemy::Demon:    { return TileImage::Demon; }
+            case Enemy::Dragon:   { return TileImage::Dragon; }
+            default:              { return TileImage::Empty; }
         }
         // clang-format on
     }

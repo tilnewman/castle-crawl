@@ -21,7 +21,6 @@ namespace castlecrawl
         calcFontExtents();
 
         loadTileSprites(config, layout);
-        loadSummonSprites(config, layout);
         loadSplatSprites(config, layout);
 
         load((config.media_dir_path / "image" / "title.png"), m_titleTexture);
@@ -51,21 +50,6 @@ namespace castlecrawl
         m_tileSprites.at(static_cast<std::size_t>(TileImage::Empty)) = m_defaultSprite;
     }
 
-    void Media::loadSummonSprites(const GameConfig & config, const Layout & layout)
-    {
-        const std::size_t imageCount{ static_cast<std::size_t>(SummonImage::Count) };
-        m_summonSprites.resize(imageCount);
-
-        load((config.media_dir_path / "image" / "summon.png"), m_summonTexture);
-
-        for (std::size_t i(0); i < imageCount; ++i)
-        {
-            m_summonSprites[i].setTexture(m_summonTexture);
-            m_summonSprites[i].setTextureRect(summonImageRect(static_cast<SummonImage>(i)));
-            util::fit(m_summonSprites[i], layout.mapCellSize());
-        }
-    }
-
     void Media::loadSplatSprites(const GameConfig & config, const Layout & layout)
     {
         const std::size_t imageCount{ static_cast<std::size_t>(SplatImage::Count) };
@@ -90,19 +74,6 @@ namespace castlecrawl
         if (index < m_tileSprites.size())
         {
             return m_tileSprites[index];
-        }
-        else
-        {
-            return m_defaultSprite;
-        }
-    }
-
-    const sf::Sprite & Media::summonSprite(const SummonImage image) const
-    {
-        const std::size_t index = static_cast<std::size_t>(image);
-        if (index < m_summonSprites.size())
-        {
-            return m_summonSprites[index];
         }
         else
         {

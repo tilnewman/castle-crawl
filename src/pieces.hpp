@@ -5,7 +5,6 @@
 //
 #include "map-types.hpp"
 #include "shaker.hpp"
-#include "summon-image.hpp"
 #include "tile-image.hpp"
 
 #include <functional>
@@ -114,7 +113,6 @@ namespace castlecrawl
       public:
         Piece(const Pieces which);
         Piece(Context & context, const Pieces which, const char mapChar, const MapPos_t & pos);
-        Piece(Context & context, const Pieces which, const SummonImage image, const MapPos_t & pos);
 
         Pieces which() const { return m_which; }
         bool isObstacle() const { return isPieceObstacle(m_which); }

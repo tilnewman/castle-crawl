@@ -5,7 +5,6 @@
 //
 #include "check-macros.hpp"
 #include "splat-image.hpp"
-#include "summon-image.hpp"
 #include "tile-image.hpp"
 
 #include <filesystem>
@@ -60,7 +59,6 @@ namespace castlecrawl
 
         const sf::Font & font() const;
         const sf::Sprite & tileSprite(const TileImage image) const;
-        const sf::Sprite & summonSprite(const SummonImage image) const;
 
         const sf::Texture & tileTexture() const { return m_tileTexture; }
         const sf::Texture & titleTexture() const { return m_titleTexture; }
@@ -87,7 +85,6 @@ namespace castlecrawl
       protected:
         void makeDefaults();
         void loadTileSprites(const GameConfig & config, const Layout & layout);
-        void loadSummonSprites(const GameConfig & config, const Layout & layout);
         void loadSplatSprites(const GameConfig & config, const Layout & layout);
 
         void calcFontExtents();
@@ -107,9 +104,6 @@ namespace castlecrawl
 
         sf::Texture m_tileTexture;
         std::vector<sf::Sprite> m_tileSprites;
-
-        sf::Texture m_summonTexture;
-        std::vector<sf::Sprite> m_summonSprites;
 
         FontExtent m_fontExtentHuge;
         FontExtent m_fontExtentLarge;

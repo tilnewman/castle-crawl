@@ -36,7 +36,7 @@ namespace castlecrawl
         m_summoners.push_back(si);
 
         context.board.add(
-            Piece(context, piece(si.summoner), summonImage(si.summoner), si.position));
+            Piece(context, piece(si.summoner), tileImageChar(tileImage(si.summoner)), si.position));
     }
 
     void Summoners::remove(Context & context, const MapPos_t & pos)

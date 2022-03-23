@@ -40,17 +40,6 @@ namespace castlecrawl
         position(context, pos); // to set the sprite's position
     }
 
-    Piece::Piece(
-        Context & context, const Pieces which, const SummonImage image, const MapPos_t & pos)
-        : m_which(which)
-        , m_sprite(context.media.summonSprite(image))
-        , m_shaker()
-        , m_shakeTimerSec(0.0f)
-        , m_position()
-    {
-        position(context, pos); // to set the sprite's position
-    }
-
     void Piece::position(Context & context, const MapPos_t & pos)
     {
         m_position = pos;

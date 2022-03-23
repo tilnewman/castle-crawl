@@ -58,6 +58,20 @@ namespace castlecrawl
         StoneBotLft,
         StoneBot,
         StoneBotRgt,
+        SnakeBag,
+        Snake,
+        SpiderWeb,
+        Spider,
+        GoblinPot,
+        Goblin,
+        BirdMask,
+        Bat,
+        SkeletonGrave,
+        Skeleton,
+        DemonDoor,
+        Demon,
+        DragonBreath,
+        Dragon,
         Count
     };
 
@@ -87,6 +101,20 @@ namespace castlecrawl
             case TileImage::Plant3:         { return '$'; }
             case TileImage::Plant4:         { return '%'; }
             case TileImage::Empty:          { return ' '; }
+            case TileImage::SnakeBag:       { return '\x80'; }
+            case TileImage::Snake:          { return '\x81'; }
+            case TileImage::SpiderWeb:      { return '\x82'; }
+            case TileImage::Spider:         { return '\x83'; }
+            case TileImage::GoblinPot:      { return '\x84'; }
+            case TileImage::Goblin:         { return '\x85'; }
+            case TileImage::BirdMask:       { return '\x86'; }
+            case TileImage::Bat:            { return '\x87'; }
+            case TileImage::SkeletonGrave:  { return '\x88'; }
+            case TileImage::Skeleton:       { return '\x89'; }
+            case TileImage::DemonDoor:      { return '\x8A'; }
+            case TileImage::Demon:          { return '\x8B'; }
+            case TileImage::DragonBreath:   { return '\x8C'; }
+            case TileImage::Dragon:         { return '\x8D'; }
             case TileImage::Dirt1:
             case TileImage::Dirt2:
             case TileImage::Dirt3:
@@ -159,6 +187,20 @@ namespace castlecrawl
             case '#': return TileImage::Plant2;
             case '$': return TileImage::Plant3;
             case '%': return TileImage::Plant4;
+            case '\x80': return TileImage::SnakeBag;
+            case '\x81': return TileImage::Snake;
+            case '\x82': return TileImage::SpiderWeb;
+            case '\x83': return TileImage::Spider;
+            case '\x84': return TileImage::GoblinPot;
+            case '\x85': return TileImage::Goblin;
+            case '\x86': return TileImage::BirdMask;
+            case '\x87': return TileImage::Bat;
+            case '\x88': return TileImage::SkeletonGrave;
+            case '\x89': return TileImage::Skeleton;
+            case '\x8A': return TileImage::DemonDoor;
+            case '\x8B': return TileImage::Demon;
+            case '\x8C': return TileImage::DragonBreath;
+            case '\x8D': return TileImage::Dragon;
             default: return TileImage::Empty;
         }
     }
@@ -219,6 +261,21 @@ namespace castlecrawl
             case TileImage::Plant2:          return sf::IntRect(32,224,32,32);
             case TileImage::Plant3:          return sf::IntRect(64,224,32,32);
             case TileImage::Plant4:          return sf::IntRect(96,224,32,32);
+            //
+            case TileImage::SnakeBag:        return sf::IntRect(192, 64,32,32);
+            case TileImage::Snake:           return sf::IntRect(224, 64,32,32);
+            case TileImage::SpiderWeb:       return sf::IntRect(192, 96,32,32);
+            case TileImage::Spider:          return sf::IntRect(224, 96,32,32);
+            case TileImage::GoblinPot:       return sf::IntRect(192,128,32,32);
+            case TileImage::Goblin:          return sf::IntRect(224,128,32,32);
+            case TileImage::BirdMask:        return sf::IntRect(192,160,32,32);
+            case TileImage::Bat:             return sf::IntRect(224,160,32,32);
+            case TileImage::SkeletonGrave:   return sf::IntRect(192,192,32,32);
+            case TileImage::Skeleton:        return sf::IntRect(224,192,32,32);
+            case TileImage::DemonDoor:       return sf::IntRect(192,224,32,32);
+            case TileImage::Demon:           return sf::IntRect(224,224,32,32);
+            case TileImage::DragonBreath:    return sf::IntRect(128,224,32,32);
+            case TileImage::Dragon:          return sf::IntRect(160,224,32,32);
             //
             case TileImage::Empty:           return sf::IntRect(0,192,32,32);
             //

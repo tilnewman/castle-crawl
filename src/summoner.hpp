@@ -6,7 +6,7 @@
 #include "enemy.hpp"
 #include "map-types.hpp"
 #include "pieces.hpp"
-#include "summon-image.hpp"
+#include "tile-image.hpp"
 
 #include <vector>
 
@@ -21,11 +21,9 @@ namespace castlecrawl
         SpiderWeb,
         GoblinPot,
         BirdMask,
-        PixieGoblet,
         SkeletonGrave,
         DemonDoor,
-        DragonBreath,
-        WizardTomb
+        DragonBreath
     };
 
     inline constexpr Pieces piece(const Summoner summoner) noexcept
@@ -37,31 +35,27 @@ namespace castlecrawl
             case Summoner::SpiderWeb:     { return Pieces::SpiderWeb; }
             case Summoner::GoblinPot:     { return Pieces::GoblinPot; }
             case Summoner::BirdMask:      { return Pieces::BirdMask; }
-            case Summoner::PixieGoblet:   { return Pieces::PixieGoblet; }
             case Summoner::SkeletonGrave: { return Pieces::SkeletonGrave; }
             case Summoner::DemonDoor:     { return Pieces::DemonDoor; }
-            case Summoner::DragonBreath:  { return Pieces::DragonBreath; }
-            case Summoner::WizardTomb:    
-            default:                      { return Pieces::WizardTomb; }
+            case Summoner::DragonBreath:
+            default:                      { return Pieces::DragonBreath; }
         }
         // clang-format on
     }
 
-    inline constexpr SummonImage summonImage(const Summoner summoner) noexcept
+    inline constexpr TileImage tileImage(const Summoner summoner) noexcept
     {
         // clang-format off
         switch (summoner)
         {
-            case Summoner::SnakeBag:      { return SummonImage::SnakeBag; }
-            case Summoner::SpiderWeb:     { return SummonImage::SpiderWeb; }
-            case Summoner::GoblinPot:     { return SummonImage::GoblinPot; }
-            case Summoner::BirdMask:      { return SummonImage::BirdMask; }
-            case Summoner::PixieGoblet:   { return SummonImage::PixieGoblet; }
-            case Summoner::SkeletonGrave: { return SummonImage::SkeletonGrave; }
-            case Summoner::DemonDoor:     { return SummonImage::DemonDoor; }
-            case Summoner::DragonBreath:  { return SummonImage::DragonBreath; }
-            case Summoner::WizardTomb:    
-            default:                      { return SummonImage::WizardTomb; }
+            case Summoner::SnakeBag:      { return TileImage::SnakeBag; }
+            case Summoner::SpiderWeb:     { return TileImage::SpiderWeb; }
+            case Summoner::GoblinPot:     { return TileImage::GoblinPot; }
+            case Summoner::BirdMask:      { return TileImage::BirdMask; }
+            case Summoner::SkeletonGrave: { return TileImage::SkeletonGrave; }
+            case Summoner::DemonDoor:     { return TileImage::DemonDoor; }
+            case Summoner::DragonBreath:  { return TileImage::DragonBreath; }
+            default:                      { return TileImage::Empty; }
         }
         // clang-format on
     }
@@ -75,11 +69,9 @@ namespace castlecrawl
             case Summoner::SpiderWeb:     { return 10.0f; }
             case Summoner::GoblinPot:     { return 14.0f; }
             case Summoner::BirdMask:      { return 10.0f; }
-            case Summoner::PixieGoblet:   { return 15.0f; }
             case Summoner::SkeletonGrave: { return 17.0f; }
             case Summoner::DemonDoor:     { return 30.0f; }
-            case Summoner::DragonBreath:  { return 20.0f; }
-            case Summoner::WizardTomb:
+            case Summoner::DragonBreath:
             default:                      { return 20.0f; }
         }
         // clang-format on
