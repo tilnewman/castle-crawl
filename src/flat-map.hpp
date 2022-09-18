@@ -56,8 +56,7 @@ namespace util
                 }
             }
 
-            m_vector.emplace_back(key, data_t{});
-            return m_vector[m_vector.size() - 1].second;
+            return m_vector.emplace_back(key, data_t{}).second;
         }
 
         data_t & at(const key_t & key)
