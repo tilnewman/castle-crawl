@@ -24,11 +24,9 @@ namespace castlecrawl
         Spider,
         Goblin,
         Bat,
-        Pixie,
         Skeleton,
         Demon,
-        Dragon,
-        Wizard
+        Dragon
     };
 
     inline TileImage tileImage(const Enemy enemy) noexcept
@@ -57,11 +55,9 @@ namespace castlecrawl
             case Enemy::Spider:     { return 2.5f; }
             case Enemy::Goblin:     { return 3.5f; }
             case Enemy::Bat:        { return 1.5f; }
-            case Enemy::Pixie:      { return 3.0f; }
             case Enemy::Skeleton:   { return 4.0f; }
             case Enemy::Demon:      { return 4.5f; }
             case Enemy::Dragon:     { return 5.0f; }
-            case Enemy::Wizard:
             default:                { return 3.0f; }
         }
         // clang-format on
