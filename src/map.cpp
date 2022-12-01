@@ -309,12 +309,15 @@ namespace castlecrawl
     {
         sf::Sprite sprite = context.media.tileSprite(TileImage::Lava); // any non-empty works here
         sprite.setColor(context.config.background_color);
-        sprite.scale(1.5f, 1.5f);
+
+        // make border verts bigger to cover corner cases (it's drawn below walls anyway)
+        const float growScale = 0.5f;
+        sprite.scale((1.0f + growScale), (1.0f + growScale));
 
         const float mapCellDimm{ context.layout.mapCellDimm() };
         const sf::Vector2f boardPos{ util::position(context.layout.boardBounds()) };
 
-        const float overlapDimm{ mapCellDimm * 0.25f };
+        const float overlapDimm{ mapCellDimm * (growScale * 0.5f) };
         const sf::Vector2f overlap{ overlapDimm, overlapDimm };
 
         sf::Vector2f pos{ boardPos };
