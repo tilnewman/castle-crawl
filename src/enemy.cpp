@@ -11,6 +11,10 @@
 namespace castlecrawl
 {
 
+    Enemies::Enemies()
+        : m_enemies()
+    {}
+
     void Enemies::update(Context & context, const float frameTimeSec)
     {
         for (EnemyInstance & instance : m_enemies)
