@@ -216,7 +216,7 @@ namespace castlecrawl
                 "  S         - Stairway Up\n"
                 "  b         - Barrel\n"
                 "  c         - Coffin\n"
-                "  f         - Stone or Wood Floor\n"
+                "  1,2,3     - Floor Type\n"
                 "  CNTRL-R   - ERASE EVERYTHING!\n"
                 "----------------------------------\n"
                 << std::endl;

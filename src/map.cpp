@@ -352,6 +352,10 @@ namespace castlecrawl
 
         auto notLiq = [](const char ch) { return ((ch != 'l') && (ch != 'w')); };
 
+        auto validNotLiquid = [&](const char ch, const MapPos_t & pos) {
+            return (notLiq(ch) && isPosValid(pos));
+        };
+
         sf::Sprite sprite = context.media.tileSprite(TileImage::Empty);
 
         const float mapCellDimm{ context.layout.mapCellDimm() };
@@ -371,62 +375,68 @@ namespace castlecrawl
                     continue;
                 }
 
-                // check all four sides
-                const char up{ getChar(x, y - 1) };
-                const char down{ getChar(x, y + 1) };
-                const char left{ getChar(x - 1, y) };
-                const char right{ getChar(x + 1, y) };
+                // chars in all directions
+                const char upChar{ getChar(x, y - 1) };
+                const char downChar{ getChar(x, y + 1) };
+                const char leftChar{ getChar(x - 1, y) };
+                const char rightChar{ getChar(x + 1, y) };
 
-                if (notLiq(up) && notLiq(left))
+                // pos in all directions
+                const MapPos_t upPos{ x, y - 1 };
+                const MapPos_t downPos{ x, y + 1 };
+                const MapPos_t leftPos{ x - 1, y };
+                const MapPos_t rightPos{ x + 1, y };
+
+                if (validNotLiquid(upChar, upPos) && validNotLiquid(leftChar, leftPos))
                 {
                     sprite = context.media.tileSprite(TileImage::StoneTopLft);
                     sprite.setPosition(pos);
                     util::appendQuadVerts(sprite.getGlobalBounds(), sprite.getTextureRect(), verts);
                 }
 
-                if (notLiq(up) && notLiq(right))
+                if (validNotLiquid(upChar, upPos) && validNotLiquid(rightChar, rightPos))
                 {
                     sprite = context.media.tileSprite(TileImage::StoneTopRgt);
                     sprite.setPosition(pos);
                     util::appendQuadVerts(sprite.getGlobalBounds(), sprite.getTextureRect(), verts);
                 }
 
-                if (notLiq(down) && notLiq(left))
+                if (validNotLiquid(downChar, downPos) && validNotLiquid(leftChar, leftPos))
                 {
                     sprite = context.media.tileSprite(TileImage::StoneBotLft);
                     sprite.setPosition(pos);
                     util::appendQuadVerts(sprite.getGlobalBounds(), sprite.getTextureRect(), verts);
                 }
 
-                if (notLiq(down) && notLiq(right))
+                if (validNotLiquid(downChar, downPos) && validNotLiquid(rightChar, rightPos))
                 {
                     sprite = context.media.tileSprite(TileImage::StoneBotRgt);
                     sprite.setPosition(pos);
                     util::appendQuadVerts(sprite.getGlobalBounds(), sprite.getTextureRect(), verts);
                 }
 
-                if (notLiq(up))
+                if (validNotLiquid(upChar, upPos))
                 {
                     sprite = context.media.tileSprite(TileImage::StoneTop);
                     sprite.setPosition(pos);
                     util::appendQuadVerts(sprite.getGlobalBounds(), sprite.getTextureRect(), verts);
                 }
 
-                if (notLiq(down))
+                if (validNotLiquid(downChar, downPos))
                 {
                     sprite = context.media.tileSprite(TileImage::StoneBot);
                     sprite.setPosition(pos);
                     util::appendQuadVerts(sprite.getGlobalBounds(), sprite.getTextureRect(), verts);
                 }
 
-                if (notLiq(left))
+                if (validNotLiquid(leftChar, leftPos))
                 {
                     sprite = context.media.tileSprite(TileImage::StoneLft);
                     sprite.setPosition(pos);
                     util::appendQuadVerts(sprite.getGlobalBounds(), sprite.getTextureRect(), verts);
                 }
 
-                if (notLiq(right))
+                if (validNotLiquid(rightChar, rightPos))
                 {
                     sprite = context.media.tileSprite(TileImage::StoneRgt);
                     sprite.setPosition(pos);
