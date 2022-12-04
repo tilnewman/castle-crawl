@@ -179,7 +179,7 @@ namespace castlecrawl
         return true;
     }
 
-    void Editor::save(Context & context)
+    void Editor::save(Context &)
     {
         const auto path = (std::filesystem::current_path() / m_filename);
 
