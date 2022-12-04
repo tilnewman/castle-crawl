@@ -198,8 +198,7 @@ namespace castlecrawl
             }
         }
 
-        context.popup.setupBanner(context, "Saved: " + path.string());
-        context.state.setChangePending(State::Popup, State::Edit);
+        std::cout << "Saved: " << path.string() << std::endl;
     }
 
     bool Editor::load(Context & context, const std::filesystem::path & path)
