@@ -52,7 +52,6 @@ namespace castlecrawl
                 }
             };
 
-        
         m_maps["level-1-cell-block"] = Map {
             random,
             Floor::Wood,
@@ -85,7 +84,6 @@ namespace castlecrawl
                 }
             };
 
-        
         m_maps["level-1-main-hall"] = Map {
             random,
             Floor::Wood,
@@ -215,6 +213,38 @@ namespace castlecrawl
                 { { -1, 9 }, "level-1-hidden-passage", { 18, 16 } }
                 }
             };
+
+        m_maps["level-2-lake-stronghold"] = Map {
+            random,
+            Floor::Stone,
+            MapChars_t {
+                "wwww ......................... wwwwwwwwww",
+                "www  .......b          .......  wwwwwwwww",
+                "ww   .......           .......        www",
+                "     ....bb.b          d     d          w",
+                "..d......  ....        ....d........b   w",
+                ".. ......     d        ....        .bb  w",
+                ".. ......   ...        ....        ...  w",
+                ".. ......   .      ........          .  w",
+                "..      d   .      ........          . ww",
+                ".....d....  .      ......b.          . ww",
+                "..... ....  .   ......... .d.....    .  w",
+                "..... .......   d    ....       .    .  w",
+                "..... .......   .    ....       .    .  w",
+                "..... .......   .    ....       ......  w",
+                "w     .......   .    ....       ....b  ww",
+                "w         .......  bb....       ....b www",
+                "ww   .... .......  bc....b      ....b  ww",
+                "www  .... ................... ......... w",
+                "wc   .... ................... ......... w",
+                "......... ................... ......... w",
+                "......... ...................d......c   w",
+                ".........     ..............     ...   ww",
+                ".............d..............         wwww"
+                },
+            MapLinks_t {}
+            };
+
         // clang-format on
 
         // this sort is not required but helps performance
