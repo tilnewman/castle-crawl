@@ -34,6 +34,8 @@ namespace castlecrawl
 
         M_CHECK(loadSuccess, "failed to load splash.png");
 
+        m_texture.setSmooth(true);
+
         m_sprite.setTexture(m_texture);
 
         util::fit(m_sprite, (context.layout.windowSize() * 0.4f));
