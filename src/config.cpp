@@ -16,7 +16,8 @@ namespace castlecrawl
 {
     GameConfig::GameConfig()
         : media_dir_path{ std::filesystem::current_path() / "media" }
-        , video_mode{ 1920, 1200, sf::VideoMode::getDesktopMode().bitsPerPixel }
+        , video_mode{ util::findVideoModeClosestTo(
+              { 1920, 1200, sf::VideoMode::getDesktopMode().bitsPerPixel }) }
         , frame_rate_limit{ 0 }
         , background_color{ sf::Color(14, 17, 20) }
         , cell_counts(41, 23) // these values just look good, not too big, not too small
