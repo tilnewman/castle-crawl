@@ -18,7 +18,7 @@ namespace castlecrawl
         makeDefaults();
 
         load((config.media_dir_path / "font/gentium-plus/gentium-plus.ttf"), m_font);
-        calcFontExtents();
+        calcFontExtents(layout);
 
         loadTileSprites(config, layout);
         loadSplatSprites(config, layout);
@@ -99,7 +99,7 @@ namespace castlecrawl
         sf::Image image;
         image.create(1, 1, sf::Color::White);
         m_defaultTexture.loadFromImage(image);
-        m_defaultSprite.setTexture(m_defaultTexture, true);
+        m_defaultSprite.setTexture(m_defaultTexture);
     }
 
     const FontExtent Media::fontExtent(const FontSize size) const
@@ -122,31 +122,39 @@ namespace castlecrawl
         }
     }
 
-    void Media::calcFontExtents()
+    void Media::calcFontExtents(const Layout & layout)
     {
+        const sf::Vector2f standardRes{ 3840.f, 2400.0f };
+        const float standardPixels = std::sqrt(standardRes.x * standardRes.y);
+
+        const sf::Vector2f currentRes = layout.windowSize();
+        const float currentPixels = std::sqrt(currentRes.x * currentRes.y);
+
+        const float pixelRatio = (currentPixels / standardPixels);
+
         sf::Text text;
         const std::string widthStr{ "M" };
         const std::string heightStr{ "|g" };
 
-        m_fontExtentHuge.char_size = 120;
+        m_fontExtentHuge.char_size = static_cast<unsigned>(130.0f * pixelRatio);
         text = makeText(FontSize::Huge, widthStr);
         m_fontExtentHuge.letter_size.x = text.getGlobalBounds().width;
         text = makeText(FontSize::Huge, heightStr);
         m_fontExtentHuge.letter_size.y = text.getGlobalBounds().height;
 
-        m_fontExtentLarge.char_size = 80;
+        m_fontExtentLarge.char_size = static_cast<unsigned>(90.0f * pixelRatio);
         text = makeText(FontSize::Large, widthStr);
         m_fontExtentLarge.letter_size.x = text.getGlobalBounds().width;
         text = makeText(FontSize::Large, heightStr);
         m_fontExtentLarge.letter_size.y = text.getGlobalBounds().height;
 
-        m_fontExtentMedium.char_size = 50;
+        m_fontExtentMedium.char_size = static_cast<unsigned>(60.0f * pixelRatio);
         text = makeText(FontSize::Medium, widthStr);
         m_fontExtentMedium.letter_size.x = text.getGlobalBounds().width;
         text = makeText(FontSize::Medium, heightStr);
         m_fontExtentMedium.letter_size.y = text.getGlobalBounds().height;
 
-        m_fontExtentSmall.char_size = 30;
+        m_fontExtentSmall.char_size = static_cast<unsigned>(40.0f * pixelRatio);
         text = makeText(FontSize::Small, widthStr);
         m_fontExtentSmall.letter_size.x = text.getGlobalBounds().width;
         text = makeText(FontSize::Small, heightStr);

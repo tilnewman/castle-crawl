@@ -87,7 +87,7 @@ namespace castlecrawl
         void loadTileSprites(const GameConfig & config, const Layout & layout);
         void loadSplatSprites(const GameConfig & config, const Layout & layout);
 
-        void calcFontExtents();
+        void calcFontExtents(const Layout & layout);
 
         template <typename T>
         void load(const std::filesystem::path & path, T & loadable)
