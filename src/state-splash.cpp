@@ -44,6 +44,8 @@ namespace castlecrawl
         m_lightningTexture.loadFromFile(
             (context.config.media_dir_path / "image" / "lightning.png").string());
 
+        m_lightningTexture.setSmooth(true);
+
         m_lightningSprite.setTexture(m_lightningTexture);
 
         sf::FloatRect lightningRect{ m_sprite.getGlobalBounds() };
