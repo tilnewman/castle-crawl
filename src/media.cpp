@@ -27,6 +27,10 @@ namespace castlecrawl
         load((config.media_dir_path / "image" / "paper-1.png"), m_paper1Texture);
         load((config.media_dir_path / "image" / "paper-2.png"), m_paper2Texture);
 
+        m_titleTexture.setSmooth(true);
+        m_paper1Texture.setSmooth(true);
+        m_paper2Texture.setSmooth(true);
+
         audio.loadAll();
     }
 
@@ -56,6 +60,7 @@ namespace castlecrawl
         m_splatSprites.resize(imageCount);
 
         load((config.media_dir_path / "image" / "splat.png"), m_splatTexture);
+        m_splatTexture.setSmooth(true);
 
         for (std::size_t i(0); i < imageCount; ++i)
         {
