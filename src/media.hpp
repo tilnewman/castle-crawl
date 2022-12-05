@@ -98,10 +98,10 @@ namespace castlecrawl
             const bool loadSuccess{ loadable.loadFromFile(path.string()) };
 
             // this causes artifacts between tile sprites so don't do it
-            if constexpr (std::is_same_v<T, sf::Texture>)
-            {
-                loadable.setSmooth(true);
-            }
+            // if constexpr (std::is_same_v<T, sf::Texture>)
+            //{
+            //    loadable.setSmooth(true);
+            //}
 
             M_CHECK(loadSuccess, path);
         }
