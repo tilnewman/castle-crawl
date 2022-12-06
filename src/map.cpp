@@ -554,6 +554,7 @@ namespace castlecrawl
                     continue;
                 }
 
+                // skip all that are off the map
                 if (!isPosValid(nextPos))
                 {
                     continue;
