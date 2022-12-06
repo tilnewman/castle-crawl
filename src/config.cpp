@@ -16,11 +16,10 @@ namespace castlecrawl
 {
     GameConfig::GameConfig()
         : media_dir_path{ std::filesystem::current_path() / "media" }
-        , video_mode{ util::findVideoModeClosestTo(
-              { 1920, 1200, sf::VideoMode::getDesktopMode().bitsPerPixel }) }
-        , frame_rate_limit{ 0 }
+        , video_mode{ util::findVideoModeClosestTo(sf::VideoMode::getDesktopMode()) }
+        , frame_rate_limit{ 0 } // leave unlimited while developing
         , background_color{ sf::Color(14, 17, 20) }
-        , cell_counts(41, 23) // these values just look good, not too big, not too small
+        , cell_counts(41, 23) // looks good on wide screens - NEVER CHANGE - maps depend on these
     {}
 
     void GameConfig::setup(const sf::VideoMode & videoModeActual)
