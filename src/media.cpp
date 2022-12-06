@@ -43,6 +43,7 @@ namespace castlecrawl
 
         for (std::size_t i(0); i < imageCount; ++i)
         {
+            // intentionally don't setSmooth(true) to avoid strange line artifacts
             m_tileSprites[i].setTexture(m_tileTexture);
             m_tileSprites[i].setTextureRect(tileImageToTileRect(static_cast<TileImage>(i)));
             util::fit(m_tileSprites[i], layout.mapCellSize());
