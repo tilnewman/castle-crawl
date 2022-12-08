@@ -155,11 +155,11 @@ namespace castlecrawl
             random,
             Floor::Wood,
             MapChars_t {
-                "...........................",
-                "d     .....................",
-                "..... .....................",
-                "..... .....................",
-                "..... .....................",
+                "...................d.......",
+                "d     ............. .......",
+                "..... ............. .......",
+                "..... ............. .......",
+                "..... ............. .......",
                 "..... ...                  ",
                 "..... ... .................",
                 "..... ... .................",
@@ -178,7 +178,8 @@ namespace castlecrawl
                 },
             MapLinks_t {
                 { { -1, 1 }, "level-1-main-hall",  { 32, 4 } },
-                { { 27, 5 }, "level-1-coffin-room", { 0,  9 } }
+                { { 27, 5 }, "level-1-coffin-room", { 0,  9 } },
+                { { 19, -1 }, "level-1-lake-stronghold", { 13,  21 } }
                 }
             };
 
@@ -213,14 +214,14 @@ namespace castlecrawl
                 }
             };
 
-        m_maps["level-2-lake-stronghold"] = Map {
+        m_maps["level-1-lake-stronghold"] = Map {
             random,
             Floor::Stone,
             MapChars_t {
-                "wwww ......................... wwwwwwwwww",
+                "wwwww.........................wwwwwwwwwww",
                 "www  .......b          .......  wwwwwwwww",
                 "ww   .......           .......        www",
-                "     ....bb.b          d     d          w",
+                "w    ....bb.b          d     d          w",
                 "..d......  ....        ....d........b   w",
                 ".. ......     d        ....        .bb  w",
                 ".. ......   ...        ....        ...  w",
@@ -234,14 +235,14 @@ namespace castlecrawl
                 "w     .......   .    ....       ....b  ww",
                 "w         .......  bb....       ....b www",
                 "ww   .... .......  bc....b      ....b  ww",
-                "www  .... ................... ......... w",
-                "wc   .... ................... ......... w",
-                "......... ................... ......... w",
-                "......... ...................d......c   w",
-                ".........     ..............     ...   ww",
-                ".............d..............         wwww"
+                "www  .... ...............bb     .........",
+                "wc   .... ...............bbb    .........",
+                "......... ...............................",
+                "......... ...............................",
+                ".........     ...........................",
+                ".............d..........................."
                 },
-            MapLinks_t {}
+            MapLinks_t {{ { 13, 23 }, "level-1-hidden-passage", { 19, 1 } }}
             };
 
         // clang-format on
@@ -256,6 +257,8 @@ namespace castlecrawl
         m_currentMapName = link.to_name;
 
         const auto iter = m_maps.find(m_currentMapName);
+
+        M_CHECK((iter != std::end(m_maps)), "Map '" << m_currentMapName << "' not found!  (from map='" << fromMapName << "')");
 
         M_CHECK(
             (!iter->second.empty()),
