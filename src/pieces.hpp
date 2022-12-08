@@ -40,6 +40,7 @@ namespace castlecrawl
         StairsUp,
         StairsDown,
         Plant,
+        Rock,
         //
         SnakeBag,
         SpiderWeb,
@@ -80,6 +81,7 @@ namespace castlecrawl
             case Pieces::StairsUp:      { return false; }
             case Pieces::StairsDown:    { return false; }
             case Pieces::Plant:         { return true;  }
+            case Pieces::Rock:          { return true;  }
             //
             case Pieces::SnakeBag:      { return true;  }
             case Pieces::SpiderWeb:     { return true;  }

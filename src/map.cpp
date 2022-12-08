@@ -219,7 +219,9 @@ namespace castlecrawl
             return;
         }
 
-        auto isNotObs = [](const char ch) { return ((ch != '.') && (ch != '|') && (ch != '-')); };
+        auto isNotObs = [](const char ch) {
+            return ((ch != '.') && (ch != '|') && (ch != '-') && (ch != 'r'));
+        };
 
         const MapPos_t mapSize(size());
 
@@ -523,6 +525,10 @@ namespace castlecrawl
                 else if (ch == tileImageChar(TileImage::Plant4))
                 {
                     context.board.add(Piece(context, Pieces::Plant, ch, pos));
+                }
+                else if (ch == tileImageChar(TileImage::Rock))
+                {
+                    context.board.add(Piece(context, Pieces::Rock, ch, pos));
                 }
                 else if (
                     (tileImageChar(TileImage::WallBlock) == ch) ||

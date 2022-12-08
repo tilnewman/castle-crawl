@@ -42,6 +42,7 @@ namespace castlecrawl
         WallHoriz,
         WallHorizShadow,
         WallVert,
+        Rock,
         Player,
         Barrel,
         Door,
@@ -100,6 +101,7 @@ namespace castlecrawl
             case TileImage::Plant2:         { return '#'; }
             case TileImage::Plant3:         { return '$'; }
             case TileImage::Plant4:         { return '%'; }
+            case TileImage::Rock:           { return 'r'; }
             case TileImage::Empty:          { return ' '; }
             case TileImage::SnakeBag:       { return '\x80'; }
             case TileImage::Snake:          { return '\x81'; }
@@ -151,6 +153,7 @@ namespace castlecrawl
     {
         switch (mapChar)
         {
+            case 'r': return TileImage::Rock;
             case 'B': return TileImage::WallBlock;
             case 'C': return TileImage::WallTopLeft;
             case 'T': return TileImage::WallTop;
@@ -248,6 +251,7 @@ namespace castlecrawl
             case TileImage::StoneBot:        return sf::IntRect(128,192,32,32);
             case TileImage::StoneBotRgt:     return sf::IntRect(160,192,32,32);
             //
+            case TileImage::Rock:            return sf::IntRect(0, 192,32,32);
             case TileImage::Lava:            return sf::IntRect(32,192,32,32);
             case TileImage::Water:           return sf::IntRect(64,192,32,32);
             //
@@ -277,7 +281,7 @@ namespace castlecrawl
             case TileImage::DragonBreath:    return sf::IntRect(128,224,32,32);
             case TileImage::Dragon:          return sf::IntRect(160,224,32,32);
             //
-            case TileImage::Empty:           return sf::IntRect(0,192,32,32);
+            case TileImage::Empty:           return sf::IntRect(224,0,32,32);
             //
             case TileImage::Count:
             default:                         return sf::IntRect(0,0,0,0);

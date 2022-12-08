@@ -245,6 +245,34 @@ namespace castlecrawl
             MapLinks_t {{ { 13, 23 }, "level-1-hidden-passage", { 19, 1 } }}
             };
 
+        m_maps["level-1-lava-gatehouse"] = Map {
+            random,
+            Floor::Stone,
+            MapChars_t {
+                "lllllllllllllllll",
+                "lllllllllllllllll",
+                "lllllllllllllllll",
+                "llll     lll   ll",
+                "ll             ll",
+                "ll              l",
+                "l  .....d.....  l",
+                "l  .         .  l",
+                "ll .         .  l",
+                "ll .         .  l",
+                "ll .         .rrr",
+                "lrr..... .....rrr",
+                "llrrrrr. .rrrrrrr",
+                "ll....r. ........",
+                "ll   .r.        d",
+                "l    ... ........",
+                "l    d   .rrrrrrr",
+                "l    .....    rrr",
+                "l             rrl",
+                "lllll       lllll",
+                "lllllllllllllllll"
+                },
+            MapLinks_t {}
+            };
         // clang-format on
 
         // this sort is not required but helps performance

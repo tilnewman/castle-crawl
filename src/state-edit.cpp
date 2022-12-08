@@ -121,6 +121,7 @@ namespace castlecrawl
         else if (sf::Keyboard::W == event.key.code)     { m_editor.setCell(context, 'w'); }
         else if (sf::Keyboard::C == event.key.code)     { m_editor.setCell(context, 'c'); }
         else if (sf::Keyboard::K == event.key.code)     { m_editor.setCell(context, 'k'); }
+        else if (sf::Keyboard::R == event.key.code)     { m_editor.setCell(context, 'r'); }
         // clang-format on
 
         if ((sf::Keyboard::Period == event.key.code) || (sf::Keyboard::Delete == event.key.code) ||
@@ -132,37 +133,20 @@ namespace castlecrawl
 
         if (event.key.shift)
         {
-            if (sf::Keyboard::Num2 == event.key.code)
-            {
-                m_editor.setCell(context, '@');
-            }
-            else if (sf::Keyboard::Num3 == event.key.code)
-            {
-                m_editor.setCell(context, '#');
-            }
-            else if (sf::Keyboard::Num4 == event.key.code)
-            {
-                m_editor.setCell(context, '$');
-            }
-            else if (sf::Keyboard::Num5 == event.key.code)
-            {
-                m_editor.setCell(context, '%');
-            }
+            // clang-format off
+            if      (sf::Keyboard::Num2 == event.key.code) { m_editor.setCell(context, '@'); }
+            else if (sf::Keyboard::Num3 == event.key.code) { m_editor.setCell(context, '#'); }
+            else if (sf::Keyboard::Num4 == event.key.code) { m_editor.setCell(context, '$'); }
+            else if (sf::Keyboard::Num5 == event.key.code) { m_editor.setCell(context, '%'); }
+            // clang-format on
         }
         else
         {
-            if (sf::Keyboard::Num1 == event.key.code)
-            {
-                m_editor.setFloor(context, Floor::Stone);
-            }
-            else if (sf::Keyboard::Num2 == event.key.code)
-            {
-                m_editor.setFloor(context, Floor::Wood);
-            }
-            else if (sf::Keyboard::Num3 == event.key.code)
-            {
-                m_editor.setFloor(context, Floor::Dirt);
-            }
+            // clang-format off
+            if      (sf::Keyboard::Num1 == event.key.code) { m_editor.setFloor(context, Floor::Stone);}
+            else if (sf::Keyboard::Num2 == event.key.code) { m_editor.setFloor(context, Floor::Wood); }
+            else if (sf::Keyboard::Num3 == event.key.code) { m_editor.setFloor(context, Floor::Dirt); }
+            // clang-format on
         }
 
         if (sf::Keyboard::D == event.key.code)
@@ -210,6 +194,7 @@ namespace castlecrawl
                 "  Period    - (same as Delete)\n"
                 "  l         - Lava\n"
                 "  w         - Water\n"
+                "  r         - Rock\n"
                 "  d         - Door\n"
                 "  D         - Locked Door\n"
                 "  s         - Stairway Down\n"
