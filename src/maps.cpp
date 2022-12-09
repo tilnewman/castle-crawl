@@ -136,7 +136,7 @@ namespace castlecrawl
                 "........d.              .....",
                 "....                    .....",
                 "....            .............",
-                "....            . bbwwwwwww..",
+                "d               . bbwwwwwww..",
                 "....            d   www......",
                 "....            .   www......",
                 "............ ................",
@@ -147,7 +147,8 @@ namespace castlecrawl
                 "............................."
                 },
             MapLinks_t {
-                { { 2,  -1 }, "level-1-main-hall", { 16, 22 } }
+                { { 2,  -1 }, "level-1-main-hall", { 16, 22 } },
+                { { -1,  13 }, "level-1-lava-gatehouse", { 15, 14 } }
                 }
             };
         
@@ -271,7 +272,7 @@ namespace castlecrawl
                 "lllll       lllll",
                 "lllllllllllllllll"
                 },
-            MapLinks_t {}
+            MapLinks_t {{ { 17,  14 }, "level-1-boiler-room", { 1, 13 } }}
             };
         // clang-format on
 
