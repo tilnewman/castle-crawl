@@ -287,7 +287,9 @@ namespace castlecrawl
 
         const auto iter = m_maps.find(m_currentMapName);
 
-        M_CHECK((iter != std::end(m_maps)), "Map '" << m_currentMapName << "' not found!  (from map='" << fromMapName << "')");
+        M_CHECK(
+            (iter != std::end(m_maps)),
+            "Map '" << m_currentMapName << "' not found!  (from map='" << fromMapName << "')");
 
         M_CHECK(
             (!iter->second.empty()),

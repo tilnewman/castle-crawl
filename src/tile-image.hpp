@@ -36,6 +36,7 @@ namespace castlecrawl
         Plant4,
         Lava,
         Water,
+        Slime,
         WallBlock,
         WallTopLeft,
         WallTop,
@@ -84,6 +85,7 @@ namespace castlecrawl
         {
             case TileImage::Lava:           { return 'l'; }
             case TileImage::Water:          { return 'w'; }
+            case TileImage::Slime:          { return 'a'; }
             case TileImage::WallBlock:      { return 'B'; }
             case TileImage::WallTopLeft:    { return 'C'; }
             case TileImage::WallTop:        { return 'T'; }
@@ -181,6 +183,7 @@ namespace castlecrawl
             case ';': return TileImage::Stone6;
             case 'l': return TileImage::Lava;
             case 'w': return TileImage::Water;
+            case 'a': return TileImage::Slime;
             case '[': return TileImage::Dirt1;
             case ']': return TileImage::Dirt2;
             case '{': return TileImage::Dirt3;
@@ -254,6 +257,7 @@ namespace castlecrawl
             case TileImage::Rock:            return sf::IntRect(0, 192,32,32);
             case TileImage::Lava:            return sf::IntRect(32,192,32,32);
             case TileImage::Water:           return sf::IntRect(64,192,32,32);
+            case TileImage::Slime:           return sf::IntRect(128,160,32,32);
             //
             case TileImage::Dirt1:           return sf::IntRect(160,0,32,32);
             case TileImage::Dirt2:           return sf::IntRect(192,0,32,32);

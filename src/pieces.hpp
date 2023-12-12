@@ -37,6 +37,7 @@ namespace castlecrawl
         Chest,
         Lava,
         Water,
+        Slime,
         StairsUp,
         StairsDown,
         Plant,
@@ -78,6 +79,7 @@ namespace castlecrawl
             case Pieces::Chest:         { return true;  }
             case Pieces::Lava:          { return true;  }
             case Pieces::Water:         { return true;  }
+            case Pieces::Slime:         { return true;  }
             case Pieces::StairsUp:      { return false; }
             case Pieces::StairsDown:    { return false; }
             case Pieces::Plant:         { return true;  }

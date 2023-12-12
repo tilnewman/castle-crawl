@@ -149,6 +149,7 @@ namespace castlecrawl
         else if (sf::Keyboard::C == event.key.code)     { m_editor.setCell(context, 'c'); }
         else if (sf::Keyboard::K == event.key.code)     { m_editor.setCell(context, 'k'); }
         else if (sf::Keyboard::R == event.key.code)     { m_editor.setCell(context, 'r'); }
+        else if (sf::Keyboard::A == event.key.code)     { m_editor.setCell(context, 'a'); }
         // clang-format on
 
         if ((sf::Keyboard::Period == event.key.code) || (sf::Keyboard::Delete == event.key.code) ||

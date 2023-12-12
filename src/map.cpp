@@ -352,7 +352,7 @@ namespace castlecrawl
             return;
         }
 
-        auto notLiq = [](const char ch) { return ((ch != 'l') && (ch != 'w')); };
+        auto notLiq = [](const char ch) { return ((ch != 'l') && (ch != 'w') && (ch != 'a')); };
 
         auto validNotLiquid = [&](const char ch, const MapPos_t & pos) {
             return (notLiq(ch) && isPosValid(pos));
@@ -489,6 +489,10 @@ namespace castlecrawl
                 else if (ch == tileImageChar(TileImage::Lava))
                 {
                     context.board.add(Piece(context, Pieces::Lava, ch, pos));
+                }
+                else if (ch == tileImageChar(TileImage::Slime))
+                {
+                    context.board.add(Piece(context, Pieces::Slime, ch, pos));
                 }
                 else if (ch == tileImageChar(TileImage::StairUp))
                 {
