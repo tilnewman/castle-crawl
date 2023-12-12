@@ -57,6 +57,9 @@ namespace castlecrawl
 
         m_helpText = context.media.makeText(FontSize::Small, "");
 
+        m_fadeText = context.media.makeText(FontSize::Large, "");
+        m_fadeText.setFillColor(sf::Color::Transparent);
+
         reset(context);
     }
 
@@ -131,6 +134,8 @@ namespace castlecrawl
         {
             target.draw(m_helpText);
         }
+
+        target.draw(m_fadeText);
     }
 
     void Editor::setFloor(Context & context, const Floor floor)
@@ -154,6 +159,26 @@ namespace castlecrawl
                     .at(static_cast<std::size_t>(entry.pos.x)) = ch;
             }
         }
+
+        // clang-format off
+        switch (ch)
+        {
+            case 'a': { startFadeText("Slime"); break; }
+            case 'l': { startFadeText("Lave"); break; }
+            case 'w': { startFadeText("Water"); break; }
+            case '.': { startFadeText("Erase"); break; }
+            case ' ': { startFadeText("Bare Floor"); break; }
+            case 'b': { startFadeText("Barrel"); break; }
+            case 'c': { startFadeText("Chest"); break; }
+            case 'k': { startFadeText("Coffin"); break; }
+            case 'r': { startFadeText("Rock Wall"); break; }
+            case 'S': { startFadeText("Stairs Up"); break; }
+            case 's': { startFadeText("Staris Down"); break; }
+            case 'D': { startFadeText("Door Locked"); break; }
+            case 'd': { startFadeText("Door Unlocked"); break; }
+            default: { break; }
+        }
+        // clang-format on
 
         updateAndRedraw(context);
     }
@@ -312,6 +337,22 @@ namespace castlecrawl
             ((context.layout.topRegion().width * 0.5f) -
              (m_helpText.getGlobalBounds().width * 0.5f)),
             50.0f);
+    }
+
+    void Editor::startFadeText(const std::string & message)
+    {
+        m_helpText.setString(message);
+        m_helpText.setFillColor(sf::Color::White);
+    }
+
+    void Editor::updateFadeText()
+    {
+        sf::Color color = m_helpText.getFillColor();
+        if (color.a > 0)
+        {
+            --color.a;
+            m_helpText.setFillColor(color);
+        }
     }
 
     void Editor::startDragging(Context & context, const sf::Vector2f & pos)

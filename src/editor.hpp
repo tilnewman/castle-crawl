@@ -63,14 +63,17 @@ namespace castlecrawl
         void showHelpText(Context & context);
         void hideHelpText() { m_helpText.setString(""); }
 
+        void startFadeText(const std::string & message);
+        void updateFadeText();
+
         bool isDragging() const { return m_isDragging; }
         void startDragging(Context & context, const sf::Vector2f & pos);
         void stopDragging(Context & context, const sf::Vector2f & pos);
         void updateDragging(Context & context, const sf::Vector2f & pos);
-        void updateDragRect();
-        void updateDragSelectedMapCells(Context & context);
 
       private:
+        void updateDragRect();
+        void updateDragSelectedMapCells(Context & context);
         void updateAndRedraw(Context & context);
 
       private:
@@ -88,6 +91,7 @@ namespace castlecrawl
         sf::Vector2f m_dragPosStop;
         sf::RectangleShape m_dragRectangle;
         std::vector<MapEntry_t> m_dragSelectedEntrys;
+        sf::Text m_fadeText;
     };
 } // namespace castlecrawl
 

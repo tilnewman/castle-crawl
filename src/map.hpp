@@ -7,6 +7,7 @@
 #include "map-types.hpp"
 #include "random.hpp"
 
+#include <string_view>
 #include <vector>
 
 namespace castlecrawl
@@ -30,6 +31,19 @@ namespace castlecrawl
         Stone,
         Dirt
     };
+
+    inline constexpr std::string_view toString(const Floor floor) noexcept
+    {
+        // clang-format off
+        switch (floor)
+        {
+            case Floor::Wood:   { return "Wood"; }
+            case Floor::Stone:  { return "Stone"; }
+            case Floor::Dirt:   { return "Dirt"; }
+            default:            { return "unknown_floor_error"; }
+        }
+        // clang-format on
+    }
 
     //
 

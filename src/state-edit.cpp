@@ -41,6 +41,8 @@ namespace castlecrawl
         m_windowOutline.setOutlineColor(sf::Color(80, 80, 80));
     }
 
+    void StateEdit::update(Context &, const float) { m_editor.updateFadeText(); }
+
     void StateEdit::handleEvent(Context & context, const sf::Event & event)
     {
         if (sf::Event::MouseButtonPressed == event.type)
@@ -98,6 +100,7 @@ namespace castlecrawl
         if (event.key.control && (sf::Keyboard::R == event.key.code))
         {
             m_editor.reset(context);
+            m_editor.startFadeText("Reset Map");
             return;
         }
 
@@ -170,11 +173,21 @@ namespace castlecrawl
         }
         else
         {
-            // clang-format off
-            if      (sf::Keyboard::Num1 == event.key.code) { m_editor.setFloor(context, Floor::Stone);}
-            else if (sf::Keyboard::Num2 == event.key.code) { m_editor.setFloor(context, Floor::Wood); }
-            else if (sf::Keyboard::Num3 == event.key.code) { m_editor.setFloor(context, Floor::Dirt); }
-            // clang-format on
+            if (sf::Keyboard::Num1 == event.key.code)
+            {
+                m_editor.setFloor(context, Floor::Stone);
+                m_editor.startFadeText("Stone Floors");
+            }
+            else if (sf::Keyboard::Num2 == event.key.code)
+            {
+                m_editor.setFloor(context, Floor::Wood);
+                m_editor.startFadeText("Wood Floors");
+            }
+            else if (sf::Keyboard::Num3 == event.key.code)
+            {
+                m_editor.setFloor(context, Floor::Dirt);
+                m_editor.startFadeText("Dirt Floors");
+            }
         }
 
         if (sf::Keyboard::D == event.key.code)
@@ -196,6 +209,7 @@ namespace castlecrawl
             if (event.key.control)
             {
                 m_editor.save(context);
+                m_editor.startFadeText("Saving...");
             }
             else if (event.key.shift)
             {
