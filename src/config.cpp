@@ -47,8 +47,7 @@ namespace castlecrawl
             video_mode.bitsPerPixel = 32;
         }
 
-        std::cout << "Game Window Resolution: " << video_mode.width << 'x' << video_mode.height
-                  << std::endl;
+        std::cout << "Game Window Resolution: " << video_mode << std::endl;
     }
 
 } // namespace castlecrawl

@@ -155,6 +155,20 @@ namespace sf
         return os;
     }
 
+    inline std::ostream & operator<<(std::ostream & os, const sf::VideoMode & vm)
+    {
+        os << "(" << vm.width << "x" << vm.height << ":" << vm.bitsPerPixel << "bpp";
+
+        if (!vm.isValid())
+        {
+            os << "(invalid)";
+        }
+
+        os << ")";
+
+        return os;
+    }
+
 } // namespace sf
 
 //
