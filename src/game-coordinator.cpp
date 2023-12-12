@@ -5,6 +5,8 @@
 //
 #include "game-coordinator.hpp"
 
+#include "sfml-util.hpp"
+
 #include <iostream>
 
 namespace castlecrawl
@@ -28,6 +30,7 @@ namespace castlecrawl
         , m_audio(m_random)
         , m_music()
         , m_anim(m_random)
+        , m_platform()
         , m_context(
               m_game,
               m_player,
@@ -45,33 +48,32 @@ namespace castlecrawl
               m_random,
               m_audio,
               m_music,
-              m_anim)
+              m_anim,
+              m_platform)
     {}
 
-    void GameCoordinator::configureAndOpenWindow(const GameConfig & configOrig)
+    void GameCoordinator::run(const GameConfig & config)
     {
-        m_config = configOrig;
+        m_config = config;
 
-        m_window.create(m_config.video_mode, "Castle Crawl", sf::Style::Fullscreen);
+        std::cout << "Platform detected: " << toString(m_platform.which());
+        if (!m_platform.isSupported())
+        {
+            std::cout << " -which is not supported.  Good luck with that.";
+        }
+        std::cout << std::endl;
 
-        M_CHECK(
-            m_window.isOpen(),
-            "Error:  Failed to create() the fullscreen graphics window at "
-                << m_config.video_mode.width << 'x' << m_config.video_mode.height);
+        if (m_platform.which() == util::Platforms::Apple)
+        {
+            openWindowMacOS();
+        }
+        else
+        {
+            openWindow();
+        }
 
         m_window.setFramerateLimit(m_config.frame_rate_limit);
         m_window.setKeyRepeatEnabled(false);
-
-        m_config.setup(sf::VideoMode{
-            m_window.getSize().x,
-            m_window.getSize().y,
-            m_window.getSettings().depthBits,
-        });
-    }
-
-    void GameCoordinator::run(const GameConfig & configOrig)
-    {
-        configureAndOpenWindow(configOrig);
 
         m_context.state.setChangePending(State::Load);
 
@@ -83,6 +85,74 @@ namespace castlecrawl
             draw();
             m_states.changeIfPending(m_context);
         }
+    }
+
+    void GameCoordinator::openWindow()
+    {
+        std::cout << "Attempting video mode " << m_config.video_mode << "...";
+
+        if (!m_config.video_mode.isValid())
+        {
+            const sf::VideoMode closeVideoMode = util::findVideoModeClosestTo(m_config.video_mode);
+            std::cout << "but that's invalid, so attempting " << closeVideoMode << " instead...";
+            m_config.video_mode = closeVideoMode;
+        }
+
+        m_window.create(m_config.video_mode, "Castle Crawl", sf::Style::Fullscreen);
+
+        if (!m_window.isOpen())
+        {
+            std::cout << "failed.";
+        }
+        else if (
+            (m_config.video_mode.width != m_window.getSize().x) ||
+            (m_config.video_mode.height != m_window.getSize().y))
+        {
+            std::cout << "failed. SFML automatically switched to " << m_window.getSize()
+                      << " instead.";
+
+            m_config.video_mode.width = m_window.getSize().x;
+            m_config.video_mode.height = m_window.getSize().y;
+        }
+        else
+        {
+            std::cout << "success.";
+        }
+
+        std::cout << std::endl;
+    }
+
+    void GameCoordinator::openWindowMacOS()
+    {
+        std::cout << "Attempting video mode " << m_config.video_mode
+                  << "...but on MacOS sfml is buggy so we have to use the desktop video mode ";
+
+        m_config.video_mode = sf::VideoMode::getDesktopMode();
+
+        std::cout << m_config.video_mode << "...";
+
+        m_window.create(m_config.video_mode, "Castle Crawl", sf::Style::Fullscreen);
+
+        if (!m_window.isOpen())
+        {
+            std::cout << "failed.";
+        }
+        else if (
+            (m_config.video_mode.width != m_window.getSize().x) ||
+            (m_config.video_mode.height != m_window.getSize().y))
+        {
+            std::cout << "failed. SFML automatically switched to " << m_window.getSize()
+                      << " instead.";
+
+            m_config.video_mode.width = m_window.getSize().x;
+            m_config.video_mode.height = m_window.getSize().y;
+        }
+        else
+        {
+            std::cout << "success.";
+        }
+
+        std::cout << std::endl;
     }
 
     void GameCoordinator::handleEvents()

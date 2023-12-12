@@ -3,6 +3,7 @@
 //
 // main.cpp
 //
+#include "check-macros.hpp"
 #include "game-coordinator.hpp"
 #include "layout.hpp"
 
@@ -22,6 +23,30 @@ int main(const int argc, const char * const argv[])
         {
             config.media_dir_path =
                 std::filesystem::current_path() / std::filesystem::path{ argv[1] };
+        }
+
+        try
+        {
+            config.media_dir_path = std::filesystem::canonical(config.media_dir_path);
+        }
+        catch (...)
+        {
+        }
+
+        M_CHECK(
+            std::filesystem::exists(config.media_dir_path),
+            "Error:  The media path does not exist:"
+                << config.media_dir_path
+                << "\nPut the media path on the command line or put the 'media' folder here.");
+
+        config.video_mode.width = 1920;
+        config.video_mode.height = 1200;
+        config.video_mode.bitsPerPixel = sf::VideoMode::getDesktopMode().bitsPerPixel;
+
+        // sometimes the getDesktopMode().bitsPerPixel is zero when it should be 32?!
+        if (0 == config.video_mode.bitsPerPixel)
+        {
+            config.video_mode.bitsPerPixel = 32;
         }
 
         GameCoordinator game;

@@ -14,6 +14,7 @@
 #include "maps.hpp"
 #include "media.hpp"
 #include "music-player.hpp"
+#include "platform.hpp"
 #include "player.hpp"
 #include "popup-manager.hpp"
 #include "process.hpp"
@@ -36,7 +37,8 @@ namespace castlecrawl
         void run(const GameConfig & config);
 
       protected:
-        void configureAndOpenWindow(const GameConfig & config);
+        void openWindow();
+        void openWindowMacOS();
         void handleEvents();
         void update(const float elapsedTimeSec);
         void draw();
@@ -61,6 +63,7 @@ namespace castlecrawl
         util::SoundPlayer m_audio;
         util::MusicPlayer m_music;
         util::AnimationPlayer m_anim;
+        util::Platform m_platform;
 
         Context m_context;
     };

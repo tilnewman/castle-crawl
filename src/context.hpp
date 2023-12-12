@@ -10,6 +10,7 @@ namespace util
     class SoundPlayer;
     class MusicPlayer;
     class AnimationPlayer;
+    class Platform;
 } // namespace util
 
 namespace castlecrawl
@@ -57,7 +58,8 @@ namespace castlecrawl
             const util::Random & ran,
             util::SoundPlayer & aud,
             util::MusicPlayer & mus,
-            util::AnimationPlayer & ani)
+            util::AnimationPlayer & ani,
+            util::Platform & plt)
             : game(gam)
             , player(pla)
             , maps(mps)
@@ -75,6 +77,7 @@ namespace castlecrawl
             , audio(aud)
             , music(mus)
             , anim(ani)
+            , platform(plt)
         {}
 
         Context(const Context &) = delete;
@@ -100,6 +103,7 @@ namespace castlecrawl
         util::SoundPlayer & audio;
         util::MusicPlayer & music;
         util::AnimationPlayer & anim;
+        util::Platform & platform;
     };
 } // namespace castlecrawl
 
