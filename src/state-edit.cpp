@@ -12,9 +12,9 @@
 #include "map.hpp"
 #include "media.hpp"
 #include "popup-manager.hpp"
+#include "sfml-util.hpp"
 #include "sound-player.hpp"
 #include "state-machine.hpp"
-#include "sfml-util.hpp"
 
 #include <iostream>
 
@@ -45,7 +45,10 @@ namespace castlecrawl
     {
         if (sf::Event::MouseButtonPressed == event.type)
         {
-            const sf::Vector2f mousePosition = sf::Vector2f{ sf::Mouse::getPosition() };
+            const sf::Vector2f mousePosition =
+                sf::Vector2f{ static_cast<float>(event.mouseButton.x),
+                              static_cast<float>(event.mouseButton.y) };
+
             const MapPos_t cellIndex = context.layout.cellPosition(mousePosition);
             if (context.layout.isPositionValid(cellIndex))
             {
