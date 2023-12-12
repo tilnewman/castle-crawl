@@ -8,6 +8,7 @@
 
 #include <filesystem>
 #include <string>
+#include <vector>
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
@@ -21,6 +22,12 @@ namespace sf
 namespace castlecrawl
 {
     struct Context;
+
+    struct MapEntry_t
+    {
+        MapPos_t pos;
+        sf::FloatRect rect;
+    };
 
     class Editor
     {
@@ -56,6 +63,13 @@ namespace castlecrawl
         void showHelpText(Context & context);
         void hideHelpText() { m_helpText.setString(""); }
 
+        bool isDragging() const { return m_isDragging; }
+        void startDragging(Context & context, const sf::Vector2f & pos);
+        void stopDragging(Context & context, const sf::Vector2f & pos);
+        void updateDragging(Context & context, const sf::Vector2f & pos);
+        void updateDragRect();
+        void updateDragSelectedMapCells(Context & context);
+
       private:
         void updateAndRedraw(Context & context);
 
@@ -69,6 +83,11 @@ namespace castlecrawl
         std::string m_filename;
         sf::RectangleShape m_cursorRectangle;
         sf::Text m_helpText;
+        bool m_isDragging;
+        sf::Vector2f m_dragPosStart;
+        sf::Vector2f m_dragPosStop;
+        sf::RectangleShape m_dragRectangle;
+        std::vector<MapEntry_t> m_dragSelectedEntrys;
     };
 } // namespace castlecrawl
 

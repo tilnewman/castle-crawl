@@ -45,16 +45,29 @@ namespace castlecrawl
     {
         if (sf::Event::MouseButtonPressed == event.type)
         {
-            const sf::Vector2f mousePosition =
-                sf::Vector2f{ static_cast<float>(event.mouseButton.x),
-                              static_cast<float>(event.mouseButton.y) };
+            m_editor.startDragging(
+                context,
+                { static_cast<float>(event.mouseButton.x),
+                  static_cast<float>(event.mouseButton.y) });
 
-            const MapPos_t cellIndex = context.layout.cellPosition(mousePosition);
-            if (context.layout.isPositionValid(cellIndex))
-            {
-                context.audio.play("thock-2");
-                m_editor.setPosition(context, cellIndex);
-            }
+            return;
+        }
+
+        if (sf::Event::MouseButtonReleased == event.type)
+        {
+            m_editor.stopDragging(
+                context,
+                { static_cast<float>(event.mouseButton.x),
+                  static_cast<float>(event.mouseButton.y) });
+
+            return;
+        }
+
+        if (m_editor.isDragging() && (sf::Event::MouseMoved == event.type))
+        {
+            m_editor.updateDragging(
+                context,
+                { static_cast<float>(event.mouseMove.x), static_cast<float>(event.mouseMove.y) });
 
             return;
         }

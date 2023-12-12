@@ -31,6 +31,11 @@ namespace castlecrawl
         , m_filename()
         , m_cursorRectangle()
         , m_helpText()
+        , m_isDragging(false)
+        , m_dragPosStart(0.0f, 0.0f)
+        , m_dragPosStop(0.0f, 0.0f)
+        , m_dragRectangle()
+        , m_dragSelectedEntrys()
     {}
 
     void Editor::setup(Context & context)
@@ -47,6 +52,9 @@ namespace castlecrawl
         m_cursorRectangle.setOutlineThickness(1.0f);
         m_cursorRectangle.setSize(context.layout.cellSize());
 
+        m_dragRectangle.setFillColor(sf::Color(0, 255, 255, 64));
+        m_dragRectangle.setOutlineThickness(0.0f);
+
         m_helpText = context.media.makeText(FontSize::Small, "");
 
         reset(context);
@@ -57,6 +65,7 @@ namespace castlecrawl
         context.audio.play("tick-on-1");
         m_position += amount;
         m_cursorRectangle.setPosition(util::position(context.layout.cellBounds(m_position)));
+        m_dragSelectedEntrys.clear();
     }
 
     void Editor::setPosition(Context & context, const MapPos_t & position)
@@ -103,6 +112,21 @@ namespace castlecrawl
 
         target.draw(m_cursorRectangle);
 
+        if (m_isDragging)
+        {
+            target.draw(m_dragRectangle);
+        }
+
+        for (const MapEntry_t & entry : m_dragSelectedEntrys)
+        {
+            sf::RectangleShape rectangle;
+            rectangle.setFillColor(sf::Color(0, 255, 255, 64));
+            rectangle.setPosition(util::position(entry.rect));
+            rectangle.setSize(util::size(entry.rect));
+
+            target.draw(rectangle);
+        }
+
         if (!m_helpText.getString().isEmpty())
         {
             target.draw(m_helpText);
@@ -117,8 +141,19 @@ namespace castlecrawl
 
     void Editor::setCell(Context & context, const char ch)
     {
-        m_mapStrings.at(static_cast<std::size_t>(m_position.y))
-            .at(static_cast<std::size_t>(m_position.x)) = ch;
+        if (m_dragSelectedEntrys.empty())
+        {
+            m_mapStrings.at(static_cast<std::size_t>(m_position.y))
+                .at(static_cast<std::size_t>(m_position.x)) = ch;
+        }
+        else
+        {
+            for (const MapEntry_t & entry : m_dragSelectedEntrys)
+            {
+                m_mapStrings.at(static_cast<std::size_t>(entry.pos.y))
+                    .at(static_cast<std::size_t>(entry.pos.x)) = ch;
+            }
+        }
 
         updateAndRedraw(context);
     }
@@ -277,6 +312,91 @@ namespace castlecrawl
             ((context.layout.topRegion().width * 0.5f) -
              (m_helpText.getGlobalBounds().width * 0.5f)),
             50.0f);
+    }
+
+    void Editor::startDragging(Context & context, const sf::Vector2f & pos)
+    {
+        m_dragPosStart = pos;
+        m_dragPosStop = pos;
+
+        updateDragRect();
+
+        m_isDragging = context.layout.boardBounds().contains(pos);
+
+        updateDragSelectedMapCells(context);
+
+        context.audio.play("tick-on-1");
+    }
+
+    void Editor::stopDragging(Context & context, const sf::Vector2f & pos)
+    {
+        const MapPos_t newMapPos = context.layout.cellPosition(pos);
+
+        if (context.layout.isPositionValid(newMapPos))
+        {
+            setPosition(context, newMapPos);
+            context.audio.play("tick-off-1");
+        }
+
+        m_isDragging = false;
+
+        if (context.layout.boardBounds().contains(pos))
+        {
+            updateDragRect();
+        }
+        else
+        {
+            m_dragRectangle.setPosition({ 0.0f, 0.0f });
+            m_dragRectangle.setSize({ 0.0f, 0.0f });
+        }
+    }
+
+    void Editor::updateDragging(Context & context, const sf::Vector2f & pos)
+    {
+        m_dragPosStop = pos;
+        updateDragRect();
+        updateDragSelectedMapCells(context);
+    }
+
+    void Editor::updateDragRect()
+    {
+        m_dragRectangle.setPosition(
+            util::min(m_dragPosStart.x, m_dragPosStop.x),
+            util::min(m_dragPosStart.y, m_dragPosStop.y));
+
+        m_dragRectangle.setSize(sf::Vector2f{ util::abs(m_dragPosStart.x - m_dragPosStop.x),
+                                              util::abs(m_dragPosStart.y - m_dragPosStop.y) });
+    }
+
+    void Editor::updateDragSelectedMapCells(Context & context)
+    {
+        m_dragSelectedEntrys.clear();
+
+        const sf::FloatRect mapRect = context.layout.boardBounds();
+        const sf::Vector2i mapSize = context.layout.cellCounts();
+
+        sf::Vector2f screenPos = util::position(mapRect);
+        for (int y(0); y < mapSize.y; ++y)
+        {
+            for (int x(0); x < mapSize.x; ++x)
+            {
+                const sf::FloatRect screenRect{ screenPos, context.layout.cellSize() };
+
+                const sf::FloatRect dragRect{ util::position(m_dragRectangle),
+                                              util::size(m_dragRectangle) };
+
+                if (screenRect.intersects(dragRect))
+                {
+                    const MapEntry_t entry{ { x, y }, screenRect };
+                    m_dragSelectedEntrys.push_back(entry);
+                }
+
+                screenPos.x += context.layout.cellSize().x;
+            }
+
+            screenPos.x = mapRect.left;
+            screenPos.y += context.layout.cellSize().y;
+        }
     }
 
 } // namespace castlecrawl
