@@ -24,7 +24,7 @@
 #include "state-direction.hpp"
 #include "state-machine.hpp"
 #include "state-treasure.hpp"
-#include "util.hpp"
+#include "sfml-util.hpp"
 
 #include <iostream>
 

@@ -4,7 +4,7 @@
 // animation-player.cpp
 //
 #include "animation-player.hpp"
-#include "util.hpp"
+#include "sfml-util.hpp"
 
 #include <algorithm>
 #include <iostream>

@@ -16,7 +16,7 @@
 #include "process.hpp"
 #include "sound-player.hpp"
 #include "state-machine.hpp"
-#include "util.hpp"
+#include "sfml-util.hpp"
 
 #include <string>
 

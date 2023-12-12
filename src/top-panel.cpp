@@ -9,7 +9,7 @@
 #include "layout.hpp"
 #include "media.hpp"
 #include "player.hpp"
-#include "util.hpp"
+#include "sfml-util.hpp"
 
 namespace castlecrawl
 {

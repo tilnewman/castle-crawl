@@ -6,7 +6,7 @@
 #include "board.hpp"
 
 #include "context.hpp"
-#include "util.hpp"
+#include "sfml-util.hpp"
 
 #include <algorithm>
 #include <sstream>

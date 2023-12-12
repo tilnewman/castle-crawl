@@ -6,7 +6,7 @@
 #include "enemy.hpp"
 
 #include "context.hpp"
-#include "util.hpp"
+#include "sfml-util.hpp"
 
 namespace castlecrawl
 {

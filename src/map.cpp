@@ -11,7 +11,7 @@
 #include "layout.hpp"
 #include "media.hpp"
 #include "random.hpp"
-#include "util.hpp"
+#include "sfml-util.hpp"
 
 #include <array>
 

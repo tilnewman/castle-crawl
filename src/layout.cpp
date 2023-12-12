@@ -8,7 +8,7 @@
 #include "check-macros.hpp"
 #include "context.hpp"
 #include "map.hpp"
-#include "util.hpp"
+#include "sfml-util.hpp"
 
 #include <filesystem>
 #include <iostream>

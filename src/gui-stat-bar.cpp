@@ -5,7 +5,7 @@
 //
 #include "gui-stat-bar.hpp"
 
-#include "util.hpp"
+#include "sfml-util.hpp"
 
 namespace castlecrawl
 {

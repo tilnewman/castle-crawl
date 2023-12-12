@@ -8,7 +8,7 @@
 #include "check-macros.hpp"
 #include "context.hpp"
 #include "map.hpp"
-#include "util.hpp"
+#include "sfml-util.hpp"
 
 #include <iostream>
 
@@ -47,7 +47,8 @@ namespace castlecrawl
             video_mode.bitsPerPixel = 32;
         }
 
-        std::cout << "Game Window Resolution: " << video_mode << std::endl;
+        std::cout << "Game Window Resolution: " << video_mode.width << 'x' << video_mode.height
+                  << std::endl;
     }
 
 } // namespace castlecrawl

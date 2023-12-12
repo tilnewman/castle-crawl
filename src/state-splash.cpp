@@ -10,7 +10,7 @@
 #include "context.hpp"
 #include "layout.hpp"
 #include "state-machine.hpp"
-#include "util.hpp"
+#include "sfml-util.hpp"
 
 #include <filesystem>
 #include <iostream>

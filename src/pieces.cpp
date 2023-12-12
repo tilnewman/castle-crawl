@@ -12,7 +12,7 @@
 #include "media.hpp"
 #include "random.hpp"
 #include "sound-player.hpp"
-#include "util.hpp"
+#include "sfml-util.hpp"
 
 #include <cassert>
 

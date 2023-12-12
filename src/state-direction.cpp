@@ -12,9 +12,9 @@
 #include "media.hpp"
 #include "popup-manager.hpp"
 #include "process.hpp"
+#include "sfml-util.hpp"
 #include "sound-player.hpp"
 #include "state-machine.hpp"
-#include "util.hpp"
 
 namespace castlecrawl
 {
