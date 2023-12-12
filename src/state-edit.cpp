@@ -59,6 +59,17 @@ namespace castlecrawl
             return;
         }
 
+        if ((sf::Event::KeyPressed == event.type) && (sf::Keyboard::H == event.key.code))
+        {
+            m_editor.showHelpText(context);
+            return;
+        }
+        else if ((sf::Event::KeyReleased == event.type) && (sf::Keyboard::H == event.key.code))
+        {
+            m_editor.hideHelpText();
+            return;
+        }
+
         // all that remain are keystrokes
         if (sf::Event::KeyPressed != event.type)
         {
@@ -182,33 +193,6 @@ namespace castlecrawl
             }
 
             return;
-        }
-
-        if (sf::Keyboard::H == event.key.code)
-        {
-            // clang-format off
-            std::cout << 
-                "----------------------------------\n"
-                "  Escape    - Quit the map editor.\n"
-                "  h         - See this help text.\n"
-                "  CNTRL-S   - Save the map.\n"
-                "  Spacebar  - Bare Floor\n"
-                "  Delete    - Clear Cell\n"
-                "  Period    - (same as Delete)\n"
-                "  l         - Lava\n"
-                "  w         - Water\n"
-                "  r         - Rock\n"
-                "  d         - Door\n"
-                "  D         - Locked Door\n"
-                "  s         - Stairway Down\n"
-                "  S         - Stairway Up\n"
-                "  b         - Barrel\n"
-                "  c         - Coffin\n"
-                "  1,2,3     - Floor Type\n"
-                "  CNTRL-R   - ERASE EVERYTHING!\n"
-                "----------------------------------\n"
-                << std::endl;
-            // clang-format on
         }
     }
 

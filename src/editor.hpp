@@ -11,6 +11,7 @@
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
+#include <SFML/Graphics/Text.hpp>
 
 namespace sf
 {
@@ -52,6 +53,9 @@ namespace castlecrawl
         void save(Context & context);
         bool load(Context & context, const std::filesystem::path & path);
 
+        void showHelpText(Context & context);
+        void hideHelpText() { m_helpText.setString(""); }
+
       private:
         void updateAndRedraw(Context & context);
 
@@ -64,6 +68,7 @@ namespace castlecrawl
         Floor m_floor;
         std::string m_filename;
         sf::RectangleShape m_cursorRectangle;
+        sf::Text m_helpText;
     };
 } // namespace castlecrawl
 

@@ -10,9 +10,9 @@
 #include "layout.hpp"
 #include "media.hpp"
 #include "popup-manager.hpp"
+#include "sfml-util.hpp"
 #include "sound-player.hpp"
 #include "state-machine.hpp"
-#include "sfml-util.hpp"
 
 #include <fstream>
 
@@ -30,11 +30,11 @@ namespace castlecrawl
         , m_floor(Floor::Stone)
         , m_filename()
         , m_cursorRectangle()
+        , m_helpText()
     {}
 
     void Editor::setup(Context & context)
     {
-        // make default map
         const std::string row(static_cast<std::size_t>(context.layout.cellCountsMax().x), '.');
         m_defaultMapStrings.reserve(static_cast<std::size_t>(context.layout.cellCountsMax().y));
         for (int y = 0; y < context.layout.cellCountsMax().y; ++y)
@@ -46,6 +46,8 @@ namespace castlecrawl
         m_cursorRectangle.setOutlineColor(sf::Color::Cyan);
         m_cursorRectangle.setOutlineThickness(1.0f);
         m_cursorRectangle.setSize(context.layout.cellSize());
+
+        m_helpText = context.media.makeText(FontSize::Small, "");
 
         reset(context);
     }
@@ -100,6 +102,11 @@ namespace castlecrawl
         }
 
         target.draw(m_cursorRectangle);
+
+        if (!m_helpText.getString().isEmpty())
+        {
+            target.draw(m_helpText);
+        }
     }
 
     void Editor::setFloor(Context & context, const Floor floor)
@@ -254,6 +261,22 @@ namespace castlecrawl
         updateAndRedraw(context);
 
         return true;
+    }
+
+    void Editor::showHelpText(Context & context)
+    {
+        const std::string helpMessage(
+            "Esc-Quit\nCNTRL-s-Save\nSpace-Bare Floor\nPeriod-Erase\n"
+            "1-Dirt Floor\n2-Stone Floor\n3-Wood Floor\na-Bag\n"
+            "r-Rock\nl-Lava\nw-Water\ng-Slime\nc-Chest\nk-Coffin\n"
+            "S-Stairs Up\ns-Stair Down\nD-Door Locked\nd-Door Unlocked\n");
+
+        m_helpText.setString(helpMessage);
+
+        m_helpText.setPosition(
+            ((context.layout.topRegion().width * 0.5f) -
+             (m_helpText.getGlobalBounds().width * 0.5f)),
+            50.0f);
     }
 
 } // namespace castlecrawl
