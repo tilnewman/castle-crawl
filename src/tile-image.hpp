@@ -216,79 +216,70 @@ namespace castlecrawl
         // clang-format off
         switch (image)
         {
-            case TileImage::WallBlock:       return sf::IntRect( 64,32,32,32);
-            case TileImage::WallTopLeft:     return sf::IntRect(  0, 0,32,32);
-            case TileImage::WallTop:         return sf::IntRect( 64, 0,32,32);
-            case TileImage::WallHoriz:       return sf::IntRect( 32, 0,32,32);
-            case TileImage::WallHorizShadow: return sf::IntRect( 32,32,32,32);
-            case TileImage::WallVert:        return sf::IntRect(  0,32,32,32);
-            case TileImage::Player:          return sf::IntRect( 96,32,32,32);
-            case TileImage::Barrel:          return sf::IntRect( 96, 0,32,32);
-            case TileImage::Door:            return sf::IntRect( 96,96,32,32);
-            case TileImage::DoorLocked:      return sf::IntRect( 96,96,32,32);
-            case TileImage::Chest:           return sf::IntRect( 96,64,32,32);
-            case TileImage::Coffin:          return sf::IntRect(160,64,32,32);
-            case TileImage::StairUp:         return sf::IntRect(128, 0,32,32);
-            case TileImage::StairDown:       return sf::IntRect(128,32,32,32);
-            //
-            case TileImage::Wood1:           return sf::IntRect( 0,64,32,32);
-            case TileImage::Wood2:           return sf::IntRect(32,64,32,32);
-            case TileImage::Wood3:           return sf::IntRect(64,64,32,32);
-            case TileImage::Wood4:           return sf::IntRect( 0,96,32,32);
-            case TileImage::Wood5:           return sf::IntRect(32,96,32,32);
-            case TileImage::Wood6:           return sf::IntRect(64,96,32,32);
-            //
-            case TileImage::Stone1:          return sf::IntRect( 0,128,32,32);
-            case TileImage::Stone2:          return sf::IntRect(32,128,32,32);
-            case TileImage::Stone3:          return sf::IntRect(64,128,32,32);
-            case TileImage::Stone4:          return sf::IntRect( 0,160,32,32);
-            case TileImage::Stone5:          return sf::IntRect(32,160,32,32);
-            case TileImage::Stone6:          return sf::IntRect(64,160,32,32);
-            //
-            case TileImage::StoneTopLft:     return sf::IntRect( 96,128,32,32);
-            case TileImage::StoneTop:        return sf::IntRect(128,128,32,32);
-            case TileImage::StoneTopRgt:     return sf::IntRect(160,128,32,32);
-            case TileImage::StoneLft:        return sf::IntRect( 96,160,32,32);
-            case TileImage::StoneRgt:        return sf::IntRect(160,160,32,32);
-            case TileImage::StoneBotLft:     return sf::IntRect( 96,192,32,32);
-            case TileImage::StoneBot:        return sf::IntRect(128,192,32,32);
-            case TileImage::StoneBotRgt:     return sf::IntRect(160,192,32,32);
-            //
-            case TileImage::Rock:            return sf::IntRect(0, 192,32,32);
-            case TileImage::Lava:            return sf::IntRect(32,192,32,32);
-            case TileImage::Water:           return sf::IntRect(64,192,32,32);
-            case TileImage::Slime:           return sf::IntRect(128,160,32,32);
-            //
-            case TileImage::Dirt1:           return sf::IntRect(160,0,32,32);
-            case TileImage::Dirt2:           return sf::IntRect(192,0,32,32);
-            case TileImage::Dirt3:           return sf::IntRect(160,32,32,32);
-            case TileImage::Dirt4:           return sf::IntRect(192,32,32,32);
-            case TileImage::Dirt5:           return sf::IntRect(224,32,32,32);
-            //           
-            case TileImage::Plant1:          return sf::IntRect(0,224,32,32);
-            case TileImage::Plant2:          return sf::IntRect(32,224,32,32);
-            case TileImage::Plant3:          return sf::IntRect(64,224,32,32);
-            case TileImage::Plant4:          return sf::IntRect(96,224,32,32);
-            //
-            case TileImage::SnakeBag:        return sf::IntRect(192, 64,32,32);
-            case TileImage::Snake:           return sf::IntRect(224, 64,32,32);
-            case TileImage::SpiderWeb:       return sf::IntRect(192, 96,32,32);
-            case TileImage::Spider:          return sf::IntRect(224, 96,32,32);
-            case TileImage::GoblinPot:       return sf::IntRect(192,128,32,32);
-            case TileImage::Goblin:          return sf::IntRect(224,128,32,32);
-            case TileImage::BirdMask:        return sf::IntRect(192,160,32,32);
-            case TileImage::Bat:             return sf::IntRect(224,160,32,32);
-            case TileImage::SkeletonGrave:   return sf::IntRect(192,192,32,32);
-            case TileImage::Skeleton:        return sf::IntRect(224,192,32,32);
-            case TileImage::DemonDoor:       return sf::IntRect(192,224,32,32);
-            case TileImage::Demon:           return sf::IntRect(224,224,32,32);
-            case TileImage::DragonBreath:    return sf::IntRect(128,224,32,32);
-            case TileImage::Dragon:          return sf::IntRect(160,224,32,32);
-            //
-            case TileImage::Empty:           return sf::IntRect(224,0,32,32);
-            //
+            case TileImage::WallBlock:       return {  64,  32, 32, 32 };
+            case TileImage::WallTopLeft:     return {   0,   0, 32, 32 };
+            case TileImage::WallTop:         return {  64,   0, 32, 32 };
+            case TileImage::WallHoriz:       return {  32,   0, 32, 32 };
+            case TileImage::WallHorizShadow: return {  32,  32, 32, 32 };
+            case TileImage::WallVert:        return {   0,  32, 32, 32 };
+            case TileImage::Player:          return {  96,  32, 32, 32 };
+            case TileImage::Barrel:          return {  96,   0, 32, 32 };
+            case TileImage::Door:            return {  96,  96, 32, 32 };
+            case TileImage::DoorLocked:      return {  96,  96, 32, 32 };
+            case TileImage::Chest:           return {  96,  64, 32, 32 };
+            case TileImage::Coffin:          return { 160,  64, 32, 32 };
+            case TileImage::StairUp:         return { 128,   0, 32, 32 };
+            case TileImage::StairDown:       return { 128,  32, 32, 32 };
+            case TileImage::Wood1:           return {   0,  64, 32, 32 };
+            case TileImage::Wood2:           return {  32,  64, 32, 32 };
+            case TileImage::Wood3:           return {  64,  64, 32, 32 };
+            case TileImage::Wood4:           return {   0,  96, 32, 32 };
+            case TileImage::Wood5:           return {  32,  96, 32, 32 };
+            case TileImage::Wood6:           return {  64,  96, 32, 32 };
+            case TileImage::Stone1:          return {   0, 128, 32, 32 };
+            case TileImage::Stone2:          return {  32, 128, 32, 32 };
+            case TileImage::Stone3:          return {  64, 128, 32, 32 };
+            case TileImage::Stone4:          return {   0, 160, 32, 32 };
+            case TileImage::Stone5:          return {  32, 160, 32, 32 };
+            case TileImage::Stone6:          return {  64, 160, 32, 32 };
+            case TileImage::StoneTopLft:     return {  96, 128, 32, 32 };
+            case TileImage::StoneTop:        return { 128, 128, 32, 32 };
+            case TileImage::StoneTopRgt:     return { 160, 128, 32, 32 };
+            case TileImage::StoneLft:        return {  96, 160, 32, 32 };
+            case TileImage::StoneRgt:        return { 160, 160, 32, 32 };
+            case TileImage::StoneBotLft:     return {  96, 192, 32, 32 };
+            case TileImage::StoneBot:        return { 128, 192, 32, 32 };
+            case TileImage::StoneBotRgt:     return { 160, 192, 32, 32 };
+            case TileImage::Rock:            return {   0, 192, 32, 32 };
+            case TileImage::Lava:            return {  32, 192, 32, 32 };
+            case TileImage::Water:           return {  64, 192, 32, 32 };
+            case TileImage::Slime:           return { 128, 160, 32, 32 };
+            case TileImage::Dirt1:           return { 160,   0, 32, 32 };
+            case TileImage::Dirt2:           return { 192,   0, 32, 32 };
+            case TileImage::Dirt3:           return { 160,  32, 32, 32 };
+            case TileImage::Dirt4:           return { 192,  32, 32, 32 };
+            case TileImage::Dirt5:           return { 224,  32, 32, 32 };       
+            case TileImage::Plant1:          return {   0, 224, 32, 32 };
+            case TileImage::Plant2:          return {  32, 224, 32, 32 };
+            case TileImage::Plant3:          return {  64, 224, 32, 32 };
+            case TileImage::Plant4:          return {  96, 224, 32, 32 };
+            case TileImage::SnakeBag:        return { 192,  64, 32, 32 };
+            case TileImage::Snake:           return { 224,  64, 32, 32 };
+            case TileImage::SpiderWeb:       return { 192,  96, 32, 32 };
+            case TileImage::Spider:          return { 224,  96, 32, 32 };
+            case TileImage::GoblinPot:       return { 192, 128, 32, 32 };
+            case TileImage::Goblin:          return { 224, 128, 32, 32 };
+            case TileImage::BirdMask:        return { 192, 160, 32, 32 };
+            case TileImage::Bat:             return { 224, 160, 32, 32 };
+            case TileImage::SkeletonGrave:   return { 192, 192, 32, 32 };
+            case TileImage::Skeleton:        return { 224, 192, 32, 32 };
+            case TileImage::DemonDoor:       return { 192, 224, 32, 32 };
+            case TileImage::Demon:           return { 224, 224, 32, 32 };
+            case TileImage::DragonBreath:    return { 128, 224, 32, 32 };
+            case TileImage::Dragon:          return { 160, 224, 32, 32 };
+            case TileImage::Empty:           
             case TileImage::Count:
-            default:                         return sf::IntRect(0,0,0,0);
+            default:                         return { 128,  96, 32, 32 };
         }
         // clang-format on
     }
