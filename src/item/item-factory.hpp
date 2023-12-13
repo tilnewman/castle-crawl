@@ -8,52 +8,53 @@
 namespace castlecrawl
 {
     struct Context;
+}
 
-    namespace item
+namespace castlecrawl::item
+{
+
+    struct Treasure
     {
-        struct Treasure
-        {
-            int gold = 0;
-            ItemVec_t items;
+        int gold = 0;
+        ItemVec_t items;
 
-            bool empty() const { return ((0 == gold) && items.empty()); }
-            const std::string description() const;
-        };
+        bool empty() const { return ((0 == gold) && items.empty()); }
+        const std::string description() const;
+    };
 
-        struct TextExtent
-        {
-            std::size_t longest_name = 0;
-            std::size_t longest_desc = 0;
-        };
+    struct TextExtent
+    {
+        std::size_t longest_name = 0;
+        std::size_t longest_desc = 0;
+    };
 
-        class ItemFactory
-        {
-          public:
-            ItemFactory();
+    class ItemFactory
+    {
+      public:
+        ItemFactory();
 
-            void processAll();
-            void printSummaries() const;
-            const TextExtent textExtents() const { return m_textExtent; }
-            const Treasure randomTreasureFind(Context & context) const;
-            const Treasure randomHerbFind(Context & context) const;
-            const ItemVec_t makeAll() const;
+        void processAll();
+        void printSummaries() const;
+        const TextExtent textExtents() const { return m_textExtent; }
+        const Treasure randomTreasureFind(Context & context) const;
+        const Treasure randomHerbFind(Context & context) const;
+        const ItemVec_t makeAll() const;
 
-          private:
-            const ItemVec_t makeWeapons() const;
-            const ItemVec_t makeArmor() const;
-            const ItemVec_t makeMisc() const;
-            const ItemVec_t makeCustom() const;
+      private:
+        const ItemVec_t makeWeapons() const;
+        const ItemVec_t makeArmor() const;
+        const ItemVec_t makeMisc() const;
+        const ItemVec_t makeCustom() const;
 
-            const TextExtent findTextExtents(const ItemVec_t & items) const;
-            void validateAll(const ItemVec_t & items) const;
-            void throwIfInvalid(const Item & item) const;
+        const TextExtent findTextExtents(const ItemVec_t & items) const;
+        void validateAll(const ItemVec_t & items) const;
+        void throwIfInvalid(const Item & item) const;
 
-          private:
-            int m_lowestValue;
-            TextExtent m_textExtent;
-        };
+      private:
+        int m_lowestValue;
+        TextExtent m_textExtent;
+    };
 
-    } // namespace item
-} // namespace castlecrawl
+} // namespace castlecrawl::item
 
 #endif // CASTLECRAWL_ITEM_FACTORY_HPP_INCLUDED
