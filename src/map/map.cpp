@@ -5,11 +5,11 @@
 //
 #include "map/map.hpp"
 
+#include "display/layout.hpp"
+#include "display/media.hpp"
 #include "map/board.hpp"
 #include "misc/config.hpp"
 #include "misc/context.hpp"
-#include "display/layout.hpp"
-#include "display/media.hpp"
 #include "misc/random.hpp"
 #include "misc/sfml-util.hpp"
 
@@ -21,14 +21,14 @@ namespace castlecrawl
 {
     void MapVerts::reset()
     {
-        floor.clear();
-        border.clear();
-        transition.clear();
+        floors.clear();
+        black_borders.clear();
+        liquid_edges.clear();
 
         // these reserve values found after trials of the biggest maps
-        floor.reserve(4000);
-        border.reserve(2000);
-        transition.reserve(1000);
+        floors.reserve(4000);
+        black_borders.reserve(2000);
+        liquid_edges.reserve(1000);
     }
 
     Map::Map()
@@ -66,9 +66,9 @@ namespace castlecrawl
         resetPieces(context, playerPos);
 
         verts.reset();
-        makeVerts(context, m_floorChars, verts.floor);
-        makeBorderVerts(context, m_floorChars, verts.border);
-        makeStoneTransitionVerts(context, verts.transition);
+        makeVerts(context, m_floorChars, verts.floors);
+        makeBorderVerts(context, m_floorChars, verts.black_borders);
+        makeStoneTransitionVerts(context, verts.liquid_edges);
     }
 
     char Map::getChar(const MapPos_t & pos) const

@@ -5,11 +5,11 @@
 //
 #include "map/maps.hpp"
 
+#include "display/layout.hpp"
+#include "display/media.hpp"
 #include "map/board.hpp"
 #include "misc/check-macros.hpp"
 #include "misc/context.hpp"
-#include "display/layout.hpp"
-#include "display/media.hpp"
 #include "misc/save-game.hpp"
 #include "misc/sfml-util.hpp"
 
@@ -312,15 +312,15 @@ namespace castlecrawl
     {
         states.texture = &context.media.tileTexture();
 
-        if (!m_verts.floor.empty())
+        if (!m_verts.floors.empty())
         {
-            target.draw(&m_verts.floor[0], m_verts.floor.size(), sf::Quads, states);
+            target.draw(&m_verts.floors[0], m_verts.floors.size(), sf::Quads, states);
         }
 
-        if (!m_verts.border.empty())
+        if (!m_verts.black_borders.empty())
         {
             // do not use states because these verts have no texture
-            target.draw(&m_verts.border[0], m_verts.border.size(), sf::Quads);
+            target.draw(&m_verts.black_borders[0], m_verts.black_borders.size(), sf::Quads);
         }
     }
 
@@ -329,9 +329,9 @@ namespace castlecrawl
     {
         states.texture = &context.media.tileTexture();
 
-        if (!m_verts.transition.empty())
+        if (!m_verts.liquid_edges.empty())
         {
-            target.draw(&m_verts.transition[0], m_verts.transition.size(), sf::Quads, states);
+            target.draw(&m_verts.liquid_edges[0], m_verts.liquid_edges.size(), sf::Quads, states);
         }
     }
 

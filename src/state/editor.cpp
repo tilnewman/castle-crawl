@@ -91,15 +91,15 @@ namespace castlecrawl
     {
         states.texture = &context.media.tileTexture();
 
-        if (!m_mapVerts.floor.empty())
+        if (!m_mapVerts.floors.empty())
         {
-            target.draw(&m_mapVerts.floor[0], m_mapVerts.floor.size(), sf::Quads, states);
+            target.draw(&m_mapVerts.floors[0], m_mapVerts.floors.size(), sf::Quads, states);
         }
 
-        if (!m_mapVerts.border.empty())
+        if (!m_mapVerts.black_borders.empty())
         {
             // do not use states because these verts have no texture only color
-            target.draw(&m_mapVerts.border[0], m_mapVerts.border.size(), sf::Quads);
+            target.draw(&m_mapVerts.black_borders[0], m_mapVerts.black_borders.size(), sf::Quads);
         }
     }
 
@@ -108,9 +108,10 @@ namespace castlecrawl
     {
         states.texture = &context.media.tileTexture();
 
-        if (!m_mapVerts.transition.empty())
+        if (!m_mapVerts.liquid_edges.empty())
         {
-            target.draw(&m_mapVerts.transition[0], m_mapVerts.transition.size(), sf::Quads, states);
+            target.draw(
+                &m_mapVerts.liquid_edges[0], m_mapVerts.liquid_edges.size(), sf::Quads, states);
         }
 
         target.draw(m_cursorRectangle);

@@ -18,9 +18,9 @@ namespace castlecrawl
 
     struct MapVerts
     {
-        VertVec_t floor;
-        VertVec_t border;
-        VertVec_t transition;
+        VertVec_t floors;
+        VertVec_t black_borders;
+        VertVec_t liquid_edges;
 
         void reset();
     };
