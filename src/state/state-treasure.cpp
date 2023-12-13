@@ -38,7 +38,7 @@ namespace castlecrawl
             context.layout.windowBounds(), m_bgFadeVerts, sf::Color(0, 0, 0, 150));
 
         // cyan bluish bar so the text can be white on top of it
-        m_bgRectangle.setFillColor(sf::Color(25, 100, 115, 200));
+        m_bgRectangle.setFillColor(sf::Color(25, 100, 115, 127));
         m_bgRectangle.setOutlineColor(sf::Color(255, 255, 255, 200));
         m_bgRectangle.setOutlineThickness(2.0f);
         m_bgRectangle.setPosition(0.0f, (context.layout.windowSize().y * 0.2f));
@@ -76,7 +76,7 @@ namespace castlecrawl
             }
             else
             {
-                goldStr += " and:";
+                goldStr += " and...";
             }
         }
 
@@ -135,7 +135,7 @@ namespace castlecrawl
         }
         else
         {
-            m_selectRectangle.setFillColor(sf::Color(0, 0, 0, 64));
+            m_selectRectangle.setFillColor(sf::Color(255, 255, 255, 64));
             m_selectRectangle.setOutlineThickness(0.0f);
             m_selectRectangle.setSize({ textWidest, fontExtent.letter_size.y });
 
