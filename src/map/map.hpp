@@ -3,8 +3,8 @@
 //
 // map.hpp
 //
-#include "misc/json.hpp"
 #include "map/map-types.hpp"
+#include "misc/json.hpp"
 #include "misc/random.hpp"
 
 #include <string_view>
