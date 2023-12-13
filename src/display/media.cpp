@@ -5,10 +5,11 @@
 //
 #include "display/media.hpp"
 
+#include "audio/sound-player.hpp"
+#include "display/layout.hpp"
 #include "misc/config.hpp"
 #include "misc/context.hpp"
-#include "display/layout.hpp"
-#include "audio/sound-player.hpp"
+#include "misc/random.hpp"
 #include "misc/sfml-util.hpp"
 
 namespace castlecrawl
@@ -26,10 +27,12 @@ namespace castlecrawl
         load((config.media_dir_path / "image" / "title.png"), m_titleTexture);
         load((config.media_dir_path / "image" / "paper-1.png"), m_paper1Texture);
         load((config.media_dir_path / "image" / "paper-2.png"), m_paper2Texture);
+        load((config.media_dir_path / "image" / "enemy.png"), m_enemyTexture);
 
         m_titleTexture.setSmooth(true);
         m_paper1Texture.setSmooth(true);
         m_paper2Texture.setSmooth(true);
+        m_enemyTexture.setSmooth(true);
 
         audio.loadAll();
     }
@@ -85,6 +88,64 @@ namespace castlecrawl
         {
             return m_defaultSprite;
         }
+    }
+
+    const sf::Sprite Media::enemySprite(const Context & context, const Pieces enemyPiece) const
+    {
+        sf::Sprite sprite(m_enemyTexture);
+
+        if (enemyPiece == Pieces::Snake)
+        {
+            sprite.setTextureRect(textureRect(static_cast<EnemyImage>(
+                static_cast<int>(EnemyImage::Snake1) + context.random.zeroTo(5))));
+        }
+        else if (enemyPiece == Pieces::Spider)
+        {
+            sprite.setTextureRect(textureRect(static_cast<EnemyImage>(
+                static_cast<int>(EnemyImage::Spider1) + context.random.zeroTo(5))));
+        }
+        else if (enemyPiece == Pieces::Goblin)
+        {
+            sprite.setTextureRect(textureRect(static_cast<EnemyImage>(
+                static_cast<int>(EnemyImage::Goblin1) + context.random.zeroTo(5))));
+        }
+        else if (enemyPiece == Pieces::Bat)
+        {
+            sprite.setTextureRect(textureRect(static_cast<EnemyImage>(
+                static_cast<int>(EnemyImage::Bat1) + context.random.zeroTo(5))));
+        }
+        else if (enemyPiece == Pieces::Pixie)
+        {
+            sprite.setTextureRect(textureRect(static_cast<EnemyImage>(
+                static_cast<int>(EnemyImage::Pixie1) + context.random.zeroTo(5))));
+        }
+        else if (enemyPiece == Pieces::Skeleton)
+        {
+            sprite.setTextureRect(textureRect(static_cast<EnemyImage>(
+                static_cast<int>(EnemyImage::Skeleton1) + context.random.zeroTo(5))));
+        }
+        else if (enemyPiece == Pieces::Demon)
+        {
+            sprite.setTextureRect(textureRect(static_cast<EnemyImage>(
+                static_cast<int>(EnemyImage::Demon1) + context.random.zeroTo(5))));
+        }
+        else if (enemyPiece == Pieces::Dragon)
+        {
+            sprite.setTextureRect(textureRect(static_cast<EnemyImage>(
+                static_cast<int>(EnemyImage::Dragon1) + context.random.zeroTo(5))));
+        }
+        else if (enemyPiece == Pieces::Wizard)
+        {
+            sprite.setTextureRect(textureRect(static_cast<EnemyImage>(
+                static_cast<int>(EnemyImage::Wizard1) + context.random.zeroTo(5))));
+        }
+        else
+        {
+            sprite.setTextureRect(textureRect(EnemyImage::FireLord));
+        }
+
+        util::fit(sprite, context.layout.mapCellSize());
+        return sprite;
     }
 
     const sf::Sprite & Media::splatSprite(const SplatImage image) const
