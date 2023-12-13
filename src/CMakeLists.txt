@@ -10,7 +10,7 @@ set(library_names audio display item map misc state)
 
 
 #list of directories with executables
-set(executable_directory_names castlecrawl)
+set(executable_directory_names castlecrawl test)
 
 
 #list of all sub-directories
