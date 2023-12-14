@@ -36,6 +36,7 @@ namespace castlecrawl
         , m_dragPosStop(0.0f, 0.0f)
         , m_dragRectangle()
         , m_dragSelectedEntrys()
+        , m_fadeText()
     {}
 
     void Editor::setup(Context & context)
@@ -139,9 +140,24 @@ namespace castlecrawl
         target.draw(m_fadeText);
     }
 
-    void Editor::setFloor(Context & context, const Floor floor)
+    void Editor::changeFloor(Context & context)
     {
-        m_floor = floor;
+        if (Floor::Stone == m_floor)
+        {
+            m_floor = Floor::Wood;
+            startFadeText(context, "Wood Floors");
+        }
+        else if (Floor::Wood == m_floor)
+        {
+            m_floor = Floor::Dirt;
+            startFadeText(context, "Dirt Floors");
+        }
+        else
+        {
+            m_floor = Floor::Stone;
+            startFadeText(context, "Stone Floors");
+        }
+
         updateAndRedraw(context);
     }
 
@@ -164,19 +180,19 @@ namespace castlecrawl
         // clang-format off
         switch (ch)
         {
-            case 'a': { startFadeText("Slime"); break; }
-            case 'l': { startFadeText("Lave"); break; }
-            case 'w': { startFadeText("Water"); break; }
-            case '.': { startFadeText("Erase"); break; }
-            case ' ': { startFadeText("Bare Floor"); break; }
-            case 'b': { startFadeText("Barrel"); break; }
-            case 'c': { startFadeText("Chest"); break; }
-            case 'k': { startFadeText("Coffin"); break; }
-            case 'r': { startFadeText("Rock Wall"); break; }
-            case 'S': { startFadeText("Stairs Up"); break; }
-            case 's': { startFadeText("Staris Down"); break; }
-            case 'D': { startFadeText("Door Locked"); break; }
-            case 'd': { startFadeText("Door Unlocked"); break; }
+            case 'a': { startFadeText(context, "Slime"); break; }
+            case 'l': { startFadeText(context, "Lave"); break; }
+            case 'w': { startFadeText(context, "Water"); break; }
+            case '.': { startFadeText(context, "Erase"); break; }
+            case ' ': { startFadeText(context, "Bare Floor"); break; }
+            case 'b': { startFadeText(context, "Barrel"); break; }
+            case 'c': { startFadeText(context, "Chest"); break; }
+            case 'k': { startFadeText(context, "Coffin"); break; }
+            case 'r': { startFadeText(context, "Rock Wall"); break; }
+            case 'S': { startFadeText(context, "Stairs Up"); break; }
+            case 's': { startFadeText(context, "Staris Down"); break; }
+            case 'D': { startFadeText(context, "Door Locked"); break; }
+            case 'd': { startFadeText(context, "Door Unlocked"); break; }
             default: { break; }
         }
         // clang-format on
@@ -328,7 +344,7 @@ namespace castlecrawl
     {
         const std::string helpMessage(
             "Esc-Quit\nCNTRL-s-Save\nSpace-Bare Floor\nPeriod-Erase\n"
-            "1-Dirt Floor\n2-Stone Floor\n3-Wood Floor\na-Bag\n"
+            "f-Change Floors\na-Bag\n"
             "r-Rock\nl-Lava\nw-Water\ng-Slime\nc-Chest\nk-Coffin\n"
             "S-Stairs Up\ns-Stair Down\nD-Door Locked\nd-Door Unlocked\n");
 
@@ -340,19 +356,20 @@ namespace castlecrawl
             50.0f);
     }
 
-    void Editor::startFadeText(const std::string & message)
+    void Editor::startFadeText(Context & context, const std::string & message)
     {
-        m_helpText.setString(message);
-        m_helpText.setFillColor(sf::Color::White);
+        m_fadeText.setString(message);
+        m_fadeText.setFillColor(sf::Color::White);
+        util::centerInside(m_fadeText, context.layout.topRegion());
     }
 
     void Editor::updateFadeText()
     {
-        sf::Color color = m_helpText.getFillColor();
+        sf::Color color = m_fadeText.getFillColor();
         if (color.a > 0)
         {
             --color.a;
-            m_helpText.setFillColor(color);
+            m_fadeText.setFillColor(color);
         }
     }
 

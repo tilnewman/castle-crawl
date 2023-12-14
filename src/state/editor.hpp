@@ -47,8 +47,7 @@ namespace castlecrawl
         void setFilename(const std::string & filename) { m_filename = filename; }
         const std::string getFilename() const { return m_filename; }
 
-        void setFloor(Context & context, const Floor floor);
-        Floor getFloor() const { return m_floor; }
+        void changeFloor(Context & context);
 
         const MapPos_t position() const { return m_position; }
         void movePosition(Context & context, const MapPos_t & amount);
@@ -63,7 +62,7 @@ namespace castlecrawl
         void showHelpText(Context & context);
         void hideHelpText() { m_helpText.setString(""); }
 
-        void startFadeText(const std::string & message);
+        void startFadeText(Context & context, const std::string & message);
         void updateFadeText();
 
         bool isDragging() const { return m_isDragging; }
