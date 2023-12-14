@@ -25,7 +25,7 @@ namespace castlecrawl
 
         void clear() { m_pieces.clear(); }
 
-        Pieces whichAt(const MapPos_t & pos) const;
+        PiecesOpt_t whichAt(const MapPos_t & pos) const;
         PieceOpt_t at(const MapPos_t & pos);
 
         void add(const Piece & piece) { m_pieces.push_back(piece); }

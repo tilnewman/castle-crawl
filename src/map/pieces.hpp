@@ -3,9 +3,9 @@
 //
 // pieces.hpp
 //
-#include "map/map-types.hpp"
 #include "display/shaker.hpp"
 #include "display/tile-image.hpp"
+#include "map/map-types.hpp"
 
 #include <functional>
 #include <optional>
@@ -27,7 +27,6 @@ namespace castlecrawl
 
     enum class Pieces
     {
-        None,
         Player,
         DoorLocked,
         DoorUnlocked,
@@ -64,50 +63,19 @@ namespace castlecrawl
         Wizard
     };
 
+    using PiecesOpt_t = std::optional<Pieces>;
+
     inline constexpr bool isPieceObstacle(const Pieces piece) noexcept
     {
-        // clang-format off
-        switch (piece)
+        if ((piece == Pieces::Player) || (piece == Pieces::DoorUnlocked) ||
+            (piece == Pieces::StairsDown) || (piece == Pieces::StairsUp))
         {
-            case Pieces::None:          { return false; }
-            case Pieces::Player:        { return false; }
-            case Pieces::DoorLocked:    { return true;  }
-            case Pieces::DoorUnlocked:  { return false; }
-            case Pieces::Wall:          { return true;  }
-            case Pieces::Barrel:        { return true;  }
-            case Pieces::Coffin:        { return true;  }
-            case Pieces::Chest:         { return true;  }
-            case Pieces::Lava:          { return true;  }
-            case Pieces::Water:         { return true;  }
-            case Pieces::Slime:         { return true;  }
-            case Pieces::StairsUp:      { return false; }
-            case Pieces::StairsDown:    { return false; }
-            case Pieces::Plant:         { return true;  }
-            case Pieces::Rock:          { return true;  }
-            //
-            case Pieces::SnakeBag:      { return true;  }
-            case Pieces::SpiderWeb:     { return true;  }
-            case Pieces::GoblinPot:     { return true;  }
-            case Pieces::BirdMask:      { return true;  }
-            case Pieces::PixieGoblet:   { return true;  }
-            case Pieces::SkeletonGrave: { return true;  }
-            case Pieces::DemonDoor:     { return true;  }
-            case Pieces::DragonBreath:  { return true;  }
-            case Pieces::WizardTomb:    { return true;  }
-            //
-            case Pieces::Snake:         { return true;  }
-            case Pieces::Spider:        { return true;  }
-            case Pieces::Goblin:        { return true;  }
-            case Pieces::Bat:           { return true;  }
-            case Pieces::Pixie:         { return true;  }
-            case Pieces::Skeleton:      { return true;  }
-            case Pieces::Demon:         { return true;  }
-            case Pieces::Dragon:        { return true;  }
-            case Pieces::Wizard:        { return true;  }
-            //
-            default:                    { return false; }
+            return false;
         }
-        // clang-format on
+        else
+        {
+            return true;
+        }
     }
 
     //

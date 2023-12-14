@@ -236,16 +236,17 @@ namespace castlecrawl
         }
 
         const MapPos_t oldPos = context.board.player().position();
-        const Pieces oldPiece = context.board.whichAt(oldPos);
+        const PiecesOpt_t oldPieceOpt = context.board.whichAt(oldPos);
         const MapPos_t newPos = keys::moveIfDir(oldPos, event.key.code);
-        const Pieces newPiece = context.board.whichAt(newPos);
+        const PiecesOpt_t newPieceOpt = context.board.whichAt(newPos);
 
         // leave the map cases
         for (const MapLink & link : context.maps.get().links())
         {
             if (link.from_pos == newPos)
             {
-                if ((oldPiece == Pieces::StairsUp) || (oldPiece == Pieces::StairsDown))
+                if (oldPieceOpt.has_value() && ((oldPieceOpt.value() == Pieces::StairsUp) ||
+                                                (oldPieceOpt.value() == Pieces::StairsDown)))
                 {
                     context.audio.play("stairs.ogg");
                 }
@@ -256,17 +257,17 @@ namespace castlecrawl
         }
 
         // obstacle bump cases
-        if (isPieceObstacle(newPiece))
+        if (newPieceOpt.has_value() && isPieceObstacle(newPieceOpt.value()))
         {
-            if (newPiece == Pieces::Lava)
+            if (newPieceOpt.value() == Pieces::Lava)
             {
                 context.audio.play("burn.ogg");
             }
-            else if (newPiece == Pieces::Water)
+            else if (newPieceOpt.value() == Pieces::Water)
             {
                 context.audio.play("splash.ogg");
             }
-            else if (newPiece == Pieces::DoorLocked)
+            else if (newPieceOpt.value() == Pieces::DoorLocked)
             {
                 context.audio.play("locked.ogg");
             }
@@ -280,11 +281,11 @@ namespace castlecrawl
 
         context.board.player().move(context, event.key.code);
 
-        if (newPiece == Pieces::None)
+        if (!newPieceOpt.has_value())
         {
             context.audio.play("tick-on-2.ogg");
         }
-        else if (newPiece == Pieces::DoorUnlocked)
+        else if (newPieceOpt.value() == Pieces::DoorUnlocked)
         {
             context.audio.play("door-open.ogg");
         }

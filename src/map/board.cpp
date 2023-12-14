@@ -20,7 +20,7 @@ namespace castlecrawl
         , m_pieces()
     {}
 
-    Pieces Board::whichAt(const MapPos_t & pos) const
+    PiecesOpt_t Board::whichAt(const MapPos_t & pos) const
     {
         for (const Piece & piece : m_pieces)
         {
@@ -30,7 +30,7 @@ namespace castlecrawl
             }
         }
 
-        return Pieces::None;
+        return std::nullopt;
     }
 
     PieceOpt_t Board::at(const MapPos_t & pos)
